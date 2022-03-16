@@ -19,6 +19,7 @@ class App extends Component {
     let SettingsPanelComponent = !this.state.isFullPageLayout ? <SettingsPanel/> : '';
     let footerComponent = !this.state.isFullPageLayout ? <Footer/> : '';
     return (
+      <>
       <div className="container-scroller">
         { navbarComponent }
         <div className="container-fluid page-body-wrapper">
@@ -32,6 +33,7 @@ class App extends Component {
           </div>
         </div>
       </div>
+      </>
     );
   }
 
@@ -42,7 +44,6 @@ class App extends Component {
   }
 
   onRouteChanged() {
-    console.log("ROUTE CHANGED");
     const { i18n } = this.props;
     const body = document.querySelector('body');
     if(this.props.location.pathname === '/layout/RtlLayout') {

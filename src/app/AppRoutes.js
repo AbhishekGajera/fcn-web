@@ -2,6 +2,7 @@ import React, { Component,Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Spinner from '../app/shared/Spinner';
+import ProtectedRoute from '../common/ProtectedRoute';
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 
@@ -41,7 +42,7 @@ class AppRoutes extends Component {
         <Switch>
 
            {/* client routes */}
-          <Route exact path="/dashboard" component={ Dashboard } />
+          <ProtectedRoute exact path="/dashboard" component={ Dashboard } />
           <Route exact path="/appoinment" component={ Dashboard } />
           <Route path="/products/training" component={ Buttons } />
           <Route path="/products/trading" component={ Dropdowns } />
@@ -73,7 +74,7 @@ class AppRoutes extends Component {
           <Route path="/general-pages/blank-page" component={ BlankPage } />
 
 
-          <Redirect to="/dashboard" />
+          <Redirect to="/user-pages/login-1" />
         </Switch>
       </Suspense>
     );
