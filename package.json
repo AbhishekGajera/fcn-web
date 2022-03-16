@@ -5,6 +5,7 @@
   "private": true,
   "dependencies": {
     "@mdi/font": "^4.2.95",
+    "axios": "^0.26.1",
     "bootstrap": "^4.3.1",
     "bosket": "^0.2.3",
     "brace": "^0.11.1",
@@ -31,6 +32,7 @@
     "react-clipboard.js": "^2.0.16",
     "react-color": "^2.17.3",
     "react-contextmenu": "^2.11.0",
+    "react-cookie": "^4.1.1",
     "react-data-sort": "^1.2.1",
     "react-datepicker": "^2.9.6",
     "react-dnd": "^9.4.0",
@@ -38,6 +40,7 @@
     "react-dnd-multi-backend": "^3.2.2",
     "react-dnd-touch-backend": "^9.4.0",
     "react-dom": "^16.9.0",
+    "react-hook-form": "^7.28.0",
     "react-i18next": "^11.2.1",
     "react-images": "^1.0.0",
     "react-input-mask": "^3.0.0-alpha.0",

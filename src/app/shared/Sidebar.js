@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link, withRouter } from 'react-router-dom';
 import { Collapse } from 'react-bootstrap';
 import { Trans } from 'react-i18next';
+import { withCookies } from 'react-cookie';
 
 class Sidebar extends Component {
 
@@ -67,7 +68,7 @@ class Sidebar extends Component {
                 <span className="login-status online"></span> {/* change to offline or busy as needed */}
               </div>
               <div className="nav-profile-text">
-                <span className="font-weight-bold mb-2"><Trans>David Grey. H</Trans></span>
+                <span className="font-weight-bold mb-2"><Trans>{this.state.user && this.state.user.name}</Trans></span>
                 <span className="text-secondary text-small"><Trans>Project Manager</Trans></span>
               </div>
               <i className="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
@@ -232,8 +233,12 @@ class Sidebar extends Component {
         }
       });
     });
+
+    if(this.props && this.props.cookies && this.props.cookies.cookies && this.props.cookies.cookies.user){
+      this.setState({ user : JSON.parse(this.props.cookies.cookies.user) })
+    }
   }
 
 }
 
-export default withRouter(Sidebar);
+export default withCookies(withRouter(Sidebar));

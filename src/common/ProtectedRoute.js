@@ -1,8 +1,11 @@
 import React from "react";
 import { Redirect, Route } from "react-router-dom";
+import { useCookies  } from 'react-cookie';
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
-  const isAuthenticated = localStorage.getItem("isAuthenticated");
+  const [cookies] = useCookies(['user']);
+  const isAuthenticated = cookies.user.auth === 'verified'
+
   return (
     <Route
       {...restOfProps}

@@ -73,6 +73,15 @@
 				border-radius: 0;
 				font-size: .9375rem;
 			}
+
+			p {
+				color: #bf1650;
+			  }
+			  
+			  p::before {
+				display: inline;
+				content: "⚠ ";
+			  }
 		}
 		.auth-form-btn {
 			padding: 1rem 3rem;
