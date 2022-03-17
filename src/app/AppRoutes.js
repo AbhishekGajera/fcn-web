@@ -2,14 +2,22 @@ import React, { Component,Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Spinner from '../app/shared/Spinner';
-<<<<<<< Updated upstream
 import ProtectedRoute from '../common/ProtectedRoute';
 
-=======
 // import SipCalc from './client-component/SipCalc';
->>>>>>> Stashed changes
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const SipCalc   = lazy(() => import('./client-component/SipCalc'));
+const FreeVideo   = lazy(() => import('./client-component/training/FreeVideo'));
+const PaidVideo   = lazy(() => import('./client-component/training/PaidVideo'));
+const Demat   = lazy(() => import('./client-component/trading/Demat'));
+const Equity   = lazy(() => import('./client-component/trading/Equity'));
+const Forex   = lazy(() => import('./client-component/trading/Forex'));
+const Balance   = lazy(() => import('./client-component/balance/Balance'));
+
+
+
+
+
 
 
 
@@ -51,11 +59,11 @@ class AppRoutes extends Component {
           <Route exact path="/appoinment" component={ Dashboard } />
           {/* <Route exact path="/training" component={ Dashboard } /> */}
 
-          <Route path="/training/free" component={ Buttons } />
-          <Route path="/training/paid" component={ Buttons } />
-          <Route path="/trading/demat" component={ Buttons } />
-          <Route path="/trading/equity" component={ Buttons } />
-          <Route path="/trading/forex" component={ Buttons } />
+          <Route path="/training/free" component={ FreeVideo  } />
+          <Route path="/training/paid" component={ PaidVideo  } />
+          <Route path="/trading/demat" component={ Demat } />
+          <Route path="/trading/equity" component={ Equity } />
+          <Route path="/trading/forex" component={ Forex } />
 
           <Route path="/investment/powerone" component={ Buttons } />
           <Route path="/investment/ssp" component={ Buttons } />
@@ -65,6 +73,9 @@ class AppRoutes extends Component {
           <Route path="/utils/offer" component={ Buttons } />
           <Route path="/utils/calculator" component={ SipCalc } />
           <Route path="/utils/literature" component={ Buttons } />
+          <Route path="/balance" component={ Balance } />
+
+
 
 
 

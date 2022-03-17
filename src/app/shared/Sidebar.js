@@ -196,7 +196,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-          {/* <li className={ this.isPathActive('/form-elements') ? 'nav-item active' : 'nav-item' }>
+         <li className={ this.isPathActive('/form-elements') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.formElementsMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('formElementsMenuOpen') } data-toggle="collapse">
               <span className="menu-title"><Trans>Form Elements</Trans></span>
               <i className="menu-arrow"></i>
@@ -208,7 +208,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-          <li className={ this.isPathActive('/tables') ? 'nav-item active' : 'nav-item' }>
+           {/* <li className={ this.isPathActive('/tables') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.tablesMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('tablesMenuOpen') } data-toggle="collapse">
               <span className="menu-title"><Trans>Tables</Trans></span>
               <i className="menu-arrow"></i>
