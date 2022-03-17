@@ -4,6 +4,7 @@ import { Form } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useCookies  } from 'react-cookie';
 import { login } from "../../utils/APIs";
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const history = useHistory()
@@ -26,7 +27,9 @@ const Login = () => {
       localStorage.setItem('accessToken',result.data.tokens.access.token)
       localStorage.setItem('refreshToken',result.data.tokens.refresh.token)
       history.push('/dashboard')
+      toast.success('login Successfully')
     } catch (error) {
+      toast.error('invalid email or password')
         console.error(error)
     }
   };

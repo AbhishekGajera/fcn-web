@@ -1,112 +1,317 @@
-import React from 'react'
-import { ProgressBar } from 'react-bootstrap';
-import {Bar, Doughnut} from 'react-chartjs-2';
-import DatePicker from "react-datepicker";
+import React, { useState, useEffect } from "react";
+import { Doughnut } from "react-chartjs-2";
+import { Tab, Col, Nav } from "react-bootstrap";
+import RangeSlider from "react-bootstrap-range-slider";
+
 const SipCalc = () => {
+  const [type, settype] = useState(0);
+
+  const [amounts, setamounts] = useState(25000);
+  const [totalYear, settotalYear] = useState(10);
+  const [returnRateAmount, setreturnRateAmount] = useState(12);
+
+  const [totalValue, settotalValue] = useState(0);
+  const [futureValues, setfutureValues] = useState(0);
+  const [investedValue, setinvestedValue] = useState(0);
+
+  // chart management
+  const [trafficOptions] = useState({
+    responsive: true,
+    animation: {
+      animateScale: true,
+      animateRotate: true,
+    },
+    legend: false,
+  });
+
+  const [trafficData, settrafficData] = useState({});
+  useEffect(() => {
+    //your code
+    var ctx = document.getElementById("visitSaleChart").getContext("2d");
+
+    var gradientdonut1 = ctx.createLinearGradient(0, 0, 0, 181);
+    gradientdonut1.addColorStop(0, "rgba(54, 215, 232, 1)");
+    gradientdonut1.addColorStop(1, "rgba(177, 148, 250, 1)");
+
+    var gradientdonut2 = ctx.createLinearGradient(0, 0, 0, 50);
+    gradientdonut2.addColorStop(0, "rgba(6, 185, 157, 1)");
+    gradientdonut2.addColorStop(1, "rgba(132, 217, 210, 1)");
+
+    const newTrafficData = {
+      datasets: [
+        {
+          data: [30, 40],
+          backgroundColor: [gradientdonut1, gradientdonut2],
+          hoverBackgroundColor: [gradientdonut1, gradientdonut2],
+          borderColor: [gradientdonut1, gradientdonut2],
+          legendColor: [gradientdonut1, gradientdonut2],
+        },
+      ],
+
+      // These labels appear in the legend and in the tooltips when hovering different arcs
+      labels: ["invested amount", "Est. returns"],
+    };
+    settrafficData(newTrafficData);
+  }, []);
+
+  React.useEffect(() => {
+    calculateResult();
+  }, [amounts, totalYear, returnRateAmount]);
+
+  const calculateResult = () => {
+    let investment = amounts;
+
+    if (type === 0) {
+      var monthlyRate = returnRateAmount / 12 / 100;
+      var months = totalYear * 12;
+      var futureValue = 0;
+
+      var total = investment * totalYear * returnRateAmount;
+
+      futureValue =
+        (investment *
+          (1 + monthlyRate) *
+          (Math.pow(1 + monthlyRate, months) - 1)) /
+        monthlyRate;
+    }
+
+    const instalments =  investment * totalYear * 12;
+    settotalValue(total === "NaN" ? "0" : total);
+    setfutureValues(Math.round(futureValue));
+    setinvestedValue(instalments);
+  };
+
+  const onChangeAmount = (changeEvent) => {
+    if (changeEvent.target.value < 100001) {
+      setamounts(changeEvent.target.value);
+    }
+
+    if (
+      changeEvent.target.value > 100000 &&
+      !isNaN(+changeEvent.target.value)
+    ) {
+      setamounts(100000);
+    }
+  };
+
+  const onChangeRate = (changeEvent) => {
+    if (changeEvent.target.value < 31) {
+      setreturnRateAmount(changeEvent.target.value);
+    }
+
+    if (changeEvent.target.value > 30 && !isNaN(+changeEvent.target.value)) {
+      setreturnRateAmount(30);
+    }
+  };
+
+  const onChangeYear = (changeEvent) => {
+    if (changeEvent.target.value < 31) {
+      settotalYear(changeEvent.target.value);
+    }
+
+    if (changeEvent.target.value > 30 && !isNaN(+changeEvent.target.value)) {
+      settotalYear(10);
+    }
+  };
+
   return (
     <div>
-   {/* <div className="row">
-          <div className="col-xl-7 grid-margin stretch-card">
+      <div>
+        <div className="page-header">
+          <h3 className="page-title">
+            <span className="page-title-icon bg-gradient-primary text-white mr-2">
+              <i className="mdi mdi-home"></i>
+            </span>{" "}
+            Dashboard{" "}
+          </h3>
+          <nav aria-label="breadcrumb">
+            <ul className="breadcrumb">
+              <li className="breadcrumb-item active" aria-current="page">
+                <span></span>Overview{" "}
+                <i className="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+              </li>
+            </ul>
+          </nav>
+        </div>
+        <div className="row">
+          <div className="col-md-7 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Project Status</h4>
-                <div className="table-responsive">
-                  <table className="table">
-                    <thead>
-                      <tr>
-                        <th> # </th>
-                        <th> Name </th>
-                        <th> Due Date </th>
-                        <th> Progress </th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr>
-                        <td> 1 </td>
-                        <td> Herman Beck </td>
-                        <td> May 15, 2015 </td>
-                        <td>
-                          <ProgressBar variant="gradient-success" now={25}/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> 2 </td>
-                        <td> Messsy Adam </td>
-                        <td> Jul 01, 2015 </td>
-                        <td>
-                        <ProgressBar variant="gradient-danger" now={75}/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> 3 </td>
-                        <td> John Richards </td>
-                        <td> Apr 12, 2015 </td>
-                        <td>
-                        <ProgressBar variant="gradient-warning" now={90}/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> 4 </td>
-                        <td> Peter Meggik </td>
-                        <td> May 15, 2015 </td>
-                        <td>
-                        <ProgressBar variant="gradient-primary" now={50}/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> 5 </td>
-                        <td> Edward </td>
-                        <td> May 03, 2015 </td>
-                        <td>
-                        <ProgressBar variant="gradient-danger" now={50}/>
-                        </td>
-                      </tr>
-                      <tr>
-                        <td> 5 </td>
-                        <td> Ronald </td>
-                        <td> Jun 05, 2015 </td>
-                        <td>
-                        <ProgressBar variant="gradient-info" now={65}/>
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-xl-5 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title text-white">Todo</h4>
-                <form  className="add-items d-flex" onSubmit={this.addTodo}>
-                  <input 
-                      type="text" 
-                      className="form-control h-auto" 
-                      placeholder="What do you need to do today?" 
-                      value={this.state.inputValue} 
-                      onChange={this.inputChangeHandler}
-                      required />
-                  <button type="submit" className="btn btn-gradient-primary font-weight-bold px-lg-4 px-3">Add</button>
-                </form>
-                <div className="list-wrapper">
-                    <ul className="d-flex flex-column todo-list">
-                        {this.state.todos.map((todo, index) =>{
-                            return <ListItem 
-                            isCompleted={todo.isCompleted}
-                            changed={(event) => this.statusChangedHandler(event, index)}
-                            key={todo.id}
-                            remove={() => this.removeTodo(index) }
-                            >{todo.task}</ListItem>
-                        })}
-                    </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div> */}
-  </div> 
-  )
-}
+                <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                  <Col sm={12}>
+                    <Nav variant="pills" className="d-flex row">
+                      <Nav.Item>
+                        <Nav.Link eventKey="first">SIP</Nav.Link>
+                      </Nav.Item>
+                      {/* <Nav.Item>
+                        <Nav.Link eventKey="second">Lumpsum</Nav.Link>
+                      </Nav.Item> */}
+                    </Nav>
+                  </Col>{" "}
+                  <br />
+                  <div style={{ padding: "0px !important" }}>
+                    <Tab.Content style={{ border: "none" }}>
+                      <Tab.Pane eventKey="first">
+                        <div style={{ margin: "10px 0px" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <span>Monthly investment</span>
+                            <div>
+                              <input
+                                type="text"
+                                className="sipInput"
+                                id="exampleInputEmail1"
+                                name="investment"
+                                value={amounts}
+                                onChange={onChangeAmount}
+                              />{" "}
+                              ₹
+                            </div>
+                          </div>
+                          <input
+                            type="range"
+                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            value={amounts}
+                            onChange={onChangeAmount}
+                            size="lg"
+                            tooltip="off"
+                            variant="primary"
+                            max={100000}
+                          />
+                        </div>
+                        <div style={{ margin: "10px 0px" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <span>Expected return rate (p.a)</span>
+                            <div>
+                              <input
+                                type="text"
+                                className="sipInput"
+                                id="exampleInputEmail1"
+                                name="investment"
+                                value={returnRateAmount}
+                                onChange={onChangeRate}
+                              />{" "}
+                              %
+                            </div>
+                          </div>
+                          <div>
+                            <input
+                              type="range"
+                              style={{ width: "100%", accentColor: "#00d09c" }}
+                              value={returnRateAmount}
+                              onChange={onChangeRate}
+                              size="lg"
+                              tooltip="off"
+                              variant="primary"
+                              max={30}
+                            />
+                          </div>
+                        </div>
+                        <div style={{ margin: "10px 0px" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <span>Time period</span>
+                            <div>
+                              <input
+                                type="text"
+                                className="sipInput"
+                                id="exampleInputEmail1"
+                                name="investment"
+                                value={totalYear}
+                                onChange={onChangeYear}
+                              />{" "}
+                              Yr
+                            </div>
+                          </div>
+                          <input
+                            type="range"
+                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            value={totalYear}
+                            onChange={onChangeYear}
+                            size="lg"
+                            tooltip="off"
+                            variant="primary"
+                            max={30}
+                          />
+                        </div>
+                      </Tab.Pane>
+                      <Tab.Pane eventKey="second">hello</Tab.Pane>
+                    </Tab.Content>
+                  </div>
+                </Tab.Container>
 
-export default SipCalc
+                <div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between", margin : '10px 0px' }}
+                  >
+                    <span>Invested amount</span>
+                    <span>{investedValue}₹</span>
+                  </div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between", margin : '10px 0px' }}
+                  >
+                    <span>Est. returns</span>
+                    <span>{futureValues}₹</span>
+                  </div>
+                  <div
+                    style={{ display: "flex", justifyContent: "space-between", margin : '10px 0px' }}
+                  >
+                    <span>Total value</span>
+                    <span>{totalValue}₹</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-5 grid-margin stretch-card">
+            <div className="card">
+              <div className="card-body">
+                <h4 className="card-title">Traffic Sources</h4>
+                <Doughnut
+                  data={trafficData}
+                  options={trafficOptions}
+                  id="visitSaleChart"
+                />
+                <div
+                  id="traffic-chart-legend"
+                  className="rounded-legend legend-vertical legend-bottom-left pt-4"
+                >
+                  <ul>
+                    <li>
+                      <span className="legend-dots bg-info"></span>Invested
+                      amount
+                      <span className="float-right">30%</span>
+                    </li>
+                    <li>
+                      <span className="legend-dots bg-success"></span>Direct
+                      Click
+                      <span className="float-right">30%</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default SipCalc;

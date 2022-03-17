@@ -3,6 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { registration } from "../../utils/APIs";
 import { useCookies  } from 'react-cookie';
+import { toast } from 'react-toastify';
 
 const Register = () => {
   const history = useHistory()
@@ -23,6 +24,7 @@ const Register = () => {
       setCookie('user', result.data.user , { path: '/' });
       localStorage.setItem('accessToken',result.data.tokens.access.token)
       localStorage.setItem('refreshToken',result.data.tokens.refresh.token)
+      toast.success('/registerd sucssefully')
       history.push('/dashboard')
     } catch (error) {
         console.error(error)
