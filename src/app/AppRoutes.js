@@ -2,9 +2,14 @@ import React, { Component,Suspense, lazy } from 'react';
 import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Spinner from '../app/shared/Spinner';
+<<<<<<< Updated upstream
 import ProtectedRoute from '../common/ProtectedRoute';
 
+=======
+// import SipCalc from './client-component/SipCalc';
+>>>>>>> Stashed changes
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
+const SipCalc   = lazy(() => import('./client-component/SipCalc'));
 
 
 
@@ -44,7 +49,28 @@ class AppRoutes extends Component {
            {/* client routes */}
           <ProtectedRoute exact path="/dashboard" component={ Dashboard } />
           <Route exact path="/appoinment" component={ Dashboard } />
-          <Route path="/products/training" component={ Buttons } />
+          {/* <Route exact path="/training" component={ Dashboard } /> */}
+
+          <Route path="/training/free" component={ Buttons } />
+          <Route path="/training/paid" component={ Buttons } />
+          <Route path="/trading/demat" component={ Buttons } />
+          <Route path="/trading/equity" component={ Buttons } />
+          <Route path="/trading/forex" component={ Buttons } />
+
+          <Route path="/investment/powerone" component={ Buttons } />
+          <Route path="/investment/ssp" component={ Buttons } />
+          <Route path="/investment/cp" component={ Buttons } />
+          <Route path="/investment/insurance" component={ Buttons } />
+
+          <Route path="/utils/offer" component={ Buttons } />
+          <Route path="/utils/calculator" component={ SipCalc } />
+          <Route path="/utils/literature" component={ Buttons } />
+
+
+
+          {/* investment */}
+
+
           <Route path="/products/trading" component={ Dropdowns } />
           <Route path="/products/investments" component={ Typography } />
 

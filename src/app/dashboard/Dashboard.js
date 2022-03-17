@@ -6,7 +6,6 @@ import DatePicker from "react-datepicker";
 // import "react-datepicker/dist/react-datepicker.css";
 
 
-
 export class Dashboard extends Component {
   handleChange = date => {
     this.setState({
