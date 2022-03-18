@@ -182,7 +182,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li> */}
-          <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
+          {/* <li className={ this.isPathActive('/basic-ui') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.basicUiMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('basicUiMenuOpen') } data-toggle="collapse">
               <span className="menu-title"><Trans>Basic UI Elements</Trans></span>
               <i className="menu-arrow"></i>
@@ -207,7 +207,7 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/form-elements/basic-elements') ? 'nav-link active' : 'nav-link' } to="/form-elements/basic-elements"><Trans>Basic Elements</Trans></Link></li>
               </ul>
             </Collapse>
-          </li>
+          </li> */}
            {/* <li className={ this.isPathActive('/tables') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.tablesMenuOpen ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('tablesMenuOpen') } data-toggle="collapse">
               <span className="menu-title"><Trans>Tables</Trans></span>
@@ -283,12 +283,12 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li> */}
-          <li className="nav-item">
+          {/* <li className="nav-item">
             <a className="nav-link" href="http://bootstrapdash.com/demo/purple-react-free/documentation/documentation.html" rel="noopener noreferrer" target="_blank">
               <span className="menu-title"><Trans>Documentation</Trans></span>
               <i className="mdi mdi-file-document-box menu-icon"></i>
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
     );

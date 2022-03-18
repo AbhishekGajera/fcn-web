@@ -40,7 +40,7 @@ const SipCalc = () => {
     const newTrafficData = {
       datasets: [
         {
-          data: [30, 40],
+          data: [investedValue, futureValues],
           backgroundColor: [gradientdonut1, gradientdonut2],
           hoverBackgroundColor: [gradientdonut1, gradientdonut2],
           borderColor: [gradientdonut1, gradientdonut2],
@@ -52,15 +52,15 @@ const SipCalc = () => {
       labels: ["invested amount", "Est. returns"],
     };
     settrafficData(newTrafficData);
-  }, []);
+  }, [investedValue, futureValues]);
 
   React.useEffect(() => {
     calculateResult();
-  }, [amounts, totalYear, returnRateAmount]);
+  }, [amounts, totalYear, returnRateAmount, type]);
 
   const calculateResult = () => {
     let investment = amounts;
-
+    let instalments;
     if (type === 0) {
       var monthlyRate = returnRateAmount / 12 / 100;
       var months = totalYear * 12;
@@ -73,9 +73,15 @@ const SipCalc = () => {
           (1 + monthlyRate) *
           (Math.pow(1 + monthlyRate, months) - 1)) /
         monthlyRate;
+      instalments = investment * totalYear * 12;
+    } else {
+      var total = investment;
+      futureValue = Math.round(
+        Math.pow(1 + returnRateAmount / 100, totalYear) * amounts
+      );
+      instalments = investment;
     }
 
-    const instalments =  investment * totalYear * 12;
     settotalValue(total === "NaN" ? "0" : total);
     setfutureValues(Math.round(futureValue));
     setinvestedValue(instalments);
@@ -114,6 +120,10 @@ const SipCalc = () => {
     }
   };
 
+  const numberWithCommas = (x) => {
+    return x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  };
+
   return (
     <div>
       <div>
@@ -140,12 +150,12 @@ const SipCalc = () => {
                 <Tab.Container id="left-tabs-example" defaultActiveKey="first">
                   <Col sm={12}>
                     <Nav variant="pills" className="d-flex row">
-                      <Nav.Item>
+                      <Nav.Item onClick={() => settype(0)}>
                         <Nav.Link eventKey="first">SIP</Nav.Link>
                       </Nav.Item>
-                      {/* <Nav.Item>
+                      <Nav.Item onClick={() => settype(1)}>
                         <Nav.Link eventKey="second">Lumpsum</Nav.Link>
-                      </Nav.Item> */}
+                      </Nav.Item>
                     </Nav>
                   </Col>{" "}
                   <br />
@@ -251,29 +261,142 @@ const SipCalc = () => {
                           />
                         </div>
                       </Tab.Pane>
-                      <Tab.Pane eventKey="second">hello</Tab.Pane>
+                      <Tab.Pane eventKey="second">
+                        <div style={{ margin: "10px 0px" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <span>Total investment</span>
+                            <div>
+                              <input
+                                type="text"
+                                className="sipInput"
+                                id="exampleInputEmail1"
+                                name="investment"
+                                value={amounts}
+                                onChange={onChangeAmount}
+                              />{" "}
+                              ₹
+                            </div>
+                          </div>
+                          <input
+                            type="range"
+                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            value={amounts}
+                            onChange={onChangeAmount}
+                            size="lg"
+                            tooltip="off"
+                            variant="primary"
+                            max={100000}
+                          />
+                        </div>
+                        <div style={{ margin: "10px 0px" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <span>Expected return rate (p.a)</span>
+                            <div>
+                              <input
+                                type="text"
+                                className="sipInput"
+                                id="exampleInputEmail1"
+                                name="investment"
+                                value={returnRateAmount}
+                                onChange={onChangeRate}
+                              />{" "}
+                              %
+                            </div>
+                          </div>
+                          <div>
+                            <input
+                              type="range"
+                              style={{ width: "100%", accentColor: "#00d09c" }}
+                              value={returnRateAmount}
+                              onChange={onChangeRate}
+                              size="lg"
+                              tooltip="off"
+                              variant="primary"
+                              max={30}
+                            />
+                          </div>
+                        </div>
+                        <div style={{ margin: "10px 0px" }}>
+                          <div
+                            style={{
+                              display: "flex",
+                              justifyContent: "space-between",
+                              flexWrap: "wrap",
+                            }}
+                          >
+                            <span>Time period</span>
+                            <div>
+                              <input
+                                type="text"
+                                className="sipInput"
+                                id="exampleInputEmail1"
+                                name="investment"
+                                value={totalYear}
+                                onChange={onChangeYear}
+                              />{" "}
+                              Yr
+                            </div>
+                          </div>
+                          <input
+                            type="range"
+                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            value={totalYear}
+                            onChange={onChangeYear}
+                            size="lg"
+                            tooltip="off"
+                            variant="primary"
+                            max={30}
+                          />
+                        </div>
+                      </Tab.Pane>
                     </Tab.Content>
                   </div>
                 </Tab.Container>
 
                 <div>
                   <div
-                    style={{ display: "flex", justifyContent: "space-between", margin : '10px 0px' }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      margin: "10px 0px",
+                    }}
                   >
                     <span>Invested amount</span>
-                    <span>{investedValue}₹</span>
+                    <span>{numberWithCommas(investedValue)} &nbsp; ₹</span>
                   </div>
                   <div
-                    style={{ display: "flex", justifyContent: "space-between", margin : '10px 0px' }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      margin: "10px 0px",
+                    }}
                   >
                     <span>Est. returns</span>
-                    <span>{futureValues}₹</span>
+                    <span>
+                      {numberWithCommas(futureValues - investedValue)} &nbsp; ₹
+                    </span>
                   </div>
                   <div
-                    style={{ display: "flex", justifyContent: "space-between", margin : '10px 0px' }}
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      margin: "10px 0px",
+                    }}
                   >
                     <span>Total value</span>
-                    <span>{totalValue}₹</span>
+                    <span>{numberWithCommas(futureValues)} &nbsp; ₹</span>
                   </div>
                 </div>
               </div>
@@ -282,7 +405,14 @@ const SipCalc = () => {
           <div className="col-md-5 grid-margin stretch-card">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Traffic Sources</h4>
+                <h4 className="card-title">
+                  <button
+                    type="button"
+                    className="btn btn-gradient-primary btn-fw"
+                  >
+                    Invest now
+                  </button>
+                </h4>
                 <Doughnut
                   data={trafficData}
                   options={trafficOptions}
@@ -296,12 +426,10 @@ const SipCalc = () => {
                     <li>
                       <span className="legend-dots bg-info"></span>Invested
                       amount
-                      <span className="float-right">30%</span>
                     </li>
                     <li>
-                      <span className="legend-dots bg-success"></span>Direct
-                      Click
-                      <span className="float-right">30%</span>
+                      <span className="legend-dots bg-success"></span>Est.
+                      returns
                     </li>
                   </ul>
                 </div>

@@ -59,21 +59,21 @@ class AppRoutes extends Component {
           <Route exact path="/appoinment" component={ Dashboard } />
           {/* <Route exact path="/training" component={ Dashboard } /> */}
 
-          <Route path="/training/free" component={ FreeVideo  } />
-          <Route path="/training/paid" component={ PaidVideo  } />
-          <Route path="/trading/demat" component={ Demat } />
-          <Route path="/trading/equity" component={ Equity } />
-          <Route path="/trading/forex" component={ Forex } />
+          <ProtectedRoute path="/training/free" component={ FreeVideo  } />
+          <ProtectedRoute path="/training/paid" component={ PaidVideo  } />
+          <ProtectedRoute path="/trading/demat" component={ Demat } />
+          <ProtectedRoute path="/trading/equity" component={ Equity } />
+          <ProtectedRoute path="/trading/forex" component={ Forex } />
 
-          <Route path="/investment/powerone" component={ Buttons } />
-          <Route path="/investment/ssp" component={ Buttons } />
-          <Route path="/investment/cp" component={ Buttons } />
-          <Route path="/investment/insurance" component={ Buttons } />
+          <ProtectedRoute path="/investment/powerone" component={ Buttons } />
+          <ProtectedRoute path="/investment/ssp" component={ Buttons } />
+          <ProtectedRoute path="/investment/cp" component={ Buttons } />
+          <ProtectedRoute path="/investment/insurance" component={ Buttons } />
 
-          <Route path="/utils/offer" component={ Buttons } />
-          <Route path="/utils/calculator" component={ SipCalc } />
-          <Route path="/utils/literature" component={ Buttons } />
-          <Route path="/balance" component={ Balance } />
+          <ProtectedRoute path="/utils/offer" component={ Buttons } />
+          <ProtectedRoute path="/utils/calculator" component={ SipCalc } />
+          <ProtectedRoute path="/utils/literature" component={ Buttons } />
+          <ProtectedRoute path="/balance" component={ Balance } />
 
 
 
