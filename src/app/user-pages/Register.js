@@ -93,6 +93,7 @@ const Register = () => {
                     <option>Argentina</option>
                   </select>
                 </div>
+
                 <div className="form-group">
                   <input
                     type="password"
