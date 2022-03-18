@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Tab, Col, Nav } from "react-bootstrap";
-import RangeSlider from "react-bootstrap-range-slider";
 
 const SipCalc = () => {
   const [type, settype] = useState(0);

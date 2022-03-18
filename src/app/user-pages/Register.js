@@ -24,12 +24,15 @@ const Register = () => {
       setCookie('user', result.data.user , { path: '/' });
       localStorage.setItem('accessToken',result.data.tokens.access.token)
       localStorage.setItem('refreshToken',result.data.tokens.refresh.token)
-      toast.success('/registerd sucssefully')
+      toast.success('registerd sucssefully')
       history.push('/dashboard')
     } catch (error) {
-        console.error(error)
+      toast.error(error.response.data.message)
     }
   };
+
+  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
+
 
   return (
     <div>
@@ -76,7 +79,7 @@ const Register = () => {
                   <select
                     className="form-control form-control-lg"
                     id="exampleFormControlSelect2"
-                  >
+                    >
                     <option>Country</option>
                     <option>United States of America</option>
                     <option>United Kingdom</option>
@@ -93,9 +96,10 @@ const Register = () => {
                     placeholder="Password"
                     autoComplete="new-password"
                     name="password"
-                    {...register("password", { required: true })}
-                  />
-                  {errors && errors.password && <p>password is required field</p>}
+                    {...register("password", { required: true , pattern : strongRegex })}
+                    />
+                  {errors && errors.password && errors.password.type === 'required' && <p>password is required field</p>}
+                  {errors && errors.password && errors.password.type === 'pattern' && <p>password should have at least 8 characters , 1 number and latter</p>}
                 </div>
                 <div className="mb-4">
                   <div className="form-check">

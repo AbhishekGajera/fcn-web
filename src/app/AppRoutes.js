@@ -4,7 +4,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Spinner from '../app/shared/Spinner';
 import ProtectedRoute from '../common/ProtectedRoute';
 
-// import SipCalc from './client-component/SipCalc';
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const SipCalc   = lazy(() => import('./client-component/SipCalc'));
 const FreeVideo   = lazy(() => import('./client-component/training/FreeVideo'));
@@ -13,12 +12,8 @@ const Demat   = lazy(() => import('./client-component/trading/Demat'));
 const Equity   = lazy(() => import('./client-component/trading/Equity'));
 const Forex   = lazy(() => import('./client-component/trading/Forex'));
 const Balance   = lazy(() => import('./client-component/balance/Balance'));
-
-
-
-
-
-
+const Offer   = lazy(() => import('./client-component/Utils/Offer'));
+const Literature   = lazy(() => import('./client-component/Utils/Literature'));
 
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
@@ -70,9 +65,9 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/investment/cp" component={ Buttons } />
           <ProtectedRoute path="/investment/insurance" component={ Buttons } />
 
-          <ProtectedRoute path="/utils/offer" component={ Buttons } />
+          <ProtectedRoute path="/utils/offer" component={ Offer } />
           <ProtectedRoute path="/utils/calculator" component={ SipCalc } />
-          <ProtectedRoute path="/utils/literature" component={ Buttons } />
+          <ProtectedRoute path="/utils/literature" component={ Literature } />
           <ProtectedRoute path="/balance" component={ Balance } />
 
 

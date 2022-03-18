@@ -1,9 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 
-export class Typography extends Component {
-  render() {
-    return (
-      <div>
+const Typography = () => {
+  return (
+    <div>
         <div className="page-header">
           <h3 className="page-title"> Typography </h3>
           <nav aria-label="breadcrumb">
@@ -265,7 +264,7 @@ export class Typography extends Component {
                   <li>Consectetur adipiscing elit</li>
                   <li>Integer molestie lorem at massa</li>
                   <li>Facilisis in pretium nisl aliquet</li>
-                  <li>Nulla volutpat aliquam velit></li>
+                  <li>Nulla volutpat aliquam velit</li>
                 </ol>
               </div>
             </div>
@@ -326,7 +325,7 @@ export class Typography extends Component {
                   <li>Consectetur adipiscing elit</li>
                   <li>Integer molestie lorem at massa</li>
                   <li>Facilisis in pretium nisl aliquet</li>
-                  <li>Nulla volutpat aliquam velit></li>
+                  <li>Nulla volutpat aliquam velit</li>
                 </ul>
               </div>
             </div>
@@ -341,7 +340,7 @@ export class Typography extends Component {
                   <li>Consectetur adipiscing elit</li>
                   <li>Integer molestie lorem at massa</li>
                   <li>Facilisis in pretium nisl aliquet</li>
-                  <li>Nulla volutpat aliquam velit></li>
+                  <li>Nulla volutpat aliquam velit</li>
                 </ul>
               </div>
             </div>
@@ -356,15 +355,14 @@ export class Typography extends Component {
                   <li>Consectetur adipiscing elit</li>
                   <li>Integer molestie lorem at massa</li>
                   <li>Facilisis in pretium nisl aliquet</li>
-                  <li>Nulla volutpat aliquam velit></li>
+                  <li>Nulla volutpat aliquam velit</li>
                 </ul>
               </div>
             </div>
           </div>
         </div>
       </div>
-    )
-  }
+  )
 }
 
 export default Typography

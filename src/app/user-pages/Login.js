@@ -29,8 +29,7 @@ const Login = () => {
       history.push('/dashboard')
       toast.success('login Successfully')
     } catch (error) {
-      toast.error('invalid email or password')
-        console.error(error)
+      toast.error(error.response.data.message)
     }
   };
 
