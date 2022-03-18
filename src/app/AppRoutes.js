@@ -17,14 +17,6 @@ const Literature   = lazy(() => import('./client-component/Utils/Literature'));
 const PowerOne   = lazy(() => import('./client-component/investment/PowerOne'));
 
 
-
-
-
-
-
-
-
-
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
 const Typography = lazy(() => import('./basic-ui/Typography'));
@@ -70,9 +62,9 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/trading/forex" component={ Forex } />
 
           <ProtectedRoute path="/investment/powerone" component={ PowerOne } />
-          <ProtectedRoute path="/investment/ssp" component={ Buttons } />
-          <ProtectedRoute path="/investment/cp" component={ Buttons } />
-          <ProtectedRoute path="/investment/insurance" component={ Buttons } />
+          <ProtectedRoute path="/investment/ssp" component={ PowerOne } />
+          <ProtectedRoute path="/investment/cp" component={ PowerOne } />
+          <ProtectedRoute path="/investment/insurance" component={ PowerOne } />
 
           <ProtectedRoute path="/utils/offer" component={ Offer } />
           <ProtectedRoute path="/utils/calculator" component={ SipCalc } />

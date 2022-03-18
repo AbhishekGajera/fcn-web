@@ -38,7 +38,7 @@ const Balance = () => {
                 <h4 className="font-weight-normal mb-4">Deposit <i className="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
               
-                <button type="button" className="btn btn-gradient-primary btn-fw mb-2 center">Click Here</button>
+                <button type="button" className="btn btn-gradient-danger btn-fw mb-2 center">Click Here</button>
               </div>
             </div>
           </div>
@@ -46,7 +46,7 @@ const Balance = () => {
             <div className="card bg-gradient-danger card-img-holder text-white">
               <div className="card-body">
                 <img src={require("../../../assets/images/dashboard/circle.svg")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-4">WithDraw <i className="mdi mdi-chart-line mdi-24px float-right"></i>
+                <h4 className="font-weight-normal mb-4">WithDraw <i className=" mdi mdi-logout-variant mdi-24px float-right"></i>
                 </h4>
                
                 <button type="button" className="btn btn-gradient-primary btn-fw mb-2">Click Here</button>
