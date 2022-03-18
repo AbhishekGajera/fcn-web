@@ -163,11 +163,7 @@ const SipCalc = () => {
                       <Tab.Pane eventKey="first">
                         <div style={{ margin: "10px 0px" }}>
                           <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexWrap: "wrap",
-                            }}
+                            className="investmentInput-controller"
                           >
                             <span>Monthly investment</span>
                             <div>
@@ -195,11 +191,7 @@ const SipCalc = () => {
                         </div>
                         <div style={{ margin: "10px 0px" }}>
                           <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexWrap: "wrap",
-                            }}
+                            className="investmentInput-controller"
                           >
                             <span>Expected return rate (p.a)</span>
                             <div>
@@ -229,11 +221,7 @@ const SipCalc = () => {
                         </div>
                         <div style={{ margin: "10px 0px" }}>
                           <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexWrap: "wrap",
-                            }}
+                            className="investmentInput-controller"
                           >
                             <span>Time period</span>
                             <div>
@@ -263,11 +251,7 @@ const SipCalc = () => {
                       <Tab.Pane eventKey="second">
                         <div style={{ margin: "10px 0px" }}>
                           <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexWrap: "wrap",
-                            }}
+                            className="investmentInput-controller"
                           >
                             <span>Total investment</span>
                             <div>
@@ -295,11 +279,7 @@ const SipCalc = () => {
                         </div>
                         <div style={{ margin: "10px 0px" }}>
                           <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexWrap: "wrap",
-                            }}
+                            className="investmentInput-controller"
                           >
                             <span>Expected return rate (p.a)</span>
                             <div>
@@ -329,11 +309,7 @@ const SipCalc = () => {
                         </div>
                         <div style={{ margin: "10px 0px" }}>
                           <div
-                            style={{
-                              display: "flex",
-                              justifyContent: "space-between",
-                              flexWrap: "wrap",
-                            }}
+                            className="investmentInput-controller"
                           >
                             <span>Time period</span>
                             <div>

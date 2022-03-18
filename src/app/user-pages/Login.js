@@ -70,7 +70,7 @@ const Login = () => {
                         Keep me signed in
                       </label>
                     </div>
-                    <a href="!#" onClick={event => event.preventDefault()} className="auth-link text-black">Forgot password?</a>
+                    <Link to="/user-pages/forgot-password-1" className="auth-link text-black">Forgot password?</Link>
                   </div>
                   <div className="mb-2">
                     <button type="button" className="btn btn-block btn-facebook auth-form-btn">

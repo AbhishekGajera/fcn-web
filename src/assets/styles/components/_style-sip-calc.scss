@@ -6,6 +6,20 @@
   padding: 5px 10px;
   color: #00d09c;
   font-weight: bold;
+  @media (max-width: 481px) {
+    max-width: 85%;
+  }
+  @media (max-width: 576px) {
+    margin-top: 15px;
+  }
+}
+
+.investmentInput-controller {
+  display: flex;
+  justify-content: space-between;
+  @media (max-width: 576px) {
+    display: block;
+  }
 }
 
 input[type='range'] {

@@ -76,10 +76,12 @@ class App extends Component {
     const fullPageLayoutRoutes = [
       "/user-pages/login-1",
       "/user-pages/register-1",
+      "/user-pages/forgot-password-1",
+      "/user-pages/reset-password-1",
       "/user-pages/lockscreen",
       "/error-pages/error-404",
       "/error-pages/error-500",
-      "/general-pages/landing-page",
+      "/general-pages/landing-page"
     ];
     for (let i = 0; i < fullPageLayoutRoutes.length; i++) {
       if (this.props.location.pathname === fullPageLayoutRoutes[i]) {
