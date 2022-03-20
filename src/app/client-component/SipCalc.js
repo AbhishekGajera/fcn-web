@@ -127,19 +127,18 @@ const SipCalc = () => {
     <div>
       <div>
         <div className="page-header">
-          <h3 className="page-title">
-            <span className="page-title-icon bg-gradient-primary text-white mr-2">
-              <i className="mdi mdi-home"></i>
-            </span>{" "}
-            Dashboard{" "}
-          </h3>
+          <h3 className="page-title">Calculators</h3>
           <nav aria-label="breadcrumb">
-            <ul className="breadcrumb">
-              <li className="breadcrumb-item active" aria-current="page">
-                <span></span>Overview{" "}
-                <i className="mdi mdi-alert-circle-outline icon-sm text-primary align-middle"></i>
+            <ol className="breadcrumb">
+              <li className="breadcrumb-item">
+                <a href="!#" onClick={(event) => event.preventDefault()}>
+                  Utils
+                </a>
               </li>
-            </ul>
+              <li className="breadcrumb-item active" aria-current="page">
+              calculators
+              </li>
+            </ol>
           </nav>
         </div>
         <div className="row">
@@ -162,9 +161,7 @@ const SipCalc = () => {
                     <Tab.Content style={{ border: "none" }}>
                       <Tab.Pane eventKey="first">
                         <div style={{ margin: "10px 0px" }}>
-                          <div
-                            className="investmentInput-controller"
-                          >
+                          <div className="investmentInput-controller">
                             <span>Monthly investment</span>
                             <div>
                               <input
@@ -190,9 +187,7 @@ const SipCalc = () => {
                           />
                         </div>
                         <div style={{ margin: "10px 0px" }}>
-                          <div
-                            className="investmentInput-controller"
-                          >
+                          <div className="investmentInput-controller">
                             <span>Expected return rate (p.a)</span>
                             <div>
                               <input
@@ -220,9 +215,7 @@ const SipCalc = () => {
                           </div>
                         </div>
                         <div style={{ margin: "10px 0px" }}>
-                          <div
-                            className="investmentInput-controller"
-                          >
+                          <div className="investmentInput-controller">
                             <span>Time period</span>
                             <div>
                               <input
@@ -250,9 +243,7 @@ const SipCalc = () => {
                       </Tab.Pane>
                       <Tab.Pane eventKey="second">
                         <div style={{ margin: "10px 0px" }}>
-                          <div
-                            className="investmentInput-controller"
-                          >
+                          <div className="investmentInput-controller">
                             <span>Total investment</span>
                             <div>
                               <input
@@ -278,9 +269,7 @@ const SipCalc = () => {
                           />
                         </div>
                         <div style={{ margin: "10px 0px" }}>
-                          <div
-                            className="investmentInput-controller"
-                          >
+                          <div className="investmentInput-controller">
                             <span>Expected return rate (p.a)</span>
                             <div>
                               <input
@@ -308,9 +297,7 @@ const SipCalc = () => {
                           </div>
                         </div>
                         <div style={{ margin: "10px 0px" }}>
-                          <div
-                            className="investmentInput-controller"
-                          >
+                          <div className="investmentInput-controller">
                             <span>Time period</span>
                             <div>
                               <input
