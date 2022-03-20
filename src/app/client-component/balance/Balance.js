@@ -1,59 +1,42 @@
 import React from 'react'
+import Modal from "react-bootstrap/Modal";
+import Deposit from './Deposit';
+import Withdraw from './Withdraw';
 import {
     BrowserRouter as Router,
     Switch,
     Route,
     Link
   } from "react-router-dom";
+  import { useForm } from "react-hook-form";
+import { Form } from 'react-bootstrap';
 const Balance = () => {
+  // const [show, setShow] = React.useState(false);
+  // const [show1, setShow1] = React.useState(false);
+
+
+  // const handleClose = () => setShow(false);
+  // const handleShow = () => setShow(true);
+
+  
+  // const handleClose1 = () => setShow(false);
+  // const handleShow1 = () => setShow(true);
+  // const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
+  //   mode: "onChange"
+  // });
+  // const onSubmit = async (data) => {
+  // alert(data.name1)
+  // };
+  // const { registerData, handleSubmit1, formState: { errors1 , isDirty1, isValid1 } } = useForm({
+  //   mode: "onChange"
+  // });
+  // const onSubmit1 = async (data) => {
+  // alert(data.name1)
+  // };
   return (
     <div>
-        <div className="page-header">
-          <h3 className="page-title"> Balance </h3>
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Balance</a></li>
-              <li className="breadcrumb-item active" aria-current="page">Balance</li>
-            </ol>
-          </nav>
-        </div>
-       <div className="row">
-       {/* <div className="col-md-4 stretch-card grid-margin">
-            <div className="card bg-gradient-danger card-img-holder text-white">
-              <div className="card-body">
-                <img src={require("../../../assets/images/dashboard/circle.svg")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-4">Deposit <i className="mdi mdi-chart-line mdi-24px float-right"></i>
-                </h4>
-                                
-                                
-            <button type="button" className="btn btn-gradient-primary btn-fw mb-2 center">Click Here</button>
-
-              </div>
-            </div>
-          </div> */}
-          <div className="col-md-4 stretch-card grid-margin">
-            <div className="card bg-gradient-success card-img-holder text-white">
-              <div className="card-body">
-                <img src={require("../../../assets/images/dashboard/circle.svg")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-4">Deposit <i className="mdi mdi-diamond mdi-24px float-right"></i>
-                </h4>
-              
-                <button type="button" className="btn btn-gradient-danger btn-fw mb-2 center">Click Here</button>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-4 stretch-card grid-margin">
-            <div className="card bg-gradient-danger card-img-holder text-white">
-              <div className="card-body">
-                <img src={require("../../../assets/images/dashboard/circle.svg")} className="card-img-absolute" alt="circle" />
-                <h4 className="font-weight-normal mb-4">WithDraw <i className=" mdi mdi-logout-variant mdi-24px float-right"></i>
-                </h4>
-               
-                <button type="button" className="btn btn-gradient-primary btn-fw mb-2">Click Here</button>
-              </div>
-            </div>
-          </div>
-       </div>
+      <Deposit/>
+     
       </div>
   )
 }

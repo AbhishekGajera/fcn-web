@@ -1,10 +1,10 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
-import DatePicker from "react-datepicker";
+// import DatePicker from "react-datepicker";
 
 
-const PowerOne = () => {
+const SystematicSaving = () => {
     const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
         mode: "onChange"
       });
@@ -14,11 +14,11 @@ const PowerOne = () => {
   return (
     <div>
         <div className="page-header">
-          <h3 className="page-title"> Opening Form / PowerOne  </h3>
+          <h3 className="page-title"> Opening Form / Systematic Saving  </h3>
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Invesment</a></li>
-              <li className="breadcrumb-item active" aria-current="page">PowerOne</li>
+              <li className="breadcrumb-item active" aria-current="page">Systematic Saving</li>
             </ol>
           </nav>
         </div>
@@ -26,7 +26,7 @@ const PowerOne = () => {
           <div className="col-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">PowerOne</h4>
+                <h4 className="card-title">Systematic Saving</h4>
                 <form className="form-sample"   onSubmit={handleSubmit(onSubmit)}>
                   <p className="card-description"> Personal info </p>
                   <div className="row">
@@ -320,4 +320,4 @@ const PowerOne = () => {
   )
 }
 
-export default PowerOne
+export default SystematicSaving

@@ -15,6 +15,12 @@ const Balance   = lazy(() => import('./client-component/balance/Balance'));
 const Offer   = lazy(() => import('./client-component/Utils/Offer'));
 const Literature   = lazy(() => import('./client-component/Utils/Literature'));
 const PowerOne   = lazy(() => import('./client-component/investment/PowerOne'));
+const SystematicSaving   = lazy(() => import('./client-component/investment/SystematicSaving'));
+const Currency   = lazy(() => import('./client-component/investment/Currency'));
+
+
+
+
 
 
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
@@ -62,8 +68,8 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/trading/forex" component={ Forex } />
 
           <ProtectedRoute path="/investment/powerone" component={ PowerOne } />
-          <ProtectedRoute path="/investment/ssp" component={ PowerOne } />
-          <ProtectedRoute path="/investment/cp" component={ PowerOne } />
+          <ProtectedRoute path="/investment/ssp" component={ SystematicSaving } />
+          <ProtectedRoute path="/investment/cp" component={ Currency } />
           <ProtectedRoute path="/investment/insurance" component={ PowerOne } />
 
           <ProtectedRoute path="/utils/offer" component={ Offer } />
