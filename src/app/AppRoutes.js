@@ -113,8 +113,7 @@ class AppRoutes extends Component {
 
           <Route path="/general-pages/blank-page" component={ BlankPage } />
 
-
-          <Redirect to="/user-pages/login-1" />
+          <Redirect to="/dashboard" />
         </Switch>
       </Suspense>
     );

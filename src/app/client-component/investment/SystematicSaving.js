@@ -1,6 +1,7 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
+import Calc from '../SipCalc/Calc';
 // import DatePicker from "react-datepicker";
 
 
@@ -22,6 +23,7 @@ const SystematicSaving = () => {
             </ol>
           </nav>
         </div>
+        <Calc />
         <div className="row">
           <div className="col-12 grid-margin">
             <div className="card">

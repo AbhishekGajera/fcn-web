@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Tab, Col, Nav } from "react-bootstrap";
 
-const SipCalc = () => {
+const Calc = () => {
   const [type, settype] = useState(0);
 
   const [amounts, setamounts] = useState(25000);
@@ -25,7 +25,7 @@ const SipCalc = () => {
 
   const [trafficData, settrafficData] = useState({});
   useEffect(() => {
-    //your code
+    // your code
     var ctx = document.getElementById("visitSaleChart").getContext("2d");
 
     var gradientdonut1 = ctx.createLinearGradient(0, 0, 0, 181);
@@ -124,23 +124,6 @@ const SipCalc = () => {
   };
 
   return (
-    <div>
-      <div>
-        <div className="page-header">
-          <h3 className="page-title">Calculators</h3>
-          <nav aria-label="breadcrumb">
-            <ol className="breadcrumb">
-              <li className="breadcrumb-item">
-                <a href="!#" onClick={(event) => event.preventDefault()}>
-                  Utils
-                </a>
-              </li>
-              <li className="breadcrumb-item active" aria-current="page">
-              calculators
-              </li>
-            </ol>
-          </nav>
-        </div>
         <div className="row">
           <div className="col-md-7 grid-margin stretch-card">
             <div className="card">
@@ -399,9 +382,7 @@ const SipCalc = () => {
             </div>
           </div>
         </div>
-      </div>
-    </div>
   );
 };
 
-export default SipCalc;
+export default Calc;
