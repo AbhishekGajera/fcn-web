@@ -4,7 +4,7 @@ import { useCookies  } from 'react-cookie';
 
 function ProtectedRoute({ component: Component, ...restOfProps }) {
   const [cookies] = useCookies(['user']);
-  const isAuthenticated = cookies.user.auth === 'verified'
+  const isAuthenticated = cookies && cookies.user && cookies.user.auth && cookies.user.auth === 'verified'
 
   return (
     <Route
