@@ -17,6 +17,7 @@ const Literature   = lazy(() => import('./client-component/Utils/Literature'));
 const PowerOne   = lazy(() => import('./client-component/investment/PowerOne'));
 const SystematicSaving   = lazy(() => import('./client-component/investment/SystematicSaving'));
 const Currency   = lazy(() => import('./client-component/investment/Currency'));
+const Settings   = lazy(() => import('./user-pages/Settings'));
 
 
 
@@ -106,6 +107,7 @@ class AppRoutes extends Component {
           <Route path="/user-pages/register-1" component={ Register1 } />
           <Route path="/user-pages/forgot-password-1" component={ Forgot1 } />
           <Route path="/user-pages/reset-password-1" component={ Reset1 } />
+          <ProtectedRoute path="/user-pages/settings-1" component={ Settings } />
           <Route path="/user-pages/lockscreen" component={ Lockscreen } />
 
           <Route path="/error-pages/error-404" component={ Error404 } />

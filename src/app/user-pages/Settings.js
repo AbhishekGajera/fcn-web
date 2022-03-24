@@ -1,13 +1,11 @@
-import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { googleRegistration, registration } from "../../utils/APIs";
+import { updateProfile, userLogout } from "../../utils/APIs";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import GoogleLogin from "react-google-login";
-import { useLinkedIn } from "react-linkedin-login-oauth2";
 
-const Register = () => {
+const Settings = () => {
   const history = useHistory();
 
   const {
@@ -18,92 +16,65 @@ const Register = () => {
     mode: "onChange",
   });
 
-  const [, setCookie] = useCookies(["user"]);
+  const [cookie, setCookie] = useCookies(["user"]);
+
+  const onClickLogoutHandler = async () => {
+    const formData = JSON.stringify({
+      refreshToken: localStorage.getItem("refreshToken"),
+    });
+    setCookie("user", null, { path: "/" });
+    userLogout(formData).finally(() => {
+      history.push("/user-pages/login-1");
+    });
+  };
 
   const onSubmit = async (data) => {
     delete data.terms;
 
+    if(!data.password){
+        delete data.password
+    }
+
     try {
-      const result = await registration(data);
-      result.data.user.auth = "verified";
-      setCookie("user", result.data.user, { path: "/" });
-      localStorage.setItem("accessToken", result.data.tokens.access.token);
-      localStorage.setItem("refreshToken", result.data.tokens.refresh.token);
-      toast.success("registerd sucssefully");
-      history.push("/dashboard");
+      const result = await updateProfile(data, cookie?.user?.id);
+      setCookie('user', result.data , { path: '/' });
+      toast.success("Profile updated sucssefully");
     } catch (error) {
-      if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-      }
+        if (error?.response?.data?.message) {
+            toast.error(error?.response?.data.message);
+        } else {
+            toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+
+        if (error?.response?.data?.code === 401) {
+          onClickLogoutHandler();
+        }
     }
   };
 
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
-  var strongRegexMo = new RegExp("^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$");
-
-  const handleLogin = async (googleData) => {
-    const formData = JSON.stringify({
-      token: googleData.tokenId,
-    });
-
-    try {
-      const result = await googleRegistration(formData);
-      result.data.user.auth = "verified";
-      setCookie("user", result.data.user, { path: "/" });
-      localStorage.setItem("accessToken", result.data.tokens.access.token);
-      localStorage.setItem("refreshToken", result.data.tokens.refresh.token);
-      toast.success("registerd sucssefully");
-      history.push("/dashboard");
-    } catch (error) {
-      if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-      }
-    }
-  };
-
-  const { linkedInLogin } = useLinkedIn({
-    clientId: '86goj4c0fjeg38',
-    redirectUri: `${window.location.origin}/dashboard/`,
-    onSuccess: (code) => {
-      window.opener.location.reload(true);
-      console.log(code);
-      window.parent.SubmitPage();
-      window.close()
-    },
-    onError: (error) => {
-      console.log(error);
-    },
-  });
+  var strongRegexMo = new RegExp(
+    "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
+  );
 
   return (
     <div>
       <div className="d-flex align-items-center auth px-0">
         <div className="row w-100 mx-0">
-          <div className="col-lg-4 mx-auto">
+          <div className="col-lg-7 mx-auto">
             <div className="auth-form-light text-left py-5 px-4 px-sm-5">
-              <div className="brand-logo">
-                <img
-                  src={require("../../assets/images/fcn_logo.png")}
-                  alt="logo"
-                />
+              <div className="d-flex align-items-center justify-content-center">
+                <div className="nav-profile-img">
+                  <img
+                    src={require("../../assets/images/faces/face1.jpg")}
+                    alt="user"
+                  />
+                  <span className="availability-status online"></span>
+                </div>
               </div>
-              <h4>New here?</h4>
+              <h4>Change in details?</h4>
               <h6 className="font-weight-light">
-                Signing up is easy. It only takes a few steps
+                Update your profile is normal, no required to verify again
               </h6>
               <form
                 className="pt-3"
@@ -117,6 +88,7 @@ const Register = () => {
                     id="exampleInputUsername1"
                     placeholder="Username"
                     name="name"
+                    defaultValue={cookie?.user?.name}
                     {...register("name", { required: true })}
                   />
                   {errors && errors.name && <p>name is required field</p>}
@@ -128,6 +100,7 @@ const Register = () => {
                     id="exampleInputEmail1"
                     placeholder="Email"
                     name="email"
+                    defaultValue={cookie?.user?.email}
                     {...register("email", {
                       required: true,
                       pattern: /^\S+@\S+$/i,
@@ -152,6 +125,7 @@ const Register = () => {
                     placeholder="Date of birth"
                     name="dob"
                     {...register("dob", { required: true })}
+                    defaultValue={cookie?.user?.dob}
                   />
                   {errors && errors.dob && <p>birthdate is required field</p>}
                 </div>
@@ -162,17 +136,28 @@ const Register = () => {
                     id="exampleInputUsername1"
                     placeholder="Contact number"
                     name="contactno"
-                    {...register("contactno", { required: true , pattern : strongRegexMo })}
+                    {...register("contactno", {
+                      required: true,
+                      pattern: strongRegexMo,
+                    })}
+                    defaultValue={cookie?.user?.contactno}
                   />
-                  {errors && errors.contactno && errors.contactno.type === 'required' && <p>contact number is required field</p>}
-                  {errors && errors.contactno && errors.contactno.type === 'pattern' && <p>invalid phone number please use valid formate</p>}
-
-                  {console.info("errors ",errors)}
+                  {errors &&
+                    errors.contactno &&
+                    errors.contactno.type === "required" && (
+                      <p>contact number is required field</p>
+                    )}
+                  {errors &&
+                    errors.contactno &&
+                    errors.contactno.type === "pattern" && (
+                      <p>invalid phone number please use valid formate</p>
+                    )}
                 </div>
                 <div className="form-group">
                   <select
                     className="form-control form-control-lg"
                     id="exampleFormControlSelect2"
+                    defaultValue={cookie?.user?.country}
                     name="country"
                     {...register("country", {
                       required: true,
@@ -196,15 +181,14 @@ const Register = () => {
                     autoComplete="new-password"
                     name="password"
                     {...register("password", {
-                      required: true,
+                      required: false,
                       pattern: strongRegex,
                     })}
                   />
-                  {errors &&
-                    errors.password &&
-                    errors.password.type === "required" && (
-                      <p>password is required field</p>
-                    )}
+                  <p>
+                   Note :- if you don't want to update your password then simply leave it blank or fill your new password
+                  </p>
+
                   {errors &&
                     errors.password &&
                     errors.password.type === "pattern" && (
@@ -223,8 +207,7 @@ const Register = () => {
                         name="terms"
                         {...register("terms", { required: true })}
                       />
-                      <i className="input-helper"></i>I agree to all Terms &
-                      Conditions
+                      <i className="input-helper"></i> Confirm your deatils
                     </label>
                   </div>
                 </div>
@@ -234,31 +217,8 @@ const Register = () => {
                     type="submit"
                     disabled={!isDirty || !isValid}
                   >
-                    SIGN UP
+                    UPDATE PROFILE
                   </button>
-                </div>
-                <div className="mt-3 google-registration-button">
-                  <GoogleLogin
-                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                    buttonText="Sign up with Google"
-                    onSuccess={handleLogin}
-                    onFailure={handleLogin}
-                    cookiePolicy={"single_host_origin"}
-                  />
-                </div>
-                {/* <div className="mt-3 google-registration-button">
-                  <img
-                    onClick={linkedInLogin}
-                    src={linkedin}
-                    alt="Sign in with Linked In"
-                    style={{ maxWidth: "180px", cursor: "pointer" }}
-                  />
-                </div> */}
-                <div className="text-center mt-4 font-weight-light">
-                  Already have an account?{" "}
-                  <Link to="/user-pages/login" className="text-primary">
-                    Login
-                  </Link>
                 </div>
               </form>
             </div>
@@ -269,4 +229,4 @@ const Register = () => {
   );
 };
 
-export default Register;
+export default Settings;

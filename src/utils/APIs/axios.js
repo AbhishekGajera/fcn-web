@@ -6,7 +6,8 @@ const api = (url = '', method, data = {}) => {
   const options = {
     method,
     headers: {
-      'content-type': 'application/json'
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('accessToken')}`
     },
      data,
     url: `${baseURL}/${url}`,

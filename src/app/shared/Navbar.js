@@ -3,6 +3,7 @@ import { Dropdown } from 'react-bootstrap';
 import { Link, useHistory } from 'react-router-dom';
 import { Trans } from 'react-i18next';
 import { useCookies  } from 'react-cookie';
+import { userLogout } from '../../utils/APIs';
 
 const Navbar = () => {
 
@@ -12,14 +13,21 @@ const Navbar = () => {
   const toggleOffcanvas = () => {
     document.querySelector('.sidebar-offcanvas').classList.toggle('active');
   }
-  const toggleRightSidebar = () => {
-    document.querySelector('.right-sidebar').classList.toggle('open');
+
+  const onClickLogoutHandler = async (evt) => {
+    evt.preventDefault()
+    const formData = JSON.stringify({
+      refreshToken: localStorage.getItem('refreshToken'),
+    });
+    setCookie('user', null , { path: '/' });
+    userLogout(formData).finally(() => {
+      history.push('/user-pages/login-1')
+    })
   }
 
-  const onClickLogoutHandler = (evt) => {
+  const onClickSettingHandler = (evt) => {
     evt.preventDefault()
-    setCookie('user', null , { path: '/' });
-    history.push('/user-pages/login-1')
+    history.push('/user-pages/settings-1')
   }
   
   return (
@@ -51,17 +59,30 @@ const Navbar = () => {
                 <span className="availability-status online"></span>
               </div>
               <div className="nav-profile-text">
-                <p className="mb-1 text-black"><Trans>{cookies && cookies.user && cookies.user.name}</Trans></p>
+                <p className="mb-1 text-black"><Trans>{cookies?.user?.name}</Trans></p>
+                <p className="mb-1 text-black"><Trans>{String(cookies?.user?.contactno)}</Trans></p>
               </div>
             </Dropdown.Toggle>
 
             <Dropdown.Menu className="navbar-dropdown">
               <Dropdown.Item href="!#" onClick={evt =>evt.preventDefault()}>
+                <i className="mdi mdi-email mr-2 text-success"></i>
+                <Trans>{cookies?.user?.email}</Trans>
+              </Dropdown.Item>
+              <Dropdown.Item href="!#" onClick={evt =>evt.preventDefault()}>
+                <i className="mdi mdi-cake mr-2 text-primary"></i>
+                <Trans>{cookies?.user?.dob}</Trans>
+              </Dropdown.Item>
+              <Dropdown.Item href="!#" onClick={evt =>evt.preventDefault()}>
                 <i className="mdi mdi-cached mr-2 text-success"></i>
                 <Trans>Activity Log</Trans>
               </Dropdown.Item>
+              <Dropdown.Item href="!#" onClick={onClickSettingHandler}>
+                <i className="mdi mdi-settings mr-2 text-primary"></i>
+                <Trans>Settings</Trans>
+              </Dropdown.Item>
               <Dropdown.Item href="!#" onClick={onClickLogoutHandler}>
-                <i className="mdi mdi-logout mr-2 text-primary"></i>
+                <i className="mdi mdi-logout mr-2 text-success"></i>
                 <Trans>Signout</Trans>
               </Dropdown.Item>
             </Dropdown.Menu>
