@@ -3,8 +3,9 @@ import { Link, useHistory } from "react-router-dom";
 import { Form } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useCookies  } from 'react-cookie';
-import { login } from "../../utils/APIs";
+import { googleLogin, login } from "../../utils/APIs";
 import { toast } from 'react-toastify';
+import GoogleLogin from 'react-google-login';
 
 const Login = () => {
   const history = useHistory()
@@ -37,6 +38,33 @@ const Login = () => {
       }
     }
   };
+
+  const handleLogin = async googleData => {
+    const formData = JSON.stringify({
+       token: googleData.tokenId
+     })
+ 
+     try {
+       const result = await googleLogin(formData);
+       result.data.user.auth = "verified";
+       setCookie("user", result.data.user, { path: "/" });
+       localStorage.setItem("accessToken", result.data.tokens.access.token);
+       localStorage.setItem("refreshToken", result.data.tokens.refresh.token);
+       toast.success("login sucssefully");
+       history.push("/dashboard");
+     } catch (error) {
+       if (
+         error &&
+         error.response &&
+         error.response.data &&
+         error.response.data.message
+       ) {
+         toast.error(error.response.data.message);
+       } else {
+         toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+       }
+     }
+   }
 
   return (
     <div>
@@ -72,6 +100,15 @@ const Login = () => {
                     </div>
                     <Link to="/user-pages/forgot-password-1" className="auth-link text-black">Forgot password?</Link>
                   </div>
+                  <div className="mt-3 mb-3 google-registration-button">
+                  <GoogleLogin
+                    clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
+                    buttonText="Sign up with Google"
+                    onSuccess={handleLogin}
+                    onFailure={handleLogin}
+                    cookiePolicy={"single_host_origin"}
+                  />
+                </div>
                   <div className="mb-2">
                     <button type="button" className="btn btn-block btn-facebook auth-form-btn">
                       <i className="mdi mdi-facebook mr-2"></i>Connect using facebook
