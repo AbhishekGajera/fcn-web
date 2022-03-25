@@ -173,10 +173,10 @@ const Dashboard = () => {
                 alt="circle"
               />
               <h4 className="font-weight-normal mb-3">
-                Weekly Sales{" "}
-                <i className="mdi mdi-chart-line mdi-24px float-right"></i>
+                Training{" "}
+                <i className="mdi mdi-lead-pencil mdi-24px float-right"></i>
               </h4>
-              <h2 className="mb-5">$ 15,0000</h2>
+              <h2 className="mb-5">500+ students</h2>
               <h6 className="card-text">Increased by 60%</h6>
             </div>
           </div>
@@ -190,11 +190,11 @@ const Dashboard = () => {
                 alt="circle"
               />
               <h4 className="font-weight-normal mb-3">
-                Weekly Orders{" "}
-                <i className="mdi mdi-bookmark-outline mdi-24px float-right"></i>
+                Trading{" "}
+                <i className="mdi mdi-chart-line mdi-24px float-right"></i>
               </h4>
-              <h2 className="mb-5">45,6334</h2>
-              <h6 className="card-text">Decreased by 10%</h6>
+              <h2 className="mb-5">45,6334+ users</h2>
+              <h6 className="card-text">Increased by 10%</h6>
             </div>
           </div>
         </div>
@@ -207,11 +207,28 @@ const Dashboard = () => {
                 alt="circle"
               />
               <h4 className="font-weight-normal mb-3">
-                Visitors Online{" "}
-                <i className="mdi mdi-diamond mdi-24px float-right"></i>
+                Investments{" "}
+                <i className="mdi mdi-briefcase-upload mdi-24px float-right"></i>
               </h4>
-              <h2 className="mb-5">95,5741</h2>
+              <h2 className="mb-5">95,5741+ investers</h2>
               <h6 className="card-text">Increased by 5%</h6>
+            </div>
+          </div>
+        </div>
+        <div className="col-md-4 stretch-card grid-margin">
+          <div className="card bg-gradient-danger card-img-holder text-white">
+            <div className="card-body">
+              <img
+                src={require("../../assets/images/dashboard/circle.svg")}
+                className="card-img-absolute"
+                alt="circle"
+              />
+              <h4 className="font-weight-normal mb-3">
+                Travels{" "}
+                <i className="mdi mdi-chart-line mdi-24px float-right"></i>
+              </h4>
+              <h2 className="mb-5">$ 15,0000</h2>
+              <h6 className="card-text">Increased by 60%</h6>
             </div>
           </div>
         </div>

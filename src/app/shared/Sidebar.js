@@ -132,6 +132,7 @@ class Sidebar extends Component {
           <li className={ this.isPathActive('/balance') ? 'nav-item active' : 'nav-item' }>
             <Link className="nav-link" to="/balance">
               <span className="menu-title"><Trans>Balance</Trans></span>
+              <i className="menu-arrow"></i>
               <i className="mdi mdi-account-check menu-icon"></i>
             </Link>
           </li>
