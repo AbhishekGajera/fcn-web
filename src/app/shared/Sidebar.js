@@ -39,7 +39,9 @@ class Sidebar extends Component {
       {path:'/training', state: 'ourTraining'},
       {path:'/trading', state: 'ourTrading'},
       {path:'/investment', state: 'ourInvestment'},
-      {path:'/utils', state: 'ourUtils'},
+      {path:'/utilities', state: 'ourUtils'},
+      {path:'/travel', state: 'ourTravels'},
+
 
       {path:'/basic-ui', state: 'basicUiMenuOpen'},
       {path:'/advanced-ui', state: 'advancedUiMenuOpen'},
@@ -94,12 +96,13 @@ class Sidebar extends Component {
             <Collapse in={this.state.ourTrading}>
               <ul className="nav flex-column sub-menu">
                 <li className="nav-item"> <Link className={ this.isPathActive('/trading/demat') ? 'nav-link active' : 'nav-link' } to="/trading/demat"><Trans>Demat</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/trading/equity') ? 'nav-link active' : 'nav-link' } to="/trading/equity"><Trans>Equity</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/trading/commodity') ? 'nav-link active' : 'nav-link' } to="/trading/commodity"><Trans>Commodity</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/trading/forex') ? 'nav-link active' : 'nav-link' } to="/trading/forex"><Trans>Forex</Trans></Link></li>
 
               </ul>
             </Collapse>
           </li>
+
           <li className={ this.isPathActive('/investment') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.ourInvestment ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('ourInvestment') } data-toggle="collapse">
               <span className="menu-title"><Trans>Investment</Trans></span>
@@ -115,26 +118,43 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-          <li className={ this.isPathActive('/utils') ? 'nav-item active' : 'nav-item' }>
-            <div className={ this.state.ourUtils ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('ourUtils') } data-toggle="collapse">
-              <span className="menu-title"><Trans>Utils</Trans></span>
-              <i className="menu-arrow"></i>
-              <i className="mdi mdi-gift menu-icon"></i>
-            </div>
-            <Collapse in={this.state.ourUtils}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/utils/offer') ? 'nav-link active' : 'nav-link' } to="/utils/offer"><Trans>Offer</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/utils/calculator') ? 'nav-link active' : 'nav-link' } to="/utils/calculator"><Trans>Calculator</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/utils/literature') ? 'nav-link active' : 'nav-link' } to="/utils/literature"><Trans>Literature</Trans></Link></li>
-              </ul>
-            </Collapse>
-          </li>
+         
           <li className={ this.isPathActive('/balance') ? 'nav-item active' : 'nav-item' }>
             <Link className="nav-link" to="/balance">
               <span className="menu-title"><Trans>Balance</Trans></span>
               <i className="menu-arrow"></i>
               <i className="mdi mdi-account-check menu-icon"></i>
             </Link>
+          </li>
+          <li className={ this.isPathActive('/utilities') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.ourUtils ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('ourUtils') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Utilities</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-gift menu-icon"></i>
+            </div>
+            <Collapse in={this.state.ourUtils}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/utilities/offers') ? 'nav-link active' : 'nav-link' } to="/utilities/offers"><Trans>Offers</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/utilities/calculator') ? 'nav-link active' : 'nav-link' } to="/utilities/calculator"><Trans>Calculator</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/utilities/literature') ? 'nav-link active' : 'nav-link' } to="/utilities/literature"><Trans>Literature</Trans></Link></li>
+              </ul>
+            </Collapse>
+          </li>
+          <li className={ this.isPathActive('/travel') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.ourTravels ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('ourTravels') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Travel</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-airplane menu-icon"></i>
+            </div>
+            <Collapse in={this.state.ourTravels}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/travel/ourplan') ? 'nav-link active' : 'nav-link' } to="/travel/ourplan"><Trans>Our Plans</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/travel/departure') ? 'nav-link active' : 'nav-link' } to="/travel/departure"><Trans>Pre Departure</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/travel/tour') ? 'nav-link active' : 'nav-link' } to="/travel/tour"><Trans>Customize Tour</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/travel/passport') ? 'nav-link active' : 'nav-link' } to="/travel/passport"><Trans>Passport</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/travel/visa') ? 'nav-link active' : 'nav-link' } to="/travel/visa"><Trans>Visa</Trans></Link></li>
+              </ul>
+            </Collapse>
           </li>
         </ul>
       </nav>

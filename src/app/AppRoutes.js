@@ -9,14 +9,16 @@ const SipCalc   = lazy(() => import('./client-component/SipCalc'));
 const FreeVideo   = lazy(() => import('./client-component/training/FreeVideo'));
 const PaidVideo   = lazy(() => import('./client-component/training/PaidVideo'));
 const Demat   = lazy(() => import('./client-component/trading/Demat'));
-const Equity   = lazy(() => import('./client-component/trading/Equity'));
+const Commodity   = lazy(() => import('./client-component/trading/Commodity'));
 const Forex   = lazy(() => import('./client-component/trading/Forex'));
 const Balance   = lazy(() => import('./client-component/balance/Balance'));
-const Offer   = lazy(() => import('./client-component/Utils/Offer'));
+const Offers   = lazy(() => import('./client-component/Utils/Offers'));
 const Literature   = lazy(() => import('./client-component/Utils/Literature'));
 const PowerOne   = lazy(() => import('./client-component/investment/PowerOne'));
 const SystematicSaving   = lazy(() => import('./client-component/investment/SystematicSaving'));
 const Currency   = lazy(() => import('./client-component/investment/Currency'));
+const Passport   = lazy(() => import('./client-component/travel/Passport'));
+const Visa   = lazy(() => import('./client-component/travel/Visa'));
 const Settings   = lazy(() => import('./user-pages/Settings'));
 
 
@@ -64,7 +66,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/training/free" component={ FreeVideo  } />
           <ProtectedRoute path="/training/paid" component={ PaidVideo  } />
           <ProtectedRoute path="/trading/demat" component={ Demat } />
-          <ProtectedRoute path="/trading/equity" component={ Equity } />
+          <ProtectedRoute path="/trading/commodity" component={ Commodity } />
           <ProtectedRoute path="/trading/forex" component={ Forex } />
 
           <ProtectedRoute path="/investment/powerone" component={ PowerOne } />
@@ -72,9 +74,24 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/investment/cp" component={ Currency } />
           <ProtectedRoute path="/investment/insurance" component={ PowerOne } />
 
-          <ProtectedRoute path="/utils/offer" component={ Offer } />
-          <ProtectedRoute path="/utils/calculator" component={ SipCalc } />
-          <ProtectedRoute path="/utils/literature" component={ Literature } />
+          <ProtectedRoute path="/utilities/offers" component={ Offers } />
+          <ProtectedRoute path="/utilities/calculator" component={ SipCalc } />
+          <ProtectedRoute path="/utilities/literature" component={ Literature } />
+
+          <ProtectedRoute path="/utilities/offers" component={ Offers } />
+          <ProtectedRoute path="/utilities/calculator" component={ SipCalc } />
+          <ProtectedRoute path="/utilities/literature" component={ Literature } />
+
+          <ProtectedRoute path="/travel/ourplan" component={ BlankPage } />
+          <ProtectedRoute path="/travel/departure" component={ BlankPage } />
+          <ProtectedRoute path="/travel/tour" component={ BlankPage } />
+          <ProtectedRoute path="/travel/passport" component={ Passport } />
+          <ProtectedRoute path="/travel/visa" component={ Visa } />
+
+      
+
+          
+
           <ProtectedRoute path="/balance" component={ Balance } />
 
 
