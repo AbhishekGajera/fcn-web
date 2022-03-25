@@ -6,6 +6,9 @@ import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Calc from '../SipCalc/Calc';
 import Modal from "react-bootstrap/Modal";
+import { useCookies  } from 'react-cookie';
+import { userLogout } from '../../../utils/APIs';
+
 
 import { ProgressBar } from 'react-bootstrap';
 
@@ -18,6 +21,8 @@ import {
 
 
 const PowerOne = () => {
+  const [cookies, setCookie] = useCookies(['user']);
+
   const [show, setShow] = React.useState(false);
   const [show1, setShow1] = React.useState(false);
 
@@ -66,9 +71,7 @@ const PowerOne = () => {
                     </Form.Group>
                   </div>
                 </div>
-             
-              
-               
+    
                 <div className='text-center'>
                       <button
                           className="btn  btn-primary btn-sm font-weight-medium auth-form-btn "
@@ -137,7 +140,7 @@ const PowerOne = () => {
      
     
     </Modal>
-      <Tabs defaultActiveKey="first">
+      <Tabs defaultActiveKey="first"  >
         <Tab eventKey="first" title="PowerOne">
         <div className="page-header">
        <h3 className="page-title"> Opening Form / PowerOne  </h3>
@@ -199,66 +202,33 @@ const PowerOne = () => {
                       </Form.Group>
                     </div>
                   </div>
-                  {/* <div className="row">
-                    <div className="col-md-6">
-                      <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Gender</label>
-                        <div className="col-sm-9">
-                          <select className="form-control">
-                            <option>Male</option>
-                            <option>Female</option>
-                          </select>
-                        </div>
-                      </Form.Group>
-                    </div>
-                    <div className="col-md-6">
-                      <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Date of Birth</label>
-                        <div className="col-sm-9">
-                        <DatePicker className="form-control w-100"
-                        //   selected={this.state.startDate}
-                        //   onChange={this.handleChange}
-                        />
-                        </div>
-                      </Form.Group>
-                    </div>
-                  </div>
                   <div className="row">
                     <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Category</label>
+                     
+                        <label className="col-sm-3 col-form-label">Mobile</label>
                         <div className="col-sm-9">
-                          <select className="form-control">
-                            <option>Category1</option>
-                            <option>Category2</option>
-                            <option>Category3</option>
-                            <option>Category4</option>
-                          </select>
-                        </div>
-                        </Form.Group>
-                    </div>
-                    <div className="col-md-6">
-                      <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Membership</label>
-                        <div className="col-sm-4">
-                        <div className="form-check">
-                          <label className="form-check-label">
-                            <input type="radio" className="form-check-input" name="ExampleRadio4" id="membershipRadios1" defaultChecked /> Free 
-                            <i className="input-helper"></i>
-                          </label>
-                        </div>
-                        </div>
-                        <div className="col-sm-5">
-                        <div className="form-check">
-                          <label className="form-check-label">
-                            <input type="radio" className="form-check-input" name="ExampleRadio4" id="membershipRadios2" /> Proffessional 
-                            <i className="input-helper"></i>
-                          </label>
-                        </div>
+                        <Form.Control type="text"
+                          name="mobile"
+                          defaultValue={cookies?.user?.contactno}
+                          {...register("mobile", { required: true })} />
                         </div>
                       </Form.Group>
                     </div>
-                  </div> */}
+                    <div className="col-md-6">
+                      <Form.Group className="row">
+                        <label className="col-sm-3 col-form-label">Email</label>
+                        <div className="col-sm-9">
+                        <Form.Control type="text"
+                          name="email"
+                          defaultValue={cookies?.user?.email}
+                          {...register("email", { required: true })} />
+                        </div>
+                      </Form.Group>
+                    </div>
+                                 
+                  </div>
+               
                   <p className="card-description">Postal Address </p>
                   <div className="row">
                     <div className="col-md-12">

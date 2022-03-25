@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Doughnut } from "react-chartjs-2";
 import { Tab, Col, Nav } from "react-bootstrap";
+import Modal from "react-bootstrap/Modal";
+import { useForm } from "react-hook-form";
+import { Form } from "react-bootstrap";
 
 const Calc = () => {
   const [type, settype] = useState(0);
@@ -12,7 +15,22 @@ const Calc = () => {
   const [totalValue, settotalValue] = useState(0);
   const [futureValues, setfutureValues] = useState(0);
   const [investedValue, setinvestedValue] = useState(0);
+  const [show, setShow] = React.useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+
+  const {
+    register,
+    handleSubmit,
+    formState: { errors, isDirty, isValid },
+  } = useForm({
+    mode: "onChange",
+  });
+  const onSubmit = async (data) => {
+    console.log(data);
+  };
   // chart management
   const [trafficOptions] = useState({
     responsive: true,
@@ -124,6 +142,129 @@ const Calc = () => {
   };
 
   return (
+    <>
+     <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Deposit</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row">
+            <div className="col-12 ">
+              <div className="card">
+                <div className="card-body">
+                  <form
+                    className="form-sample"
+                    onSubmit={handleSubmit(onSubmit)}
+                  >
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Enter Amount
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter Amount"
+                              name="amount"
+                              {...register("amount", { required: true })}
+                            />
+                          </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Enter Account-number
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter Account-number"
+                              name="account-number"
+                              {...register("account-number", {
+                                required: true,
+                              })}
+                            />
+                          </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Enter Account-number
+                          </label>
+                          <div className="col-sm-9">
+                            <select className="form-select">
+                              <option selected={true}>Surat</option>
+                              <option>Masma</option>
+                              <option>Olpad</option>
+                              <option>Navsari</option>
+                              <option>Valsad</option>
+                            </select>
+                          </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Training Type
+                          </label>
+                          <div className="col-sm-3">
+                            <div className="form-check">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  className="form-check-input"
+                                  name="android"
+                                  {...register("android", { required: true })}
+                                />
+                                <i className="input-helper"></i>
+                                Android
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-sm-3">
+                            <div className="form-check">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  className="form-check-input"
+                                  name="iphone"
+                                  {...register("iphone", { required: true })}
+                                />
+                                <i className="input-helper"></i>
+                                IPhone
+                              </label>
+                            </div>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="text-center mb-4 font-weight-light">
+                      for bank details{" "}
+                      <a
+                        onClick={() => window.open("/user-pages/bank-details")}
+                        className="text-primary"
+                      >
+                        click here
+                      </a>
+                    </div>
+                    <div className="text-center">
+                      <button
+                        className="btn  btn-primary btn-sm font-weight-medium auth-form-btn "
+                        type="submit"
+                      >
+                        SUBMIT
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
         <div className="row">
           <div className="col-md-7 grid-margin stretch-card">
             <div className="card">
@@ -379,9 +520,21 @@ const Calc = () => {
                   </ul>
                 </div>
               </div>
+              <div className='mr-3 mb-3'>
+              <h4 className="card-title text-right">
+                  <button
+                    type="button"
+                    className="btn btn-gradient-primary btn-fw"
+                    onClick={handleShow}
+                  >
+                    Withdrawal
+                  </button>
+                </h4>
+                </div>
             </div>
           </div>
         </div>
+        </>
   );
 };
 

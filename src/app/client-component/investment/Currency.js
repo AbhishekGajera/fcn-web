@@ -2,9 +2,12 @@ import React from 'react'
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
 // import DatePicker from "react-datepicker";
-
+import { useCookies  } from 'react-cookie';
+import { userLogout } from '../../../utils/APIs';
 
 const Currency = () => {
+  const [cookies, setCookie] = useCookies(['user']);
+
     const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
         mode: "onChange"
       });
@@ -14,11 +17,11 @@ const Currency = () => {
   return (
     <div>
         <div className="page-header">
-          <h3 className="page-title"> Weekly Awareness Program  </h3>
+          <h3 className="page-title"> Colleteral Plan </h3>
           <nav aria-label="breadcrumb">
             <ol className="breadcrumb">
               <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Invesment</a></li>
-              <li className="breadcrumb-item active" aria-current="page">Weekly Program</li>
+              <li className="breadcrumb-item active" aria-current="page">Colleteral Plan</li>
             </ol>
           </nav>
         </div>
@@ -26,7 +29,26 @@ const Currency = () => {
           <div className="col-12 grid-margin">
             <div className="card">
               <div className="card-body">
-                <h4 className="card-title">Weekly Awareness</h4>
+                <div className='text-right'>
+                <div className="row">
+                    <div className="col-md-12 text-right">
+                      <Form.Group className="row">
+                        <label className="col-sm-4 col-form-label">Select City</label>
+                        <div className="col-sm-4">
+                          <select className="form-control">
+                            <option>Surat</option>
+                            <option>Baroda</option>
+                            <option>Vapi</option>
+                            <option>Ahmedabad</option>
+                          </select>
+                        </div>
+                        </Form.Group>
+                    </div>
+                   
+                  </div>
+                </div>
+                <h4 className="card-title">Colleteral Plan</h4>
+               
                 <form className="form-sample"   onSubmit={handleSubmit(onSubmit)}>
                   <p className="card-description"> Personal info </p>
                   <div className="row">
@@ -125,6 +147,7 @@ const Currency = () => {
                         <div className="col-sm-9">
                         <Form.Control type="text"
                           name="mobile"
+                          defaultValue={cookies?.user?.contactno}
                           {...register("mobile", { required: true })} />
                         </div>
                       </Form.Group>
@@ -147,6 +170,8 @@ const Currency = () => {
                         <div className="col-sm-9">
                         <Form.Control type="text"
                           name="email"
+                          defaultValue={cookies?.user?.email}
+
                           {...register("email", { required: true })} />
                         </div>
                       </Form.Group>
