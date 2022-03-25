@@ -1,44 +1,31 @@
-import React from 'react'
-import Modal from "react-bootstrap/Modal";
-import Deposit from './Deposit';
-import Withdraw from './Withdraw';
-import {
-    BrowserRouter as Router,
-    Switch,
-    Route,
-    Link
-  } from "react-router-dom";
-  import { useForm } from "react-hook-form";
-import { Form } from 'react-bootstrap';
+import React from "react";
+import Deposit from "./Deposit";
+import Withdraw from "./Withdraw";
+
 const Balance = () => {
-  // const [show, setShow] = React.useState(false);
-  // const [show1, setShow1] = React.useState(false);
-
-
-  // const handleClose = () => setShow(false);
-  // const handleShow = () => setShow(true);
-
-  
-  // const handleClose1 = () => setShow(false);
-  // const handleShow1 = () => setShow(true);
-  // const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
-  //   mode: "onChange"
-  // });
-  // const onSubmit = async (data) => {
-  // alert(data.name1)
-  // };
-  // const { registerData, handleSubmit1, formState: { errors1 , isDirty1, isValid1 } } = useForm({
-  //   mode: "onChange"
-  // });
-  // const onSubmit1 = async (data) => {
-  // alert(data.name1)
-  // };
   return (
     <div>
-      <Deposit/>
-     
+      <div className="page-header">
+        <h3 className="page-title"> Balance </h3>
+        <nav aria-label="breadcrumb">
+          <ol className="breadcrumb">
+            <li className="breadcrumb-item">
+              <a href="!#" onClick={(event) => event.preventDefault()}>
+                Balance
+              </a>
+            </li>
+            <li className="breadcrumb-item active" aria-current="page">
+              Balance
+            </li>
+          </ol>
+        </nav>
       </div>
-  )
-}
+      <div className="row">
+        <Deposit />
+        <Withdraw />
+      </div>
+    </div>
+  );
+};
 
-export default Balance
+export default Balance;

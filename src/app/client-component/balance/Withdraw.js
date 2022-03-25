@@ -47,9 +47,6 @@ const Withdraw = () => {
                   </Form.Group>
                 </div>
               </div>
-           
-            
-             
               <div className='text-center'>
                     <button
                         className="btn  btn-primary btn-sm font-weight-medium auth-form-btn "
@@ -58,7 +55,6 @@ const Withdraw = () => {
                     >
                       SUBMIT
                     </button>
-                    
                 </div>
             </form>
           </div>

@@ -50,6 +50,7 @@ const Forgot1 = lazy(() => import('./user-pages/ForgotPasswod'));
 const Reset1 = lazy(() => import('./user-pages/ResetPassword'));
 const Lockscreen = lazy(() => import('./user-pages/Lockscreen'));
 const BlankPage = lazy(() => import('./general-pages/BlankPage'));
+const BankDetails = lazy(() => import('../common/BankDetails'));
 
 
 class AppRoutes extends Component {
@@ -124,6 +125,7 @@ class AppRoutes extends Component {
           <Route path="/user-pages/register-1" component={ Register1 } />
           <Route path="/user-pages/forgot-password-1" component={ Forgot1 } />
           <Route path="/user-pages/reset-password-1" component={ Reset1 } />
+          <Route path="/user-pages/bank-details" component={ BankDetails } />
           <ProtectedRoute path="/user-pages/settings-1" component={ Settings } />
           <Route path="/user-pages/lockscreen" component={ Lockscreen } />
 

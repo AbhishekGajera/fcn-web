@@ -3,7 +3,7 @@ import { Link, useHistory } from "react-router-dom";
 import { Form } from 'react-bootstrap';
 import { useForm } from "react-hook-form";
 import { useCookies  } from 'react-cookie';
-import { googleLogin, login } from "../../utils/APIs";
+import { googleLoginHandler, login } from "../../utils/APIs";
 import { toast } from 'react-toastify';
 import GoogleLogin from 'react-google-login';
 
@@ -45,7 +45,7 @@ const Login = () => {
      })
  
      try {
-       const result = await googleLogin(formData);
+       const result = await googleLoginHandler(formData);
        result.data.user.auth = "verified";
        setCookie("user", result.data.user, { path: "/" });
        localStorage.setItem("accessToken", result.data.tokens.access.token);
@@ -64,6 +64,10 @@ const Login = () => {
          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
        }
      }
+   }
+
+   const handleLoginFailure = (res) => {
+    toast.error(res.error);
    }
 
   return (
@@ -103,9 +107,9 @@ const Login = () => {
                   <div className="mt-3 mb-3 google-registration-button">
                   <GoogleLogin
                     clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
-                    buttonText="Sign up with Google"
+                    buttonText="Sign in with Google"
                     onSuccess={handleLogin}
-                    onFailure={handleLogin}
+                    onFailure={handleLoginFailure}
                     cookiePolicy={"single_host_origin"}
                   />
                 </div>

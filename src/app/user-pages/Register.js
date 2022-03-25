@@ -75,6 +75,10 @@ const Register = () => {
     }
   };
 
+  const handleLoginFailure = (res) => {
+    toast.error(res.error);
+   }
+
   const { linkedInLogin } = useLinkedIn({
     clientId: '86goj4c0fjeg38',
     redirectUri: `${window.location.origin}/dashboard/`,
@@ -242,7 +246,7 @@ const Register = () => {
                     clientId={process.env.REACT_APP_GOOGLE_CLIENT_ID}
                     buttonText="Sign up with Google"
                     onSuccess={handleLogin}
-                    onFailure={handleLogin}
+                    onFailure={handleLoginFailure}
                     cookiePolicy={"single_host_origin"}
                   />
                 </div>
