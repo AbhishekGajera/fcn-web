@@ -2,6 +2,7 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
+import { toast } from "react-toastify";
 
 const Deposit = () => {
   const [show, setShow] = React.useState(false);
@@ -17,6 +18,8 @@ const Deposit = () => {
     mode: "onChange",
   });
   const onSubmit = async (data) => {
+    handleClose()
+    toast.success('Your request sended successfully')
     console.log(data);
   };
 
@@ -51,8 +54,9 @@ const Deposit = () => {
                               type="text"
                               placeholder="Enter Amount"
                               name="amount"
-                              {...register("amount", { required: true })}
+                              {...register("amount", { required: false })}
                             />
+                            {errors?.amount && <p>{errors?.amount?.message}</p>}
                           </div>
                         </Form.Group>
                         <Form.Group className="row">
@@ -65,7 +69,7 @@ const Deposit = () => {
                               placeholder="Enter Account-number"
                               name="account-number"
                               {...register("account-number", {
-                                required: true,
+                                required: false,
                               })}
                             />
                           </div>
@@ -94,11 +98,11 @@ const Deposit = () => {
                                 <input
                                   type="checkbox"
                                   className="form-check-input"
-                                  name="android"
-                                  {...register("android", { required: true })}
+                                  name="demat"
+                                  {...register("demat", { required: false })}
                                 />
                                 <i className="input-helper"></i>
-                                Android
+                                Demat
                               </label>
                             </div>
                           </div>
@@ -108,11 +112,25 @@ const Deposit = () => {
                                 <input
                                   type="checkbox"
                                   className="form-check-input"
-                                  name="iphone"
-                                  {...register("iphone", { required: true })}
+                                  name="commoditiy"
+                                  {...register("commoditiy", { required: false })}
                                 />
                                 <i className="input-helper"></i>
-                                IPhone
+                                Commoditiy
+                              </label>
+                            </div>
+                          </div>
+                          <div className="col-sm-3">
+                            <div className="form-check">
+                              <label className="form-check-label">
+                                <input
+                                  type="checkbox"
+                                  className="form-check-input"
+                                  name="forex"
+                                  {...register("forex", { required: false })}
+                                />
+                                <i className="input-helper"></i>
+                                Forex
                               </label>
                             </div>
                           </div>

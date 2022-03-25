@@ -15,6 +15,7 @@ const Balance   = lazy(() => import('./client-component/balance/Balance'));
 const Offers   = lazy(() => import('./client-component/Utils/Offers'));
 const Literature   = lazy(() => import('./client-component/Utils/Literature'));
 const PowerOne   = lazy(() => import('./client-component/investment/PowerOne'));
+const Insurance   = lazy(() => import('./client-component/investment/Insurance'));
 const SystematicSaving   = lazy(() => import('./client-component/investment/SystematicSaving'));
 const Currency   = lazy(() => import('./client-component/investment/Currency'));
 const Passport   = lazy(() => import('./client-component/travel/Passport'));
@@ -73,7 +74,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/investment/powerone" component={ PowerOne } />
           <ProtectedRoute path="/investment/ssp" component={ SystematicSaving } />
           <ProtectedRoute path="/investment/cp" component={ Currency } />
-          <ProtectedRoute path="/investment/insurance" component={ PowerOne } />
+          <ProtectedRoute path="/investment/insurance" component={ Insurance } />
 
           <ProtectedRoute path="/utilities/offers" component={ Offers } />
           <ProtectedRoute path="/utilities/calculator" component={ SipCalc } />

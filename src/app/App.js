@@ -81,7 +81,8 @@ class App extends Component {
       "/user-pages/lockscreen",
       "/error-pages/error-404",
       "/error-pages/error-500",
-      "/general-pages/landing-page"
+      "/general-pages/landing-page",
+      "/user-pages/bank-details"
     ];
     for (let i = 0; i < fullPageLayoutRoutes.length; i++) {
       if (this.props.location.pathname === fullPageLayoutRoutes[i]) {

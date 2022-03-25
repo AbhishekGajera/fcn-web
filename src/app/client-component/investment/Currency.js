@@ -1,9 +1,13 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
+<<<<<<< Updated upstream
 // import DatePicker from "react-datepicker";
 import { useCookies  } from 'react-cookie';
 import { userLogout } from '../../../utils/APIs';
+=======
+
+>>>>>>> Stashed changes
 
 const Currency = () => {
   const [cookies, setCookie] = useCookies(['user']);
@@ -11,9 +15,7 @@ const Currency = () => {
     const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
         mode: "onChange"
       });
-      const onSubmit = async (data) => {
-     alert("hi")
-      };
+      const onSubmit = async (data) => { alert("hi") };
   return (
     <div>
         <div className="page-header">

@@ -148,7 +148,7 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-        <div className="col-md-4 stretch-card grid-margin">
+        <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
           <div className="card bg-gradient-danger card-img-holder text-white">
             <div className="card-body">
               <img
@@ -160,7 +160,7 @@ const Dashboard = () => {
                 Travels{" "}
                 <i className="mdi mdi-chart-line mdi-24px float-right"></i>
               </h4>
-              <h2 className="mb-5">$ 15,0000</h2>
+              <h2 className="mb-5">1400+ successfull tours</h2>
               <h6 className="card-text">Increased by 60%</h6>
             </div>
           </div>

@@ -1,7 +1,6 @@
 import React from 'react'
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
-import DatePicker from "react-datepicker";
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Calc from '../SipCalc/Calc';
