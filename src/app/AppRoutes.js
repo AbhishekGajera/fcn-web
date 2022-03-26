@@ -20,7 +20,10 @@ const SystematicSaving   = lazy(() => import('./client-component/investment/Syst
 const Currency   = lazy(() => import('./client-component/investment/Currency'));
 const Passport   = lazy(() => import('./client-component/travel/Passport'));
 const Visa   = lazy(() => import('./client-component/travel/Visa'));
+const CustomizeTour   = lazy(() => import('./client-component/travel/CustomizeTour'));
+
 const Settings   = lazy(() => import('./user-pages/Settings'));
+
 
 
 
@@ -86,9 +89,12 @@ class AppRoutes extends Component {
 
           <ProtectedRoute path="/travel/ourplan" component={ BlankPage } />
           <ProtectedRoute path="/travel/departure" component={ BlankPage } />
-          <ProtectedRoute path="/travel/tour" component={ BlankPage } />
+      
           <ProtectedRoute path="/travel/passport" component={ Passport } />
           <ProtectedRoute path="/travel/visa" component={ Visa } />
+          <ProtectedRoute path="/travel/tour" component={ CustomizeTour } />
+
+
 
       
 
