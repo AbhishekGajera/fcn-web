@@ -146,3 +146,26 @@
   }
 }
 }
+
+.tours {
+  .tour {
+    .tour-image {
+      width: 100%;
+      height: auto;
+    }
+    .tour-title {
+      font-weight: 900;
+      color: #fff;
+    }
+    .tour-description {
+      font-weight: 300;
+    }
+    .tour-price {
+      font-weight: 500;
+      font-size: 1em;
+      .price {
+        font-size: 1.5em;
+      }
+    }
+  }
+}
