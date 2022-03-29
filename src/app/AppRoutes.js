@@ -23,32 +23,7 @@ const OurPlans   = lazy(() => import('./client-component/travel/OurPlans'));
 const PreDeparture   = lazy(() => import('./client-component/travel/PreDeparture'));
 const Visa   = lazy(() => import('./client-component/travel/Visa'));
 const CustomizeTour   = lazy(() => import('./client-component/travel/CustomizeTour'));
-
 const Settings   = lazy(() => import('./user-pages/Settings'));
-
-
-
-
-
-
-
-const Buttons = lazy(() => import('./basic-ui/Buttons'));
-const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
-const Typography = lazy(() => import('./basic-ui/Typography'));
-
-
-const BasicElements = lazy(() => import('./form-elements/BasicElements'));
-
-const BasicTable = lazy(() => import('./tables/BasicTable'));
-
-
-
-const Mdi = lazy(() => import('./icons/Mdi'));
-
-const ChartJs = lazy(() => import('./charts/ChartJs'));
-
-const Error404 = lazy(() => import('./error-pages/Error404'));
-const Error500 = lazy(() => import('./error-pages/Error500'));
 
 const Login = lazy(() => import('./user-pages/Login'));
 const Register1 = lazy(() => import('./user-pages/Register'));
@@ -57,6 +32,21 @@ const Reset1 = lazy(() => import('./user-pages/ResetPassword'));
 const Lockscreen = lazy(() => import('./user-pages/Lockscreen'));
 const BlankPage = lazy(() => import('./general-pages/BlankPage'));
 const BankDetails = lazy(() => import('../common/BankDetails'));
+
+const CreateClints = lazy(() => import('./IBO-components/CreateClients'));
+
+const Buttons = lazy(() => import('./basic-ui/Buttons'));
+const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
+const Typography = lazy(() => import('./basic-ui/Typography'));
+const BasicElements = lazy(() => import('./form-elements/BasicElements'));
+const BasicTable = lazy(() => import('./tables/BasicTable'));
+const Mdi = lazy(() => import('./icons/Mdi'));
+const ChartJs = lazy(() => import('./charts/ChartJs'));
+const Error404 = lazy(() => import('./error-pages/Error404'));
+const Error500 = lazy(() => import('./error-pages/Error500'));
+
+
+
 
 
 class AppRoutes extends Component {
@@ -95,13 +85,6 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/travel/passport" component={ Passport } />
           <ProtectedRoute path="/travel/visa" component={ Visa } />
           <ProtectedRoute path="/travel/tour" component={ CustomizeTour } />
-
-
-
-      
-
-          
-
           <ProtectedRoute path="/balance" component={ Balance } />
 
 
@@ -137,6 +120,15 @@ class AppRoutes extends Component {
           <Route path="/user-pages/bank-details" component={ BankDetails } />
           <ProtectedRoute path="/user-pages/settings-1" component={ Settings } />
           <Route path="/user-pages/lockscreen" component={ Lockscreen } />
+
+
+
+
+          {/* IBO routes */}
+          <ProtectedRoute path="/clients" component={ CreateClints } />
+
+
+
 
           <Route path="/error-pages/error-404" component={ Error404 } />
           <Route path="/error-pages/error-500" component={ Error500 } />

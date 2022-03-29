@@ -172,7 +172,7 @@ const Settings = () => {
                   </select>
                 </div>
 
-                <div className="form-group">
+                {cookie?.user?.registrationType !== 'google' && <div className="form-group">
                   <input
                     type="password"
                     className="form-control form-control-lg"
@@ -197,7 +197,7 @@ const Settings = () => {
                         and latter
                       </p>
                     )}
-                </div>
+                </div>}
                 <div className="mb-4">
                   <div className="form-check">
                     <label className="form-check-label text-muted">

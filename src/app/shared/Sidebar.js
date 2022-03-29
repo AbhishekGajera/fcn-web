@@ -8,15 +8,42 @@ class Sidebar extends Component {
 
   state = {};
 
+  setFirstActiveItem = (itemName) => {
+    if(itemName === 'ourTraining'){
+      this.props.history.push('/training/free')
+    }
+
+    if(itemName === 'ourTrading'){
+      this.props.history.push('/trading/demat')
+    }
+
+    if(itemName === 'ourInvestment'){
+      this.props.history.push('/investment/powerone')
+    }
+
+    if(itemName === 'ourUtils'){
+      this.props.history.push('/utilities/offers')
+    }
+    if(itemName === 'ourTravels'){
+      this.props.history.push('/travel/ourplan')
+    }
+
+    if(itemName === 'clients'){
+      this.props.history.push('/clients')
+    }
+  }
+
   toggleMenuState(menuState) {
     if (this.state[menuState]) {
       this.setState({[menuState] : false});
     } else if(Object.keys(this.state).length === 0) {
+      this.setFirstActiveItem(menuState)
       this.setState({[menuState] : true});
     } else {
       Object.keys(this.state).forEach(i => {
         this.setState({[i]: false});
       });
+      this.setFirstActiveItem(menuState)
       this.setState({[menuState] : true});
     }
   }
@@ -74,6 +101,13 @@ class Sidebar extends Component {
               <i className="mdi mdi-home menu-icon"></i>
             </Link>
           </li>
+         {this?.state?.user?.role === 'IBO' && <li className={ this.isPathActive('/clients') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.clients ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('clients') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Clients</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-account-key menu-icon"></i>
+            </div>
+          </li>}
            <li className={ this.isPathActive('/training') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.ourTraining ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('ourTraining') } data-toggle="collapse">
               <span className="menu-title"><Trans>Training</Trans></span>
