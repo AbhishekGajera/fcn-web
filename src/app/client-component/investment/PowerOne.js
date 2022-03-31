@@ -6,21 +6,10 @@ import Tab from 'react-bootstrap/Tab';
 import Calc from '../SipCalc/Calc';
 import Modal from "react-bootstrap/Modal";
 import { useCookies  } from 'react-cookie';
-import { userLogout } from '../../../utils/APIs';
-
-
-import { ProgressBar } from 'react-bootstrap';
-
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Link
-} from "react-router-dom";
 
 
 const PowerOne = () => {
-  const [cookies, setCookie] = useCookies(['user']);
+  const [cookies] = useCookies(['user']);
 
   const [show, setShow] = React.useState(false);
   const [show1, setShow1] = React.useState(false);

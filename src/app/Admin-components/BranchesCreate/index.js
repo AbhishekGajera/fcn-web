@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { CreateUser } from "../../../utils/APIs";
 
-const CreateClints = () => {
+const CreateBranches = () => {
   const [cookies] = useCookies(["user"]);
 
   const {
@@ -43,7 +43,7 @@ const CreateClints = () => {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">Clients / create Clients </h3>
+        <h3 className="page-title">Clients / Create Branches </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -52,7 +52,7 @@ const CreateClints = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Create clients
+              Create Branches
             </li>
           </ol>
         </nav>
@@ -291,4 +291,4 @@ const CreateClints = () => {
   );
 };
 
-export default CreateClints;
+export default CreateBranches;

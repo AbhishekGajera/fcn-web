@@ -115,3 +115,18 @@
 
 /* === Customs === */
 @import "../assets/styles/components/style-sip-calc";
+
+.p0{
+    padding: 0px !important;
+}
+
+// client page
+
+ul.client-list {
+    list-style: none;
+    display: inline-flex;
+    padding: 0px 10px;
+}
+ul.client-list li{
+    padding: 0px 5px;
+}

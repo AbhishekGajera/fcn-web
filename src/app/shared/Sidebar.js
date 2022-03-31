@@ -7,7 +7,7 @@ import { withCookies } from 'react-cookie';
 class Sidebar extends Component {
 
   state = {};
-  userData = JSON.parse(this.props.cookies.cookies.user)
+  userData = JSON.parse(this.props?.cookies?.cookies?.user || '{"name":"John", "age":30, "city":"New York"}')
 
   setFirstActiveItem = (itemName) => {
     if(itemName === 'ourTraining'){
@@ -29,8 +29,16 @@ class Sidebar extends Component {
       this.props.history.push('/travel/ourplan')
     }
 
-    if(itemName === 'clients'){
-      this.props.history.push('/clients')
+    if(itemName === 'fcnClients'){
+      this.props.history.push('/clients/createclient')
+    }
+
+    if(itemName === 'fcnBranches'){
+      this.props.history.push('/branches/createbranches')
+    }
+
+    if(itemName === 'fcnEmployees'){
+      this.props.history.push('/employees/createEmployees')
     }
   }
 
@@ -63,7 +71,9 @@ class Sidebar extends Component {
 
     const dropdownPaths = [
       {path:'/apps', state: 'appsMenuOpen'},
-      {path:'/clients', state: 'clients'},
+      {path:'/clients', state: 'fcnClients'},
+      {path:'/branches', state: 'fcnBranches'},
+      {path:'/employees', state: 'fcnEmployees'},
       {path:'/products', state: 'ourProducts'},
       {path:'/training', state: 'ourTraining'},
       {path:'/trading', state: 'ourTrading'},
@@ -101,13 +111,23 @@ class Sidebar extends Component {
               <i className="mdi mdi-home menu-icon"></i>
             </Link>
           </li>
-         {this.userData?.role === 'IBO' && <li className={ this.isPathActive('/clients') ? 'nav-item active' : 'nav-item' }>
-            <div className={ this.state.clients ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('clients') } data-toggle="collapse">
+         {["IBO"].includes(this.userData?.role) && 
+         <>
+         <li className={ this.isPathActive('/clients') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.fcnClients ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnClients') } data-toggle="collapse">
               <span className="menu-title"><Trans>Clients</Trans></span>
               <i className="menu-arrow"></i>
               <i className="mdi mdi-account-key menu-icon"></i>
             </div>
-          </li>}
+            <Collapse in={this.state.fcnClients}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/clients/createclient') ? 'nav-link active' : 'nav-link' } to="/clients/createclient"><Trans>Create Clients</Trans></Link></li>
+              </ul>
+            </Collapse>
+          </li>
+          </>
+          }
+           {["IBO","user"].includes(this.userData?.role) &&  <>
            <li className={ this.isPathActive('/training') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.ourTraining ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('ourTraining') } data-toggle="collapse">
               <span className="menu-title"><Trans>Training</Trans></span>
@@ -190,6 +210,53 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+           </>}
+           {["admin"].includes(this.userData?.role) && 
+           <>
+           <li className={ this.isPathActive('/clients') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.fcnClients ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnClients') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Clients</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-account-key menu-icon"></i>
+            </div>
+            <Collapse in={this.state.fcnClients}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/clients/createclient') ? 'nav-link active' : 'nav-link' } to="/clients/createclient"><Trans>Create Clients</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/clients/clientlist') ? 'nav-link active' : 'nav-link' } to="/clients/clientlist"><Trans>Fetch Clients</Trans></Link></li>
+              </ul>
+            </Collapse>
+          </li>
+          <li className={ this.isPathActive('/branches') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.fcnBranches ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnBranches') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Branches</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-source-branch menu-icon"></i>
+            </div>
+            <Collapse in={this.state.fcnBranches}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/branches/createbranches') ? 'nav-link active' : 'nav-link' } to="/branches/createbranches"><Trans>Create Branch</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/branches/brancheslist') ? 'nav-link active' : 'nav-link' } to="/branches/brancheslist"><Trans>Fetch Branch</Trans></Link></li>
+              </ul>
+            </Collapse>
+          </li>
+          </>}
+          {["branch"].includes(this.userData?.role) && 
+         <>
+         <li className={ this.isPathActive('/employees') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.fcnEmployees ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnEmployees') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Employees</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-account-key menu-icon"></i>
+            </div>
+            <Collapse in={this.state.fcnEmployees}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/employees/createEmployees') ? 'nav-link active' : 'nav-link' } to="/employees/createEmployees"><Trans>Create Employees</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/employees/listEmployee') ? 'nav-link active' : 'nav-link' } to="/employees/listEmployee"><Trans>Fetch Employees</Trans></Link></li>
+              </ul>
+            </Collapse>
+          </li>
+          </>
+          }
         </ul>
       </nav>
     );

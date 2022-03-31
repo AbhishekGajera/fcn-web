@@ -1,4 +1,4 @@
-import api from './axios';
+import api, { refreshTokenApi } from './axios';
 
 // user apis
 export const registration = (data) => api('auth/register', 'POST', data);
@@ -11,4 +11,5 @@ export const ResetUserPasswod = (data) => api('auth/forgot-password', 'POST', da
 export const CreateUser = (data) => api('users', 'POST', data);
 export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
-export const refreshTokens = (data,id) => api(`auth/refresh-tokens`, 'POST', data);
+export const getUsers = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}`, 'GET');
+export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);

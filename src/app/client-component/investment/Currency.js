@@ -3,7 +3,6 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 // import DatePicker from "react-datepicker";
 import { useCookies } from "react-cookie";
-import { userLogout } from "../../../utils/APIs";
 
 const Currency = () => {
   const [cookies, setCookie] = useCookies(["user"]);

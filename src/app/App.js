@@ -9,6 +9,7 @@ import Footer from "./shared/Footer";
 import { withTranslation } from "react-i18next";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Common from "../utils/Common";
 
 class App extends Component {
   state = {};
@@ -26,6 +27,7 @@ class App extends Component {
     let footerComponent = !this.state.isFullPageLayout ? <Footer /> : "";
     return (
       <>
+        <Common />
         <ToastContainer
           position="top-right"
           autoClose={5000}
