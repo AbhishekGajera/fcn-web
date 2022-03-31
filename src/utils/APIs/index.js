@@ -8,5 +8,7 @@ export const login = (data) => api('auth/login', 'POST', data);
 export const googleLoginHandler = (data) => api('auth/googleLogin', 'POST', data);
 export const UserforgotPasswod = (data) => api('auth/forgot-password', 'POST', data);
 export const ResetUserPasswod = (data) => api('auth/forgot-password', 'POST', data);
+export const CreateUser = (data) => api('users', 'POST', data);
 export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
+export const refreshTokens = (data,id) => api(`auth/refresh-tokens`, 'POST', data);

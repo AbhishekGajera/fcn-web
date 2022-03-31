@@ -1,9 +1,9 @@
 import React from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
-// import DatePicker from "react-datepicker";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
+import { CreateUser } from "../../../utils/APIs";
 
 const CreateClints = () => {
   const [cookies] = useCookies(["user"]);
@@ -18,9 +18,26 @@ const CreateClints = () => {
   var strongRegexMo = new RegExp(
     "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
   );
+  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   const onSubmit = async (data) => {
-    toast.success("user crated successfully")
+      try {
+        const result = await CreateUser(data)
+        console.info("result ",result)
+        toast.success("user crated successfully");
+      } catch (error) {
+          console.info("error ",error)
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
   };
 
   console.info("errors ", errors);
@@ -164,6 +181,60 @@ const CreateClints = () => {
                           {...register("dob", { required: true })}
                         />
                         {errors && errors.dob && <p>DOB is required field</p>}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Password
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="password"
+                          {...register("password", {
+                            required: true,
+                            pattern: strongRegex,
+                          })}
+                        />
+                        {errors &&
+                          errors.password &&
+                          errors.password.type === "required" && (
+                            <p>password is required field</p>
+                          )}
+                        {errors &&
+                          errors.password &&
+                          errors.password.type === "pattern" && (
+                            <p>
+                              password should have at least 8 characters , 1
+                              number and latter
+                            </p>
+                          )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">Select Country</label>
+                      <div className="col-sm-9">
+                        <select
+                          className="form-control form-control-lg"
+                          id="exampleFormControlSelect2"
+                          name="country"
+                          {...register("country", {
+                            required: true,
+                          })}
+                        >
+                          <option>Country</option>
+                          <option>United States of America</option>
+                          <option selected>India</option>
+                          <option>United Kingdom</option>
+                          <option>Germany</option>
+                          <option>Argentina</option>
+                        </select>
                       </div>
                     </Form.Group>
                   </div>

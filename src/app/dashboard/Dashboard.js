@@ -149,7 +149,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-danger card-img-holder text-white">
+          <div className="card bg-gradient-dark card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}

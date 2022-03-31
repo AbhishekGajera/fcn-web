@@ -7,6 +7,7 @@ import { withCookies } from 'react-cookie';
 class Sidebar extends Component {
 
   state = {};
+  userData = JSON.parse(this.props.cookies.cookies.user)
 
   setFirstActiveItem = (itemName) => {
     if(itemName === 'ourTraining'){
@@ -62,14 +63,13 @@ class Sidebar extends Component {
 
     const dropdownPaths = [
       {path:'/apps', state: 'appsMenuOpen'},
+      {path:'/clients', state: 'clients'},
       {path:'/products', state: 'ourProducts'},
       {path:'/training', state: 'ourTraining'},
       {path:'/trading', state: 'ourTrading'},
       {path:'/investment', state: 'ourInvestment'},
       {path:'/utilities', state: 'ourUtils'},
       {path:'/travel', state: 'ourTravels'},
-
-
       {path:'/basic-ui', state: 'basicUiMenuOpen'},
       {path:'/advanced-ui', state: 'advancedUiMenuOpen'},
       {path:'/form-elements', state: 'formElementsMenuOpen'},
@@ -101,7 +101,7 @@ class Sidebar extends Component {
               <i className="mdi mdi-home menu-icon"></i>
             </Link>
           </li>
-         {this?.state?.user?.role === 'IBO' && <li className={ this.isPathActive('/clients') ? 'nav-item active' : 'nav-item' }>
+         {this.userData?.role === 'IBO' && <li className={ this.isPathActive('/clients') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.clients ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('clients') } data-toggle="collapse">
               <span className="menu-title"><Trans>Clients</Trans></span>
               <i className="menu-arrow"></i>

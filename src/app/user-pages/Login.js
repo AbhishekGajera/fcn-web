@@ -1,6 +1,6 @@
 import React from "react";
 import { Link, useHistory } from "react-router-dom";
-import { Form, Tabs, Tab } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import { useForm } from "react-hook-form";
 import { useCookies } from "react-cookie";
 import { googleLoginHandler, login } from "../../utils/APIs";
@@ -50,6 +50,8 @@ const Login = () => {
       token: googleData.tokenId,
     });
 
+    console.info("googleData ",googleData)
+
     try {
       const result = await googleLoginHandler(formData);
       result.data.user.auth = "verified";
@@ -82,12 +84,6 @@ const Login = () => {
       <div className="d-flex align-items-center auth px-0">
         <div className="row w-100 mx-0">
           <div className="col-lg-4 mx-auto">
-            <Tabs
-              defaultActiveKey="client"
-              id="uncontrolled-tab-example"
-              className="mb-3"
-            >
-              <Tab eventKey="client" title="Client">
                 <div className="auth-form-light text-left py-5 px-4 px-sm-5">
                   <div className="brand-logo">
                     <img
@@ -193,8 +189,6 @@ const Login = () => {
                     </div>
                   </Form>
                 </div>
-              </Tab>
-            </Tabs>
           </div>
         </div>
       </div>

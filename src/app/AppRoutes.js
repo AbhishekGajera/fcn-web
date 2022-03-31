@@ -56,36 +56,36 @@ class AppRoutes extends Component {
         <Switch>
 
            {/* client routes */}
-          <ProtectedRoute exact path="/dashboard" component={ Dashboard } />
-          <Route exact path="/appoinment" component={ Dashboard } />
+          <ProtectedRoute exact path="/dashboard" component={ Dashboard } accesstype={["client","admin","IBO","branch"]}/>
+          <Route exact path="/appoinment" component={ Dashboard }  accesstype={["client","admin","IBO","branch"]}/>
           {/* <Route exact path="/training" component={ Dashboard } /> */}
 
-          <ProtectedRoute path="/training/free" component={ FreeVideo  } />
-          <ProtectedRoute path="/training/paid" component={ PaidVideo  } />
-          <ProtectedRoute path="/trading/demat" component={ Demat } />
-          <ProtectedRoute path="/trading/commodity" component={ Commodity } />
-          <ProtectedRoute path="/trading/forex" component={ Forex } />
+          <ProtectedRoute path="/training/free" component={ FreeVideo  }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/training/paid" component={ PaidVideo  }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/trading/demat" component={ Demat }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/trading/commodity" component={ Commodity }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/trading/forex" component={ Forex }  accesstype={["client","admin","IBO","branch"]}/>
 
-          <ProtectedRoute path="/investment/powerone" component={ PowerOne } />
-          <ProtectedRoute path="/investment/ssp" component={ SystematicSaving } />
-          <ProtectedRoute path="/investment/cp" component={ Currency } />
-          <ProtectedRoute path="/investment/insurance" component={ Insurance } />
+          <ProtectedRoute path="/investment/powerone" component={ PowerOne }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/investment/ssp" component={ SystematicSaving }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/investment/cp" component={ Currency } accesstype={["client","admin","IBO","branch"]} />
+          <ProtectedRoute path="/investment/insurance" component={ Insurance } accesstype={["client","admin","IBO","branch"]} />
 
-          <ProtectedRoute path="/utilities/offers" component={ Offers } />
-          <ProtectedRoute path="/utilities/calculator" component={ SipCalc } />
-          <ProtectedRoute path="/utilities/literature" component={ Literature } />
+          <ProtectedRoute path="/utilities/offers" component={ Offers }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/utilities/calculator" component={ SipCalc }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/utilities/literature" component={ Literature }  accesstype={["client","admin","IBO","branch"]}/>
 
-          <ProtectedRoute path="/utilities/offers" component={ Offers } />
-          <ProtectedRoute path="/utilities/calculator" component={ SipCalc } />
-          <ProtectedRoute path="/utilities/literature" component={ Literature } />
+          <ProtectedRoute path="/utilities/offers" component={ Offers }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/utilities/calculator" component={ SipCalc }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/utilities/literature" component={ Literature } accesstype={["client","admin","IBO","branch"]} />
 
-          <ProtectedRoute path="/travel/ourplan" component={ OurPlans } />
-          <ProtectedRoute path="/travel/departure" component={ PreDeparture } />
+          <ProtectedRoute path="/travel/ourplan" component={ OurPlans }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/travel/departure" component={ PreDeparture } accesstype={["client","admin","IBO","branch"]} />
       
-          <ProtectedRoute path="/travel/passport" component={ Passport } />
-          <ProtectedRoute path="/travel/visa" component={ Visa } />
-          <ProtectedRoute path="/travel/tour" component={ CustomizeTour } />
-          <ProtectedRoute path="/balance" component={ Balance } />
+          <ProtectedRoute path="/travel/passport" component={ Passport }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/travel/visa" component={ Visa } accesstype={["client","admin","IBO","branch"]} />
+          <ProtectedRoute path="/travel/tour" component={ CustomizeTour } accesstype={["client","admin","IBO","branch"]} />
+          <ProtectedRoute path="/balance" component={ Balance } accesstype={["client","admin","IBO","branch"]} />
 
 
 
@@ -94,46 +94,46 @@ class AppRoutes extends Component {
           {/* investment */}
 
 
-          <Route path="/products/trading" component={ Dropdowns } />
-          <Route path="/products/investments" component={ Typography } />
+          <Route path="/products/trading" component={ Dropdowns }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/products/investments" component={ Typography } accesstype={["client","admin","IBO","branch"]} />
 
-          <Route path="/basic-ui/buttons" component={ Buttons } />
-          <Route path="/basic-ui/dropdowns" component={ Dropdowns } />
-          <Route path="/basic-ui/typography" component={ Typography } />
-
-
-          <Route path="/form-Elements/basic-elements" component={ BasicElements } />
-
-          <Route path="/tables/basic-table" component={ BasicTable } />
+          <Route path="/basic-ui/buttons" component={ Buttons }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/basic-ui/dropdowns" component={ Dropdowns }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/basic-ui/typography" component={ Typography } accesstype={["client","admin","IBO","branch"]} />
 
 
-          <Route path="/icons/mdi" component={ Mdi } />
+          <Route path="/form-Elements/basic-elements" component={ BasicElements }  accesstype={["client","admin","IBO","branch"]}/>
+
+          <Route path="/tables/basic-table" component={ BasicTable } accesstype={["client","admin","IBO","branch"]} />
 
 
-          <Route path="/charts/chart-js" component={ ChartJs } />
+          <Route path="/icons/mdi" component={ Mdi }  accesstype={["client","admin","IBO","branch"]}/>
 
 
-          <Route path="/user-pages/login-1" component={ Login } />
-          <Route path="/user-pages/register-1" component={ Register1 } />
-          <Route path="/user-pages/forgot-password-1" component={ Forgot1 } />
-          <Route path="/user-pages/reset-password-1" component={ Reset1 } />
-          <Route path="/user-pages/bank-details" component={ BankDetails } />
-          <ProtectedRoute path="/user-pages/settings-1" component={ Settings } />
-          <Route path="/user-pages/lockscreen" component={ Lockscreen } />
+          <Route path="/charts/chart-js" component={ ChartJs }  accesstype={["client","admin","IBO","branch"]}/>
+
+
+          <Route path="/user-pages/login-1" component={ Login }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/user-pages/register-1" component={ Register1 }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/user-pages/forgot-password-1" component={ Forgot1 }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/user-pages/reset-password-1" component={ Reset1 }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/user-pages/bank-details" component={ BankDetails }  accesstype={["client","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/user-pages/settings-1" component={ Settings } accesstype={["client","admin","IBO","branch"]} />
+          <Route path="/user-pages/lockscreen" component={ Lockscreen }  accesstype={["client","admin","IBO","branch"]}/>
 
 
 
 
           {/* IBO routes */}
-          <ProtectedRoute path="/clients" component={ CreateClints } />
+          <ProtectedRoute path="/clients" component={ CreateClints } accesstype={["client","admin","IBO","branch"]} />
 
 
 
 
-          <Route path="/error-pages/error-404" component={ Error404 } />
-          <Route path="/error-pages/error-500" component={ Error500 } />
+          <Route path="/error-pages/error-404" component={ Error404 }  accesstype={["client","admin","IBO","branch"]}/>
+          <Route path="/error-pages/error-500" component={ Error500 }  accesstype={["client","admin","IBO","branch"]}/>
 
-          <Route path="/general-pages/blank-page" component={ BlankPage } />
+          <Route path="/general-pages/blank-page" component={ BlankPage }  accesstype={["client","admin","IBO","branch"]}/>
 
           <Redirect to="/dashboard" />
         </Switch>

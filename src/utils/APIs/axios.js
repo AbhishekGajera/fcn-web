@@ -16,3 +16,18 @@ const api = (url = '', method, data = {}) => {
 }
 
 export default api
+
+const refreshTokenApi = (url = '', method, data = {}) => {
+  const options = {
+    method,
+    headers: {
+      'content-type': 'application/json',
+      'Authorization': `Bearer ${localStorage.getItem('refreshToken')}`
+    },
+     data,
+    url: `${baseURL}/${url}`,
+  }
+  return axios(options)
+}
+
+export  { refreshTokenApi }
