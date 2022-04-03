@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
 import { getUsers } from "../../../utils/APIs";
+import Swal from "sweetalert2";
 
 const BranchList = () => {
   const [cookies] = useCookies(["user"]);
@@ -37,10 +38,38 @@ const BranchList = () => {
     );
     setItemOffset(newOffset);
   };
+  const deleteBranch =(uid)=>{
+    // console.log(uid);
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#DD6B55",
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // return (
+        //   deleteUsr(uid, () => {
+        //     list();
+        //   }),
+        //   Swal.fire(
+        //     "Deleted!",
+        //     "Your imaginary file has been deleted.",
+        //     "success",
+        //   )
+        // );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    });
+  }
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">Clients / create Clients </h3>
+        <h3 className="page-title">Clients / Fetch Branch </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -85,7 +114,7 @@ const BranchList = () => {
                           <i className="mdi mdi-lead-pencil"></i>
                         </td>
                         <td>
-                          <i className="mdi mdi-delete"></i>
+                          <i  onClick={()=> deleteBranch(item?.id)} className="mdi mdi-delete"></i>
                         </td>
                       </tr>
                     );
