@@ -294,6 +294,70 @@ const PowerOne = () => {
                   </div>
                   <p className="card-description">KYC </p>
                   <div className="row">
+                  <div className="col-md-8">
+                    <Form.Group className="row">
+                      <label className="col-sm-3  col-form-label">KYC</label>
+                      <div className="col-sm-3">
+                        <div className="form-check">
+                          <label className="form-check-label">
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              name="pancard"
+                              {...register("pancard", { required: true })}
+                            />
+                            <i className="input-helper"></i>
+                            Pan card
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-sm-3">
+                        <div className="form-check">
+                          <label className="form-check-label">
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              name="adhaarcard"
+                              {...register("adhaarcard", { required: true })}
+                            />
+                            <i className="input-helper"></i>
+                            Adhaar card
+                          </label>
+                        </div>
+                      </div>
+                      <div className="col-sm-3">
+                        <div className="form-check">
+                          <label className="form-check-label">
+                            <input
+                              type="checkbox"
+                              className="form-check-input"
+                              name="bankpassbook"
+                              {...register("bankpassbook", { required: true })}
+                            />
+                            <i className="input-helper"></i>
+                            Bank Passbook
+                          </label>
+                        </div>
+                      </div>
+                    </Form.Group>
+                  </div>
+                    <div className="col-md-4  ">
+                    <div className="col-sm-3">
+                        <div className="">
+                          <label className="label">
+                            <input
+                              type="file"
+                              className="input"
+                              name="file"
+                              multiple={true}
+                              {...register("file", { required: true })}
+                              />
+                          </label>
+                        </div>
+                      </div>
+                    </div>
+                </div>
+                  <div className="row">
                     <div className="col-md-12">
                       <Form.Group className="row">
                         <label className="col-sm-2 col-form-label">PAN Number</label>
