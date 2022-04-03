@@ -158,7 +158,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                 Travels{" "}
-                <i className="mdi mdi-chart-line mdi-24px float-right"></i>
+                <i className="mdi mdi-airplane mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ successfull tours</h2>
               <h6 className="card-text">Increased by 60%</h6>
