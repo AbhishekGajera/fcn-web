@@ -34,7 +34,9 @@ const Passport = () => {
                         <div className="col-sm-9">
                         <Form.Control  type="text"
                          name="name"
+                         placeholder="Enter Your Name"
                          {...register("name", { required: true })} />
+                        {errors && errors.name && <p style={{ color: "red" }}>name is required field</p>}
                         </div>
                       </Form.Group>
                     </div>
@@ -42,9 +44,11 @@ const Passport = () => {
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">Surname</label>
                         <div className="col-sm-9">
-                        <Form.Control type="text"
+                        <Form.Control  type="text"
                          name="surname"
-                         {...register("surname", { required: true })} /> 
+                         placeholder="Enter Your surname"
+                         {...register("surname", { required: true })} />
+                        {errors && errors.surname && <p style={{ color: "red" }}>surname is required field</p>}
                         </div>
                       </Form.Group>
                     </div>
@@ -73,7 +77,9 @@ const Passport = () => {
                   <div className="col-sm-9">
                   <Form.Control  type="text"
                          name="dob"
+                         placeholder="Enter Your dob"
                          {...register("dob", { required: true })} />
+                        {errors && errors.dob && <p style={{ color: "red" }}>Date of birth is required field</p>}
                   </div>
                 </Form.Group>
                     </div>
@@ -110,7 +116,11 @@ const Passport = () => {
                       <Form.Group className="row">
                         <label className="col-sm-3 col-form-label">City</label>
                         <div className="col-sm-9">
-                        <Form.Control type="text"/>
+                        <Form.Control  type="text"
+                         name="city"
+                         placeholder="Enter Your city"
+                         {...register("city", { required: true })} />
+                        {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
                         </div>
                       </Form.Group>
                     </div>
@@ -149,7 +159,11 @@ const Passport = () => {
                       <Form.Group className="row">
                         <label className="col-sm-2 col-form-label">PAN Number</label>
                         <div className="col-sm-10">
-                        <Form.Control type="text"/>
+                        <Form.Control  type="text"
+                         name="pan"
+                         placeholder="Enter Your pan"
+                         {...register("pan", { required: true })} />
+                        {errors && errors.pan && <p style={{ color: "red" }}>PAN is required field</p>}
                         </div>
                       </Form.Group>
  
@@ -162,7 +176,11 @@ const Passport = () => {
                       <Form.Group className="row">
                         <label className="col-sm-2 col-form-label">Voter ID Number</label>
                         <div className="col-sm-10">
-                        <Form.Control type="text"/>
+                        <Form.Control  type="text"
+                         name="voter"
+                         placeholder="Enter Your Voter ID"
+                         {...register("voter", { required: true })} />
+                        {errors && errors.voter && <p style={{ color: "red" }}>voter id is required field</p>}
                         </div>
                       </Form.Group>
  
@@ -174,7 +192,7 @@ const Passport = () => {
                         <button
                             className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
                             type="submit"
-                            disabled={!isDirty || !isValid}
+                            
                         >
                             SUBMIT
                         </button>

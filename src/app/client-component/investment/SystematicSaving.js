@@ -58,8 +58,10 @@ const SystematicSaving = () => {
               <label className="col-sm-3 col-form-label">Name of 1st Applicant</label>
               <div className="col-sm-9">
               <Form.Control  type="text"
-               name="name1"
-               {...register("name1", { required: true })} />
+                         name="name1"
+                         placeholder="Enter Your 1st Applicant"
+                         {...register("name1", { required: true })} />
+                            {errors && errors.name1 && <p style={{ color: "red" }}>name is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -68,8 +70,11 @@ const SystematicSaving = () => {
               <label className="col-sm-3 col-form-label">PAN</label>
               <div className="col-sm-9">
               <Form.Control type="text"
-               name="pan1"
-               {...register("pan1", { required: true })} /> 
+                         name="pan1"
+                         placeholder="Enter Your PAN1"
+                         {...register("pan1", { required: true })} /> 
+                      {errors && errors.name1 && <p style={{ color: "red" }}>pan1 is required field</p>}
+
               </div>
             </Form.Group>
           </div>
@@ -80,8 +85,10 @@ const SystematicSaving = () => {
               <label className="col-sm-3 col-form-label">Name of 2nd Applicant</label>
               <div className="col-sm-9">
               <Form.Control  type="text"
-               name="name2"
-               {...register("name2", { required: true })} />
+                         name="name2"
+                         placeholder="Enter Your 2nd Applicant"
+                         {...register("name2", { required: true })} />
+                        {errors && errors.name2 && <p style={{ color: "red" }}>name2 is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -90,8 +97,10 @@ const SystematicSaving = () => {
               <label className="col-sm-3 col-form-label">PAN</label>
               <div className="col-sm-9">
               <Form.Control type="text"
-               name="pan2"
-               {...register("pan2", { required: true })} /> 
+                         name="pan2"
+                         placeholder="Enter Your PAN2"
+                         {...register("pan2", { required: true })} /> 
+                        {errors && errors.pan2 && <p style={{ color: "red" }}>pan2 is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -130,7 +139,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-2 col-form-label">Address 1</label>
               <div className="col-sm-10">
-              <Form.Control type="text"/>
+             <Form.Control type="text" name="address1"  placeholder="Enter Your Address1"
+                         {...register("address1", { required: true })}/>
+                        
+                        {errors && errors.address1 && <p style={{ color: "red" }}>address1 is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -140,7 +152,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-2 col-form-label">Address 2</label>
               <div className="col-sm-10">
-              <Form.Control type="text"/>
+             <Form.Control type="text" name="address2"  placeholder="Enter Your address2"
+                         {...register("address2", { required: true })}/>
+                        
+                        {errors && errors.address2 && <p style={{ color: "red" }}>address2 is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -151,7 +166,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-3 col-form-label">City</label>
               <div className="col-sm-9">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="city"  placeholder="Enter Your city"
+                         {...register("city", { required: true })}/>
+                        
+                        {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -159,7 +177,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-3 col-form-label">State</label>
               <div className="col-sm-9">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="state"  placeholder="Enter Your state"
+                         {...register("state", { required: true })}/>
+                        
+                        {errors && errors.state && <p style={{ color: "red" }}>state is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -167,7 +188,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-3 col-form-label">Country</label>
               <div className="col-sm-9">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="country"  placeholder="Enter Your country"
+                         {...register("country", { required: true })}/>
+                        
+                        {errors && errors.country && <p style={{ color: "red" }}>country is required field</p>}
               </div>
             </Form.Group>
           </div>
@@ -233,6 +257,7 @@ const SystematicSaving = () => {
                               multiple={true}
                               {...register("file", { required: true })}
                               />
+                                {errors && errors.file && <p style={{ color: "red" }}> file is required field</p>}
                           </label>
                         </div>
                       </div>
@@ -243,7 +268,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-2 col-form-label">PAN Number</label>
               <div className="col-sm-10">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="pan_number"  placeholder="Enter Your Pan"
+                         {...register("pan_number", { required: true })}/>
+                        
+                        {errors && errors.pan_number && <p style={{ color: "red" }}>pan is required field</p>}
               </div>
             </Form.Group>
 
@@ -254,7 +282,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-2 col-form-label">Aadhar Number</label>
               <div className="col-sm-10">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="adhar"  placeholder="Enter Your Adhar"
+                         {...register("adhar", { required: true })}/>
+                        
+                        {errors && errors.adhar && <p style={{ color: "red" }}>adhar is required field</p>}
               </div>
             </Form.Group>
 
@@ -265,7 +296,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-2 col-form-label">Passport Number</label>
               <div className="col-sm-10">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="passport"  placeholder="Enter Your Passport"
+                         {...register("passport", { required: true })}/>
+                        
+                        {errors && errors.passport && <p style={{ color: "red" }}>pan is required field</p>}
               </div>
             </Form.Group>
 
@@ -276,7 +310,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-2 col-form-label">Voter ID Number</label>
               <div className="col-sm-10">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="voter"  placeholder="Enter Your voter"
+                         {...register("voter", { required: true })}/>
+                        
+                        {errors && errors.voter && <p style={{ color: "red" }}>voter is required field</p>}
               </div>
             </Form.Group>
 
@@ -288,7 +325,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-3 col-form-label">By Cheque</label>
               <div className="col-sm-9">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="cheque"  placeholder="Enter Your cheque"
+                         {...register("cheque", { required: true })}/>
+                        
+                        {errors && errors.cheque && <p style={{ color: "red" }}>cheque is required field</p>}
               </div>
             </Form.Group>
 
@@ -297,7 +337,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-3 col-form-label">By NEFT</label>
               <div className="col-sm-9">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="neft"  placeholder="Enter Your neft"
+                         {...register("neft", { required: true })}/>
+                        
+                        {errors && errors.neft && <p style={{ color: "red" }}>neft is required field</p>}
               </div>
             </Form.Group>
 
@@ -309,7 +352,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-3 col-form-label">By RTGS</label>
               <div className="col-sm-9">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="rtgs"  placeholder="Enter Your rtgs"
+                         {...register("rtgs", { required: true })}/>
+                        
+                        {errors && errors.rtgs && <p style={{ color: "red" }}>rtgs is required field</p>}
               </div>
             </Form.Group>
 
@@ -318,7 +364,10 @@ const SystematicSaving = () => {
             <Form.Group className="row">
               <label className="col-sm-3 col-form-label">By Payment Gateways</label>
               <div className="col-sm-9">
-              <Form.Control type="text"/>
+              <Form.Control type="text" name="payment"  placeholder="Enter Your payment"
+                         {...register("payment", { required: true })}/>
+                        
+                        {errors && errors.payment && <p style={{ color: "red" }}>gateway is required field</p>}
               </div>
             </Form.Group>
 
@@ -335,7 +384,7 @@ const SystematicSaving = () => {
               <button
                   className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
                   type="submit"
-                  disabled={!isDirty || !isValid}
+                
               >
                  SUBMIT
               </button>
