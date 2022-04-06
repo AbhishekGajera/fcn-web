@@ -34,7 +34,9 @@ const Insurance = () => {
                         <div className="col-sm-10">
                         <Form.Control  type="text"
                          name="name"
+                         placeholder="Enter Your Name"
                          {...register("name", { required: true })} />
+                            {errors && errors.name && <p style={{ color: "red" }}>name is required field</p>}
                         </div>
                       </Form.Group>
                     </div>

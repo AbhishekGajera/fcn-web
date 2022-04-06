@@ -34,7 +34,9 @@ const CustomizeTour = () => {
                         <div className="col-sm-9">
                         <Form.Control  type="text"
                          name="source"
+                         placeholder="Enter Your Source"
                          {...register("source", { required: true })} />
+                        {errors && errors.source && <p style={{ color: "red" }}>source is required field</p>}
                         </div>
                       </Form.Group>
                     </div>
@@ -47,7 +49,9 @@ const CustomizeTour = () => {
                         <div className="col-sm-9">
                         <Form.Control  type="text"
                          name="dest"
+                         placeholder="Enter Your dest"
                          {...register("dest", { required: true })} />
+                        {errors && errors.dest && <p style={{ color: "red" }}>destination is required field</p>}
                         </div>
                       </Form.Group>
                     </div>
@@ -59,8 +63,11 @@ const CustomizeTour = () => {
                         <label className="col-sm-3 col-form-label">Start Date</label>
                         <div className="col-sm-9">
                         <Form.Control  type="text"
-                         name="start"
-                         {...register("start", { required: true })} />
+                         name="start_date"
+                         placeholder="Enter Your start date"
+
+                         {...register("start_date", { required: true })} />
+                         {errors && errors.start_date && <p style={{ color: "red" }}>start date is required field</p>}
                         </div>
                       </Form.Group>
                     </div>
@@ -71,8 +78,12 @@ const CustomizeTour = () => {
                         <label className="col-sm-3 col-form-label">End Date</label>
                         <div className="col-sm-9">
                         <Form.Control  type="text"
-                         name="end"
-                         {...register("end", { required: true })} />
+                         name="end_date"
+                         placeholder="Enter Your end date"
+
+                         {...register("end_date", { required: true })} />
+                         {errors && errors.end_date && <p style={{ color: "red" }}>end date is required field</p>}
+
                         </div>
                       </Form.Group>
                     </div>
@@ -84,7 +95,7 @@ const CustomizeTour = () => {
                         <button
                             className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
                             type="submit"
-                            disabled={!isDirty || !isValid}
+                          
                         >
                             SEARCH
                         </button>

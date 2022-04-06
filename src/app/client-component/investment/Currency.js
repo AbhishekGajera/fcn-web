@@ -66,11 +66,11 @@ const Currency = () => {
                     <Form.Group className="row">
                       <label className="col-sm-2 col-form-label">Name</label>
                       <div className="col-sm-10">
-                        <Form.Control
-                          type="text"
-                          name="name"
-                          {...register("name", { required: true })}
-                        />
+                      <Form.Control  type="text"
+                         name="name"
+                         placeholder="Enter Your Name"
+                         {...register("name", { required: true })} />
+                            {errors && errors.name && <p>name is required field</p>}
                       </div>
                     </Form.Group>
                   </div>
@@ -143,11 +143,11 @@ const Currency = () => {
                         Address{" "}
                       </label>
                       <div className="col-sm-10">
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          {...register("address", { required: true })}
-                        />
+                      <Form.Control type="text" name="address"  placeholder="Enter Your Address"
+                         {...register("address", { required: true })}/>
+                        
+                        {errors && errors.address && <p>address is required field</p>}
+
                       </div>
                     </Form.Group>
                   </div>
@@ -254,6 +254,7 @@ const Currency = () => {
                               multiple={true}
                               {...register("file", { required: true })}
                               />
+                               {errors && errors.file && <p> file is required field</p>}
                           </label>
                         </div>
                       </div>
