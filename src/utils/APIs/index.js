@@ -11,5 +11,8 @@ export const ResetUserPasswod = (data) => api('auth/forgot-password', 'POST', da
 export const CreateUser = (data) => api('users', 'POST', data);
 export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
-export const getUsers = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}`, 'GET');
+export const getUsers = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=user`, 'GET');
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
+
+// branch management
+export const getBranches = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=branch`, 'GET');

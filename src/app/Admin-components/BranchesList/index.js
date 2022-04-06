@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getUsers } from "../../../utils/APIs";
+import { getBranches } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 
 const BranchList = () => {
@@ -19,14 +19,14 @@ const BranchList = () => {
   useEffect(() => {
     (async () => {
       const endOffset = itemOffset + itemsPerPage;
-      const items = await (await getUsers(itemsPerPage, itemOffset)).data;
+      const items = await (await getBranches(itemsPerPage, itemOffset)).data;
       setitemlist(items?.results);
       console.info("items ", items);
 
       // Fetch items from another resources.
       console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(items.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(items.length / itemsPerPage));
+      setCurrentItems(items?.results?.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
     })();
   }, [itemOffset, itemsPerPage]);
 
@@ -39,7 +39,6 @@ const BranchList = () => {
     setItemOffset(newOffset);
   };
   const deleteBranch =(uid)=>{
-    // console.log(uid);
     Swal.fire({
       title: "Are you sure?",
       text: "You will not be able to recover this imaginary file!",
