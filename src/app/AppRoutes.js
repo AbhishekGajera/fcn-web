@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Spinner from '../app/shared/Spinner';
 import ProtectedRoute from '../common/ProtectedRoute';
+import Deposit from './client-component/balance/Deposit';
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const SipCalc   = lazy(() => import('./client-component/SipCalc'));
@@ -37,6 +38,81 @@ const CreateClints = lazy(() => import('./IBO-components/CreateClients'));
 const ClientList = lazy(() => import('./IBO-components/ClientList'));
 const CreateBranches = lazy(() => import('./Admin-components/BranchesCreate'));
 const BranchList = lazy(() => import('./Admin-components/BranchesList'));
+const ProductAdd = lazy(() => import('./Admin-components/Product/ProductAdd'));
+const ProductFetch = lazy(() => import('./Admin-components/Product/ProductFetch'));
+const Weekly = lazy(() => import('./Admin-components/Target/Weekly'));
+const Monthly = lazy(() => import('./Admin-components/Target/Monthly'));
+const Yearly = lazy(() => import('./Admin-components/Target/Yearly'));
+const OfficeExpense = lazy(() => import('./Admin-components/Cost/OfficeExpense'));
+const EmployeeExpense = lazy(() => import('./Admin-components/Cost/EmployeeExpense'));
+const Mislenious = lazy(() => import('./Admin-components/Cost/Mislenious'));
+const EmployeeRevenue = lazy(() => import('./Admin-components/Revenues/EmployeeRevenue'));
+const IboRevenue = lazy(() => import('./Admin-components/Revenues/IboRevenue'));
+const BranchRevenue = lazy(() => import('./Admin-components/Revenues/BranchRevenue'));
+const Invoice = lazy(() => import('./Admin-components/Fees/Invoice'));
+const Technology = lazy(() => import('./Admin-components/Fees/Technology'));
+const DepositWithdrawal = lazy(() => import('./Admin-components/Fees/DepositWithdrawal'));
+const AnnouncementPromote = lazy(() => import('./Admin-components/Marketing/AnnouncementPromote'));
+const FlyerAward = lazy(() => import('./Admin-components/Marketing/FlyerAward'));
+const Browchures = lazy(() => import('./Admin-components/Marketing/Browchures'));
+const AccountOpening = lazy(() => import('./Admin-components/Welcome/AccountOpening'));
+const ProductAcquire = lazy(() => import('./Admin-components/Welcome/ProductAcquire'));
+const TerminateLetter = lazy(() => import('./Admin-components/Welcome/TerminateLetter'));
+const Client = lazy(() => import('./Admin-components/Product-Assign/Client'));
+const Ibo = lazy(() => import('./Admin-components/Product-Assign/Ibo'));
+const Branch = lazy(() => import('./Admin-components/Product-Assign/Branch'));
+const BranchPerformance = lazy(() => import('./Admin-components/Performance/BranchPerformance'));
+const Employee = lazy(() => import('./Admin-components/Performance/Employee'));
+const IboPerformance = lazy(() => import('./Admin-components/Performance/IboPerformance'));
+const EmployeeNotification = lazy(() => import('./Admin-components/Notification/EmployeeNotification'));
+const IboNotification = lazy(() => import('./Admin-components/Notification/IboNotification'));
+const BranchNotification = lazy(() => import('./Admin-components/Notification/BranchNotification'));
+const ClientNotification = lazy(() => import('./Admin-components/Notification/ClientNotification'));
+const Manual = lazy(() => import('./Admin-components/Password/Manual'));
+const Random = lazy(() => import('./Admin-components/Password/Random'));
+const Otp = lazy(() => import('./Admin-components/Password/Otp'));
+const CpTravels = lazy(() => import('./Admin-components/Auto-Calculation/CpTravels'));
+const PoEquity = lazy(() => import('./Admin-components/Auto-Calculation/PoEquity'));
+const Ssp = lazy(() => import('./Admin-components/Auto-Calculation/Ssp'));
+const Advances = lazy(() => import('./Admin-components/Employee-Management/Advances'));
+const Bonus = lazy(() => import('./Admin-components/Employee-Management/Bonus'));
+const Brokerages = lazy(() => import('./Admin-components/Employee-Management/Brokerages'));
+const Commision = lazy(() => import('./Admin-components/Employee-Management/Commision'));
+const Leave = lazy(() => import('./Admin-components/Employee-Management/Leave'));
+const Salaries = lazy(() => import('./Admin-components/Employee-Management/Salaries'));
+const Active = lazy(() => import('./Admin-components/Appointment/Active'));
+const MonthlyAppoint = lazy(() => import('./Admin-components/Appointment/MonthlyAppoint'));
+const NotRequired = lazy(() => import('./Admin-components/Appointment/NotRequired'));
+const Pending = lazy(() => import('./Admin-components/Appointment/Pending'));
+const Today = lazy(() => import('./Admin-components/Appointment/Today'));
+const WeeklyAppoint = lazy(() => import('./Admin-components/Appointment/WeeklyAppoint'));
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 const CreateEmployee = lazy(() => import('./BranchComponents/CreateEmployee'));
 const EmployeeList = lazy(() => import('./BranchComponents/EmployeeList'));
 
@@ -124,6 +200,78 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/clients/clientlist" component={ ClientList } accesstype={["admin"]} />
           <ProtectedRoute path="/branches/createbranches" component={ CreateBranches } accesstype={["admin"]} />
           <ProtectedRoute path="/branches/brancheslist" component={ BranchList } accesstype={["admin"]} />
+          <ProtectedRoute path="/products/addproducts" component={ ProductAdd } accesstype={["admin"]} />
+          <ProtectedRoute path="/products/productslist" component={ ProductFetch } accesstype={["admin"]} />
+          <ProtectedRoute path="/targets/weekly" component={ Weekly } accesstype={["admin"]} />
+          <ProtectedRoute path="/targets/monthly" component={ Monthly } accesstype={["admin"]} />
+          <ProtectedRoute path="/targets/yearly" component={ Yearly } accesstype={["admin"]} />
+          <ProtectedRoute path="/costs/office" component={ OfficeExpense } accesstype={["admin"]} />
+          <ProtectedRoute path="/costs/employee" component={ EmployeeExpense } accesstype={["admin"]} />
+          <ProtectedRoute path="/costs/mislenious" component={ Mislenious } accesstype={["admin"]} />
+          <ProtectedRoute path="/revenue/employee" component={ EmployeeRevenue } accesstype={["admin"]} />
+          <ProtectedRoute path="/revenue/ibo" component={ IboRevenue } accesstype={["admin"]} />
+          <ProtectedRoute path="/revenue/branch" component={ BranchRevenue } accesstype={["admin"]} />
+          <ProtectedRoute path="/fees/invoice" component={ Invoice } accesstype={["admin"]} />
+          <ProtectedRoute path="/fees/technology" component={ Technology } accesstype={["admin"]} />
+          <ProtectedRoute path="/fees/deposit" component={ DepositWithdrawal } accesstype={["admin"]} />
+          <ProtectedRoute path="/marketing/announcement" component={ AnnouncementPromote } accesstype={["admin"]} />
+          <ProtectedRoute path="/marketing/flyers" component={ FlyerAward } accesstype={["admin"]} />
+          <ProtectedRoute path="/marketing/browchures" component={ Browchures } accesstype={["admin"]} />
+          <ProtectedRoute path="/welcome/account_opening" component={ AccountOpening } accesstype={["admin"]} />
+          <ProtectedRoute path="/welcome/product_aquire" component={ ProductAcquire } accesstype={["admin"]} />
+          <ProtectedRoute path="/welcome/terminate_branch" component={ TerminateLetter } accesstype={["admin"]} />
+          <ProtectedRoute path="/product-assign/client" component={ Client } accesstype={["admin"]} />
+          <ProtectedRoute path="/product-assign/ibo" component={ Ibo } accesstype={["admin"]} />
+          <ProtectedRoute path="/product-assign/branch" component={ Branch } accesstype={["admin"]} />
+          <ProtectedRoute path="/performance/employee" component={ Employee } accesstype={["admin"]} />
+          <ProtectedRoute path="/performance/ibo" component={ IboPerformance } accesstype={["admin"]} />
+          <ProtectedRoute path="/performance/branch" component={ BranchPerformance } accesstype={["admin"]} />
+          <ProtectedRoute path="/notification/employee" component={ EmployeeNotification } accesstype={["admin"]} />
+          <ProtectedRoute path="/notification/ibo" component={ IboNotification } accesstype={["admin"]} />
+          <ProtectedRoute path="/notification/branch" component={ BranchNotification } accesstype={["admin"]} />
+          <ProtectedRoute path="/notification/client" component={ ClientNotification } accesstype={["admin"]} />
+          <ProtectedRoute path="/password/random" component={ Random } accesstype={["admin"]} />
+          <ProtectedRoute path="/password/manual" component={ Manual } accesstype={["admin"]} />
+          <ProtectedRoute path="/password/otp" component={ Otp } accesstype={["admin"]} />
+          <ProtectedRoute path="/calculation/ssp" component={ Ssp } accesstype={["admin"]} />
+          <ProtectedRoute path="/calculation/powerone" component={ PoEquity } accesstype={["admin"]} />
+          <ProtectedRoute path="/calculation/cp" component={ CpTravels } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/leave" component={ Leave } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/advances" component={ Advances } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/salary" component={ Salaries } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/bonus" component={ Bonus } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/commision" component={ Commision } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/brokerages" component={ Brokerages } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/today" component={ Today } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/weekly" component={ WeeklyAppoint } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/monthly" component={ MonthlyAppoint } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/pending" component={ Pending } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/active" component={ Active } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/norequired" component={ NotRequired } accesstype={["admin"]} />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+          
+
+          
+
+
+
+
+
 
 
           {/* branch routes */}
