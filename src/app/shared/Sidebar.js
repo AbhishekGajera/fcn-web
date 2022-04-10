@@ -8,9 +8,6 @@ class Sidebar extends Component {
 
   state = {};
   userData = JSON.parse(this.props?.cookies?.cookies?.user || '{"name":"John", "age":30, "city":"New York"}')
-  // <ProtectedRoute path="/marketing/announcement" component={ AnnouncementPromote } accesstype={["admin"]} />
-  //         <ProtectedRoute path="/marketing/flyers" component={ FlyerAward } accesstype={["admin"]} />
-  //         <ProtectedRoute path="/marketing/browchures" component={ Browchures } accesstype={["admin"]} />
   setFirstActiveItem = (itemName) => {
     if(itemName === 'ourTraining'){
       this.props.history.push('/training/free')
