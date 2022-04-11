@@ -3,6 +3,9 @@ import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
 import { getBranches } from "../../../utils/APIs";
 import Swal from "sweetalert2";
+import Modal from "react-bootstrap/Modal";
+import { useForm } from "react-hook-form";
+import { Form } from 'react-bootstrap';
 
 const BranchList = () => {
   const [cookies] = useCookies(["user"]);
@@ -15,6 +18,33 @@ const BranchList = () => {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage, setitemsPerPage] = useState(10);
+  const [show, setShow] = React.useState(false);
+  const [valueToEdit, setvalueToEdit] = useState({})
+
+  const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
+    mode: "onChange"
+  });
+  var strongRegexMo = new RegExp(
+    "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
+  );
+  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
+
+  const handleClose = () => {
+    setShow(false)
+    setvalueToEdit({})
+  };
+
+  const handleShow = (value) =>{ 
+    setvalueToEdit(value)
+   
+      setShow(true);
+  
+  }
+  console.log(valueToEdit);
+  const onSubmit = async (data) => {
+    alert(data);
+    };
+
 
   useEffect(() => {
     (async () => {
@@ -67,6 +97,178 @@ const BranchList = () => {
   }
   return (
     <div>
+         <Modal
+      show={show}
+      onHide={handleClose}
+      backdrop="static"
+      keyboard={false}
+    >
+      <Modal.Header closeButton>
+        <Modal.Title>Update Client</Modal.Title>
+      </Modal.Header>
+      <Modal.Body>
+      <div className="row auth">
+        <div className="col-12 grid-margin">
+          <div className="card">
+            <div className="card-body">
+              <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+                <p className="card-description"> Update Client </p>
+                <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">Name</label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="name"
+                          defaultValue={valueToEdit.name}
+                          {...register("name", { required: true })}
+                       
+                        />
+                        {errors && errors.name && <p>name is required field</p>}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+{/* 
+                <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-2 col-form-label">
+                        Address{" "}
+                      </label>
+                      <div className="col-sm-10">
+                        <Form.Control
+                          type="text"
+                          name="address"
+                          {...register("address", { required: true })}
+                        />
+                        {errors && errors.address && (
+                          <p>address is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div> */}
+
+                <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Contact No
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="contactno"
+                          defaultValue={valueToEdit.contactno}
+                          {...register("contactno", {
+                            required: true,
+                            pattern: strongRegexMo,
+                          })}
+                        />
+                        {errors &&
+                          errors.contactno &&
+                          errors.contactno.type === "required" && (
+                            <p>contact number is required field</p>
+                          )}
+                        {errors &&
+                          errors.contactno &&
+                          errors.contactno.type === "pattern" && (
+                            <p>invalid phone number please use valid formate</p>
+                          )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  </div>
+                  <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">Branch</label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          defaultValue={valueToEdit.branch}
+
+                          name="branch"
+                          {...register("branch", { required: true })}
+                        />
+                        {errors && errors.branch && (
+                          <p>branch is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">Email</label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="email"
+                          defaultValue={valueToEdit.email}
+
+                          {...register("email", {
+                            required: true,
+                            pattern: /^\S+@\S+$/i,
+                          })}
+                        />
+                        {errors &&
+                          errors.email &&
+                          errors.email.type === "required" && (
+                            <p>email is required field</p>
+                          )}
+                        {errors &&
+                          errors.email &&
+                          errors.email.type === "pattern" && (
+                            <p>invalid email formate</p>
+                          )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                 
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">Role</label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          defaultValue={valueToEdit.role}
+
+                          name="role"
+                          {...register("role", { required: true })}
+                        />
+                        {errors && errors.branch && (
+                          <p>role is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+              
+             
+
+                <div className="mt-3">
+                  <button
+                    className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                    type="submit"
+                  >
+                    UPDATE
+                  </button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+      </Modal.Body>
+     
+    
+    </Modal>
       <div className="page-header">
         <h3 className="page-title">Clients / Fetch Branch </h3>
         <nav aria-label="breadcrumb">
@@ -110,7 +312,7 @@ const BranchList = () => {
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
                         <td>
-                          <i className="mdi mdi-lead-pencil"></i>
+                          <i onClick={()=> handleShow(item)} className="mdi mdi-lead-pencil"></i>
                         </td>
                         <td>
                           <i  onClick={()=> deleteBranch(item?.id)} className="mdi mdi-delete"></i>
