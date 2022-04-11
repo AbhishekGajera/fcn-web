@@ -270,7 +270,7 @@ const BranchList = () => {
     
     </Modal>
       <div className="page-header">
-        <h3 className="page-title">Clients / Fetch Branch </h3>
+        <h3 className="page-title">branches / Fetch Branch </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -279,7 +279,7 @@ const BranchList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Create clients
+              Create branches
             </li>
           </ol>
         </nav>
