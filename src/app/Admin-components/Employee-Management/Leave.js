@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getEmployee ,deleteEmployee,userLogout } from "../../../utils/APIs";
+import { getEmployeeLeaves ,deleteEmployeeLeave,userLogout,getAllEmployee, updateEmployeeLeave,approveEmployee } from "../../../utils/APIs";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -14,68 +14,139 @@ const Leave = () => {
   const history = useHistory()
   const [cookies,setCookie ] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
- 
-  const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
-    mode: "onChange"
-  });
-  var strongRegexMo = new RegExp(
-    "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
-  );
-  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
-  const onSubmit = async (data) => {
-  alert(data);
-  };
-
+  const [employeeList, setemployeeList] = useState([])
   // We start with an empty list of items.
-  const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage, setitemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
-  const [show1, setShow1] = React.useState(false);
+  const [valueToEdit, setvalueToEdit] = useState({});
+ 
+  const { register, handleSubmit,reset, formState: { errors , isDirty, isValid } } = useForm({
+    mode: "onChange"
+  });
 
-  const [valueToEdit, setvalueToEdit] = useState({})
-  // const [first, setfirst] = useState(second)
+  const [modelMode, setmodelMode] = useState('create')
 
+  const onSubmit = async (data) => {
+    const date1 = new Date(data?.date_from);
+    const date2 = new Date(data?.date_to);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24)); 
+    if(modelMode === 'edit'){
+    try {
+      const formData = JSON.stringify({
+        leave_id: valueToEdit?.id,
+        user: data.user,
+        reason: data?.reason,
+        leave_status: data?.leave_status,
+        total_leave : diffDays,
+        date_from : new Date(data?.date_from).toISOString(),
+        date_to : new Date(data?.date_to).toISOString(),
+      });
+      await updateEmployeeLeave(formData)
+      toast.success('Leave updated successfully',{
+        autoClose : true
+      })
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
+    finally {
+      handleClose()
+      getData()
+    }
+  }
+
+  if(modelMode === 'create'){
+    try {
+      const formData = JSON.stringify({
+        user: data.user,
+        reason: data?.reason,
+        leave_status: data?.leave_status,
+        total_leave : diffDays,
+        date_from : new Date(data?.date_from).toISOString(),
+        date_to : new Date(data?.date_to).toISOString(),
+      });
+      await approveEmployee(formData)
+      toast.success('Leave added successfully',{
+        autoClose : true
+      })
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
+    finally {
+      handleClose()
+      getData()
+    }
+  }
+  };
 
   const handleClose = () => {
     setShow(false)
     setvalueToEdit({})
-  };
-  const handleClose1 = () => {
-    setShow1(false)
-    // setvalueToEdit({})
+    reset()
   };
 
-  const handleShow = (value) =>{ 
-    setvalueToEdit(value)
-   
-      setShow(true);
-  
+
+  const handleShow = (value,mode) => { 
+    reset()
+
+    if(mode === 'edit'){
+      setvalueToEdit(value)
+      setmodelMode('edit')
+    }
+
+    if(mode === 'create'){
+      setvalueToEdit(value)
+      setmodelMode('create')
+    }
+    setShow(true);
   }
-  const handleShow1 = () =>{ 
-    // setvalueToEdit(value)
-   
-      setShow1(true);
-  
-  }
-  console.log(valueToEdit);
 
   useEffect(() => {
-    (async () => {
-      const endOffset = itemOffset + itemsPerPage;
+    getData()
+  }, [itemOffset, itemsPerPage]);
+
+  useEffect(() => {
+    getEmployeeData()
+  }, []);
+
+  const getEmployeeData = async () => {
       try {
-        const items = await (await getEmployee(itemsPerPage, itemOffset)).data;
-        console.log(items);
-        setitemlist(items?.results);  
-        // Fetch items from another resources.
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-        setCurrentItems(items?.results?.slice(itemOffset, endOffset));
-        setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
+        const result = await getAllEmployee()
+        setemployeeList(result.data.results)
       } catch (error) {
-        console.info("error ",error)
+        getEmployeeData()
+      }
+  }
+
+  const getData = async () => {
+      try {
+        const result = await (await getEmployeeLeaves(itemsPerPage, itemOffset)).data;
+        setitemlist(result?.results);  
+        // Fetch items from another resources.
+        setPageCount(result?.totalPages);
+      } catch (error) {
         if (
           error?.response?.data?.message
         ) {
@@ -95,246 +166,53 @@ const Leave = () => {
         }
       }
 
-
-    })();
-  }, [itemOffset, itemsPerPage]);
+  }
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % itemlist.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
+    const newOffset = (event.selected + 1);
     setItemOffset(newOffset);
   };
-    const deleteData =(id)=>{
-      // console.log("myid",id);
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You will not be able to recover this imaginary file!",
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonColor: "#DD6B55",
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, keep it",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          return (
-            deleteEmployee(id),
-            Swal.fire(
-              "Deleted!",
-              "Your imaginary file has been deleted.",
-              "success",
-            )
-          );
-        } else if (result.dismiss === Swal.DismissReason.ccancel) {
-          Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
-        }
-      });
-    }
+
+
+  const deleteData = (id) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#DD6B55",
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it",
+    }).then((result) => {
+      if (result.value) {
+        return (
+          deleteEmployeeLeave(id),
+          Swal.fire(
+            "Deleted!",
+            "Your imaginary file has been deleted.",
+            "success",
+          )
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    }).finally(() => {
+      getData()
+    })
+  }
    
   return (
     <div>
-         <Modal
-      show={show1}
-      onHide={handleClose1}
-      backdrop="static"
-      keyboard={false}
-    >
-      <Modal.Header closeButton>
-        <Modal.Title>Add Leave</Modal.Title>
-      </Modal.Header>
-      <Modal.Body>
-      <div className="row auth">
-        <div className="col-12 grid-margin">
-          <div className="card">
-            <div className="card-body">
-              <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                <p className="card-description"> Add Leave </p>
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Users</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="user"
-                          defaultValue={valueToEdit.user}
-                          
-                          {...register("user", { required: true })}
-                        />
-                        {errors && errors.name && <p>name is required field</p>}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-{/* 
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
-                        Address{" "}
-                      </label>
-                      <div className="col-sm-10">
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          {...register("address", { required: true })}
-                        />
-                        {errors && errors.address && (
-                          <p>address is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div> */}
-
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
-                       Reason
-                      </label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="contactno"
-                          defaultValue={valueToEdit.reason}
-                          {...register("reason", {
-                            required: true,
-                            pattern: strongRegexMo,
-                          })}
-                        />
-                        {errors &&
-                          errors.reason &&
-                          errors.reason.type === "required" && (
-                            <p>contact number is required field</p>
-                          )}
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "pattern" && (
-                            <p>invalid phone number please use valid formate</p>
-                          )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                  </div>
-                  <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Leave Status</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.leave_status}
-
-                          name="leave_status"
-                          {...register("leave_status", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>branch is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Total Leave</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="total_leave"
-                          defaultValue={valueToEdit.total_leave}
-
-                          {...register("total_leave", {
-                            required: true,
-                            pattern: /^\S+@\S+$/i,
-                          })}
-                        />
-                        {errors &&
-                          errors.email &&
-                          errors.email.type === "required" && (
-                            <p>email is required field</p>
-                          )}
-                        {errors &&
-                          errors.email &&
-                          errors.email.type === "pattern" && (
-                            <p>invalid email formate</p>
-                          )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                 
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Date From</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.date_from}
-
-                          name="date_from"
-                          {...register("date_from", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>role is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Date To</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.date_to}
-
-                          name="date_to"
-                          {...register("date_to", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>role is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-              
-             
-
-                <div className="mt-3">
-                  <button
-                    className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
-                    type="submit"
-                  >
-                    ADD
-                  </button>
-                </div>
-              </form>
-            </div>
-          </div>
-        </div>
-      </div>
-      </Modal.Body>
-     
-    
-    </Modal>
-          <Modal
+    <Modal
       show={show}
       onHide={handleClose}
       backdrop="static"
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Update Leave</Modal.Title>
+        <Modal.Title>{modelMode === 'edit' ? 'Update' : 'Create'} Leave</Modal.Title>
       </Modal.Header>
       <Modal.Body>
       <div className="row auth">
@@ -342,44 +220,27 @@ const Leave = () => {
           <div className="card">
             <div className="card-body">
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                <p className="card-description"> Update Leave </p>
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">User</label>
                       <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
+                      <select
                           name="user"
-                          defaultValue={valueToEdit.user}
-                          
-                          {...register("user", { required: true })}
-                        />
-                        {errors && errors.name && <p>name is required field</p>}
+                          {...register("user")}
+                          defaultValue={valueToEdit?.user?.id}
+                        >
+                            {employeeList?.map((item) => {
+                              return <>
+                                <option value={item?.id} selected={valueToEdit?.user?.id === item?.id}>{item?.name}</option>
+                              </>
+                            })}
+                        </select>
+                        {errors && errors.user && <p> select employee is required field</p>}
                       </div>
                     </Form.Group>
                   </div>
                 </div>
-{/* 
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
-                        Address{" "}
-                      </label>
-                      <div className="col-sm-10">
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          {...register("address", { required: true })}
-                        />
-                        {errors && errors.address && (
-                          <p>address is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div> */}
 
                 <div className="row">
                   <div className="col-md-12">
@@ -391,21 +252,16 @@ const Leave = () => {
                         <Form.Control
                           type="text"
                           name="contactno"
-                          defaultValue={valueToEdit.reason}
+                          defaultValue={valueToEdit?.reason}
+                          autoFocus
                           {...register("reason", {
                             required: true,
-                            pattern: strongRegexMo,
                           })}
                         />
                         {errors &&
                           errors.reason &&
                           errors.reason.type === "required" && (
-                            <p>contact number is required field</p>
-                          )}
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "pattern" && (
-                            <p>invalid phone number please use valid formate</p>
+                            <p>reason is required field</p>
                           )}
                       </div>
                     </Form.Group>
@@ -416,15 +272,16 @@ const Leave = () => {
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Leave Status</label>
                       <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.leave_status}
-
+                        <select
                           name="leave_status"
-                          {...register("leave_status", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>branch is required field</p>
+                          {...register("leave_status")}
+                        >
+                            <option value="pending" selected={valueToEdit.leave_status === 'pending'} >pending</option>
+                            <option value="approved" selected={valueToEdit.leave_status === 'approved'} >approved</option>
+                            <option value="rejected" selected={valueToEdit.leave_status === 'rejected'} >rejected</option>
+                        </select>
+                        {errors && errors.leave_status && (
+                          <p>Leave status is required field</p>
                         )}
                       </div>
                     </Form.Group>
@@ -433,47 +290,16 @@ const Leave = () => {
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Total Leave</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="total_leave"
-                          defaultValue={valueToEdit.total_leave}
-
-                          {...register("total_leave", {
-                            required: true,
-                            pattern: /^\S+@\S+$/i,
-                          })}
-                        />
-                        {errors &&
-                          errors.email &&
-                          errors.email.type === "required" && (
-                            <p>email is required field</p>
-                          )}
-                        {errors &&
-                          errors.email &&
-                          errors.email.type === "pattern" && (
-                            <p>invalid email formate</p>
-                          )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                 
-                </div>
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Date From</label>
                       <div className="col-sm-9">
                         <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.date_from}
-
+                          type="date"
+                          defaultValue={(valueToEdit?.date_from)?.substring(0, 10)}
                           name="date_from"
                           {...register("date_from", { required: true })}
                         />
-                        {errors && errors.branch && (
-                          <p>role is required field</p>
+                        {errors && errors.date_from && (
+                          <p>date_from is required field</p>
                         )}
                       </div>
                     </Form.Group>
@@ -485,28 +311,25 @@ const Leave = () => {
                       <label className="col-sm-3 col-form-label">Date To</label>
                       <div className="col-sm-9">
                         <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.date_to}
-
+                          type="date"
+                          defaultValue={(valueToEdit?.date_to)?.substring(0, 10)}
                           name="date_to"
                           {...register("date_to", { required: true })}
                         />
-                        {errors && errors.branch && (
-                          <p>role is required field</p>
+                        {errors && errors.date_to && (
+                          <p>date_to is required field</p>
                         )}
                       </div>
                     </Form.Group>
                   </div>
                 </div>
-              
-             
-
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
                     type="submit"
+                    disabled={!isDirty || !isValid}
                   >
-                    UPDATE
+                    {modelMode === 'edit' ? 'UPDATE' : 'CREATE'}
                   </button>
                 </div>
               </form>
@@ -541,7 +364,7 @@ const Leave = () => {
                   <button
                     type="button"
                     className="btn btn-gradient-primary btn-fw"
-                    onClick={handleShow1}
+                    onClick={() => handleShow({},'create')}
                   >
                     Add New
                   </button>
@@ -570,11 +393,10 @@ const Leave = () => {
                         <td>{item?.leave_status}</td>
                         <td>{item?.total_leave}</td>
 
-                        <td>{item?.date_from}</td>
-                        <td>{item?.date_to}</td>
-
+                        <td>{new Date(item?.date_from)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                        <td>{new Date(item?.date_to)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                         <td>
-                          <i onClick={()=> handleShow(item)} className="mdi mdi-lead-pencil"></i>
+                          <i onClick={()=> handleShow(item,'edit')} className="mdi mdi-lead-pencil"></i>
                         </td>
                         <td>
                          <i onClick={()=> deleteData(item?.id)} className="mdi mdi-delete"> </i>
@@ -589,6 +411,7 @@ const Leave = () => {
                 nextLabel="next >"
                 className="client-list"
                 onPageChange={handlePageClick}
+                forcePage={0}
                 pageRangeDisplayed={5}
                 pageCount={pageCount}
                 previousLabel="< previous"

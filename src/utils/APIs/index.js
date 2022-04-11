@@ -11,14 +11,16 @@ export const ResetUserPasswod = (data) => api('auth/forgot-password', 'POST', da
 export const CreateUser = (data) => api('users', 'POST', data);
 export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
-export const getUsers = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=user`, 'GET');
+export const getUsers = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=user`, 'GET');
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
-export const getEmployee = (limit = 100,offset = 1) => api(`employee/getLeaves?limit=${limit}&page=${offset}`, 'GET');
-export const deleteEmployee = (id) => api(`employee/delete-leave?leave_id=${id}`, 'DELETE');
 
-
-// export const employee = (data) => api(`employee/approve-leave`, 'POST', data);
+// employee management
+export const getEmployeeLeaves = (limit = 10,offset = 1) => api(`employee/getLeaves?limit=${limit}&page=${offset}&sortBy=createdAt:desc`, 'GET');
+export const deleteEmployeeLeave = (id) => api(`employee/delete-leave/${id}`, 'DELETE');
+export const getAllEmployee = (limit = 1000,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=employee`, 'GET');
+export const updateEmployeeLeave = (data) => api(`employee/update-leave`, 'POST',data);
+export const approveEmployee = (data) => api(`employee/approve-leave`, 'POST', data);
 
 
 // branch management
-export const getBranches = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=branch`, 'GET');
+export const getBranches = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=branch`, 'GET');
