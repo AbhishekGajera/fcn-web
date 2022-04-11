@@ -350,7 +350,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnPasswords ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnPasswords') } data-toggle="collapse">
               <span className="menu-title"><Trans>Password</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-lock-plus menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnPasswords}>
               <ul className="nav flex-column sub-menu">
@@ -365,7 +365,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnCosts ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnCosts') } data-toggle="collapse">
               <span className="menu-title"><Trans>Costs</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-arrange-send-to-back menu-icon"></i>
+              <i className="mdi mdi-format-strikethrough-variant menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnCosts}>
               <ul className="nav flex-column sub-menu">
@@ -380,7 +380,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnRevenues ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnRevenues') } data-toggle="collapse">
               <span className="menu-title"><Trans>Revenues</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-flask menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnRevenues}>
               <ul className="nav flex-column sub-menu">
@@ -395,7 +395,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnFees ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnFees') } data-toggle="collapse">
               <span className="menu-title"><Trans>Fees</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-table-row-plus-after menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnFees}>
               <ul className="nav flex-column sub-menu">
@@ -410,7 +410,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnMarketing ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnMarketing') } data-toggle="collapse">
               <span className="menu-title"><Trans>Marketing</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-shopping menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnMarketing}>
               <ul className="nav flex-column sub-menu">
@@ -432,7 +432,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnEmployee ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnEmployee') } data-toggle="collapse">
               <span className="menu-title"><Trans>Employee Management</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-account-switch menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnEmployee}>
               <ul className="nav flex-column sub-menu">
@@ -458,7 +458,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnAppointments ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnAppointments') } data-toggle="collapse">
               <span className="menu-title"><Trans>Appointments</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-move-resize menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnAppointments}>
               <ul className="nav flex-column sub-menu">
@@ -485,7 +485,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnWelcome ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnWelcome') } data-toggle="collapse">
               <span className="menu-title"><Trans>Welcome</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-logout-variant menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnWelcome}>
               <ul className="nav flex-column sub-menu">
@@ -502,7 +502,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnProductAssign ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnProductAssign') } data-toggle="collapse">
               <span className="menu-title"><Trans>Products Assign</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-reproduction menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnProductAssign}>
               <ul className="nav flex-column sub-menu">
@@ -519,7 +519,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnCalculation ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnCalculation') } data-toggle="collapse">
               <span className="menu-title"><Trans>Calculation</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-calculator menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnCalculation}>
               <ul className="nav flex-column sub-menu">
@@ -536,7 +536,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnPerformance ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnPerformance') } data-toggle="collapse">
               <span className="menu-title"><Trans>Best Performance</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-chart-bar menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnPerformance}>
               <ul className="nav flex-column sub-menu">
@@ -553,7 +553,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnNotification ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnNotification') } data-toggle="collapse">
               <span className="menu-title"><Trans>Notfication</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-target menu-icon"></i>
+              <i className="mdi mdi-notification-clear-all menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnNotification}>
               <ul className="nav flex-column sub-menu">
