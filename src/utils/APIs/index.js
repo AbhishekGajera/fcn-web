@@ -13,6 +13,12 @@ export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
 export const getUsers = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=user`, 'GET');
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
+export const getEmployee = (limit = 100,offset = 1) => api(`employee/getLeaves?limit=${limit}&page=${offset}`, 'GET');
+export const deleteEmployee = (id) => api(`employee/delete-leave?leave_id=${id}`, 'DELETE');
+
+
+// export const employee = (data) => api(`employee/approve-leave`, 'POST', data);
+
 
 // branch management
 export const getBranches = (limit = 100,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=branch`, 'GET');
