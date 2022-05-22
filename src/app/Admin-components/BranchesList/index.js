@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import { useHistory } from 'react-router-dom'
+import { useUrl } from "../../../utils/Functions/useUrl";
 
 const BranchList = () => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -18,7 +19,7 @@ const BranchList = () => {
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
+  const [itemOffset, setItemOffset] = useUrl('page');
   const [itemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({})
@@ -29,7 +30,6 @@ const BranchList = () => {
   var strongRegexMo = new RegExp(
     "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
   );
-  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   const handleClose = () => {
     setShow(false)
@@ -69,17 +69,7 @@ const BranchList = () => {
 
 
   useEffect(() => {
-    (async () => {
-      const endOffset = itemOffset + itemsPerPage;
-      const items = await (await getUsers(itemsPerPage, itemOffset)).data;
-      setitemlist(items?.results);
-      console.info("items ", items);
-
-      // Fetch items from another resources.
-      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(items.results.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(items.length / itemsPerPage));
-    })();
+    list()
   }, [itemOffset, itemsPerPage]);
 
   // Invoke when user click to request another page.
@@ -114,7 +104,7 @@ const BranchList = () => {
 
 
   const list = async () => {
-    const items = await (await getBranches(itemsPerPage, itemOffset)).data;
+    const items = await (await getBranches(itemsPerPage, (+itemOffset + 0))).data;
     setitemlist(items?.results);
     setPageCount(items?.totalPages);
   }
@@ -355,6 +345,7 @@ const BranchList = () => {
                 pageCount={pageCount}
                 previousLabel="< previous"
                 renderOnZeroPageCount={null}
+                forcePage={itemOffset}
               />
             </div>
           </div>
