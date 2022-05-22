@@ -1,7 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getUsers, userLogout, deleteUsr, updateProfile } from "../../../utils/APIs";
+import {
+  getUsers,
+  userLogout,
+  deleteUsr,
+  updateProfile,
+} from "../../../utils/APIs";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -10,6 +15,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { password_generator } from "../../../utils/Functions/passwordGenerator";
 import { useUrl } from "../../../utils/Functions/useUrl";
+import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
 
 const ClientList = () => {
   const history = useHistory();
@@ -28,10 +34,14 @@ const ClientList = () => {
   );
 
   const onSubmit = async (data) => {
+    data.status = updateStatus
     try {
-      const updatedData = JSON.stringify(data)
-      await updateProfile(updatedData,valueToEdit?.id)
-      list()
+      const updatedData = JSON.stringify(data);
+      await updateProfile(updatedData, valueToEdit?.id);
+      toast.success('User updated Successfully',{
+        autoClose : 3000
+      })
+      list();
     } catch (error) {
       if (error?.response?.data?.message) {
         toast.error(error.response.data.message);
@@ -49,7 +59,7 @@ const ClientList = () => {
         });
       }
     } finally {
-      setShow(false)
+      setShow(false);
     }
   };
 
@@ -61,15 +71,21 @@ const ClientList = () => {
   const [itemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
-  
+  const [updateStatus, setupdateStatus] = useState(0);
+
+  const onChangeStatusForm = (e) => {
+    setupdateStatus(+e?.target?.value || 0)
+  }
 
   const handleClose = () => {
     setShow(false);
     setvalueToEdit({});
+    setupdateStatus(0)
   };
 
   const handleShow = (value) => {
     setvalueToEdit(value);
+    setupdateStatus(value?.status || 0)
     setShow(true);
   };
 
@@ -104,21 +120,23 @@ const ClientList = () => {
   const generatePassword = async (id) => {
     const randomPassword = password_generator();
     const newPassword = JSON.stringify({
-      password : randomPassword
-    })
+      password: randomPassword,
+    });
 
     try {
-     await updateProfile(newPassword,id)
-     toast.success('Password generated and sended to user via Email successfully',{ autoClose : 3000 })
+      await updateProfile(newPassword, id);
+      toast.success(
+        "Password generated and sended to user via Email successfully",
+        { autoClose: 3000 }
+      );
     } catch (error) {
-      toast.error('Password generation failed, please try again later')
+      toast.error("Password generation failed, please try again later");
     }
-    
   };
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    window.scrollTo(0,0)
+    window.scrollTo(0, 0);
     setItemOffset(event.selected);
   };
 
@@ -190,27 +208,27 @@ const ClientList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                    
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
-                        Address{" "}
-                      </label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          defaultValue={valueToEdit.address}
-                          {...register("address", { required: true })}
-                        />
-                        {errors && errors.address && (
-                          <p>address is required field</p>
-                        )}
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Address{" "}
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              name="address"
+                              defaultValue={valueToEdit.address}
+                              {...register("address", { required: true })}
+                            />
+                            {errors && errors.address && (
+                              <p>address is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
                       </div>
-                    </Form.Group>
-                  </div>
-                </div>
+                    </div>
 
                     <div className="row">
                       <div className="col-md-12">
@@ -294,6 +312,34 @@ const ClientList = () => {
                         </Form.Group>
                       </div>
                     </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            status
+                          </label>
+                          <select
+                            className="form-control form-control-sm col-sm-9"
+                            id="exampleFormControlSelect3"
+                            name="status"
+                            onChange={onChangeStatusForm}
+                          >
+                            {statusOption?.map((i) => {
+                              return (
+                                <option
+                                  value={i?.value}
+                                  selected={+updateStatus === +i?.value}
+                                >
+                                  {i?.label}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </Form.Group>
+                      </div>
+                    </div>
+
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -407,14 +453,7 @@ const ClientList = () => {
                         <td>{item?.branch}</td>
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
-                        <td>
-                          <label className="badge badge-gradient-success">
-                            Active
-                          </label>
-                          <label className="badge badge-gradient-danger">
-                            Inactive
-                          </label>
-                        </td>
+                        <td>{formateStatus(item?.status)}</td>
                         <td>
                           <button
                             type="button"

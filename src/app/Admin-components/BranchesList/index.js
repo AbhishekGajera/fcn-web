@@ -9,6 +9,7 @@ import { Form } from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import { useHistory } from 'react-router-dom'
 import { useUrl } from "../../../utils/Functions/useUrl";
+import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
 
 const BranchList = () => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -23,6 +24,7 @@ const BranchList = () => {
   const [itemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({})
+  const [updateStatus, setupdateStatus] = useState(0);
 
   const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
     mode: "onChange"
@@ -34,17 +36,27 @@ const BranchList = () => {
   const handleClose = () => {
     setShow(false)
     setvalueToEdit({})
+    setupdateStatus(0)
   };
+
+  const onChangeStatusForm = (e) => {
+    setupdateStatus(+e?.target?.value || 0)
+  }
 
   const handleShow = (value) =>{ 
     setvalueToEdit(value)
-      setShow(true);
-  
+    setupdateStatus(value?.status || 0)
+    setShow(true);
   }
+
   const onSubmit = async (data) => {
+    data.status = updateStatus
     try {
       const updatedData = JSON.stringify(data)
       await updateProfile(updatedData,valueToEdit?.id)
+      toast.success('User updated Successfully',{
+        autoClose : 3000
+      })
       list()
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -195,25 +207,7 @@ const BranchList = () => {
                     </Form.Group>
                   </div>
                   </div>
-                  <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Branch</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.branch}
 
-                          name="branch"
-                          {...register("branch", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>branch is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
@@ -242,8 +236,36 @@ const BranchList = () => {
                       </div>
                     </Form.Group>
                   </div>
-                 
                 </div>
+
+                <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            status
+                          </label>
+                          <select
+                            className="form-control form-control-sm col-sm-9"
+                            id="exampleFormControlSelect3"
+                            name="status"
+                            onChange={onChangeStatusForm}
+                          >
+                            {statusOption?.map((i) => {
+                              return (
+                                <option
+                                  value={i?.value}
+                                  selected={+updateStatus === +i?.value}
+                                >
+                                  {i?.label}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
@@ -256,7 +278,7 @@ const BranchList = () => {
                           name="role"
                           {...register("role", { required: true })}
                         />
-                        {errors && errors.branch && (
+                        {errors && errors.role && (
                           <p>role is required field</p>
                         )}
                       </div>
@@ -312,6 +334,7 @@ const BranchList = () => {
                     <th> Branch </th>
                     <th> Email </th>
                     <th> Role </th>
+                    <th> Status </th>
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -325,6 +348,7 @@ const BranchList = () => {
                         <td>{item?.branch}</td>
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
+                        <td>{formateStatus(item?.status)}</td>
                         <td>
                           <i onClick={()=> handleShow(item)} className="mdi mdi-lead-pencil"></i>
                         </td>

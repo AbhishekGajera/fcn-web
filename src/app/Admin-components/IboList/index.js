@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
 
 const IboList = () => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -15,14 +16,14 @@ const IboList = () => {
   const history = useHistory();
 
   // We start with an empty list of items.
-  const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage, setitemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
+  const [updateStatus, setupdateStatus] = useState(0);
 
   const {
     register,
@@ -39,6 +40,7 @@ const IboList = () => {
   const handleClose = () => {
     setShow(false);
     setvalueToEdit({});
+    setupdateStatus(0)
   };
 
   const handleShow = (value) => {
@@ -46,10 +48,18 @@ const IboList = () => {
     setShow(true);
   };
 
+  const onChangeStatusForm = (e) => {
+    setupdateStatus(+e?.target?.value || 0)
+  }
+
   const onSubmit = async (data) => {
+    data.status = updateStatus
     try {
       const updatedData = JSON.stringify(data);
       await updateProfile(updatedData, valueToEdit?.id);
+      toast.success('User updated Successfully',{
+        autoClose : 3000
+      })
       list();
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -278,6 +288,34 @@ const IboList = () => {
                         </Form.Group>
                       </div>
                     </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            status
+                          </label>
+                          <select
+                            className="form-control form-control-sm col-sm-9"
+                            id="exampleFormControlSelect3"
+                            name="status"
+                            onChange={onChangeStatusForm}
+                          >
+                            {statusOption?.map((i) => {
+                              return (
+                                <option
+                                  value={i?.value}
+                                  selected={+updateStatus === +i?.value}
+                                >
+                                  {i?.label}
+                                </option>
+                              );
+                            })}
+                          </select>
+                        </Form.Group>
+                      </div>
+                    </div>
+
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -343,7 +381,7 @@ const IboList = () => {
                     <th> Branch </th>
                     <th> Email </th>
                     <th> Role </th>
-
+                    <th> Status </th>
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -357,6 +395,7 @@ const IboList = () => {
                         <td>{item?.branch}</td>
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
+                        <td>{formateStatus(item?.status)}</td>
                         <td>
                           <i
                             onClick={() => handleShow(item)}
