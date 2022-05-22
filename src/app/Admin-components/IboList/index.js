@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getBranches } from "../../../utils/APIs";
+import { getBranches, deleteUsr } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
@@ -47,17 +47,7 @@ const IboList = () => {
 
 
   useEffect(() => {
-    (async () => {
-      const endOffset = itemOffset + itemsPerPage;
-      const items = await (await getBranches(itemsPerPage, itemOffset)).data;
-      setitemlist(items?.results);
-      console.info("items ", items);
-
-      // Fetch items from another resources.
-      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(items?.results?.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
-    })();
+   list()
   }, [itemOffset, itemsPerPage]);
 
   // Invoke when user click to request another page.
@@ -79,22 +69,32 @@ const IboList = () => {
       confirmButtonText: "Yes, delete it!",
       cancelButtonText: "No, keep it",
     }).then((result) => {
-      if (result.isConfirmed) {
-        // return (
-        //   deleteUsr(uid, () => {
-        //     list();
-        //   }),
-        //   Swal.fire(
-        //     "Deleted!",
-        //     "Your imaginary file has been deleted.",
-        //     "success",
-        //   )
-        // );
+      if (result.value) {
+        return (
+          deleteUsr(uid).finally(() => list()),
+          Swal.fire(
+            "Deleted!",
+            "Your imaginary file has been deleted.",
+            "success",
+          )
+        );
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
       }
     });
   }
+
+  const list = async () => {
+    const endOffset = itemOffset + itemsPerPage;
+    const items = await (await getBranches(itemsPerPage, itemOffset)).data;
+    setitemlist(items?.results);
+    console.info("items ", items);
+
+    // Fetch items from another resources.
+    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+    setCurrentItems(items?.results?.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
+  } 
   return (
     <div>
          <Modal

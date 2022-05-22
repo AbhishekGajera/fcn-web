@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getUsers ,userLogout } from "../../../utils/APIs";
+import { getUsers ,userLogout, deleteUsr } from "../../../utils/APIs";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -45,17 +45,17 @@ const ClientList = () => {
 
   const handleShow = (value) =>{ 
     setvalueToEdit(value)
-   
       setShow(true);
-  
   }
-  console.log(valueToEdit);
 
   useEffect(() => {
-    (async () => {
-      const endOffset = itemOffset + itemsPerPage;
+    list()
+  }, [itemOffset, itemsPerPage]);
+  
+  const  list = async () => {
+    const endOffset = itemOffset + itemsPerPage;
       try {
-        const items = await (await getUsers(itemsPerPage, itemOffset)).data;
+        const items = await (await getUsers(itemsPerPage, itemOffset + 1)).data;
         setitemlist(items?.results);  
         // Fetch items from another resources.
         console.log(`Loading items from ${itemOffset} to ${endOffset}`);
@@ -81,10 +81,12 @@ const ClientList = () => {
           })
         }
       }
+  }
+  
+  const generatePassword = (id) => {
 
+  }
 
-    })();
-  }, [itemOffset, itemsPerPage]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -94,6 +96,7 @@ const ClientList = () => {
     );
     setItemOffset(newOffset);
   };
+
     const deleteData =(uid)=>{
       // console.log(uid);
       Swal.fire({
@@ -106,17 +109,15 @@ const ClientList = () => {
         confirmButtonText: "Yes, delete it!",
         cancelButtonText: "No, keep it",
       }).then((result) => {
-        if (result.isConfirmed) {
-          // return (
-          //   deleteUsr(uid, () => {
-          //     list();
-          //   }),
-          //   Swal.fire(
-          //     "Deleted!",
-          //     "Your imaginary file has been deleted.",
-          //     "success",
-          //   )
-          // );
+        if (result.value) {
+          return (
+            deleteUsr(uid).finally(() => list()),
+            Swal.fire(
+              "Deleted!",
+              "Your imaginary file has been deleted.",
+              "success",
+            )
+          );
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
         }
@@ -383,15 +384,15 @@ const ClientList = () => {
                         <td>  
 
                         
-                              <label class="badge badge-gradient-success">Active</label>
-                              <label class="badge badge-gradient-danger">Inactive</label>
+                              <label className="badge badge-gradient-success">Active</label>
+                              <label className="badge badge-gradient-danger">Inactive</label>
 
                            
                        
                      
                     </td>
 
-                        <td><button type="button" class="btn btn-gradient-primary btn-sm ">Generate</button>
+                        <td><button type="button" className="btn btn-gradient-primary btn-sm " onClick={() => generatePassword(item?.id)}>Generate</button>
                         </td> 
 
                        
