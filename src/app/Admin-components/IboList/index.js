@@ -1,30 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getUsers ,userLogout } from "../../../utils/APIs";
-import { toast } from "react-toastify";
-import { useHistory } from "react-router-dom";
+import { getBranches } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
 
-
-const ClientList = () => {
-  const history = useHistory()
-  const [cookies,setCookie ] = useCookies(["user"]);
+const IboList = () => {
+  const [cookies] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
- 
-  const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
-    mode: "onChange"
-  });
-  var strongRegexMo = new RegExp(
-    "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
-  );
-  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
-  const onSubmit = async (data) => {
-  alert(data);
-  };
 
   // We start with an empty list of items.
   const [currentItems, setCurrentItems] = useState(null);
@@ -35,8 +20,14 @@ const ClientList = () => {
   const [itemsPerPage, setitemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({})
-  // const [first, setfirst] = useState(second)
 
+  const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
+    mode: "onChange"
+  });
+  var strongRegexMo = new RegExp(
+    "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
+  );
+  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   const handleClose = () => {
     setShow(false)
@@ -50,39 +41,22 @@ const ClientList = () => {
   
   }
   console.log(valueToEdit);
+  const onSubmit = async (data) => {
+    alert(data);
+    };
+
 
   useEffect(() => {
     (async () => {
       const endOffset = itemOffset + itemsPerPage;
-      try {
-        const items = await (await getUsers(itemsPerPage, itemOffset)).data;
-        setitemlist(items?.results);  
-        // Fetch items from another resources.
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-        setCurrentItems(items?.results?.slice(itemOffset, endOffset));
-        setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
-      } catch (error) {
-        console.info("error ",error)
-        if (
-          error?.response?.data?.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+      const items = await (await getBranches(itemsPerPage, itemOffset)).data;
+      setitemlist(items?.results);
+      console.info("items ", items);
 
-        if(error?.response?.data?.code === 401){
-          const formData = JSON.stringify({
-            refreshToken: localStorage.getItem('refreshToken'),
-          });
-          setCookie('user', null , { path: '/' });
-          userLogout(formData).finally(() => {
-            history.push('/user-pages/login-1')
-          })
-        }
-      }
-
-
+      // Fetch items from another resources.
+      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+      setCurrentItems(items?.results?.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
     })();
   }, [itemOffset, itemsPerPage]);
 
@@ -94,45 +68,43 @@ const ClientList = () => {
     );
     setItemOffset(newOffset);
   };
-    const deleteData =(uid)=>{
-      // console.log(uid);
-      Swal.fire({
-        title: "Are you sure?",
-        text: "You will not be able to recover this imaginary file!",
-        icon: "warning",
-        showCancelButton: true,
-        cancelButtonColor: "#DD6B55",
-        confirmButtonColor: "#DD6B55",
-        confirmButtonText: "Yes, delete it!",
-        cancelButtonText: "No, keep it",
-      }).then((result) => {
-        if (result.isConfirmed) {
-          // return (
-          //   deleteUsr(uid, () => {
-          //     list();
-          //   }),
-          //   Swal.fire(
-          //     "Deleted!",
-          //     "Your imaginary file has been deleted.",
-          //     "success",
-          //   )
-          // );
-        } else if (result.dismiss === Swal.DismissReason.cancel) {
-          Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
-        }
-      });
-    }
-   
+  const deleteBranch =(uid)=>{
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#DD6B55",
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it",
+    }).then((result) => {
+      if (result.isConfirmed) {
+        // return (
+        //   deleteUsr(uid, () => {
+        //     list();
+        //   }),
+        //   Swal.fire(
+        //     "Deleted!",
+        //     "Your imaginary file has been deleted.",
+        //     "success",
+        //   )
+        // );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    });
+  }
   return (
     <div>
-          <Modal
+         <Modal
       show={show}
       onHide={handleClose}
       backdrop="static"
       keyboard={false}
     >
       <Modal.Header closeButton>
-        <Modal.Title>Update Client</Modal.Title>
+        <Modal.Title>Update Ibo</Modal.Title>
       </Modal.Header>
       <Modal.Body>
       <div className="row auth">
@@ -140,7 +112,7 @@ const ClientList = () => {
           <div className="card">
             <div className="card-body">
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                <p className="card-description"> Update Client </p>
+                <p className="card-description"> Update Ibo </p>
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
@@ -298,7 +270,7 @@ const ClientList = () => {
     
     </Modal>
       <div className="page-header">
-        <h3 className="page-title">Clients / Fetch Clients </h3>
+        <h3 className="page-title">ibos / Fetch Ibos </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -307,7 +279,7 @@ const ClientList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Create clients
+              Fetch Ibos
             </li>
           </ol>
         </nav>
@@ -315,47 +287,8 @@ const ClientList = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
+            <h4 className="card-title">Ibo list</h4>
 
-       <div className="row">
-          
-       <div className="col-md-6">
-                    <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">Search Branch</label>
-                      <div className="col-sm-8">
-                        <select
-                          className="form-control form-control-lg"
-                          id="exampleFormControlSelect2"
-                          name="branch"
-                         
-                        >
-                          <option>Branches</option>
-                          <option>United States of America</option>
-                          <option >India</option>
-                          <option>United Kingdom</option>
-                          <option>Germany</option>
-                          <option>Argentina</option>
-                        </select>
-                      </div>
-                    </Form.Group>
-                  </div>
-            <div className="col-md-6">
-            <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
-                       Search Name:
-                      </label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="contactno"
-                        
-                        />
-                      
-                      </div>
-                    </Form.Group>
-            </div>
-       </div>
-            <h4 className="card-title">Client list</h4>
-            
             <div className="table-responsive">
               <table className="table table-striped">
                 <thead>
@@ -365,8 +298,7 @@ const ClientList = () => {
                     <th> Branch </th>
                     <th> Email </th>
                     <th> Role </th>
-                    <th> Status </th>
-                    <th> Generate Password </th>
+                    
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -380,26 +312,11 @@ const ClientList = () => {
                         <td>{item?.branch}</td>
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
-                        <td>  
-
-                        
-                              <label class="badge badge-gradient-success">Active</label>
-                              <label class="badge badge-gradient-danger">Inactive</label>
-
-                           
-                       
-                     
-                    </td>
-
-                        <td><button type="button" class="btn btn-gradient-primary btn-sm ">Generate</button>
-                        </td> 
-
-                       
                         <td>
                           <i onClick={()=> handleShow(item)} className="mdi mdi-lead-pencil"></i>
                         </td>
                         <td>
-                         <i onClick={()=> deleteData(item?.id)} className="mdi mdi-delete"> </i>
+                          <i  onClick={()=> deleteBranch(item?.id)} className="mdi mdi-delete"></i>
                         </td>
                       </tr>
                     );
@@ -424,4 +341,4 @@ const ClientList = () => {
   );
 };
 
-export default ClientList;
+export default IboList;

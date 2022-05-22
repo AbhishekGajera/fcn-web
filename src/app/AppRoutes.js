@@ -38,6 +38,8 @@ const CreateClints = lazy(() => import('./IBO-components/CreateClients'));
 const ClientList = lazy(() => import('./IBO-components/ClientList'));
 const CreateBranches = lazy(() => import('./Admin-components/BranchesCreate'));
 const BranchList = lazy(() => import('./Admin-components/BranchesList'));
+const CreateIbo = lazy(() => import('./Admin-components/IboCreate'));
+const IboList = lazy(() => import('./Admin-components/IboList'));
 const ProductAdd = lazy(() => import('./Admin-components/Product/ProductAdd'));
 const ProductFetch = lazy(() => import('./Admin-components/Product/ProductFetch'));
 const Weekly = lazy(() => import('./Admin-components/Target/Weekly'));
@@ -200,6 +202,8 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/clients/clientlist" component={ ClientList } accesstype={["admin"]} />
           <ProtectedRoute path="/branches/createbranches" component={ CreateBranches } accesstype={["admin"]} />
           <ProtectedRoute path="/branches/brancheslist" component={ BranchList } accesstype={["admin"]} />
+          <ProtectedRoute path="/ibo/createibo" component={ CreateIbo } accesstype={["admin"]} />
+          <ProtectedRoute path="/ibo/ibolist" component={ IboList } accesstype={["admin"]} />
           <ProtectedRoute path="/products/addproducts" component={ ProductAdd } accesstype={["admin"]} />
           <ProtectedRoute path="/products/productslist" component={ ProductFetch } accesstype={["admin"]} />
           <ProtectedRoute path="/targets/weekly" component={ Weekly } accesstype={["admin"]} />

@@ -279,7 +279,7 @@ const BranchList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Create branches
+              Fetch branches
             </li>
           </ol>
         </nav>
@@ -287,7 +287,7 @@ const BranchList = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">Client list</h4>
+            <h4 className="card-title">Branch list</h4>
 
             <div className="table-responsive">
               <table className="table table-striped">

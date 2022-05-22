@@ -36,6 +36,12 @@ class Sidebar extends Component {
       this.props.history.push('/branches/createbranches')
     }
 
+    if(itemName === 'fcnIbo'){
+      this.props.history.push('/ibo/createibo')
+    }
+
+  
+
     if(itemName === 'fcnProducts'){
       this.props.history.push('/products/addproducts')
     }
@@ -129,10 +135,11 @@ class Sidebar extends Component {
       {path:'/apps', state: 'appsMenuOpen'},
       {path:'/clients', state: 'fcnClients'},
       {path:'/branches', state: 'fcnBranches'},
+      {path:'/ibo', state: 'fcnIbo'},
       {path:'/products', state: 'fcnProducts'},
       {path:'/appointment', state: 'fcnAppointments'},
       {path:'/targets', state: 'fcnTargets'},
-      {path:'/password', state: 'fcnPasswords'},
+      // {path:'/password', state: 'fcnPasswords'},
       {path:'/employee_manage', state: 'fcnEmployee'},
       {path:'/costs', state: 'fcnCosts'},
       {path:'/revenue', state: 'fcnRevenues'},
@@ -318,6 +325,19 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+          <li className={ this.isPathActive('/ibo') ? 'nav-item active' : 'nav-item' }>
+            <div className={ this.state.fcnIbo ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnIbo') } data-toggle="collapse">
+              <span className="menu-title"><Trans>Ibo</Trans></span>
+              <i className="menu-arrow"></i>
+              <i className="mdi mdi-source-branch menu-icon"></i>
+            </div>
+            <Collapse in={this.state.fcnIbo}>
+              <ul className="nav flex-column sub-menu">
+                <li className="nav-item"> <Link className={ this.isPathActive('/ibo/createibo') ? 'nav-link active' : 'nav-link' } to="/ibo/createibo"><Trans>Create Ibo</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/ibo/ibolist') ? 'nav-link active' : 'nav-link' } to="/ibo/ibolist"><Trans>Fetch Ibo</Trans></Link></li>
+              </ul>
+            </Collapse>
+          </li>
           <li className={ this.isPathActive('/products') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnProducts ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnProducts') } data-toggle="collapse">
               <span className="menu-title"><Trans>Products</Trans></span>
@@ -346,7 +366,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-          <li className={ this.isPathActive('/password') ? 'nav-item active' : 'nav-item' }>
+          {/* <li className={ this.isPathActive('/password') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnPasswords ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnPasswords') } data-toggle="collapse">
               <span className="menu-title"><Trans>Password</Trans></span>
               <i className="menu-arrow"></i>
@@ -360,7 +380,7 @@ class Sidebar extends Component {
 
               </ul>
             </Collapse>
-          </li>
+          </li> */}
           <li className={ this.isPathActive('/costs') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnCosts ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnCosts') } data-toggle="collapse">
               <span className="menu-title"><Trans>Costs</Trans></span>
