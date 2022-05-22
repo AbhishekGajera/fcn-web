@@ -4,9 +4,11 @@ import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { CreateUser } from "../../../utils/APIs";
+import { useHistory } from "react-router-dom";
 
 const CreateClints = () => {
   const [cookies] = useCookies(["user"]);
+  const history = useHistory()
 
   const {
     register,
@@ -22,11 +24,10 @@ const CreateClints = () => {
 
   const onSubmit = async (data) => {
       try {
-        const result = await CreateUser(data)
-        console.info("result ",result)
+        await CreateUser(data)
         toast.success("user crated successfully");
+        history.push('/clients/clientlist')
       } catch (error) {
-          console.info("error ",error)
         if (
           error &&
           error.response &&

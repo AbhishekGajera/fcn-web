@@ -9,6 +9,7 @@ import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { password_generator } from "../../../utils/Functions/passwordGenerator";
+import { useUrl } from "../../../utils/Functions/useUrl";
 
 const ClientList = () => {
   const history = useHistory();
@@ -25,21 +26,42 @@ const ClientList = () => {
   var strongRegexMo = new RegExp(
     "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
   );
-  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
+
   const onSubmit = async (data) => {
-    alert(data);
+    try {
+      const updatedData = JSON.stringify(data)
+      await updateProfile(updatedData,valueToEdit?.id)
+      list()
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    } finally {
+      setShow(false)
+    }
   };
 
   // We start with an empty list of items.
-  const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage, setitemsPerPage] = useState(10);
+  const [itemOffset, setItemOffset] = useUrl("page");
+  const [itemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
-  // const [first, setfirst] = useState(second)
+  
 
   const handleClose = () => {
     setShow(false);
@@ -56,16 +78,11 @@ const ClientList = () => {
   }, [itemOffset, itemsPerPage]);
 
   const list = async () => {
-    const endOffset = itemOffset + itemsPerPage;
     try {
-      const items = await (await getUsers(itemsPerPage, itemOffset + 1)).data;
+      const items = await (await getUsers(itemsPerPage, +itemOffset + 1)).data;
       setitemlist(items?.results);
-      // Fetch items from another resources.
-      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-      setCurrentItems(items?.results?.slice(itemOffset, endOffset));
-      setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
+      setPageCount(items?.totalPages);
     } catch (error) {
-      console.info("error ", error);
       if (error?.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {
@@ -101,11 +118,8 @@ const ClientList = () => {
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % itemlist.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
+    window.scrollTo(0,0)
+    setItemOffset(event.selected);
   };
 
   const deleteData = (uid) => {
@@ -176,17 +190,18 @@ const ClientList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                    {/* 
+                    
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
+                      <label className="col-sm-3 col-form-label">
                         Address{" "}
                       </label>
-                      <div className="col-sm-10">
+                      <div className="col-sm-9">
                         <Form.Control
                           type="text"
                           name="address"
+                          defaultValue={valueToEdit.address}
                           {...register("address", { required: true })}
                         />
                         {errors && errors.address && (
@@ -195,7 +210,7 @@ const ClientList = () => {
                       </div>
                     </Form.Group>
                   </div>
-                </div> */}
+                </div>
 
                     <div className="row">
                       <div className="col-md-12">
@@ -292,7 +307,7 @@ const ClientList = () => {
                               name="role"
                               {...register("role", { required: true })}
                             />
-                            {errors && errors.branch && (
+                            {errors && errors.role && (
                               <p>role is required field</p>
                             )}
                           </div>
@@ -437,6 +452,7 @@ const ClientList = () => {
                 pageCount={pageCount}
                 previousLabel="< previous"
                 renderOnZeroPageCount={null}
+                forcePage={itemOffset}
               />
             </div>
           </div>

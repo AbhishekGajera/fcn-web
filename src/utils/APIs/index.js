@@ -12,7 +12,7 @@ export const CreateUser = (data) => api('users', 'POST', data);
 export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const deleteUsr = (id) => api(`users/${id}`, 'DELETE');
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
-export const getUsers = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=user`, 'GET');
+export const getUsers = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=user&sortBy=asc`, 'GET');
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
 
 // employee management

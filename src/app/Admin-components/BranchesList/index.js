@@ -1,23 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getBranches,deleteUsr } from "../../../utils/APIs";
+import { getBranches,deleteUsr,updateProfile,userLogout } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
+import {toast} from 'react-toastify';
+import { useHistory } from 'react-router-dom'
 
 const BranchList = () => {
-  const [cookies] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const history = useHistory()
 
   // We start with an empty list of items.
-  const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage, setitemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(10);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({})
 
@@ -36,14 +38,34 @@ const BranchList = () => {
 
   const handleShow = (value) =>{ 
     setvalueToEdit(value)
-   
       setShow(true);
   
   }
-  console.log(valueToEdit);
   const onSubmit = async (data) => {
-    alert(data);
-    };
+    try {
+      const updatedData = JSON.stringify(data)
+      await updateProfile(updatedData,valueToEdit?.id)
+      list()
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    } finally {
+      setShow(false)
+    }
+  };
 
 
   useEffect(() => {
@@ -52,11 +74,7 @@ const BranchList = () => {
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % itemlist.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
+    setItemOffset(event.selected);
   };
   const deleteBranch =(uid)=>{
     Swal.fire({
@@ -86,15 +104,9 @@ const BranchList = () => {
 
 
   const list = async () => {
-    const endOffset = itemOffset + itemsPerPage;
     const items = await (await getBranches(itemsPerPage, itemOffset)).data;
     setitemlist(items?.results);
-    console.info("items ", items);
-
-    // Fetch items from another resources.
-    console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-    setCurrentItems(items?.results?.slice(itemOffset, endOffset));
-    setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
+    setPageCount(items?.totalPages);
   }
 
   return (
