@@ -39,8 +39,6 @@ class App extends Component {
           draggable
           pauseOnHover
         />
-        {/* Same as */}
-        <ToastContainer />
         <div className="container-scroller">
           {navbarComponent}
           <div className="container-fluid page-body-wrapper">
