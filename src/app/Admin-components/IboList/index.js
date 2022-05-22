@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getBranches, deleteUsr, userLogout, updateProfile } from "../../../utils/APIs";
+import { getIBOs, deleteUsr, userLogout, updateProfile } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
@@ -89,9 +89,6 @@ const IboList = () => {
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % itemlist.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
     setItemOffset(newOffset);
   };
   const deleteBranch = (uid) => {
@@ -122,7 +119,7 @@ const IboList = () => {
 
   const list = async () => {
     try {
-      const items = await (await getBranches(itemsPerPage, itemOffset)).data;
+      const items = await (await getIBOs(itemsPerPage, itemOffset)).data;
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {

@@ -12,7 +12,7 @@ export const CreateUser = (data) => api('users', 'POST', data);
 export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const deleteUsr = (id) => api(`users/${id}`, 'DELETE');
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
-export const getUsers = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=user&sortBy=asc`, 'GET');
+export const getUsers = (limit = 10,offset = 1,name = '',role='user',branch='',IBO='') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=asc&name=${name}&custom=true&branch=${branch}&IBO=${IBO}`, 'GET');
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
 
 // employee management
@@ -25,3 +25,6 @@ export const approveEmployee = (data) => api(`employee/approve-leave`, 'POST', d
 
 // branch management
 export const getBranches = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=branch`, 'GET');
+
+// IBO management
+export const getIBOs = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=IBO`, 'GET');

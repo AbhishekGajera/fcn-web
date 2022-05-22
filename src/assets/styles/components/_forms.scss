@@ -4,6 +4,11 @@
   margin-bottom: 1.5rem;
 }
 
+
+.outline-gray {
+  outline: 1px solid #ebedf2 !important;
+}
+
 .input-group-append,
 .input-group-prepend {
   color: $input-placeholder-color;

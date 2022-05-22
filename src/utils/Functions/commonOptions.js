@@ -4,6 +4,13 @@ export const statusOption = [
     { value : 2, label : 'Terminated' }
 ]
 
+export const roleOption = [
+    { value : 'user', label : 'User' },
+    { value : 'admin', label : 'Admin' },
+    { value : 'IBO', label : 'IBO' },
+    { value : 'branch', label : 'Branch' }
+]
+
 export const formateStatus = (status) => {
     switch (+status) {
         case (0):

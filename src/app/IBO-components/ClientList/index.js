@@ -6,6 +6,8 @@ import {
   userLogout,
   deleteUsr,
   updateProfile,
+  getBranches,
+  getIBOs,
 } from "../../../utils/APIs";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
@@ -15,12 +17,19 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { password_generator } from "../../../utils/Functions/passwordGenerator";
 import { useUrl } from "../../../utils/Functions/useUrl";
-import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
+import {
+  statusOption,
+  formateStatus,
+  roleOption
+} from "../../../utils/Functions/commonOptions";
+import { useDebounce } from "../../../utils/Functions/useDebounce";
 
 const ClientList = () => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const {
     register,
@@ -34,13 +43,17 @@ const ClientList = () => {
   );
 
   const onSubmit = async (data) => {
-    data.status = updateStatus
+    data.status = updateStatus;
+    data.branch = branchUpdate;
+    data.IBO = IBOUpdate;
+    data.role = roleUpdate
+    
     try {
       const updatedData = JSON.stringify(data);
       await updateProfile(updatedData, valueToEdit?.id);
-      toast.success('User updated Successfully',{
-        autoClose : 3000
-      })
+      toast.success("User updated Successfully", {
+        autoClose: 3000,
+      });
       list();
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -72,30 +85,95 @@ const ClientList = () => {
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
   const [updateStatus, setupdateStatus] = useState(0);
+  const [branchList, setbranchList] = useState([]);
+  const [selectedBranch, setselectedBranch] = useState("");
+  const [IBOList, setIBOList] = useState([]);
+  const [selectedIBO, setselectedIBO] = useState("");
+  const [branchUpdate, setbranchUpdate] = useState('')
+  const [IBOUpdate, setIBOUpdate] = useState('')
+  const [roleUpdate, setroleUpdate] = useState('')
+
+  const onChangeBranchUpdate = (e) => {
+    setbranchUpdate(e?.target?.value)
+  }
 
   const onChangeStatusForm = (e) => {
-    setupdateStatus(+e?.target?.value || 0)
+    setupdateStatus(+e?.target?.value || 0);
+  };
+
+  const onChangeIBOpdate = (e) => {
+    setIBOUpdate(e?.target?.value)
+  }
+
+  const onChangeRolepdate = (e) => {
+    setroleUpdate(e?.target?.value)
   }
 
   const handleClose = () => {
     setShow(false);
     setvalueToEdit({});
-    setupdateStatus(0)
+    setupdateStatus(0);
+    setbranchUpdate('');
+    setIBOUpdate('');
+    setroleUpdate('')
   };
 
   const handleShow = (value) => {
     setvalueToEdit(value);
-    setupdateStatus(value?.status || 0)
+    setupdateStatus(value?.status || 0);
+    setbranchUpdate(value?.branch)
+    setIBOUpdate(value?.IBO)
+    setroleUpdate(value?.role)
     setShow(true);
   };
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage]);
+  }, [itemOffset, itemsPerPage, selectedBranch, selectedIBO]);
+
+  useEffect(() => {
+    list();
+  }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    getBranchList();
+    getIBOList();
+  }, []);
+
+  const getBranchList = async () => {
+    const items = await (await getBranches(5000, 1, "", "branch")).data;
+
+    setbranchList(items?.results);
+  };
+
+  const onChangeHandlerBranch = (e) => {
+    setItemOffset(0);
+    setselectedBranch(e.target.value);
+  };
+
+  const getIBOList = async () => {
+    const items = await (await getIBOs(5000, 1, "", "IBO")).data;
+
+    setIBOList(items?.results);
+  };
+
+  const onChangeHandlerIBO = (e) => {
+    setItemOffset(0);
+    setselectedIBO(e.target.value);
+  };
 
   const list = async () => {
     try {
-      const items = await (await getUsers(itemsPerPage, +itemOffset + 1)).data;
+      const items = await (
+        await getUsers(
+          itemsPerPage,
+          +itemOffset + 1,
+          searchTerm,
+          "user",
+          selectedBranch,
+          selectedIBO
+        )
+      ).data;
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
@@ -141,7 +219,6 @@ const ClientList = () => {
   };
 
   const deleteData = (uid) => {
-    // console.log(uid);
     Swal.fire({
       title: "Are you sure?",
       text: "You will not be able to recover this imaginary file!",
@@ -262,26 +339,7 @@ const ClientList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
-                            Branch
-                          </label>
-                          <div className="col-sm-9">
-                            <Form.Control
-                              type="text"
-                              defaultValue={valueToEdit.branch}
-                              name="branch"
-                              {...register("branch", { required: true })}
-                            />
-                            {errors && errors.branch && (
-                              <p>branch is required field</p>
-                            )}
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div>
+
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -319,23 +377,25 @@ const ClientList = () => {
                           <label className="col-sm-3 col-form-label">
                             status
                           </label>
-                          <select
-                            className="form-control form-control-sm col-sm-9"
-                            id="exampleFormControlSelect3"
-                            name="status"
-                            onChange={onChangeStatusForm}
-                          >
-                            {statusOption?.map((i) => {
-                              return (
-                                <option
-                                  value={i?.value}
-                                  selected={+updateStatus === +i?.value}
-                                >
-                                  {i?.label}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect3"
+                              name="status"
+                              onChange={onChangeStatusForm}
+                            >
+                              {statusOption?.map((i) => {
+                                return (
+                                  <option
+                                    value={i?.value}
+                                    selected={+updateStatus === +i?.value}
+                                  >
+                                    {i?.label}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
                         </Form.Group>
                       </div>
                     </div>
@@ -344,18 +404,90 @@ const ClientList = () => {
                       <div className="col-md-12">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">
-                            Role
+                            Search Branch
                           </label>
                           <div className="col-sm-9">
-                            <Form.Control
-                              type="text"
-                              defaultValue={valueToEdit.role}
-                              name="role"
-                              {...register("role", { required: true })}
-                            />
-                            {errors && errors.role && (
-                              <p>role is required field</p>
-                            )}
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              onChange={onChangeBranchUpdate}
+                            >
+                              {branchList?.map((i) => {
+                                return (
+                                  <>
+                                    <option
+                                      selected={i.name === branchUpdate}
+                                      value={i.name}
+                                    >
+                                      {i.name}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Select IBO
+                          </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              onChange={onChangeIBOpdate}
+                            >
+                              {IBOList?.map((i) => {
+                                return (
+                                  <>
+                                    <option
+                                      selected={i.name === IBOUpdate}
+                                      value={i.name}
+                                    >
+                                      {i.name}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Select Role
+                          </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              onChange={onChangeRolepdate}
+                            >
+                              {roleOption?.map((i) => {
+                                return (
+                                  <>
+                                    <option
+                                      selected={i.value === roleUpdate}
+                                      value={i.value}
+                                    >
+                                      {i.label}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
                           </div>
                         </Form.Group>
                       </div>
@@ -395,36 +527,88 @@ const ClientList = () => {
         <div className="card">
           <div className="card-body">
             <div className="row">
-              <div className="col-md-6">
+              <div className="col-md-3">
                 <Form.Group className="row">
                   <label className="col-sm-4 col-form-label">
                     Search Branch
                   </label>
                   <div className="col-sm-8">
                     <select
-                      className="form-control form-control-lg"
+                      className="form-control form-control-sm"
                       id="exampleFormControlSelect2"
                       name="branch"
+                      onChange={onChangeHandlerBranch}
                     >
-                      <option>Branches</option>
-                      <option>United States of America</option>
-                      <option>India</option>
-                      <option>United Kingdom</option>
-                      <option>Germany</option>
-                      <option>Argentina</option>
+                      <option selected={"" === selectedBranch} value={""}>
+                        Not Selected
+                      </option>
+                      {branchList?.map((i) => {
+                        return (
+                          <>
+                            <option
+                              selected={i.name === selectedBranch}
+                              value={i.name}
+                            >
+                              {i.name}
+                            </option>
+                          </>
+                        );
+                      })}
                     </select>
                   </div>
                 </Form.Group>
               </div>
-              <div className="col-md-6">
+
+              <div className="col-md-3">
                 <Form.Group className="row">
-                  <label className="col-sm-3 col-form-label">
-                    Search Name:
-                  </label>
-                  <div className="col-sm-9">
-                    <Form.Control type="text" name="contactno" />
+                  <label className="col-sm-4 col-form-label">Search IBO</label>
+                  <div className="col-sm-8">
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect2"
+                      name="branch"
+                      onChange={onChangeHandlerIBO}
+                    >
+                      <option selected={"" === selectedIBO} value={""}>
+                        Not Selected
+                      </option>
+                      {IBOList?.map((i) => {
+                        return (
+                          <>
+                            <option
+                              selected={i.name === selectedIBO}
+                              value={i.name}
+                            >
+                              {i.name}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
                   </div>
                 </Form.Group>
+              </div>
+
+              <div className="col-md-6">
+                <div className="search-field d-none d-md-block">
+                  <form className="d-flex align-items-center h-100" action="#">
+                    <div className="input-group">
+                      <div className="input-group-prepend outline-gray bg-transparent">
+                        <i className="input-group-text border-0 mdi mdi-magnify"></i>
+                      </div>
+                      <input
+                        type="text"
+                        className="form-control outline-gray bg-transparent border-0"
+                        placeholder="Search Clients"
+                        value={searchTerm}
+                        onChange={(e) => {
+                          setSearchTerm(e?.target?.value);
+                          setItemOffset(0);
+                        }}
+                      />
+                    </div>
+                  </form>
+                </div>
               </div>
             </div>
             <h4 className="card-title">Client list</h4>
@@ -436,6 +620,7 @@ const ClientList = () => {
                     <th> Name </th>
                     <th> Contact no. </th>
                     <th> Branch </th>
+                    <th> IBO </th>
                     <th> Email </th>
                     <th> Role </th>
                     <th> Status </th>
@@ -451,6 +636,7 @@ const ClientList = () => {
                         <td>{item?.name}</td>
                         <td>{item?.contactno}</td>
                         <td>{item?.branch}</td>
+                        <td>{item?.IBO}</td>
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
                         <td>{formateStatus(item?.status)}</td>
