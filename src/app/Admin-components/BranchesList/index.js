@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getBranches,deleteUsr,updateProfile,userLogout } from "../../../utils/APIs";
+import { getBranches,deleteUsr,updateProfile,userLogout,getUsers } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
@@ -69,7 +69,17 @@ const BranchList = () => {
 
 
   useEffect(() => {
-      list()
+    (async () => {
+      const endOffset = itemOffset + itemsPerPage;
+      const items = await (await getUsers(itemsPerPage, itemOffset)).data;
+      setitemlist(items?.results);
+      console.info("items ", items);
+
+      // Fetch items from another resources.
+      console.log(`Loading items from ${itemOffset} to ${endOffset}`);
+      setCurrentItems(items.results.slice(itemOffset, endOffset));
+      setPageCount(Math.ceil(items.length / itemsPerPage));
+    })();
   }, [itemOffset, itemsPerPage]);
 
   // Invoke when user click to request another page.
