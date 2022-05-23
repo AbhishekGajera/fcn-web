@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser } from "../../../utils/APIs";
+import { CreateUser,CreateBranch } from "../../../utils/APIs";
 
 const CreateBranches = () => {
   const [cookies] = useCookies(["user"]);
@@ -21,6 +21,7 @@ const CreateBranches = () => {
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   const onSubmit = async (data) => {
+    data.role = 'branch'
       try {
         const result = await CreateUser(data)
         console.info("result ",result)
@@ -127,7 +128,7 @@ const CreateBranches = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  <div className="col-md-6">
+                  {/* <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Branch</label>
                       <div className="col-sm-9">
@@ -141,7 +142,7 @@ const CreateBranches = () => {
                         )}
                       </div>
                     </Form.Group>
-                  </div>
+                  </div> */}
                 </div>
                 <div className="row">
                   <div className="col-md-6">

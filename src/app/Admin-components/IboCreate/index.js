@@ -1,12 +1,15 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser } from "../../../utils/APIs";
+import { CreateUser,getBranches } from "../../../utils/APIs";
 
 const CreateIbo = () => {
   const [cookies] = useCookies(["user"]);
+  const [itemlist, setitemlist] = useState([]);
+
 
   const {
     register,
@@ -21,6 +24,7 @@ const CreateIbo = () => {
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   const onSubmit = async (data) => {
+    data.role = 'IBO'
       try {
         const result = await CreateUser(data)
         console.info("result ",result)
@@ -38,6 +42,34 @@ const CreateIbo = () => {
           toast.error(process.env.REACT_APP_ERROR_MESSAGE);
         }
       }
+  };
+  useEffect(() => {
+    list();
+  }, []);
+
+  const list = async () => {
+    try {
+      const items = await (await getBranches()).data;
+      console.log("itm",items)
+      setitemlist(items?.results);
+      // setPageCount(items?.totalPages);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        // setCookie("user", null, { path: "/" });
+        // userLogout(formData).finally(() => {
+        //   history.push("/user-pages/login-1");
+        // });
+      }
+    }
   };
 
   return (
@@ -131,6 +163,31 @@ const CreateIbo = () => {
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Branch</label>
                       <div className="col-sm-9">
+                      {/* {dataValues.map((tags, index) => (
+                  <MenuItem key={index} value={tags.title}>
+                    {tags.title}
+                  </MenuItem>
+                ))} */}
+                      <select
+                          className="form-control form-control-lg"
+                          id="exampleFormControlSelect2"
+                          name="branch"
+                          {...register("branch", {
+                            required: true,
+                          })}
+                        >
+                           {itemlist.map((item, index) => (
+                  <option key={index} value={item?.name} label={item?.name}></option>
+                ))}
+                         
+                          {/* <option>United States of America</option>
+                          <option >India</option>
+                          <option>United Kingdom</option>
+                          <option>Germany</option>
+                          <option>Argentina</option> */}
+                        </select>
+                        </div>
+                      {/* <div className="col-sm-9">
                         <Form.Control
                           type="text"
                           name="branch"
@@ -139,7 +196,7 @@ const CreateIbo = () => {
                         {errors && errors.branch && (
                           <p>branch is required field</p>
                         )}
-                      </div>
+                      </div> */}
                     </Form.Group>
                   </div>
                 </div>

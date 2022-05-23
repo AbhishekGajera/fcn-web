@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getIBOs, deleteUsr, userLogout, updateProfile } from "../../../utils/APIs";
+// import { getIBOs, deleteUsr, userLogout, updateProfile } from "../../../utils/APIs";
+import {
+  getUsers,
+  userLogout,
+  deleteUsr,
+  updateProfile,
+  getBranches,
+  getIBOs,
+} from "../../../utils/APIs";
+import { useDebounce } from "../../../utils/Functions/useDebounce";
+
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
@@ -9,11 +19,16 @@ import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
+import { password_generator } from "../../../utils/Functions/passwordGenerator";
+
 
 const IboList = () => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();
+  const [searchTerm, setSearchTerm] = useState("");
+  
+
 
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
@@ -24,6 +39,37 @@ const IboList = () => {
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
   const [updateStatus, setupdateStatus] = useState(0);
+  const [branchList, setbranchList] = useState([]);
+  const [selectedBranch, setselectedBranch] = useState("");
+  const [IBOList, setIBOList] = useState([]);
+  const [selectedIBO, setselectedIBO] = useState("");
+  const [branchUpdate, setbranchUpdate] = useState('')
+  const [IBOUpdate, setIBOUpdate] = useState('')
+  const [roleUpdate, setroleUpdate] = useState('')
+  const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const onChangeBranchUpdate = (e) => {
+    setbranchUpdate(e?.target?.value)
+  }
+
+
+
+  const onChangeIBOpdate = (e) => {
+    setIBOUpdate(e?.target?.value)
+  }
+
+  const onChangeRolepdate = (e) => {
+    setroleUpdate(e?.target?.value)
+  }
+  const onChangeHandlerBranch = (e) => {
+    setItemOffset(0);
+    setselectedBranch(e.target.value);
+  };
+  const onChangeHandlerIBO = (e) => {
+    setItemOffset(0);
+    setselectedIBO(e.target.value);
+  };
+
+  
 
   const {
     register,
@@ -85,12 +131,56 @@ const IboList = () => {
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage]);
+  const generatePassword = async (id) => {
+    const randomPassword = password_generator();
+    const newPassword = JSON.stringify({
+      password : randomPassword
+    })
+    
+
+    try {
+     await updateProfile(newPassword,id)
+     toast.success('Password generated and sended to user via Email successfully',{ autoClose : 3000 })
+    } catch (error) {
+      toast.error('Password generation failed, please try again later')
+    }
+    
+  };
+  const getIBOList = async () => {
+    const items = await (await getIBOs(5000, 1, "", "IBO")).data;
+
+    setIBOList(items?.results);
+  };
+
+  // const onChangeHandlerIBO = (e) => {
+  //   setItemOffset(0);
+  //   setselectedIBO(e.target.value);
+  // };
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % itemlist.length;
     setItemOffset(newOffset);
   };
+  
+  useEffect(() => {
+    list();
+  }, [itemOffset, itemsPerPage, selectedBranch, selectedIBO]);
+
+  useEffect(() => {
+    list();
+  }, [debouncedSearchTerm]);
+
+  useEffect(() => {
+    getBranchList();
+    getIBOList();
+  }, []);
+  const getBranchList = async () => {
+    const items = await (await getBranches(5000, 1, "", "branch")).data;
+
+    setbranchList(items?.results);
+  };
+
   const deleteBranch = (uid) => {
     Swal.fire({
       title: "Are you sure?",
@@ -292,6 +382,35 @@ const IboList = () => {
                           <label className="col-sm-3 col-form-label">
                             status
                           </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect3"
+                              name="status"
+                              onChange={onChangeStatusForm}
+                            >
+                              {statusOption?.map((i) => {
+                                return (
+                                  <option
+                                    value={i?.value}
+                                    selected={+updateStatus === +i?.value}
+                                  >
+                                    {i?.label}
+                                  </option>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    {/* <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-md-3 col-form-label">
+                            status
+                          </label>
+                          <div className="col-md-9">
                           <select
                             className="form-control form-control-sm col-sm-9"
                             id="exampleFormControlSelect3"
@@ -309,9 +428,10 @@ const IboList = () => {
                               );
                             })}
                           </select>
+                          </div>
                         </Form.Group>
                       </div>
-                    </div>
+                    </div> */}
 
                     <div className="row">
                       <div className="col-md-12">
@@ -367,6 +487,91 @@ const IboList = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
+          <div className="row">
+              {/* <div className="col-md-3">
+                <Form.Group className="row">
+                  <label className="col-sm-4 col-form-label">
+                    Search Branch
+                  </label>
+                  <div className="col-sm-8">
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect2"
+                      name="branch"
+                      onChange={onChangeHandlerBranch}
+                    >
+                      <option selected={"" === selectedBranch} value={""}>
+                        Not Selected
+                      </option>
+                      {branchList?.map((i) => {
+                        return (
+                          <>
+                            <option
+                              selected={i.name === selectedBranch}
+                              value={i.name}
+                            >
+                              {i.name}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </Form.Group>
+              </div> */}
+
+              <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-4 col-form-label">Search IBO</label>
+                  <div className="col-sm-8">
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect2"
+                      name="branch"
+                      onChange={onChangeHandlerIBO}
+                    >
+                      <option selected={"" === selectedIBO} value={""}>
+                        Not Selected
+                      </option>
+                      {IBOList?.map((i) => {
+                        return (
+                          <>
+                            <option
+                              selected={i.name === selectedIBO}
+                              value={i.name}
+                            >
+                              {i.name}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </Form.Group>
+              </div>
+
+              <div className="col-md-6">
+                <div className="search-field d-none d-md-block">
+                  <form className="d-flex align-items-center h-100" action="#">
+                    <div className="input-group">
+                      <div className="input-group-prepend outline-gray bg-transparent">
+                        <i className="input-group-text border-0 mdi mdi-magnify"></i>
+                      </div>
+                      <input
+                        type="text"
+                        className="form-control outline-gray bg-transparent border-0"
+                        placeholder="Search Clients"
+                        value={searchTerm}
+                        onChange={(e) => {
+                          setSearchTerm(e?.target?.value);
+                          setItemOffset(0);
+                        }}
+                      />
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
             <h4 className="card-title">Ibo list</h4>
 
             <div className="table-responsive">
@@ -379,6 +584,8 @@ const IboList = () => {
                     <th> Email </th>
                     <th> Role </th>
                     <th> Status </th>
+                    <th> Generate Password </th>
+
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -393,6 +600,23 @@ const IboList = () => {
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
                         <td>{formateStatus(item?.status)}</td>
+                        {/* <td>
+                          <label className="badge badge-gradient-success">
+                            Active
+                          </label>
+                          <label className="badge badge-gradient-danger">
+                            Inactive
+                          </label>
+                        </td> */}
+                        <td>
+                          <button
+                            type="button"
+                            className="btn btn-gradient-primary btn-sm "
+                            onClick={() => generatePassword(item?.id)}
+                          >
+                            Generate
+                          </button>
+                        </td>
                         <td>
                           <i
                             onClick={() => handleShow(item)}
