@@ -1,14 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-// import { getBranches,deleteUsr,updateProfile,userLogout,getUsers } from "../../../utils/APIs";
 import {
-  getUsers,
   userLogout,
   deleteUsr,
   updateProfile,
   getBranches,
-  getIBOs,
 } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
@@ -16,12 +13,9 @@ import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
 import {toast} from 'react-toastify';
 import { useHistory } from 'react-router-dom'
-import { useUrl } from "../../../utils/Functions/useUrl";
-import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
+import { statusOption,formateStatus,roleOption } from "../../../utils/Functions/commonOptions";
 import { password_generator } from "../../../utils/Functions/passwordGenerator";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
-
-
 
 
 const BranchList = () => {
@@ -37,49 +31,16 @@ const BranchList = () => {
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
   const [updateStatus, setupdateStatus] = useState(0);
-  const [branchList, setbranchList] = useState([]);
-  const [selectedBranch, setselectedBranch] = useState("");
-  const [IBOList, setIBOList] = useState([]);
-  const [selectedIBO, setselectedIBO] = useState("");
-  const [branchUpdate, setbranchUpdate] = useState('')
-  const [IBOUpdate, setIBOUpdate] = useState('')
   const [roleUpdate, setroleUpdate] = useState('')
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  const onChangeBranchUpdate = (e) => {
-    setbranchUpdate(e?.target?.value)
-  }
-
-
-
-  const onChangeIBOpdate = (e) => {
-    setIBOUpdate(e?.target?.value)
-  }
 
   const onChangeRolepdate = (e) => {
     setroleUpdate(e?.target?.value)
   }
-  const onChangeHandlerBranch = (e) => {
-    setItemOffset(0);
-    setselectedBranch(e.target.value);
-  };
-  const onChangeHandlerIBO = (e) => {
-    setItemOffset(0);
-    setselectedIBO(e.target.value);
-  };
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory()
-
-  // We start with an empty list of items.
-  // const [pageCount, setPageCount] = useState(0);
-  // Here we use item offsets; we could also use page offsets
-  // following the API or data you're working with.
-  // const [itemOffset, setItemOffset] = useUrl('page');
-  // const [itemsPerPage] = useState(10);
-  // const [show, setShow] = React.useState(false);
-  // const [valueToEdit, setvalueToEdit] = useState({})
-  // const [updateStatus, setupdateStatus] = useState(0);
 
   const { register, handleSubmit, formState: { errors , isDirty, isValid } } = useForm({
     mode: "onChange"
@@ -101,6 +62,7 @@ const BranchList = () => {
   const handleShow = (value) =>{ 
     setvalueToEdit(value)
     setupdateStatus(value?.status || 0)
+    setroleUpdate(value?.role)
     setShow(true);
   }
   const generatePassword = async (id) => {
@@ -118,7 +80,8 @@ const BranchList = () => {
     
   };
   const onSubmit = async (data) => {
-    data.status = updateStatus
+    data.status = updateStatus;
+    data.role = roleUpdate
     try {
       const updatedData = JSON.stringify(data)
       await updateProfile(updatedData,valueToEdit?.id)
@@ -152,17 +115,17 @@ const BranchList = () => {
   useEffect(() => {
     list()
   }, [itemOffset, itemsPerPage]);
+
+  useEffect(() => {
+    list()
+  }, [debouncedSearchTerm]);
  
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     setItemOffset(event.selected);
   };
-  const getIBOList = async () => {
-    const items = await (await getIBOs(5000, 1, "", "IBO")).data;
 
-    setIBOList(items?.results);
-  };
   const deleteBranch =(uid)=>{
     Swal.fire({
       title: "Are you sure?",
@@ -191,7 +154,7 @@ const BranchList = () => {
 
 
   const list = async () => {
-    const items = await (await getBranches(itemsPerPage, (+itemOffset + 0))).data;
+    const items = await (await getBranches(itemsPerPage, (+itemOffset + 0),searchTerm)).data;
     setitemlist(items?.results);
     setPageCount(items?.totalPages);
   }
@@ -231,26 +194,6 @@ const BranchList = () => {
                     </Form.Group>
                   </div>
                 </div>
-{/* 
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
-                        Address{" "}
-                      </label>
-                      <div className="col-sm-10">
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          {...register("address", { required: true })}
-                        />
-                        {errors && errors.address && (
-                          <p>address is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div> */}
 
                 <div className="row">
                   <div className="col-md-12">
@@ -341,53 +284,38 @@ const BranchList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                {/* <div className="row">
+
+
+<div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">
-                            status
+                            Select Role
                           </label>
-                          <select
-                            className="form-control form-control-sm col-sm-9"
-                            id="exampleFormControlSelect3"
-                            name="status"
-                            onChange={onChangeStatusForm}
-                          >
-                            {statusOption?.map((i) => {
-                              return (
-                                <option
-                                  value={i?.value}
-                                  selected={+updateStatus === +i?.value}
-                                >
-                                  {i?.label}
-                                </option>
-                              );
-                            })}
-                          </select>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              onChange={onChangeRolepdate}
+                            >
+                              {roleOption?.map((i) => {
+                                return (
+                                  <>
+                                    <option
+                                      selected={i.value === roleUpdate}
+                                      value={i.value}
+                                    >
+                                      {i.label}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
+                          </div>
                         </Form.Group>
                       </div>
-                    </div> */}
-
-
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Role</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          defaultValue={valueToEdit.role}
-
-                          name="role"
-                          {...register("role", { required: true })}
-                        />
-                        {errors && errors.role && (
-                          <p>role is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
+                    </div>
               
              
 
@@ -429,67 +357,6 @@ const BranchList = () => {
           <div className="row">
           <div className="col-md-6">
             </div>
-              {/* <div className="col-md-3">
-                <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">
-                    Search Branch
-                  </label>
-                  <div className="col-sm-8">
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect2"
-                      name="branch"
-                      onChange={onChangeHandlerBranch}
-                    >
-                      <option selected={"" === selectedBranch} value={""}>
-                        Not Selected
-                      </option>
-                      {branchList?.map((i) => {
-                        return (
-                          <>
-                            <option
-                              selected={i.name === selectedBranch}
-                              value={i.name}
-                            >
-                              {i.name}
-                            </option>
-                          </>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </Form.Group>
-              </div> */}
-
-              {/* <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">Search IBO</label>
-                  <div className="col-sm-8">
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect2"
-                      name="branch"
-                      onChange={onChangeHandlerIBO}
-                    >
-                      <option selected={"" === selectedIBO} value={""}>
-                        Not Selected
-                      </option>
-                      {IBOList?.map((i) => {
-                        return (
-                          <>
-                            <option
-                              selected={i.name === selectedIBO}
-                              value={i.name}
-                            >
-                              {i.name}
-                            </option>
-                          </>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </Form.Group>
-              </div> */}
 
               <div className="col-md-6">
                 <div className="search-field d-none d-md-block">
