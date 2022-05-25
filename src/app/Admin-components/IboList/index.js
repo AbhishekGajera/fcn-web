@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-// import { getIBOs, deleteUsr, userLogout, updateProfile } from "../../../utils/APIs";
 import {
   getUsers,
   userLogout,
@@ -44,17 +43,11 @@ const IboList = () => {
   const [IBOList, setIBOList] = useState([]);
   const [selectedIBO, setselectedIBO] = useState("");
   const [branchUpdate, setbranchUpdate] = useState('')
-  const [IBOUpdate, setIBOUpdate] = useState('')
   const [roleUpdate, setroleUpdate] = useState('')
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+
   const onChangeBranchUpdate = (e) => {
     setbranchUpdate(e?.target?.value)
-  }
-
-
-
-  const onChangeIBOpdate = (e) => {
-    setIBOUpdate(e?.target?.value)
   }
 
   const onChangeRolepdate = (e) => {
@@ -64,12 +57,6 @@ const IboList = () => {
     setItemOffset(0);
     setselectedBranch(e.target.value);
   };
-  const onChangeHandlerIBO = (e) => {
-    setItemOffset(0);
-    setselectedIBO(e.target.value);
-  };
-
-  
 
   const {
     register,
@@ -81,7 +68,6 @@ const IboList = () => {
   var strongRegexMo = new RegExp(
     "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
   );
-  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   const handleClose = () => {
     setShow(false);
@@ -152,11 +138,6 @@ const IboList = () => {
     setIBOList(items?.results);
   };
 
-  // const onChangeHandlerIBO = (e) => {
-  //   setItemOffset(0);
-  //   setselectedIBO(e.target.value);
-  // };
-
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
     const newOffset = (event.selected * itemsPerPage) % itemlist.length;
@@ -175,9 +156,9 @@ const IboList = () => {
     getBranchList();
     getIBOList();
   }, []);
+
   const getBranchList = async () => {
     const items = await (await getBranches(5000, 1, "", "branch")).data;
-
     setbranchList(items?.results);
   };
 
@@ -272,7 +253,8 @@ const IboList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                    {/* 
+
+                    
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
@@ -291,7 +273,7 @@ const IboList = () => {
                       </div>
                     </Form.Group>
                   </div>
-                </div> */}
+                </div>
 
                     <div className="row">
                       <div className="col-md-12">
@@ -325,26 +307,7 @@ const IboList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
-                            Branch
-                          </label>
-                          <div className="col-sm-9">
-                            <Form.Control
-                              type="text"
-                              defaultValue={valueToEdit.branch}
-                              name="branch"
-                              {...register("branch", { required: true })}
-                            />
-                            {errors && errors.branch && (
-                              <p>branch is required field</p>
-                            )}
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div>
+
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -404,34 +367,6 @@ const IboList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                    {/* <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-md-3 col-form-label">
-                            status
-                          </label>
-                          <div className="col-md-9">
-                          <select
-                            className="form-control form-control-sm col-sm-9"
-                            id="exampleFormControlSelect3"
-                            name="status"
-                            onChange={onChangeStatusForm}
-                          >
-                            {statusOption?.map((i) => {
-                              return (
-                                <option
-                                  value={i?.value}
-                                  selected={+updateStatus === +i?.value}
-                                >
-                                  {i?.label}
-                                </option>
-                              );
-                            })}
-                          </select>
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div> */}
 
                     <div className="row">
                       <div className="col-md-12">
@@ -488,7 +423,7 @@ const IboList = () => {
         <div className="card">
           <div className="card-body">
           <div className="row">
-              {/* <div className="col-md-3">
+              <div className="col-md-6">
                 <Form.Group className="row">
                   <label className="col-sm-4 col-form-label">
                     Search Branch
@@ -508,36 +443,6 @@ const IboList = () => {
                           <>
                             <option
                               selected={i.name === selectedBranch}
-                              value={i.name}
-                            >
-                              {i.name}
-                            </option>
-                          </>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </Form.Group>
-              </div> */}
-
-              <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">Search IBO</label>
-                  <div className="col-sm-8">
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect2"
-                      name="branch"
-                      onChange={onChangeHandlerIBO}
-                    >
-                      <option selected={"" === selectedIBO} value={""}>
-                        Not Selected
-                      </option>
-                      {IBOList?.map((i) => {
-                        return (
-                          <>
-                            <option
-                              selected={i.name === selectedIBO}
                               value={i.name}
                             >
                               {i.name}
