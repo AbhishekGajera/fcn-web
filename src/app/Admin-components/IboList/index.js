@@ -307,7 +307,36 @@ const IboList = () => {
                         </Form.Group>
                       </div>
                     </div>
-
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Search Branch
+                          </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              onChange={onChangeBranchUpdate}
+                            >
+                              {branchList?.map((i) => {
+                                return (
+                                  <>
+                                    <option
+                                      selected={i.name === branchUpdate}
+                                      value={i.name}
+                                    >
+                                      {i.name}
+                                    </option>
+                                  </>
+                                );
+                              })}
+                            </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
