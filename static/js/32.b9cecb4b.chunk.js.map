@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Cost/OfficeExpense.js"],"names":["OfficeExpense"],"mappings":"+HAAA,2BAQeA,UANO,WACpB,OACE","file":"static/js/32.b9cecb4b.chunk.js","sourcesContent":["import React from 'react'\n\nconst OfficeExpense = () => {\n  return (\n    <div>OfficeExpense</div>\n  )\n}\n\nexport default OfficeExpense"],"sourceRoot":""}
