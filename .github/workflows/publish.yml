@@ -25,7 +25,7 @@ jobs:
           architecture: ${{ matrix.architecture }}
 
       - name: Push
-        uses: s0/git-publish-subdir-action@develop
+        uses: s0/git-publish-subdir-action@main
         env:
           REPO: self
           BRANCH: build # The branch name where you want to push the assets
