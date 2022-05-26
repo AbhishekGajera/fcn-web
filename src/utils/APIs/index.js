@@ -27,4 +27,4 @@ export const approveEmployee = (data) => api(`employee/approve-leave`, 'POST', d
 export const getBranches = (limit = 10,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}`, 'GET');
 
 // IBO management
-export const getIBOs = (limit = 10,offset = 1) => api(`users?limit=${limit}&page=${offset}&role=IBO`, 'GET');
+export const getIBOs = (limit = 10,offset = 1,name = '',branch = '') => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');

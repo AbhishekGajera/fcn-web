@@ -40,19 +40,13 @@ const IboList = () => {
   const [updateStatus, setupdateStatus] = useState(0);
   const [branchList, setbranchList] = useState([]);
   const [selectedBranch, setselectedBranch] = useState("");
-  const [IBOList, setIBOList] = useState([]);
-  const [selectedIBO, setselectedIBO] = useState("");
   const [branchUpdate, setbranchUpdate] = useState('')
-  const [roleUpdate, setroleUpdate] = useState('')
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
   const onChangeBranchUpdate = (e) => {
     setbranchUpdate(e?.target?.value)
   }
 
-  const onChangeRolepdate = (e) => {
-    setroleUpdate(e?.target?.value)
-  }
   const onChangeHandlerBranch = (e) => {
     setItemOffset(0);
     setselectedBranch(e.target.value);
@@ -132,11 +126,6 @@ const IboList = () => {
     }
     
   };
-  const getIBOList = async () => {
-    const items = await (await getIBOs(5000, 1, "", "IBO")).data;
-
-    setIBOList(items?.results);
-  };
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -146,7 +135,7 @@ const IboList = () => {
   
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, selectedBranch, selectedIBO]);
+  }, [itemOffset, itemsPerPage, selectedBranch]);
 
   useEffect(() => {
     list();
@@ -154,7 +143,6 @@ const IboList = () => {
 
   useEffect(() => {
     getBranchList();
-    getIBOList();
   }, []);
 
   const getBranchList = async () => {
@@ -190,7 +178,7 @@ const IboList = () => {
 
   const list = async () => {
     try {
-      const items = await (await getIBOs(itemsPerPage, itemOffset)).data;
+      const items = await (await getIBOs(itemsPerPage, itemOffset,searchTerm,selectedBranch)).data;
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {

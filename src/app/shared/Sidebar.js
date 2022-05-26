@@ -150,15 +150,6 @@ class Sidebar extends Component {
       {path:'/performance', state: 'fcnPerformance'},
       {path:'/notification', state: 'fcnNotification'},
       {path:'/calculation', state: 'fcnCalculation'},
-
-
-      //fcnCalculation
-
-
-      // <ProtectedRoute path="/product-assign/client" component={ Client } accesstype={["admin"]} />
-      // <ProtectedRoute path="/product-assign/ibo" component={ Ibo } accesstype={["admin"]} />
-      // <ProtectedRoute path="/product-assign/branch" component={ Branch } accesstype={["admin"]} />
-
       {path:'/employee', state: 'fcnEmployees'},
       {path:'/products', state: 'ourProducts'},
       {path:'/training', state: 'ourTraining'},
@@ -297,7 +288,7 @@ class Sidebar extends Component {
             </Collapse>
           </li>
            </>}
-           {["admin"].includes(this.userData?.role) && 
+           {["admin","branch"].includes(this.userData?.role) && 
            <>
            <li className={ this.isPathActive('/clients') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnClients ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnClients') } data-toggle="collapse">
@@ -312,6 +303,8 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+          </>}
+          {["admin"].includes(this.userData?.role) && 
           <li className={ this.isPathActive('/branches') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnBranches ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnBranches') } data-toggle="collapse">
               <span className="menu-title"><Trans>Branches</Trans></span>
@@ -325,6 +318,8 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin","branch"].includes(this.userData?.role) && 
           <li className={ this.isPathActive('/ibo') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnIbo ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnIbo') } data-toggle="collapse">
               <span className="menu-title"><Trans>Ibo</Trans></span>
@@ -338,6 +333,9 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/products') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnProducts ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnProducts') } data-toggle="collapse">
               <span className="menu-title"><Trans>Products</Trans></span>
@@ -351,6 +349,9 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/targets') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnTargets ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnTargets') } data-toggle="collapse">
               <span className="menu-title"><Trans>Targets</Trans></span>
@@ -366,21 +367,9 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-          {/* <li className={ this.isPathActive('/password') ? 'nav-item active' : 'nav-item' }>
-            <div className={ this.state.fcnPasswords ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnPasswords') } data-toggle="collapse">
-              <span className="menu-title"><Trans>Password</Trans></span>
-              <i className="menu-arrow"></i>
-              <i className="mdi mdi-lock-plus menu-icon"></i>
-            </div>
-            <Collapse in={this.state.fcnPasswords}>
-              <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/password/random') ? 'nav-link active' : 'nav-link' } to="/password/random"><Trans>Random</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/password/manual') ? 'nav-link active' : 'nav-link' } to="/password/manual"><Trans>Manual</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/password/otp') ? 'nav-link active' : 'nav-link' } to="/password/otp"><Trans>Otp</Trans></Link></li>
+  }
+           {["admin"].includes(this.userData?.role) && 
 
-              </ul>
-            </Collapse>
-          </li> */}
           <li className={ this.isPathActive('/costs') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnCosts ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnCosts') } data-toggle="collapse">
               <span className="menu-title"><Trans>Costs</Trans></span>
@@ -396,6 +385,9 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+  
           <li className={ this.isPathActive('/revenue') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnRevenues ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnRevenues') } data-toggle="collapse">
               <span className="menu-title"><Trans>Revenues</Trans></span>
@@ -411,6 +403,9 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/fees') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnFees ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnFees') } data-toggle="collapse">
               <span className="menu-title"><Trans>Fees</Trans></span>
@@ -426,6 +421,9 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/marketing') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnMarketing ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnMarketing') } data-toggle="collapse">
               <span className="menu-title"><Trans>Marketing</Trans></span>
@@ -437,17 +435,12 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/marketing/announcement') ? 'nav-link active' : 'nav-link' } to="/marketing/announcement"><Trans>Announcement Promotions</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/marketing/flyers') ? 'nav-link active' : 'nav-link' } to="/marketing/flyers"><Trans>Flyers Award</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/marketing/browchures') ? 'nav-link active' : 'nav-link' } to="/marketing/browchures"><Trans>Browchures Appreciation</Trans></Link></li>
-                {/* <ProtectedRoute path="/employee/leave" component={ Leave } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/advances" component={ Advances } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/salary" component={ Salaries } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/bonus" component={ Bonus } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/commision" component={ Commision } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/brokerages" component={ Brokerages } accesstype={["admin"]} /> */}
-
-
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/employee_manage') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnEmployee ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnEmployee') } data-toggle="collapse">
               <span className="menu-title"><Trans>Employee Management</Trans></span>
@@ -463,17 +456,12 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/employee_manage/commision') ? 'nav-link active' : 'nav-link' } to="/employee_manage/commision"><Trans>Commision</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/employee_manage/brokerages') ? 'nav-link active' : 'nav-link' } to="/employee_manage_manage/browchures"><Trans>Browchures</Trans></Link></li>
 
-                {/* <ProtectedRoute path="/employee/leave" component={ Leave } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/advances" component={ Advances } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/salary" component={ Salaries } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/bonus" component={ Bonus } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/commision" component={ Commision } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee/brokerages" component={ Brokerages } accesstype={["admin"]} /> */}
-
-
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/appointment') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnAppointments ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnAppointments') } data-toggle="collapse">
               <span className="menu-title"><Trans>Appointments</Trans></span>
@@ -488,19 +476,12 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/appointment/pending') ? 'nav-link active' : 'nav-link' } to="/appointment/pending"><Trans>Pending</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/appointment/active') ? 'nav-link active' : 'nav-link' } to="/appointment/active"><Trans>Activer</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/appointment/norequired') ? 'nav-link active' : 'nav-link' } to="/appointment/norequired"><Trans>Not Required</Trans></Link></li>
-
-                {/* <ProtectedRoute path="/product-assign/client" component={ Client } accesstype={["admin"]} />
-          <ProtectedRoute path="/product-assign/ibo" component={ Ibo } accesstype={["admin"]} />
-          <ProtectedRoute path="/product-assign/branch" component={ Branch } accesstype={["admin"]} /> */}
               </ul>
             </Collapse>
           </li>
-          {/* <ProtectedRoute path="/c/today" component={ Today } accesstype={["admin"]} />
-    <ProtectedRoute path="/appointment/weekly" component={ Weekly } accesstype={["admin"]} />
-    <ProtectedRoute path="/appointment/monthly" component={ Monthly } accesstype={["admin"]} />
-    <ProtectedRoute path="/appointment/pending" component={ Pending } accesstype={["admin"]} />
-    <ProtectedRoute path="/appointment/active" component={ Active } accesstype={["admin"]} />
-    <ProtectedRoute path="/appointment/norequired" component={ NotRequired } accesstype={["admin"]} /> */}
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/welcome') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnWelcome ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnWelcome') } data-toggle="collapse">
               <span className="menu-title"><Trans>Welcome</Trans></span>
@@ -512,12 +493,12 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/welcome/account_opening') ? 'nav-link active' : 'nav-link' } to="/welcome/account_opening"><Trans>Account Opening Welcome Letter</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/welcome/product_aquire') ? 'nav-link active' : 'nav-link' } to="/welcome/product_aquire"><Trans>Prodict Aquire IBO Letter</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/welcome/terminate_branch') ? 'nav-link active' : 'nav-link' } to="/welcome/terminate_branch"><Trans>Terminate Branch Letter</Trans></Link></li>
-                {/* <ProtectedRoute path="/product-assign/client" component={ Client } accesstype={["admin"]} />
-          <ProtectedRoute path="/product-assign/ibo" component={ Ibo } accesstype={["admin"]} />
-          <ProtectedRoute path="/product-assign/branch" component={ Branch } accesstype={["admin"]} /> */}
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/product-assign') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnProductAssign ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnProductAssign') } data-toggle="collapse">
               <span className="menu-title"><Trans>Products Assign</Trans></span>
@@ -529,12 +510,12 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/product-assign/client') ? 'nav-link active' : 'nav-link' } to="/product-assign/client"><Trans>Client</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/product-assign/ibo') ? 'nav-link active' : 'nav-link' } to="/product-assign/ibo"><Trans>IBO</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/product-assign/branch') ? 'nav-link active' : 'nav-link' } to="/product-assign/branch"><Trans>Branch</Trans></Link></li>
-                {/* <ProtectedRoute path="/performance/employee" component={ Employee } accesstype={["admin"]} />
-          <ProtectedRoute path="/performance/ibo" component={ IboPerformance } accesstype={["admin"]} />
-          <ProtectedRoute path="/performance/branch" component={ BranchPerformance } accesstype={["admin"]} /> */}
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/calculation') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnCalculation ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnCalculation') } data-toggle="collapse">
               <span className="menu-title"><Trans>Calculation</Trans></span>
@@ -546,12 +527,11 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/calculation/ssp') ? 'nav-link active' : 'nav-link' } to="/calculation/ssp"><Trans>SSP Fix Brokerage</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/calculation/powerone') ? 'nav-link active' : 'nav-link' } to="/calculation/powerone"><Trans>Powerone Equity Brokrage</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/calculation/cp') ? 'nav-link active' : 'nav-link' } to="/calculation/cp"><Trans>Cp Travels</Trans></Link></li>
-                {/* <ProtectedRoute path="/calculation/ssp" component={ Ssp } accesstype={["admin"]} />
-          <ProtectedRoute path="/calculation/powerone" component={ PoEquity } accesstype={["admin"]} />
-          <ProtectedRoute path="/calculation/cp" component={ CpTravels } accesstype={["admin"]} /> */}
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
           <li className={ this.isPathActive('/performance') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnPerformance ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnPerformance') } data-toggle="collapse">
               <span className="menu-title"><Trans>Best Performance</Trans></span>
@@ -563,12 +543,12 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/performance/employee') ? 'nav-link active' : 'nav-link' } to="/performance/employee"><Trans>Employee</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/performance/ibo') ? 'nav-link active' : 'nav-link' } to="/performance/ibo"><Trans>IBO</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/performance/branch') ? 'nav-link active' : 'nav-link' } to="/performance/branch"><Trans>Branch</Trans></Link></li>
-                {/* <ProtectedRoute path="/performance/employee" component={ Employee } accesstype={["admin"]} />
-          <ProtectedRoute path="/performance/ibo" component={ IboPerformance } accesstype={["admin"]} />
-          <ProtectedRoute path="/performance/branch" component={ BranchPerformance } accesstype={["admin"]} /> */}
               </ul>
             </Collapse>
           </li>
+  }
+           {["admin"].includes(this.userData?.role) && 
+
           <li className={ this.isPathActive('/notification') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnNotification ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnNotification') } data-toggle="collapse">
               <span className="menu-title"><Trans>Notfication</Trans></span>
@@ -581,15 +561,10 @@ class Sidebar extends Component {
                 <li className="nav-item"> <Link className={ this.isPathActive('/notification/ibo') ? 'nav-link active' : 'nav-link' } to="/notification/ibo"><Trans>IBO</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/notification/branch') ? 'nav-link active' : 'nav-link' } to="/notification/branch"><Trans>Branch</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/notification/client') ? 'nav-link active' : 'nav-link' } to="/notification/client"><Trans>Client</Trans></Link></li>
-
-                {/* <ProtectedRoute path="/notification/employee" component={ EmployeeNotification } accesstype={["admin"]} />
-          <ProtectedRoute path="/notification/ibo" component={ IboNotification } accesstype={["admin"]} />
-          <ProtectedRoute path="/notification/branch" component={ BranchNotification } accesstype={["admin"]} />
-          <ProtectedRoute path="/notification/client" component={ ClientNotification } accesstype={["admin"]} /> */}
               </ul>
             </Collapse>
           </li>
-          </>}
+  }
           {["branch"].includes(this.userData?.role) && 
          <>
          <li className={ this.isPathActive('/employees') ? 'nav-item active' : 'nav-item' }>

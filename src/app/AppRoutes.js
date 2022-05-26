@@ -199,11 +199,11 @@ class AppRoutes extends Component {
 
 
           {/* admin routes */}
-          <ProtectedRoute path="/clients/clientlist" component={ ClientList } accesstype={["admin"]} />
-          <ProtectedRoute path="/branches/createbranches" component={ CreateBranches } accesstype={["admin"]} />
+          <ProtectedRoute path="/clients/clientlist" component={ ClientList } accesstype={["admin","branch","IBO"]} />
+          <ProtectedRoute path="/branches/createbranches" component={ CreateBranches } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/branches/brancheslist" component={ BranchList } accesstype={["admin"]} />
-          <ProtectedRoute path="/ibo/createibo" component={ CreateIbo } accesstype={["admin"]} />
-          <ProtectedRoute path="/ibo/ibolist" component={ IboList } accesstype={["admin"]} />
+          <ProtectedRoute path="/ibo/createibo" component={ CreateIbo } accesstype={["admin","branch"]} />
+          <ProtectedRoute path="/ibo/ibolist" component={ IboList } accesstype={["admin","branch"]} />
           <ProtectedRoute path="/products/addproducts" component={ ProductAdd } accesstype={["admin"]} />
           <ProtectedRoute path="/products/productslist" component={ ProductFetch } accesstype={["admin"]} />
           <ProtectedRoute path="/targets/weekly" component={ Weekly } accesstype={["admin"]} />
