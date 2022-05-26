@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Target/Weekly.js"],"names":["Weekly"],"mappings":"+HAAA,2BAQeA,UANA,WACb,OACE","file":"static/js/64.fae1e4fe.chunk.js","sourcesContent":["import React from 'react'\n\nconst Weekly = () => {\n  return (\n    <div>Weekly</div>\n  )\n}\n\nexport default Weekly"],"sourceRoot":""}
