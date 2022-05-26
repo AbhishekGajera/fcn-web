@@ -40,7 +40,7 @@ jobs:
         run: npm update -g npm
 
       - name: npm install
-        run: npm install --legacy-peer-dependency
+        run: npm install --legacy-peer-deps
 
       - name: Build
         run: npm run build # The build command of your project
