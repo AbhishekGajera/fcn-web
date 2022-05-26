@@ -24,6 +24,9 @@ jobs:
           node-version: ${{ matrix.node_version }}
           architecture: ${{ matrix.architecture }}
 
+      - name: remove node modules
+        run: rm -rf node_modules
+
       - name: remove packages-lock.json dependencies
         run: rm -rf package-lock.json
 
@@ -38,6 +41,12 @@ jobs:
 
       - name: npm update
         run: npm update -g npm
+
+      - name: npm update node gyp
+        run: npm install -g node-gyp
+
+      - name: add path
+        run: export npm_config_node_gyp=/usr/local/lib/node_modules/node-gyp/bin/node-gyp.js
 
       - name: npm install
         run: npm install --legacy-peer-deps
