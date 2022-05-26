@@ -25,7 +25,12 @@ jobs:
           architecture: ${{ matrix.architecture }}
 
       - name: Install all dependencies
-        run: npm install
+        run: rm -rf package-lock.json
+        run: rm -rf yarn.lock
+        run: rm -rf yarn-error.log
+        run: npm cache clean --force
+        run: npm update -g npm 
+        run: npm install --force
 
       - name: Build
         run: npm run build # The build command of your project
