@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Employee-Management/Advances.js"],"names":["Advances"],"mappings":"+HAAA,2BAQeA,UANE,WACf,OACE","file":"static/js/32.7035cc58.chunk.js","sourcesContent":["import React from 'react'\n\nconst Advances = () => {\n  return (\n    <div>Advances</div>\n  )\n}\n\nexport default Advances"],"sourceRoot":""}

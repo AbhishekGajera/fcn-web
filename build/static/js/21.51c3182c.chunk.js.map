@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Appointment/NotRequired.js"],"names":["NotRequired"],"mappings":"+HAAA,2BAQeA,UANK,WAClB,OACE","file":"static/js/21.51c3182c.chunk.js","sourcesContent":["import React from 'react'\n\nconst NotRequired = () => {\n  return (\n    <div>NotRequired</div>\n  )\n}\n\nexport default NotRequired"],"sourceRoot":""}
