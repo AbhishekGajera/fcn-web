@@ -24,12 +24,22 @@ jobs:
           node-version: ${{ matrix.node_version }}
           architecture: ${{ matrix.architecture }}
 
-      - name: Install all dependencies
+      - name: remove packages-lock.json dependencies
         run: rm -rf package-lock.json
+
+      - name: remove yarn.lock dependencies
         run: rm -rf yarn.lock
+
+      - name: remove yarn-error.log dependencies
         run: rm -rf yarn-error.log
+
+      - name: clean caches
         run: npm cache clean --force
-        run: npm update -g npm 
+
+      - name: npm update
+        run: npm update -g npm
+
+      - name: npm install
         run: npm install --force
 
       - name: Build
