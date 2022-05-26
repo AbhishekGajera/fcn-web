@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Employee-Management/Commision.js"],"names":["Commision"],"mappings":"+HAAA,2BAQeA,UANG,WAChB,OACE","file":"static/js/35.13f24594.chunk.js","sourcesContent":["import React from 'react'\n\nconst Commision = () => {\n  return (\n    <div>Commision</div>\n  )\n}\n\nexport default Commision"],"sourceRoot":""}
