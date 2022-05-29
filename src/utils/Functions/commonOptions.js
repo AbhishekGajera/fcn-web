@@ -11,6 +11,14 @@ export const roleOption = [
     { value : 'branch', label : 'Branch' }
 ]
 
+export const timeOption = [
+    { value : new Date().setDate(new Date().getDate() - 7), label : '1 week' },
+    { value : new Date().setDate(new Date().getDate() - 30), label : '1 month' },
+    { value : new Date().setDate(new Date().getDate() - 90), label : '3 month' },
+    { value : new Date().setDate(new Date().getDate() - 180), label : '6 month' },
+    { value : new Date().setDate(new Date().getDate() - 365), label : '1 Year' }
+]
+
 export const optionForExpenceType = [
     { value : 'Office expence', label : 'Office expence' },
     { value : 'Employee expence', label : 'Employee expence' },

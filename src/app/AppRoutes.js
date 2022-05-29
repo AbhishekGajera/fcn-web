@@ -208,7 +208,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/targets/weekly" component={ Weekly } accesstype={["admin"]} />
           <ProtectedRoute path="/targets/monthly" component={ Monthly } accesstype={["admin"]} />
           <ProtectedRoute path="/targets/yearly" component={ Yearly } accesstype={["admin"]} />
-          <ProtectedRoute path="/costs/expences" component={AddExpences} accesstype={["admin"]} />
+          <ProtectedRoute path="/costs/expences" component={AddExpences} accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/costs/fetchExpences" component={ ExpenceList } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/revenue/employee" component={ EmployeeRevenue } accesstype={["admin"]} />
           <ProtectedRoute path="/revenue/ibo" component={ IboRevenue } accesstype={["admin"]} />

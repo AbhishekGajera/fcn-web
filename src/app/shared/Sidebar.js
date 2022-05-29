@@ -585,7 +585,6 @@ class Sidebar extends Component {
   }
 
   isPathActive(path) {
-    console.info("test++ ",this.props.location.pathname === path)
     return this.props.location.pathname.startsWith(path);
   }
 

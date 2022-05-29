@@ -1,96 +1,61 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser,getBranches,getIBOs } from "../../../utils/APIs";
+import { CreateProduct } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
-
 
 const ProductAdd = () => {
   const [cookies] = useCookies(["user"]);
-  const [itemlist, setitemlist] = useState([]);
-  const [branchlist, setBranchlist] = useState([]);
-
-
-  const history = useHistory()
+  const history = useHistory();
 
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid },
+        formState: { errors, isDirty, isValid },
+    getValues,
   } = useForm({
     mode: "onChange",
   });
-  var strongRegexMo = new RegExp(
-    "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
-  );
-  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
+
+  const values = getValues();
 
   const onSubmit = async (data) => {
-      try {
-        await CreateUser(data)
-        toast.success("user crated successfully");
-        history.push('/clients/clientlist')
-      } catch (error) {
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
-      }
-  };
-  useEffect(() => {
-    list();
-  }, []);
-  useEffect(() => {
-    branchList();
-  }, []);
-
-  const list = async () => {
     try {
-      const items = await (await getBranches()).data;
-      console.log("itm",items)
-      setitemlist(items?.results);
+
+      const formData = new FormData()
+        formData.append("user",cookies?.user?.id)
+        formData.append("category",data?.category)
+        formData.append("description",data?.description)
+        formData.append("image",data?.file[0])
+        formData.append("name",data?.name)
+
+      await CreateProduct(formData);
+      toast.success("Product crated successfully");
+      history.push("/products/productslist");
     } catch (error) {
-      if (error?.response?.data?.message) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
         toast.error(error.response.data.message);
       } else {
         toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
-
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-      
-      }
     }
   };
-  const branchList = async () => {
-    try {
-      const items = await (await getIBOs()).data;
-      setBranchlist(items?.results);
-    } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-      }
 
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-      
-      }
+  const handleUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-id');
+    if (element) {
+        element.click()
     }
-  };
+};
+
   return (
     <div>
       <div className="page-header">
@@ -108,13 +73,16 @@ const ProductAdd = () => {
           </ol>
         </nav>
       </div>
-      <div className="row auth" style={{display: 'flex', justifyContent: 'center'}}>
-        <div className="col-6 grid-margin" >
+      <div
+        className="row auth"
+        style={{ display: "flex", justifyContent: "center" }}
+      >
+        <div className="col-6 grid-margin">
           <div className="card">
             <div className="card-body">
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
                 <p className="card-description"> Add Product </p>
-                <div className="row" >
+                <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Name</label>
@@ -123,6 +91,7 @@ const ProductAdd = () => {
                           type="text"
                           name="name"
                           {...register("name", { required: true })}
+                          placeholder="name"
                         />
                         {errors && errors.name && <p>name is required field</p>}
                       </div>
@@ -134,16 +103,17 @@ const ProductAdd = () => {
                   <div className="col-md-12">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
-                        Type{" "}
+                        Category{" "}
                       </label>
                       <div className="col-sm-9">
                         <Form.Control
                           type="text"
-                          name="type"
-                          {...register("type", { required: true })}
+                          name="category"
+                          {...register("category", { required: true })}
+                          placeholder="category"
                         />
                         {errors && errors.address && (
-                          <p>Type is required field</p>
+                          <p>Category is required field</p>
                         )}
                       </div>
                     </Form.Group>
@@ -158,9 +128,10 @@ const ProductAdd = () => {
                       </label>
                       <div className="col-sm-9">
                         <Form.Control
-                          type="text"
-                          name="desc"
-                          {...register("desc", { required: true })}
+                          as="textarea"
+                          name="description"
+                          {...register("description", { required: true })}
+                          placeholder="description"
                         />
                         {errors && errors.address && (
                           <p>Description is required field</p>
@@ -170,8 +141,46 @@ const ProductAdd = () => {
                   </div>
                 </div>
 
-          
-                <div className="mt-3" style={{display: 'flex', justifyContent: 'center'}}>
+                <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Upload Invoice{" "}
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          id="input-id"
+                          className="d-none"
+                          type="file"
+                          name="file"
+                          multiple={false}
+                          {...register("file", { required: true })}
+                        />
+
+                        <button
+                          onClick={handleUpload}
+                          className={`btn btn-outline-${
+                            values?.file?.[0]?.name
+                              ? " btn-primary"
+                              : " btn-primary"
+                          }`}
+                        >
+                          {values?.file?.[0]?.name
+                            ? values?.file?.[0]?.name
+                            : "Upload Invoice  "}
+                        </button>
+                        {errors && errors.file && (
+                          <p>Upload invoice is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+
+                <div
+                  className="mt-3"
+                  style={{ display: "flex", justifyContent: "center" }}
+                >
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
                     type="submit"

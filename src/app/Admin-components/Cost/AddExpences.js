@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React from 'react'
 import { Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form';
 import { useCookies } from "react-cookie";
@@ -45,7 +45,16 @@ const AddExpences = () => {
             toast.success("Invoice added Succesfully",{ autoClose : 4000 })
             history.push('/costs/fetchExpences')
         } catch (error) {
-            
+            if (
+                error &&
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+              ) {
+                toast.error(error.response.data.message);
+              } else {
+                toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+              }
         }
     }
     return (
@@ -74,9 +83,6 @@ const AddExpences = () => {
                                                    {optionForCostCategory.map((item) => {
                                                        return <option value={item.value}> {item.label} </option>
                                                    })}
-                                                    {errors && errors.name && (
-                                                    <p>Description is required field</p>
-                                                )}
                                                 </select>
                                             </div>
                                         </Form.Group>
@@ -100,9 +106,6 @@ const AddExpences = () => {
                                                         return <option value={item.value}>{item.label}</option>
                                                     })
                                                 }
-                                                    {errors && errors.type && (
-                                                    <p>Type is required field</p>
-                                                )}
                                                 </select>
                                             </div>
                                         </Form.Group>
@@ -141,6 +144,7 @@ const AddExpences = () => {
                                                 <Form.Control
                                                     type="text"
                                                     name="desc"
+                                                    as="textarea"
                                                     {...register("desc", { required: true })}
                                                 />
                                                 {errors && errors.desc && (
@@ -150,6 +154,7 @@ const AddExpences = () => {
                                         </Form.Group>
                                     </div>
                                 </div>
+
                                 <div className="row">
                                     <div className="col-md-12">
                                         <Form.Group className="row">
@@ -180,6 +185,7 @@ const AddExpences = () => {
                                         </Form.Group>
                                     </div>
                                 </div>
+                                
                                 <div className="mt-3" style={{ display: 'flex', justifyContent: 'center' }}>
                                     <button
                                         className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"

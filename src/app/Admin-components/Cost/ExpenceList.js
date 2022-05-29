@@ -3,16 +3,17 @@ import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
 import { deleteCost, getCostList } from "../../../utils/APIs";
 import Swal from "sweetalert2";
-import { toast } from "react-toastify";
 import {
   optionForExpenceType,
   optionForCostCategory,
+  timeOption
 } from "../../../utils/Functions/commonOptions";
 import { Form } from "react-bootstrap";
 
 const ExpenceList = () => {
   const [selectedExpenceType, setselectedExpenceType] = useState("");
   const [selectedExpenceCategory, setselectedExpenceCategory] = useState("");
+  const [selectedExpenceTime, setselectedExpenceTime] = useState("");
 
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
@@ -33,9 +34,14 @@ const ExpenceList = () => {
     setselectedExpenceCategory(e.target.value);
   };
 
+  const onChangeHandlerForExpenceTime = (e) => {
+    setItemOffset(0);
+    setselectedExpenceTime(e.target.value);
+  };
+
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, selectedExpenceType, selectedExpenceCategory]);
+  }, [itemOffset, itemsPerPage, selectedExpenceType, selectedExpenceCategory,selectedExpenceTime]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -78,7 +84,8 @@ const ExpenceList = () => {
         itemsPerPage,
         +itemOffset + 0,
         selectedExpenceCategory,
-        selectedExpenceType
+        selectedExpenceType,
+        ["IBO","branch"].includes(cookies?.user?.role) ? cookies?.user?.id : ''
       )
     ).data;
     setitemlist(items?.results);
@@ -106,6 +113,7 @@ const ExpenceList = () => {
         <div className="card">
           <div className="card-body">
             <div className="row">
+
               <div className="col-md-6">
                 <Form.Group className="row">
                   <label className="col-sm-4 col-form-label">
@@ -129,6 +137,41 @@ const ExpenceList = () => {
                           <>
                             <option
                               selected={i.value === selectedExpenceCategory}
+                              value={i.value}
+                            >
+                              {i.label}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </Form.Group>
+              </div>
+
+              <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-4 col-form-label">
+                    Select Time
+                  </label>
+                  <div className="col-sm-8">
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect2"
+                      name="branch"
+                      onChange={onChangeHandlerForExpenceTime}
+                    >
+                      <option
+                        selected={"" === selectedExpenceTime}
+                        value={""}
+                      >
+                        Not Selected
+                      </option>
+                      {timeOption?.map((i) => {
+                        return (
+                          <>
+                            <option
+                              selected={i.value === selectedExpenceTime}
                               value={i.value}
                             >
                               {i.label}
@@ -179,7 +222,7 @@ const ExpenceList = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th> Expence Type </th>
+                    <th> Expence Category </th>
                     <th> Total Expence </th>
                     <th> Type </th>
                     <th> Description </th>

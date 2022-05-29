@@ -32,5 +32,10 @@ export const getIBOs = (limit = 10,offset = 1,name = '',branch = '') => api(`use
 
 // Cost management
 export const addCost = (data) => multipartApi(`cost/add-cost`, 'POST', data);
-export const getCostList = (limit = 10,offset = 1,category = '',type = '') => api(`cost/fetch-cost?limit=${limit}&page=${offset}&category=${category}&type=${type}`, 'GET');
+export const getCostList = (limit = 10,offset = 1,category = '',type = '',user = '') => api(`cost/fetch-cost?limit=${limit}&sortBy=createdAt:desc&page=${offset}&category=${category}&type=${type}&user=${user}`, 'GET');
 export const deleteCost = (id) => api(`cost/delete-cost/${id}`, 'GET');
+
+// Product management
+export const CreateProduct = (data) => multipartApi(`product`, 'POST', data);
+export const getProductsList = (limit = 10,offset = 1,name = '') => api(`product?limit=${limit}&sortBy=createdAt:desc&page=${offset}&name=${name}&custom=true`, 'GET');
+export const deleteProductById = (id) => api(`product/${id}`, 'GET');
