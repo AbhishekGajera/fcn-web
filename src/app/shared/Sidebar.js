@@ -59,7 +59,7 @@ class Sidebar extends Component {
     }
 
     if(itemName === 'fcnCosts'){
-      this.props.history.push('/costs/office')
+      this.props.history.push('/costs/expences')
     }
 
     if(itemName === 'fcnRevenues'){
@@ -378,6 +378,7 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnCosts}>
               <ul className="nav flex-column sub-menu">
+              <li className="nav-item"> <Link className={ this.isPathActive('/costs/expences') ? 'nav-link active' : 'nav-link' } to="/costs/expences"><Trans>Add Expences</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/costs/office') ? 'nav-link active' : 'nav-link' } to="/costs/office"><Trans>Office Expense</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/costs/employee') ? 'nav-link active' : 'nav-link' } to="/costs/employee"><Trans>Employee Expense</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/costs/mislenious') ? 'nav-link active' : 'nav-link' } to="/costs/mislenious"><Trans>Mislenious</Trans></Link></li>
