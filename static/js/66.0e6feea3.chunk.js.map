@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Target/Yearly.js"],"names":["Yearly"],"mappings":"+HAAA,2BAQeA,UANA,WACb,OACE","file":"static/js/66.0e6feea3.chunk.js","sourcesContent":["import React from 'react'\n\nconst Yearly = () => {\n  return (\n    <div>Yearly</div>\n  )\n}\n\nexport default Yearly"],"sourceRoot":""}

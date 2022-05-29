@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Revenues/EmployeeRevenue.js"],"names":["EmployeeRevenue"],"mappings":"+HAAA,2BAQeA,UANS,WACtB,OACE","file":"static/js/61.99bd0bae.chunk.js","sourcesContent":["import React from 'react'\n\nconst EmployeeRevenue = () => {\n  return (\n    <div>EmployeeRevenue</div>\n  )\n}\n\nexport default EmployeeRevenue"],"sourceRoot":""}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Appointment/Today.js"],"names":["Today"],"mappings":"+HAAA,2BAQeA,UAND,WACZ,OACE","file":"static/js/24.2993ec4c.chunk.js","sourcesContent":["import React from 'react'\n\nconst Today = () => {\n  return (\n    <div>Today</div>\n  )\n}\n\nexport default Today"],"sourceRoot":""}

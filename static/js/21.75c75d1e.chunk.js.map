@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Appointment/MonthlyAppoint.js"],"names":["MonthlyAppoint"],"mappings":"+HAAA,2BAQeA,UANQ,WACrB,OACE","file":"static/js/21.75c75d1e.chunk.js","sourcesContent":["import React from 'react'\n\nconst MonthlyAppoint = () => {\n  return (\n    <div>MonthlyAppoint</div>\n  )\n}\n\nexport default MonthlyAppoint"],"sourceRoot":""}
