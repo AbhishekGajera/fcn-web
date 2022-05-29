@@ -46,9 +46,7 @@ const Weekly = lazy(() => import('./Admin-components/Target/Weekly'));
 const Monthly = lazy(() => import('./Admin-components/Target/Monthly'));
 const Yearly = lazy(() => import('./Admin-components/Target/Yearly'));
 const AddExpences = lazy(()=>import ('./Admin-components/Cost/AddExpences'))
-const OfficeExpense = lazy(() => import('./Admin-components/Cost/OfficeExpense'));
-const EmployeeExpense = lazy(() => import('./Admin-components/Cost/EmployeeExpense'));
-const Mislenious = lazy(() => import('./Admin-components/Cost/Mislenious'));
+const ExpenceList = lazy(() => import('./Admin-components/Cost/ExpenceList'));
 const EmployeeRevenue = lazy(() => import('./Admin-components/Revenues/EmployeeRevenue'));
 const IboRevenue = lazy(() => import('./Admin-components/Revenues/IboRevenue'));
 const BranchRevenue = lazy(() => import('./Admin-components/Revenues/BranchRevenue'));
@@ -211,9 +209,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/targets/monthly" component={ Monthly } accesstype={["admin"]} />
           <ProtectedRoute path="/targets/yearly" component={ Yearly } accesstype={["admin"]} />
           <ProtectedRoute path="/costs/expences" component={AddExpences} accesstype={["admin"]} />
-          <ProtectedRoute path="/costs/office" component={ OfficeExpense } accesstype={["admin"]} />
-          <ProtectedRoute path="/costs/employee" component={ EmployeeExpense } accesstype={["admin"]} />
-          <ProtectedRoute path="/costs/mislenious" component={ Mislenious } accesstype={["admin"]} />
+          <ProtectedRoute path="/costs/fetchExpences" component={ ExpenceList } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/revenue/employee" component={ EmployeeRevenue } accesstype={["admin"]} />
           <ProtectedRoute path="/revenue/ibo" component={ IboRevenue } accesstype={["admin"]} />
           <ProtectedRoute path="/revenue/branch" component={ BranchRevenue } accesstype={["admin"]} />

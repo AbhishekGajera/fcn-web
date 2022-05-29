@@ -4,7 +4,9 @@
   "homepage": "http://fcn.ziadoz.com/",
   "private": true,
   "dependencies": {
+    "@fortawesome/fontawesome-free-solid": "^5.0.13",
     "@fortawesome/fontawesome-svg-core": "^6.1.1",
+    "@fortawesome/free-regular-svg-icons": "^6.1.1",
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/react-fontawesome": "^0.1.18",
     "@mdi/font": "^4.2.95",

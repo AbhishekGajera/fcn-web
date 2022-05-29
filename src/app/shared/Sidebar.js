@@ -368,8 +368,7 @@ class Sidebar extends Component {
             </Collapse>
           </li>
   }
-           {["admin"].includes(this.userData?.role) && 
-
+           {["admin","branch","IBO"].includes(this.userData?.role) && 
           <li className={ this.isPathActive('/costs') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnCosts ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnCosts') } data-toggle="collapse">
               <span className="menu-title"><Trans>Costs</Trans></span>
@@ -378,11 +377,8 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnCosts}>
               <ul className="nav flex-column sub-menu">
-              <li className="nav-item"> <Link className={ this.isPathActive('/costs/expences') ? 'nav-link active' : 'nav-link' } to="/costs/expences"><Trans>Add Expences</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/costs/office') ? 'nav-link active' : 'nav-link' } to="/costs/office"><Trans>Office Expense</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/costs/employee') ? 'nav-link active' : 'nav-link' } to="/costs/employee"><Trans>Employee Expense</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/costs/mislenious') ? 'nav-link active' : 'nav-link' } to="/costs/mislenious"><Trans>Mislenious</Trans></Link></li>
-
+                <li className="nav-item"> <Link className={ this.isPathActive('/costs/expences') ? 'nav-link active' : 'nav-link' } to="/costs/expences"><Trans>Add Expences</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/costs/fetchExpences') === true ? 'nav-link active' : 'nav-link' } to="/costs/fetchExpences"><Trans>Fetch Expense</Trans></Link></li>
               </ul>
             </Collapse>
           </li>
@@ -589,6 +585,7 @@ class Sidebar extends Component {
   }
 
   isPathActive(path) {
+    console.info("test++ ",this.props.location.pathname === path)
     return this.props.location.pathname.startsWith(path);
   }
 

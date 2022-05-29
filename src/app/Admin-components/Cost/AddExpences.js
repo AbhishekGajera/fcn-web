@@ -4,10 +4,12 @@ import { useForm } from 'react-hook-form';
 import { useCookies } from "react-cookie";
 import { toast } from 'react-toastify';
 import { addCost } from '../../../utils/APIs';
+import { optionForExpenceType,optionForCostCategory } from "../../../utils/Functions/commonOptions";
+import { useHistory } from 'react-router-dom';
 
 const AddExpences = () => {
     const [cookies ] = useCookies(["user"]);
-
+    const history = useHistory()
 
     const handleUpload = (e) => {
         e.preventDefault()
@@ -36,10 +38,12 @@ const AddExpences = () => {
         formData.append("category",data?.expences)
         formData.append("description",data?.desc)
         formData.append("image",data?.file[0])
+        formData.append("type",data?.type)
 
         try {
             await addCost(formData)
             toast.success("Invoice added Succesfully",{ autoClose : 4000 })
+            history.push('/costs/fetchExpences')
         } catch (error) {
             
         }
@@ -67,26 +71,9 @@ const AddExpences = () => {
                                                     {...register("expences", {
                                                         required: true,
                                                     })}>
-                                                    <option>Petrol</option>
-                                                    <option>Food</option>
-                                                    <option>Rent</option>
-                                                    <option> Tea</option>
-                                                    <option>Transport</option>
-                                                    <option> Gift</option>
-                                                    <option>Printing</option>
-                                                    <option> Advertising</option>
-                                                    <option>Electricity Bill</option>
-                                                    <option> Cleaning</option>
-                                                    <option>Salary</option>
-                                                    <option>Medical Expences</option>
-                                                    <option> Insurance</option>
-                                                    <option> Legal & Professionals Fees</option>
-                                                    <option> Phone Bill</option>
-                                                    <option>  Internet Bill</option>
-                                                    <option> Stationaries Bill</option>
-                                                    <option> Depreciation</option>
-                                                    <option>Row materials</option>
-                                                    <option> Books and magazine subscriptions</option>
+                                                   {optionForCostCategory.map((item) => {
+                                                       return <option value={item.value}> {item.label} </option>
+                                                   })}
                                                     {errors && errors.name && (
                                                     <p>Description is required field</p>
                                                 )}
@@ -108,10 +95,11 @@ const AddExpences = () => {
                                                     {...register("type", {
                                                         required: true,
                                                     })}>
-                                                    <option>Office expence</option>
-                                                    <option>Employee expence</option>
-                                                    <option>Misleniuneous expence</option>
-                                                    <option>Other expence</option>
+                                                {
+                                                    optionForExpenceType?.map((item) => {
+                                                        return <option value={item.value}>{item.label}</option>
+                                                    })
+                                                }
                                                     {errors && errors.type && (
                                                     <p>Type is required field</p>
                                                 )}
