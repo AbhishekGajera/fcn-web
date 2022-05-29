@@ -4,12 +4,15 @@ import ReactPaginate from "react-paginate";
 import { deleteCost, getCostList } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { toast } from "react-toastify";
-import { optionForExpenceType,optionForCostCategory } from "../../../utils/Functions/commonOptions";
+import {
+  optionForExpenceType,
+  optionForCostCategory,
+} from "../../../utils/Functions/commonOptions";
 import { Form } from "react-bootstrap";
 
 const ExpenceList = () => {
   const [selectedExpenceType, setselectedExpenceType] = useState("");
-  const [selectedExpenceCategory, setselectedExpenceCategory] = useState('')
+  const [selectedExpenceCategory, setselectedExpenceCategory] = useState("");
 
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
@@ -32,7 +35,7 @@ const ExpenceList = () => {
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage,selectedExpenceType,selectedExpenceCategory]);
+  }, [itemOffset, itemsPerPage, selectedExpenceType, selectedExpenceCategory]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -65,9 +68,18 @@ const ExpenceList = () => {
     });
   };
 
+  const onClickDownload = (imageURL) => {
+    window.open(imageURL, '_blank');
+  }
+
   const list = async () => {
     const items = await (
-      await getCostList(itemsPerPage, +itemOffset + 0, selectedExpenceCategory,selectedExpenceType)
+      await getCostList(
+        itemsPerPage,
+        +itemOffset + 0,
+        selectedExpenceCategory,
+        selectedExpenceType
+      )
     ).data;
     setitemlist(items?.results);
     setPageCount(items?.totalPages);
@@ -106,7 +118,10 @@ const ExpenceList = () => {
                       name="branch"
                       onChange={onChangeHandlerForExpenceCategory}
                     >
-                      <option selected={"" === selectedExpenceCategory} value={""}>
+                      <option
+                        selected={"" === selectedExpenceCategory}
+                        value={""}
+                      >
                         Not Selected
                       </option>
                       {optionForCostCategory?.map((i) => {
@@ -188,6 +203,15 @@ const ExpenceList = () => {
                             onClick={() => deleteBranch(item?.id)}
                             className="mdi mdi-delete"
                           ></i>
+                        </td>
+                        <td>
+                          <button
+                            type="button"
+                            className="btn btn-gradient-primary btn-sm "
+                            onClick={() => onClickDownload(item?.image)}
+                          >
+                            Download Invoice
+                          </button>
                         </td>
                       </tr>
                     );
