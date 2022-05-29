@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Cost/Mislenious.js"],"names":["Mislenious"],"mappings":"+HAAA,2BAQeA,UANI,WACjB,OACE","file":"static/js/32.6fe4481d.chunk.js","sourcesContent":["import React from 'react'\n\nconst Mislenious = () => {\n  return (\n    <div>Mislenious</div>\n  )\n}\n\nexport default Mislenious"],"sourceRoot":""}

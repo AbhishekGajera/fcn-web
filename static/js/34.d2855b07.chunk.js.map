@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Employee-Management/Brokerages.js"],"names":["Brokerages"],"mappings":"+HAAA,2BAQeA,UANI,WACjB,OACE","file":"static/js/34.d2855b07.chunk.js","sourcesContent":["import React from 'react'\n\nconst Brokerages = () => {\n  return (\n    <div>Brokerages</div>\n  )\n}\n\nexport default Brokerages"],"sourceRoot":""}

@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Cost/EmployeeExpense.js"],"names":["EmployeeExpense"],"mappings":"+HAAA,2BAQeA,UANS,WACtB,OACE","file":"static/js/31.746960fa.chunk.js","sourcesContent":["import React from 'react'\n\nconst EmployeeExpense = () => {\n  return (\n    <div>EmployeeExpense</div>\n  )\n}\n\nexport default EmployeeExpense"],"sourceRoot":""}

@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Marketing/FlyerAward.js"],"names":["FlyerAward"],"mappings":"+HAAA,2BAQeA,UANI,WACjB,OACE","file":"static/js/44.bc9e08e8.chunk.js","sourcesContent":["import React from 'react'\n\nconst FlyerAward = () => {\n  return (\n    <div>FlyerAward</div>\n  )\n}\n\nexport default FlyerAward"],"sourceRoot":""}
