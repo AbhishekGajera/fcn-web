@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Notification/IboNotification.js"],"names":["IboNotification"],"mappings":"+HAAA,2BAQeA,UANS,WACtB,OACE","file":"static/js/50.fee2490b.chunk.js","sourcesContent":["import React from 'react'\n\nconst IboNotification = () => {\n  return (\n    <div>IboNotification</div>\n  )\n}\n\nexport default IboNotification"],"sourceRoot":""}

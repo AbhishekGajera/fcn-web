@@ -177,7 +177,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                 Demat Account{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-account-convert mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -194,24 +194,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
               Financial Planning{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
-              </h4>
-              <h2 className="mb-5">1400+ users</h2>
-              <h6 className="card-text">Increased by 50%</h6>
-            </div>
-          </div>
-        </div>
-        <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
-            <div className="card-body">
-              <img
-                src={require("../../assets/images/dashboard/circle.svg")}
-                className="card-img-absolute"
-                alt="circle"
-              />
-              <h4 className="font-weight-normal mb-3">
-               SIP{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-airplane-landing mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -227,8 +210,8 @@ const Dashboard = () => {
                 alt="circle"
               />
               <h4 className="font-weight-normal mb-3">
-               Insurance{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+               SIP{" "}
+                <i className="mdi mdi-calculator mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -236,7 +219,24 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-info card-img-holder text-white">
+            <div className="card-body">
+              <img
+                src={require("../../assets/images/dashboard/circle.svg")}
+                className="card-img-absolute"
+                alt="circle"
+              />
+              <h4 className="font-weight-normal mb-3">
+               Insurance{" "}
+                <i className="mdi mdi-cash-multiple mdi-24px float-right"></i>
+              </h4>
+              <h2 className="mb-5">1400+ users</h2>
+              <h6 className="card-text">Increased by 50%</h6>
+            </div>
+          </div>
+        </div>
+        <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
+          <div className="card bg-gradient-success card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -245,7 +245,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Passport{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-discord mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -253,7 +253,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-dark card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -262,7 +262,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Air Tickets/Hotel Booking{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-hotel mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -270,7 +270,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-secondary card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -279,7 +279,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                International Tour{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-wallet-travel mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -287,7 +287,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-warning card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -296,7 +296,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Visa{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-airplane-takeoff mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -304,7 +304,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-danger card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -313,7 +313,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Loan{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-xing-box mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -321,7 +321,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-info card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -330,7 +330,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Foreign Education{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-gauge mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -338,7 +338,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-success card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -347,7 +347,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
               Real Estate{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-chemical-weapon mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
@@ -355,7 +355,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div onClick={() => history.push("/travel/ourplan")} className="col-md-4 stretch-card grid-margin">
-          <div className="card bg-gradient-primary card-img-holder text-white">
+          <div className="card bg-gradient-dark card-img-holder text-white">
             <div className="card-body">
               <img
                 src={require("../../assets/images/dashboard/circle.svg")}
@@ -364,7 +364,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
               Digital Studio{" "}
-                <i className="mdi mdi-airplane mdi-24px float-right"></i>
+                <i className="mdi mdi-video mdi-24px float-right"></i>
               </h4>
               <h2 className="mb-5">1400+ users</h2>
               <h6 className="card-text">Increased by 50%</h6>
