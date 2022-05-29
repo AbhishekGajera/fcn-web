@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
 import {
-  getUsers,
   userLogout,
   deleteUsr,
   updateProfile,

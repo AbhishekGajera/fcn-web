@@ -1,4 +1,4 @@
-import api, { refreshTokenApi } from './axios';
+import api, { refreshTokenApi, multipartApi } from './axios';
 
 // user apis
 export const registration = (data) => api('auth/register', 'POST', data);
@@ -28,3 +28,7 @@ export const getBranches = (limit = 10,offset = 1,name = '') => api(`users?limit
 
 // IBO management
 export const getIBOs = (limit = 10,offset = 1,name = '',branch = '') => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
+
+
+// Cost management
+export const addCost = (data) => multipartApi(`cost/add-cost`, 'POST', data);

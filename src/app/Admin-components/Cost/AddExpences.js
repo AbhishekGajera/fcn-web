@@ -1,9 +1,14 @@
 import React, { useState } from 'react'
 import { Form } from 'react-bootstrap'
 import { useForm } from 'react-hook-form';
+import { useCookies } from "react-cookie";
+import { toast } from 'react-toastify';
+import { addCost } from '../../../utils/APIs';
 
 const AddExpences = () => {
-    const [uploadedFileName, setUploadedFileName] = useState(null);
+    const [cookies ] = useCookies(["user"]);
+
+
     const handleUpload = (e) => {
         e.preventDefault()
         const element = document.getElementById('input-id');
@@ -11,20 +16,33 @@ const AddExpences = () => {
             element.click()
         }
     };
-    const handleDisplayFileDetails = (e) => {
-        setUploadedFileName(e?.target?.files[0]?.name);
-    };
 
     // form validation
     const {
         register,
         handleSubmit,
         formState: { errors, isDirty, isValid },
+        getValues
     } = useForm({
         mode: "onChange",
     });
-    const onSubmit = (data) => {
-        console.log(data)
+
+    const values = getValues();
+
+    const onSubmit = async (data) => {
+        const formData = new FormData()
+        formData.append("user",cookies?.user?.id)
+        formData.append("totalCost",+data?.cost)
+        formData.append("category",data?.expences)
+        formData.append("description",data?.desc)
+        formData.append("image",data?.file[0])
+
+        try {
+            await addCost(formData)
+            toast.success("Invoice added Succesfully",{ autoClose : 4000 })
+        } catch (error) {
+            
+        }
     }
     return (
         <div>
@@ -78,6 +96,31 @@ const AddExpences = () => {
                                     </div>
                                 </div>
 
+                                <div className="row" >
+                                    <div className="col-md-12">
+                                        <Form.Group className="row">
+                                            <label className="col-sm-3 col-form-label">Type</label>
+                                            <div className="col-sm-9">
+                                                <select
+                                                    className="form-control form-control-lg"
+                                                    id="exampleFormControlSelect2"
+                                                    name="type"
+                                                    {...register("type", {
+                                                        required: true,
+                                                    })}>
+                                                    <option>Office expence</option>
+                                                    <option>Employee expence</option>
+                                                    <option>Misleniuneous expence</option>
+                                                    <option>Other expence</option>
+                                                    {errors && errors.type && (
+                                                    <p>Type is required field</p>
+                                                )}
+                                                </select>
+                                            </div>
+                                        </Form.Group>
+                                    </div>
+                                </div>
+
                                 <div className="row">
                                     <div className="col-md-12">
                                         <Form.Group className="row">
@@ -86,7 +129,7 @@ const AddExpences = () => {
                                             </label>
                                             <div className="col-sm-9">
                                                 <Form.Control
-                                                    type="numbber"
+                                                    type="number"
                                                     name="cost"
                                                     {...register("cost", {
                                                         required: true,
@@ -126,12 +169,8 @@ const AddExpences = () => {
                                                 Upload Invoice{" "}
                                             </label>
                                             <div className="col-sm-9">
-                                                {/* <Form.Control
-                                                   type="file" className="form-control visibility-hidden" id="customFileLang" lang="es"
-                                                /> */}
                                                 <Form.Control
                                                     id="input-id"
-                                                    onChange={handleDisplayFileDetails}
                                                     className="d-none"
                                                     type="file"
                                                     name="file"
@@ -141,10 +180,10 @@ const AddExpences = () => {
                                                 
                                                 <button
                                                     onClick={handleUpload}
-                                                    className={`btn btn-outline-${uploadedFileName ? " btn-primary" : " btn-primary"
+                                                    className={`btn btn-outline-${values?.file?.[0]?.name ? " btn-primary" : " btn-primary"
                                                         }`}
                                                 >
-                                                    {uploadedFileName ? uploadedFileName : "Upload Invoice  "}
+                                                    {values?.file?.[0]?.name ? values?.file?.[0]?.name : "Upload Invoice  "}
                                                 </button>
                                                 {errors && errors.file && (
                                                     <p>Upload invoice is required field</p>

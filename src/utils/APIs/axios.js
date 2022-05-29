@@ -61,6 +61,28 @@ const api = (url = "", method, data = {}) => {
 
 export default api;
 
+const multipartApi = (url = "", method, data = {}) => {
+  if (url.includes("?")) {
+    const updatedURL1 = url?.split("?")[0];
+    const updatedURL2 = url?.split("?")[1];
+    const string = updateURL(updatedURL2)
+    url = updatedURL1 + "?" + string;
+  }
+
+  const options = {
+    method,
+    headers: {
+      "content-type": "multipart/form-data",
+      Authorization: `Bearer ${localStorage.getItem("accessToken")}`,
+    },
+    data,
+    url: `${baseURL}/${url}`,
+  };
+  return axios(options);
+};
+
+export { multipartApi };
+
 const refreshTokenApi = (url = "", method, data = {}) => {
   const options = {
     method,
