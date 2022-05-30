@@ -170,42 +170,6 @@ const ProductAdd = () => {
                   </div>
                 </div>
 
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
-                        Upload Invoice{" "}
-                      </label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          id="input-id"
-                          className="d-none"
-                          type="file"
-                          name="file"
-                          multiple={false}
-                          {...register("file", { required: true })}
-                        />
-
-                        <button
-                          onClick={handleUpload}
-                          className={`btn btn-outline-${
-                            values?.file?.[0]?.name
-                              ? " btn-primary"
-                              : " btn-primary"
-                          }`}
-                        >
-                          {values?.file?.[0]?.name
-                            ? values?.file?.[0]?.name
-                            : "Upload Invoice  "}
-                        </button>
-                        {errors && errors.file && (
-                          <p>Upload invoice is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-
                 <div
                   className="mt-3"
                   style={{ display: "flex", justifyContent: "center" }}

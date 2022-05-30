@@ -63,6 +63,7 @@ const ProductList = () => {
   }
 
   const list = async () => {
+    setIsLoading(true)
     const items = await (
       await getProductsList(
         itemsPerPage,
