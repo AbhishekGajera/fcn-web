@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import { deleteProductById, getProductsList } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
+import Spinner from "../../shared/Spinner";
 
 const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -20,12 +21,13 @@ const ProductList = () => {
   const [itemsPerPage] = useState(10);
   const [cookies] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const [isLoading,setIsLoading] = useState(true)
 
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage, selectedProductType, selectedProductCategory,debouncedSearchTerm]);
 
-  // Invoke when user click to request another page.
+  // Invoke when user click to request another page. 
   const handlePageClick = (event) => {
     setItemOffset(event.selected);
   };
@@ -70,6 +72,7 @@ const ProductList = () => {
     ).data;
     setitemlist(items?.results);
     setPageCount(items?.totalPages);
+    setIsLoading(false)
   };
 
   return (
@@ -132,7 +135,10 @@ const ProductList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemlist?.map((item) => {
+                  {isLoading ?
+                <Spinner />
+                  :
+                  itemlist?.map((item) => {
                     return (
                       <tr>
                         <td>{item?.name}</td>
