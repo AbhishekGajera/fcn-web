@@ -259,7 +259,8 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Passport{" "}
-               <FontAwesomeIcon  icon={["fas", "fa-passport"]} className="float-right" size="xl"/>
+               <FontAwesomeIcon  icon={["fas", "fa-credit-card"]}  className="float-right" size="xl"/>
+
 
               </h4>
               <h2 className="mb-5">1400+ users</h2>
@@ -277,8 +278,8 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Air Tickets/Hotel Booking{" "}
-               {/* fa-hotel */}
-               <FontAwesomeIcon  icon={["fas", "fa-hotel"]} className="float-right" size="xl"/>
+              <FontAwesomeIcon  icon={["fas", "fa-plane"]} className="float-right" size="xl"/>
+
 
               </h4>
               <h2 className="mb-5">1400+ users</h2>
@@ -297,7 +298,8 @@ const Dashboard = () => {
               <h4 className="font-weight-normal mb-3">
                International Tour{" "}
                {/* fa-plane-departure */}
-               <FontAwesomeIcon  icon={["fas", "fa-plane-departure"]} className="float-right" size="xl"/>
+              <FontAwesomeIcon  icon={["fas", "fa-plane"]} className="float-right" size="xl"/>
+
 
               </h4>
               <h2 className="mb-5">1400+ users</h2>
@@ -315,8 +317,7 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Visa{" "}
-               <FontAwesomeIcon  icon={["fas", "fa-cc-visa"]}  className="float-right" size="xl"/>
-             
+               <FontAwesomeIcon  icon={["fas", "fa-credit-card"]}  className="float-right" size="xl"/>
 
               </h4>
               <h2 className="mb-5">1400+ users</h2>
@@ -352,7 +353,9 @@ const Dashboard = () => {
               />
               <h4 className="font-weight-normal mb-3">
                Foreign Education{" "}
-               <FontAwesomeIcon  icon={["fas", "fa-book-reader"]} className="float-right" size="xl"/>
+               <FontAwesomeIcon  icon={["fas", "fa-school"]}  className="float-right" size="xl"/>
+            
+
 
               </h4>
               <h2 className="mb-5">1400+ users</h2>
