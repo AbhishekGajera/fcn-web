@@ -6,6 +6,7 @@ import "./i18n";
 import * as serviceWorker from "./serviceWorker";
 import { CookiesProvider } from "react-cookie";
 
+
 ReactDOM.render(
   <BrowserRouter>
     <CookiesProvider>
