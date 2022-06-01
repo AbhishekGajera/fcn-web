@@ -81,7 +81,7 @@ const ProductList = () => {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">costs / Fetch Costs </h3>
+        <h3 className="page-title">Products / Fetch Products </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -90,7 +90,7 @@ const ProductList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Costs
+              Fetch Products
             </li>
           </ol>
         </nav>
