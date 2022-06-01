@@ -163,10 +163,10 @@ const CreateClints = () => {
                 <div className="row">
                   <div className="col-md-4">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Contact
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="contactno"
@@ -190,8 +190,8 @@ const CreateClints = () => {
                   </div>
                   <div className="col-md-4">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Branch</label>
-                      <div className="col-sm-9">
+                      <label className="col-sm-4 col-form-label">Branch</label>
+                      <div className="col-sm-8">
                       {/* {dataValues.map((tags, index) => (
                   <MenuItem key={index} value={tags.title}>
                     {tags.title}
@@ -325,8 +325,8 @@ const CreateClints = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Select Country</label>
-                      <div className="col-sm-9">
+                      <label className="col-sm-4 col-form-label">Select Country</label>
+                      <div className="col-sm-8">
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
@@ -349,10 +349,10 @@ const CreateClints = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Bank Account no
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="bankAccNo"

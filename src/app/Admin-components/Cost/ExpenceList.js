@@ -116,10 +116,10 @@ const ExpenceList = () => {
 
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">
+                  <label className="col-sm-6 col-form-label">
                     Select Expence Category
                   </label>
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect2"
@@ -186,10 +186,10 @@ const ExpenceList = () => {
 
               <div className="col-md-6">
                 <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">
+                  <label className="col-sm-6 col-form-label">
                     Select Expence Type
                   </label>
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect2"

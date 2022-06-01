@@ -18,6 +18,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
 import { password_generator } from "../../../utils/Functions/passwordGenerator";
+import Spinner from "../../shared/Spinner";
 
 
 const IboList = () => {
@@ -25,7 +26,7 @@ const IboList = () => {
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState("");
-  
+  const [isLoading,setIsLoading] = useState(true)
 
 
   // We start with an empty list of items.
@@ -176,6 +177,7 @@ const IboList = () => {
   };
 
   const list = async () => {
+    setIsLoading(true)
     try {
       const items = await (await getIBOs(itemsPerPage, itemOffset,searchTerm,selectedBranch)).data;
       setitemlist(items?.results);
@@ -197,6 +199,7 @@ const IboList = () => {
         });
       }
     }
+    setIsLoading(false)
   };
 
   return (
@@ -512,7 +515,10 @@ const IboList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemlist?.map((item) => {
+                  {
+                   isLoading ?
+                    <Spinner />
+                      :itemlist?.map((item) => {
                     return (
                       <tr>
                         <td>{item?.name}</td>

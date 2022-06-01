@@ -122,10 +122,10 @@ const ProductAdd = () => {
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Description{" "}
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           as="textarea"
                           name="description"
@@ -142,10 +142,10 @@ const ProductAdd = () => {
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Upload Image{" "}</label>
                       
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           id="input-id"
                           className="d-none"

@@ -5,11 +5,13 @@ import { deleteProductById, getProductsList } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
+import { useUrl } from "../../../utils/Functions/useUrl";
+
 
 const ProductList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-  
+
   const [selectedProductType, setselectedProductType] = useState("");
   const [selectedProductCategory, setselectedProductCategory] = useState("");
 
@@ -17,15 +19,15 @@ const ProductList = () => {
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
+  const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
   const [cookies] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
-  const [isLoading,setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, selectedProductType, selectedProductCategory,debouncedSearchTerm]);
+  }, [itemOffset, itemsPerPage, selectedProductType, selectedProductCategory, debouncedSearchTerm]);
 
   // Invoke when user click to request another page. 
   const handlePageClick = (event) => {
@@ -67,7 +69,7 @@ const ProductList = () => {
     const items = await (
       await getProductsList(
         itemsPerPage,
-        +itemOffset + 0,
+        +itemOffset + 1,
         searchTerm,
       )
     ).data;
@@ -97,8 +99,8 @@ const ProductList = () => {
         <div className="card">
           <div className="card-body">
             <div className="row">
-            <div className="col-md-6">
-            </div>
+              <div className="col-md-6">
+              </div>
 
               <div className="col-md-6">
                 <div className="search-field d-none d-md-block">
@@ -136,33 +138,33 @@ const ProductList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {isLoading ?
-                <Spinner />
-                  :
-                  itemlist?.map((item) => {
-                    return (
-                      <tr>
-                        <td>{item?.name}</td>
-                        <td>{item?.category}</td>
-                        <td>{item?.description}</td>
-                        <td>
-                          <i
-                            onClick={() => deleteProduct(item?.id)}
-                            className="mdi mdi-delete"
-                          ></i>
-                        </td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-gradient-primary btn-sm "
-                            onClick={() => onClickDownload(item?.image)}
-                          >
-                            Download Product Image
-                          </button>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                  {
+                  isLoading ? <React.Fragment><Spinner /></React.Fragment>
+                    :
+                    itemlist?.map((item, index) => {
+                      return (
+                        <tr key={index}>
+                          <td>{item?.name}</td>
+                          <td>{item?.category}</td>
+                          <td>{item?.description}</td>
+                          <td>
+                            <i
+                              onClick={() => deleteProduct(item?.id)}
+                              className="mdi mdi-delete"
+                            ></i>
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-gradient-primary btn-sm "
+                              onClick={() => onClickDownload(item?.image)}
+                            >
+                              Download Product Image
+                            </button>
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
               <ReactPaginate

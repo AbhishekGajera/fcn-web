@@ -24,6 +24,7 @@ import {
   roleOption
 } from "../../../utils/Functions/commonOptions";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
+import Spinner from "../../shared/Spinner";
 
 const ClientList = () => {
   const history = useHistory();
@@ -48,7 +49,7 @@ const ClientList = () => {
     data.branch = branchUpdate;
     data.IBO = IBOUpdate;
     data.role = roleUpdate
-    
+
     try {
       const updatedData = JSON.stringify(data);
       await updateProfile(updatedData, valueToEdit?.id);
@@ -93,7 +94,7 @@ const ClientList = () => {
   const [branchUpdate, setbranchUpdate] = useState('')
   const [IBOUpdate, setIBOUpdate] = useState('')
   const [roleUpdate, setroleUpdate] = useState('')
-
+  const [isLoading, setIsLoading] = useState(true)
   const onChangeBranchUpdate = (e) => {
     setbranchUpdate(e?.target?.value)
   }
@@ -164,6 +165,7 @@ const ClientList = () => {
   };
 
   const list = async () => {
+    setIsLoading(true)
     try {
       const items = await (
         await getUsers(
@@ -194,6 +196,7 @@ const ClientList = () => {
         });
       }
     }
+    setIsLoading(false)
   };
 
   const generatePassword = async (id) => {
@@ -528,12 +531,12 @@ const ClientList = () => {
         <div className="card">
           <div className="card-body">
             <div className="row">
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">
+                  <label className="col-sm-6 col-form-label">
                     Search Branch
                   </label>
-                  <div className="col-sm-8">
+                  <div className="col-sm-6">
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect2"
@@ -560,10 +563,10 @@ const ClientList = () => {
                 </Form.Group>
               </div>
 
-              <div className="col-md-3">
+              <div className="col-md-4">
                 <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">Search IBO</label>
-                  <div className="col-sm-8">
+                  <label className="col-sm-5 col-form-label">Search IBO</label>
+                  <div className="col-sm-7">
                     <select
                       className="form-control form-control-sm"
                       id="exampleFormControlSelect2"
@@ -590,7 +593,7 @@ const ClientList = () => {
                 </Form.Group>
               </div>
 
-              <div className="col-md-6">
+              <div className="col-md-4">
                 <div className="search-field d-none d-md-block">
                   <form className="d-flex align-items-center h-100" action="#">
                     <div className="input-group">
@@ -631,7 +634,9 @@ const ClientList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {itemlist?.map((item) => {
+                  {isLoading ? <Spinner />
+                  :
+                  itemlist?.map((item) => {
                     return (
                       <tr>
                         <td>{item?.name}</td>
