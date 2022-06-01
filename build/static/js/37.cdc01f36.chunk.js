@@ -1,2 +1,0 @@
-(this["webpackJsonppurple-react-free"]=this["webpackJsonppurple-react-free"]||[]).push([[37],{527:function(e,r,t){"use strict";t.r(r);var a=t(0),n=t.n(a);r.default=function(){return n.a.createElement("div",null,"Salaries")}}}]);
-//# sourceMappingURL=37.cdc01f36.chunk.js.map

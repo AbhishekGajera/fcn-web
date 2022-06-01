@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Auto-Calculation/PoEquity.js"],"names":["PoEquity"],"mappings":"+HAAA,2BAQeA,UANE,WACf,OACE","file":"static/js/30.5553c897.chunk.js","sourcesContent":["import React from 'react'\n\nconst PoEquity = () => {\n  return (\n    <div>PoEquity</div>\n  )\n}\n\nexport default PoEquity"],"sourceRoot":""}

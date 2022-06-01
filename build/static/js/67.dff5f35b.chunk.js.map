@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Welcome/TerminateLetter.js"],"names":["TerminateLetter"],"mappings":"+HAAA,2BAQeA,UANS,WACtB,OACE","file":"static/js/67.dff5f35b.chunk.js","sourcesContent":["import React from 'react'\n\nconst TerminateLetter = () => {\n  return (\n    <div>TerminateLetter</div>\n  )\n}\n\nexport default TerminateLetter"],"sourceRoot":""}
