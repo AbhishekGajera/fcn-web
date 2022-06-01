@@ -1,0 +1,2 @@
+(this["webpackJsonppurple-react-free"]=this["webpackJsonppurple-react-free"]||[]).push([[24],{532:function(e,t,n){"use strict";n.r(t);var r=n(0),p=n.n(r);t.default=function(){return p.a.createElement("div",null,"MonthlyAppoint")}}}]);
+//# sourceMappingURL=24.ccbd9c66.chunk.js.map
