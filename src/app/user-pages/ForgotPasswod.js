@@ -14,7 +14,6 @@ const ForgotPasswod = () => {
   const onSubmit = async (data) => {
     try {
       const result = await UserforgotPasswod(data)
-      console.info("result ",result)
 
       toast.success('we have send you confirmation email on email id that you have entered')
       history.push("/user-pages/reset-password-1")

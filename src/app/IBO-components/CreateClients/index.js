@@ -3,12 +3,12 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser,getBranches,getIBOs } from "../../../utils/APIs";
+import { CreateUser,getBranches,getIBOs,userLogout } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 
 
 const CreateClints = () => {
-  const [cookies] = useCookies(["user"]);
+  const [cookies,setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [branchlist, setBranchlist] = useState([]);
 
@@ -56,7 +56,6 @@ const CreateClints = () => {
   const list = async () => {
     try {
       const items = await (await getBranches()).data;
-      console.log("itm",items)
       setitemlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
@@ -70,10 +69,10 @@ const CreateClints = () => {
         const formData = JSON.stringify({
           refreshToken: localStorage.getItem("refreshToken"),
         });
-        // setCookie("user", null, { path: "/" });
-        // userLogout(formData).finally(() => {
-        //   history.push("/user-pages/login-1");
-        // });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
       }
     }
   };
@@ -94,10 +93,10 @@ const CreateClints = () => {
         const formData = JSON.stringify({
           refreshToken: localStorage.getItem("refreshToken"),
         });
-        // setCookie("user", null, { path: "/" });
-        // userLogout(formData).finally(() => {
-        //   history.push("/user-pages/login-1");
-        // });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
       }
     }
   };

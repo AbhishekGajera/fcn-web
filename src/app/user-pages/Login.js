@@ -50,8 +50,6 @@ const Login = () => {
       token: googleData.tokenId,
     });
 
-    console.info("googleData ",googleData)
-
     try {
       const result = await googleLoginHandler(formData);
       result.data.user.auth = "verified";

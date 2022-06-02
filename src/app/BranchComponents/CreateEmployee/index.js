@@ -23,7 +23,6 @@ const CreateEmployee = () => {
   const onSubmit = async (data) => {
       try {
         const result = await CreateUser(data)
-        console.info("result ",result)
         toast.success("user crated successfully");
       } catch (error) {
           console.info("error ",error)

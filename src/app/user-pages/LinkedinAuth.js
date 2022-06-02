@@ -8,7 +8,6 @@ const LinkedinAuth = () => {
   const handlePostMessage = (event) => {
     if (event.data.type === "profile") {
       updateProfile(event.data.profile);
-      console.info("event.data.profile.localizedFirstName ",  event.data.profile.localizedFirstName);
     }
   };
 

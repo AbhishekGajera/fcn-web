@@ -4,12 +4,14 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser,getBranches } from "../../../utils/APIs";
+import { CreateUser,getBranches,  userLogout,
+} from "../../../utils/APIs";
+import { useHistory } from "react-router-dom";
 
 const CreateIbo = () => {
-  const [cookies] = useCookies(["user"]);
+  const [cookies,setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
-
+  const history = useHistory();
 
   const {
     register,
@@ -27,7 +29,6 @@ const CreateIbo = () => {
     data.role = 'IBO'
       try {
         const result = await CreateUser(data)
-        console.info("result ",result)
         toast.success("user crated successfully");
       } catch (error) {
           console.info("error ",error)
@@ -64,10 +65,10 @@ const CreateIbo = () => {
         const formData = JSON.stringify({
           refreshToken: localStorage.getItem("refreshToken"),
         });
-        // setCookie("user", null, { path: "/" });
-        // userLogout(formData).finally(() => {
-        //   history.push("/user-pages/login-1");
-        // });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
       }
     }
   };

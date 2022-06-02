@@ -1,11 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { deleteProductById, getProductsList } from "../../../utils/APIs";
+import { deleteProductById, getProductsList,userLogout } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
 import { useUrl } from "../../../utils/Functions/useUrl";
+import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 
 
 const ProductList = () => {
@@ -21,10 +23,11 @@ const ProductList = () => {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
-  const [cookies] = useCookies(["user"]);
+  const [cookies,setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
-
+  const history = useHistory()
+  
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage, selectedProductType, selectedProductCategory, debouncedSearchTerm]);
@@ -66,7 +69,7 @@ const ProductList = () => {
 
   const list = async () => {
     setIsLoading(true)
-    const items = await (
+ try { const items = await (
       await getProductsList(
         itemsPerPage,
         +itemOffset + 1,
@@ -76,7 +79,24 @@ const ProductList = () => {
     setitemlist(items?.results);
     setPageCount(items?.totalPages);
     setIsLoading(false)
-  };
+  }catch(error){
+    if (error?.response?.data?.message) {
+      toast.error(error.response.data.message);
+    } else {
+      toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+    }
+
+    if (error?.response?.data?.code === 401) {
+      const formData = JSON.stringify({
+        refreshToken: localStorage.getItem("refreshToken"),
+      });
+      setCookie("user", null, { path: "/" });
+      userLogout(formData).finally(() => {
+        history.push("/user-pages/login-1");
+      });
+    }
+  }
+}
 
   return (
     <div>

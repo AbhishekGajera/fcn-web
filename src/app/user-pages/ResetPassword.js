@@ -20,7 +20,6 @@ const ResetPassword = () => {
   const onSubmit = async (data) => {
     try {
       const result = await ResetUserPasswod(data);
-      console.info("result ", result);
 
       toast.success("Your password has been updated successfully");
       history.push("/user-pages/login");

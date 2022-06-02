@@ -6,7 +6,7 @@ import { refreshTokens } from "../APIs";
 const Common = () => {
   const [cookies ] = useCookies(["user"]);
 
-  var timer = window.setInterval(async () =>  {
+  (async () =>  {
     if(cookies?.user){
       const formData = JSON.stringify({
         refreshToken: localStorage.getItem('refreshToken'),
@@ -15,14 +15,7 @@ const Common = () => {
     localStorage.setItem("accessToken", tokens.data.access.token);
     localStorage.setItem("refreshToken", tokens.data.refresh.token);
     }
-  }, 100000);
-
-  React.useEffect(() => {
-    return () => {
-        window.clearInterval(timer);
-    }
-  }, [])
-  
+  })()
 
   return <></>;
 };

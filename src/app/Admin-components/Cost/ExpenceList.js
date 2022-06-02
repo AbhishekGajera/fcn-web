@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { deleteCost, getCostList } from "../../../utils/APIs";
+import { deleteCost, getCostList,userLogout
+} from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import {
   optionForExpenceType,
   optionForCostCategory,
-  timeOption
+  timeOption,
 } from "../../../utils/Functions/commonOptions";
 import { Form } from "react-bootstrap";
+import { useHistory } from "react-router-dom";
+import { toast } from "react-toastify";
+
 
 const ExpenceList = () => {
   const [selectedExpenceType, setselectedExpenceType] = useState("");
@@ -21,8 +25,9 @@ const ExpenceList = () => {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage] = useState(10);
-  const [cookies] = useCookies(["user"]);
+  const [cookies,setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const history = useHistory();
 
   const onChangeHandlerForExpenceType = (e) => {
     setItemOffset(0);
@@ -41,7 +46,7 @@ const ExpenceList = () => {
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, selectedExpenceType, selectedExpenceCategory,selectedExpenceTime]);
+  }, [itemOffset, itemsPerPage, selectedExpenceType, selectedExpenceCategory, selectedExpenceTime]);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -79,17 +84,36 @@ const ExpenceList = () => {
   }
 
   const list = async () => {
-    const items = await (
-      await getCostList(
-        itemsPerPage,
-        +itemOffset + 0,
-        selectedExpenceCategory,
-        selectedExpenceType,
-        ["IBO","branch"].includes(cookies?.user?.role) ? cookies?.user?.id : ''
-      )
-    ).data;
-    setitemlist(items?.results);
-    setPageCount(items?.totalPages);
+    try {
+      const items = await (
+        await getCostList(
+          itemsPerPage,
+          +itemOffset + 0,
+          selectedExpenceCategory,
+          selectedExpenceType,
+          ["IBO", "branch"].includes(cookies?.user?.role) ? cookies?.user?.id : ''
+        )
+      ).data;
+      setitemlist(items?.results);
+      setPageCount(items?.totalPages);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+
+    }
   };
 
   return (
