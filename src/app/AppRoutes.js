@@ -59,6 +59,7 @@ const Browchures = lazy(() => import('./Admin-components/Marketing/Browchures'))
 const AccountOpening = lazy(() => import('./Admin-components/Welcome/AccountOpening'));
 const ProductAcquire = lazy(() => import('./Admin-components/Welcome/ProductAcquire'));
 const TerminateLetter = lazy(() => import('./Admin-components/Welcome/TerminateLetter'));
+const AssignProduct = lazy(()=>import('./Admin-components/Product-Assign/AssignProduct'))
 const Client = lazy(() => import('./Admin-components/Product-Assign/Client'));
 const Ibo = lazy(() => import('./Admin-components/Product-Assign/Ibo'));
 const Branch = lazy(() => import('./Admin-components/Product-Assign/Branch'));
@@ -223,6 +224,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/welcome/product_aquire" component={ ProductAcquire } accesstype={["admin"]} />
           <ProtectedRoute path="/welcome/terminate_branch" component={ TerminateLetter } accesstype={["admin"]} />
           <ProtectedRoute path="/product-assign/client" component={ Client } accesstype={["admin"]} />
+          <ProtectedRoute path="/product-assign/product" component={ AssignProduct } accesstype={["admin"]} />
           <ProtectedRoute path="/product-assign/ibo" component={ Ibo } accesstype={["admin"]} />
           <ProtectedRoute path="/product-assign/branch" component={ Branch } accesstype={["admin"]} />
           <ProtectedRoute path="/performance/employee" component={ Employee } accesstype={["admin"]} />
