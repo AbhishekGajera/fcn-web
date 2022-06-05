@@ -11,6 +11,11 @@ export const roleOption = [
     { value : 'branch', label : 'Branch' }
 ]
 
+export const roleOptionForAmin = [
+    { value : 'IBO', label : 'IBO' },
+    { value : 'branch', label : 'Branch' }
+]
+
 export const timeOption = [
     { value : new Date().setDate(new Date().getDate() - 7), label : '1 week' },
     { value : new Date().setDate(new Date().getDate() - 30), label : '1 month' },
@@ -59,5 +64,20 @@ export const formateStatus = (status) => {
             return 'Terminated'            
         default:
             return 'Active';
+    }
+}
+
+export const formateStatusForTargets = (status) => {
+    switch (+status) {
+        case (1):
+            return 'Running';
+        case (2):
+            return 'Finished';
+        case (3):
+            return 'Cancelled';
+        case (4):
+            return 'Archieved';         
+        default:
+            return 'Cancelled';
     }
 }

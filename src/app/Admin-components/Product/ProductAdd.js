@@ -17,6 +17,7 @@ const ProductAdd = () => {
       element.click()
     }
   };
+  
   const {
     register,
     handleSubmit,
@@ -122,10 +123,10 @@ const ProductAdd = () => {
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-3 col-form-label">
                         Description{" "}
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-9">
                         <Form.Control
                           as="textarea"
                           name="description"

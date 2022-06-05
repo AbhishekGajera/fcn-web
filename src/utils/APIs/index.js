@@ -39,3 +39,8 @@ export const deleteCost = (id) => api(`cost/delete-cost/${id}`, 'GET');
 export const CreateProduct = (data) => multipartApi(`product`, 'POST', data);
 export const getProductsList = (limit = 10,offset = 1,name = '') => api(`product?limit=${limit}&sortBy=createdAt:desc&page=${offset}&name=${name}&custom=true`, 'GET');
 export const deleteProductById = (id) => api(`product/${id}`, 'GET');
+
+// Target management
+export const CreateTargets = (data) => api(`target/add-target`, 'POST', data);
+export const getTargetsList = (limit = 10,offset = 1,name = '') => api(`target/fetch-target?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
+export const deleteTargetById = (id) => api(`target/${id}`, 'GET');

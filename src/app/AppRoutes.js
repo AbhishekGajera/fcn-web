@@ -3,7 +3,6 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Spinner from '../app/shared/Spinner';
 import ProtectedRoute from '../common/ProtectedRoute';
-import Deposit from './client-component/balance/Deposit';
 
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const SipCalc   = lazy(() => import('./client-component/SipCalc'));
@@ -42,9 +41,8 @@ const CreateIbo = lazy(() => import('./Admin-components/IboCreate'));
 const IboList = lazy(() => import('./Admin-components/IboList'));
 const ProductAdd = lazy(() => import('./Admin-components/Product/ProductAdd'));
 const ProductFetch = lazy(() => import('./Admin-components/Product/ProductFetch'));
-const Weekly = lazy(() => import('./Admin-components/Target/Weekly'));
-const Monthly = lazy(() => import('./Admin-components/Target/Monthly'));
-const Yearly = lazy(() => import('./Admin-components/Target/Yearly'));
+const Targets =  lazy(() => import('./Admin-components/Target/Targets'));
+const ViewTargets =  lazy(() => import('./Admin-components/Target/ViewTargets'));
 const AddExpences = lazy(()=>import ('./Admin-components/Cost/AddExpences'))
 const ExpenceList = lazy(() => import('./Admin-components/Cost/ExpenceList'));
 const EmployeeRevenue = lazy(() => import('./Admin-components/Revenues/EmployeeRevenue'));
@@ -206,9 +204,8 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/ibo/ibolist" component={ IboList } accesstype={["admin","branch"]} />
           <ProtectedRoute path="/products/addproducts" component={ ProductAdd } accesstype={["admin"]} />
           <ProtectedRoute path="/products/productslist" component={ ProductFetch } accesstype={["admin"]} />
-          <ProtectedRoute path="/targets/weekly" component={ Weekly } accesstype={["admin"]} />
-          <ProtectedRoute path="/targets/monthly" component={ Monthly } accesstype={["admin"]} />
-          <ProtectedRoute path="/targets/yearly" component={ Yearly } accesstype={["admin"]} />
+          <ProtectedRoute path="/targets/addtarget" component={ Targets } accesstype={["admin"]} />
+          <ProtectedRoute path="/targets/viewtarget" component={ ViewTargets } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/costs/expences" component={AddExpences} accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/costs/fetchExpences" component={ ExpenceList } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/revenue/employee" component={ EmployeeRevenue } accesstype={["admin"]} />

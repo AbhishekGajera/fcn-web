@@ -47,7 +47,13 @@ class Sidebar extends Component {
     }
 
     if(itemName === 'fcnTargets'){
-      this.props.history.push('/targets/weekly')
+      if(["admin"].includes(this.userData?.role)){
+        this.props.history.push('/targets/addtarget')
+      }
+
+      if(["IBO","branch","user"].includes(this.userData?.role)){
+        this.props.history.push('/targets/viewtarget')
+      }
     }
 
     if(itemName === 'fcnEmployee'){
@@ -360,10 +366,8 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnTargets}>
               <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/targets/weekly') ? 'nav-link active' : 'nav-link' } to="/targets/weekly"><Trans>Weekly</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/targets/monthly') ? 'nav-link active' : 'nav-link' } to="/targets/monthly"><Trans>Monthly</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/targets/yearly') ? 'nav-link active' : 'nav-link' } to="/targets/yearly"><Trans>Yearly</Trans></Link></li>
-
+                <li className="nav-item"> <Link className={ this.isPathActive('/targets/addtarget') ? 'nav-link active' : 'nav-link' } to="/targets/addtarget"><Trans>Add Targets</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/targets/viewtarget') ? 'nav-link active' : 'nav-link' } to="/targets/viewtarget"><Trans>View Targets</Trans></Link></li>
               </ul>
             </Collapse>
           </li>

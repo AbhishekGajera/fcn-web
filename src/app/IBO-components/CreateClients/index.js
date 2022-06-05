@@ -27,7 +27,6 @@ const CreateClints = () => {
   );
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
-  console.log(errors)
   const onSubmit = async (data) => {
       try {
         await CreateUser(data)
