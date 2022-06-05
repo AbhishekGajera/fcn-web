@@ -1,2 +1,0 @@
-(this["webpackJsonppurple-react-free"]=this["webpackJsonppurple-react-free"]||[]).push([[46],{517:function(e,t,r){"use strict";r.r(t);var n=r(0),a=r.n(n);t.default=function(){return a.a.createElement("div",null,"BranchNotification")}}}]);
-//# sourceMappingURL=46.db077f76.chunk.js.map

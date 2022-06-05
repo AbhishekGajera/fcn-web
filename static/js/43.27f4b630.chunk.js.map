@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Appointment/Active.js"],"names":["Active"],"mappings":"+HAAA,2BAQeA,UANA,WACb,OACE","file":"static/js/43.27f4b630.chunk.js","sourcesContent":["import React from 'react'\n\nconst Active = () => {\n  return (\n    <div>Active</div>\n  )\n}\n\nexport default Active"],"sourceRoot":""}

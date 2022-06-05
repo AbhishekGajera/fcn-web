@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Revenues/BranchRevenue.js"],"names":["BranchRevenue"],"mappings":"+HAAA,2BAQeA,UANO,WACpB,OACE","file":"static/js/77.47f0d2a9.chunk.js","sourcesContent":["import React from 'react'\n\nconst BranchRevenue = () => {\n  return (\n    <div>BranchRevenue</div>\n  )\n}\n\nexport default BranchRevenue"],"sourceRoot":""}
