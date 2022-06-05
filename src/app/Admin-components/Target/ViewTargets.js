@@ -147,6 +147,7 @@ const ViewTargets = () => {
                     <th> Product </th>
                     <th> Quantity </th>
                     <th> User Type </th>
+                    <th> User </th>
                     <th> Description </th>
                     <th> Status </th>
                   </tr>
@@ -164,8 +165,9 @@ const ViewTargets = () => {
                           <td>{item?.product?.name}</td>
                           <td>{item?.qty}</td>
                           <td>{item?.userType}</td>
+                          <td>{item?.user?.name}</td>
                           <td>{item?.Description}</td>
-                          <td>{ formateStatusForTargets(item?.status)}</td>
+                          <td>{formateStatusForTargets(item?.status)}</td>
                           <td>
                             <i
                               onClick={() => deleteProduct(item?.id)}

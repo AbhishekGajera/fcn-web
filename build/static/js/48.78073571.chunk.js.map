@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Appointment/WeeklyAppoint.js"],"names":["WeeklyAppoint"],"mappings":"+HAAA,2BAQeA,UANO,WACpB,OACE","file":"static/js/48.78073571.chunk.js","sourcesContent":["import React from 'react'\n\nconst WeeklyAppoint = () => {\n  return (\n    <div>WeeklyAppoint</div>\n  )\n}\n\nexport default WeeklyAppoint"],"sourceRoot":""}
