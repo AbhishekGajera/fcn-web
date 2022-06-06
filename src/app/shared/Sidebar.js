@@ -81,7 +81,7 @@ class Sidebar extends Component {
     }
 
     if(itemName === 'fcnAppointments'){
-      this.props.history.push('/appointment/today')
+      this.props.history.push('/appointment/book-appoinment')
     }
 
     if(itemName === 'fcnWelcome'){
@@ -356,7 +356,7 @@ class Sidebar extends Component {
             </Collapse>
           </li>
   }
-           {["admin"].includes(this.userData?.role) && 
+           {["admin","IBO","branch"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/targets') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnTargets ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnTargets') } data-toggle="collapse">
@@ -366,8 +366,8 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnTargets}>
               <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/targets/addtarget') ? 'nav-link active' : 'nav-link' } to="/targets/addtarget"><Trans>Add Targets</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/targets/viewtarget') ? 'nav-link active' : 'nav-link' } to="/targets/viewtarget"><Trans>View Targets</Trans></Link></li>
+              {["admin"].includes(this.userData?.role) && <li className="nav-item"> <Link className={ this.isPathActive('/targets/addtarget') ? 'nav-link active' : 'nav-link' } to="/targets/addtarget"><Trans>Add Targets</Trans></Link></li>}  
+                {<li className="nav-item"> <Link className={ this.isPathActive('/targets/viewtarget') ? 'nav-link active' : 'nav-link' } to="/targets/viewtarget"><Trans>View Targets</Trans></Link></li>}
               </ul>
             </Collapse>
           </li>
@@ -471,12 +471,8 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnAppointments}>
               <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/today') ? 'nav-link active' : 'nav-link' } to="/appointment/today"><Trans>Today</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/weekly') ? 'nav-link active' : 'nav-link' } to="/appointment/weekly"><Trans>Weekly</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/monthly') ? 'nav-link active' : 'nav-link' } to="/appointment/monthly"><Trans>Monthly</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/pending') ? 'nav-link active' : 'nav-link' } to="/appointment/pending"><Trans>Pending</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/active') ? 'nav-link active' : 'nav-link' } to="/appointment/active"><Trans>Activer</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/norequired') ? 'nav-link active' : 'nav-link' } to="/appointment/norequired"><Trans>Not Required</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/book-appoinment') ? 'nav-link active' : 'nav-link' } to="/appointment/book-appoinment"><Trans>Book Appoinment</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/fetch-appoinment') ? 'nav-link active' : 'nav-link' } to="/appointment/fetch-appoinment"><Trans>Fetch Appoinment</Trans></Link></li>
               </ul>
             </Collapse>
           </li>

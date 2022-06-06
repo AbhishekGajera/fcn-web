@@ -80,12 +80,8 @@ const Brokerages = lazy(() => import('./Admin-components/Employee-Management/Bro
 const Commision = lazy(() => import('./Admin-components/Employee-Management/Commision'));
 const Leave = lazy(() => import('./Admin-components/Employee-Management/Leave'));
 const Salaries = lazy(() => import('./Admin-components/Employee-Management/Salaries'));
-const Active = lazy(() => import('./Admin-components/Appointment/Active'));
-const MonthlyAppoint = lazy(() => import('./Admin-components/Appointment/MonthlyAppoint'));
-const NotRequired = lazy(() => import('./Admin-components/Appointment/NotRequired'));
-const Pending = lazy(() => import('./Admin-components/Appointment/Pending'));
-const Today = lazy(() => import('./Admin-components/Appointment/Today'));
-const WeeklyAppoint = lazy(() => import('./Admin-components/Appointment/WeeklyAppoint'));
+const BookAppoinments = lazy(() => import('./Admin-components/Appointment/BookAppoinments'));
+const FetchAppoinments = lazy(() => import('./Admin-components/Appointment/FetchAppoinments'));
 
 
 
@@ -243,12 +239,8 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/employee_manage/bonus" component={ Bonus } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/commision" component={ Commision } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/brokerages" component={ Brokerages } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/today" component={ Today } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/weekly" component={ WeeklyAppoint } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/monthly" component={ MonthlyAppoint } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/pending" component={ Pending } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/active" component={ Active } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/norequired" component={ NotRequired } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/book-appoinment" component={ BookAppoinments } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/fetch-appoinment" component={ FetchAppoinments } accesstype={["admin"]} />
 
 
 

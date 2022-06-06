@@ -42,5 +42,12 @@ export const deleteProductById = (id) => api(`product/${id}`, 'GET');
 
 // Target management
 export const CreateTargets = (data) => api(`target/add-target`, 'POST', data);
-export const getTargetsList = (limit = 10,offset = 1,name = '') => api(`target/fetch-target?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
-export const deleteTargetById = (id) => api(`target/${id}`, 'GET');
+export const getTargetsList = (limit = 10,offset = 1) => api(`target/fetch-target?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
+export const getTargetsListByUser = (limit = 10,offset = 1,user = '') => api(`target/fetch-target?limit=${limit}&sortBy=createdAt:desc&page=${offset}&user=${user}`, 'GET');
+export const deleteTargetById = (id) => api(`target/delete-target/${id}`, 'GET');
+
+// Appoinment management
+export const CreateAppoinments = (data) => api(`appoinment/add-appoinment`, 'POST', data);
+export const getAppoinmentsList = (limit = 10,offset = 1) => api(`appoinment/fetch-appoinment?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
+export const getAppoinmentsListByUser = (limit = 10,offset = 1,user = '') => api(`appoinment/fetch-appoinment?limit=${limit}&sortBy=createdAt:desc&page=${offset}&user=${user}`, 'GET');
+export const deleteAppoinmentById = (id) => api(`appoinment/delete-appoinment/${id}`, 'GET');

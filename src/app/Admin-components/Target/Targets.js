@@ -19,7 +19,6 @@ const Targets = () => {
   const [IBOs, setIBOs] = useState([]);
   const [branches, setbranches] = useState([]);
   const [previousSelectedType, setpreviousSelectedType] = useState('IBO')
-  const [isDataThere, setisDataThere] = useState(false)
 
   useEffect(() => {
     getAllProducts();
@@ -38,7 +37,6 @@ const Targets = () => {
     setIBOs(allIBOs?.data?.results);
     setValue('selectUser',allIBOs?.data?.results[0]?.id)
     clearErrors('selectUser')
-    setisDataThere(true)
   };
 
   const getBrancheList = async () => {
@@ -53,7 +51,6 @@ const Targets = () => {
     getValues,
     watch,
     setValue,
-    setError,
     clearErrors
   } = useForm({
     mode: "onChange",
@@ -61,7 +58,6 @@ const Targets = () => {
 
   const values = getValues();
   const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
-  console.info("values++ ", watchAllFields);
 
   useEffect(() => {
     if('branch' === watchAllFields?.addto && previousSelectedType !== 'branch'){
@@ -76,11 +72,6 @@ const Targets = () => {
 
   },[watchAllFields])
 
-  useEffect(() => {
-    console.info("values++ ",values)
-
-  },[values])
-
   const onSubmit = async (data) => {
     const jsonData = JSON.stringify({
       product: data?.selectProduct,
@@ -92,7 +83,7 @@ const Targets = () => {
     });
     try {
       await CreateTargets(jsonData);
-      toast.success("Product crated successfully");
+      toast.success("Target added successfully");
       history.push("/targets/viewtarget");
     } catch (error) {
       if (

@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
 import {
-  deleteProductById,
+  deleteTargetById,
   getTargetsList,
   userLogout,
+  getTargetsListByUser
 } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
@@ -38,7 +39,7 @@ const ViewTargets = () => {
     setItemOffset(event.selected);
   };
 
-  const deleteProduct = (uid) => {
+  const deleteTarget = (uid) => {
     Swal.fire({
       title: "Are you sure?",
       text: "You will not be able to recover this imaginary file!",
@@ -51,7 +52,7 @@ const ViewTargets = () => {
     }).then((result) => {
       if (result.value) {
         return (
-          deleteProductById(uid).finally(() => list()),
+          deleteTargetById(uid).finally(() => list()),
           Swal.fire(
             "Deleted!",
             "Your imaginary file has been deleted.",
@@ -65,11 +66,24 @@ const ViewTargets = () => {
   };
 
   const list = async () => {
+    console.info("cookies++ ",cookies?.user?.role)
     setIsLoading(true);
     try {
-      const items = await (
-        await getTargetsList(itemsPerPage, +itemOffset + 1, searchTerm)
-      ).data;
+      let items 
+      
+      if(cookies?.user?.role === 'admin'){
+        items = await (
+         await getTargetsList(itemsPerPage, +itemOffset + 1)
+       ).data;
+      }
+
+      if(cookies?.user?.role !== 'admin'){
+        items = await (
+         await getTargetsListByUser(itemsPerPage, +itemOffset + 1, cookies?.user?.id)
+       ).data;
+      }
+
+
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
       setIsLoading(false);
@@ -150,6 +164,7 @@ const ViewTargets = () => {
                     <th> User </th>
                     <th> Description </th>
                     <th> Status </th>
+                    {["admin"].includes(cookies?.user?.role) && <th> Delete </th>}
                   </tr>
                 </thead>
                 <tbody>
@@ -168,12 +183,12 @@ const ViewTargets = () => {
                           <td>{item?.user?.name}</td>
                           <td>{item?.Description}</td>
                           <td>{formateStatusForTargets(item?.status)}</td>
-                          <td>
+                          { ["admin"].includes(cookies?.user?.role) && <td>
                             <i
-                              onClick={() => deleteProduct(item?.id)}
+                              onClick={() => deleteTarget(item?.id)}
                               className="mdi mdi-delete"
                             ></i>
-                          </td>
+                          </td>}
                         </tr>
                       );
                     })
