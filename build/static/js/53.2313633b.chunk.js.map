@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Employee-Management/Bonus.js"],"names":["Bonus"],"mappings":"+HAAA,2BAQeA,UAND,WACZ,OACE","file":"static/js/53.2313633b.chunk.js","sourcesContent":["import React from 'react'\n\nconst Bonus = () => {\n  return (\n    <div>Bonus</div>\n  )\n}\n\nexport default Bonus"],"sourceRoot":""}

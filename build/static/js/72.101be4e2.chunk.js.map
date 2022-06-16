@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Performance/IboPerformance.js"],"names":["IboPerformance"],"mappings":"+HAAA,2BAQeA,UANQ,WACrB,OACE","file":"static/js/72.101be4e2.chunk.js","sourcesContent":["import React from 'react'\n\nconst IboPerformance = () => {\n  return (\n    <div>IboPerformance</div>\n  )\n}\n\nexport default IboPerformance"],"sourceRoot":""}
