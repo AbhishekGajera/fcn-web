@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Welcome/ProductAcquire.js"],"names":["ProductAcquire"],"mappings":"+HAAA,2BAQeA,UANQ,WACrB,OACE","file":"static/js/80.f0476e42.chunk.js","sourcesContent":["import React from 'react'\n\nconst ProductAcquire = () => {\n  return (\n    <div>ProductAcquire</div>\n  )\n}\n\nexport default ProductAcquire"],"sourceRoot":""}
