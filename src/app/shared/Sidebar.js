@@ -81,7 +81,12 @@ class Sidebar extends Component {
     }
 
     if(itemName === 'fcnAppointments'){
+      {["user","IBO","branch"].includes(this.userData?.role) && 
       this.props.history.push('/appointment/book-appoinment')
+      }
+      {["admin"].includes(this.userData?.role) && 
+        this.props.history.push('/appointment/fetch-appoinment')
+      }
     }
 
     if(itemName === 'fcnWelcome'){
@@ -461,7 +466,7 @@ class Sidebar extends Component {
             </Collapse>
           </li>
   }
-           {["admin"].includes(this.userData?.role) && 
+        {["user","admin","IBO","branch"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/appointment') ? 'nav-item active' : 'nav-item' }>
             <div className={ this.state.fcnAppointments ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnAppointments') } data-toggle="collapse">
@@ -471,12 +476,14 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnAppointments}>
               <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/appointment/book-appoinment') ? 'nav-link active' : 'nav-link' } to="/appointment/book-appoinment"><Trans>Book Appoinment</Trans></Link></li>
+                {["user","IBO","branch"].includes(this.userData?.role) && 
+                  <li className="nav-item"> <Link className={ this.isPathActive('/appointment/book-appoinment') ? 'nav-link active' : 'nav-link' } to="/appointment/book-appoinment"><Trans>Book Appoinment</Trans></Link></li>
+                }
                 <li className="nav-item"> <Link className={ this.isPathActive('/appointment/fetch-appoinment') ? 'nav-link active' : 'nav-link' } to="/appointment/fetch-appoinment"><Trans>Fetch Appoinment</Trans></Link></li>
               </ul>
             </Collapse>
           </li>
-  }
+        }
            {["admin"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/welcome') ? 'nav-item active' : 'nav-item' }>

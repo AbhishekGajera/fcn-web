@@ -239,8 +239,8 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/employee_manage/bonus" component={ Bonus } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/commision" component={ Commision } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/brokerages" component={ Brokerages } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/book-appoinment" component={ BookAppoinments } accesstype={["admin"]} />
-          <ProtectedRoute path="/appointment/fetch-appoinment" component={ FetchAppoinments } accesstype={["admin"]} />
+          <ProtectedRoute path="/appointment/book-appoinment" component={ BookAppoinments } accesstype={["user","IBO","branch"]} />
+          <ProtectedRoute path="/appointment/fetch-appoinment" component={ FetchAppoinments } accesstype={["user","IBO","branch","admin"]} />
 
 
 

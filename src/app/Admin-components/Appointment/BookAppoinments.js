@@ -3,20 +3,12 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateProduct } from "../../../utils/APIs";
+import { CreateAppoinments } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 
 const BookAppoinment = () => {
   const [cookies] = useCookies(["user"]);
   const history = useHistory();
-
-  const handleUpload = (e) => {
-    e.preventDefault();
-    const element = document.getElementById("input-id");
-    if (element) {
-      element.click();
-    }
-  };
 
   const {
     register,
@@ -28,8 +20,16 @@ const BookAppoinment = () => {
   });
 
   const onSubmit = async (data) => {
+    const formData = JSON.stringify({
+      'user' : cookies?.user?.id,
+      'toDate' : data?.toDate,
+      'fromDate' : data?.fromDate,
+      'Description' : data?.Description,
+      'status' : 1
+    })
+
     try {
-      await CreateProduct(data);
+      await CreateAppoinments(formData);
       toast.success("Appoinment Booked successfully");
       history.push("/appoinments/fetch-appoinments");
     } catch (error) {
@@ -72,7 +72,6 @@ const BookAppoinment = () => {
             <div className="card-body">
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
                 <p className="card-description"> Book Appoinment </p>
-
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
@@ -120,9 +119,9 @@ const BookAppoinment = () => {
                       <div className="col-sm-9">
                         <Form.Control
                           type="text"
-                          name="desc"
+                          name="Description"
                           as="textarea"
-                          {...register("desc", { required: true })}
+                          {...register("Description", { required: true })}
                         />
                         {errors && errors.desc && (
                           <p>description is required field</p>
