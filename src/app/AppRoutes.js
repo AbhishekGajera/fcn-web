@@ -26,6 +26,7 @@ const CustomizeTour   = lazy(() => import('./client-component/travel/CustomizeTo
 const Settings   = lazy(() => import('./user-pages/Settings'));
 
 const Login = lazy(() => import('./user-pages/Login'));
+const Connect = lazy(() => import('./user-pages/Connect'));
 const Register1 = lazy(() => import('./user-pages/Register'));
 const Forgot1 = lazy(() => import('./user-pages/ForgotPasswod'));
 const Reset1 = lazy(() => import('./user-pages/ResetPassword'));
@@ -35,6 +36,7 @@ const BankDetails = lazy(() => import('../common/BankDetails'));
 
 const CreateClints = lazy(() => import('./IBO-components/CreateClients'));
 const ClientList = lazy(() => import('./IBO-components/ClientList'));
+const ContactedClients = lazy(() => import('./Admin-components/ContactedClients/ClientList/index'));
 const CreateBranches = lazy(() => import('./Admin-components/BranchesCreate'));
 const BranchList = lazy(() => import('./Admin-components/BranchesList'));
 const CreateIbo = lazy(() => import('./Admin-components/IboCreate'));
@@ -178,6 +180,7 @@ class AppRoutes extends Component {
 
 
           <Route path="/user-pages/login-1" component={ Login }  accesstype={["user","admin","IBO","branch"]}/>
+          <Route path="/user-pages/connect" component={ Connect }  accesstype={["user","admin","IBO","branch"]}/>
           <Route path="/user-pages/register-1" component={ Register1 }  accesstype={["user","admin","IBO","branch"]}/>
           <Route path="/user-pages/forgot-password-1" component={ Forgot1 }  accesstype={["user","admin","IBO","branch"]}/>
           <Route path="/user-pages/reset-password-1" component={ Reset1 }  accesstype={["user","admin","IBO","branch"]}/>
@@ -193,6 +196,7 @@ class AppRoutes extends Component {
 
 
           {/* admin routes */}
+          <ProtectedRoute path="/connectedusers/getuserList" component={ ContactedClients } accesstype={["admin"]} />
           <ProtectedRoute path="/clients/clientlist" component={ ClientList } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/branches/createbranches" component={ CreateBranches } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/branches/brancheslist" component={ BranchList } accesstype={["admin"]} />

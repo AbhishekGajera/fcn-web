@@ -39,8 +39,10 @@ class Sidebar extends Component {
     if(itemName === 'fcnIbo'){
       this.props.history.push('/ibo/createibo')
     }
-
-  
+    
+    if(itemName === 'connectedUsers'){
+      this.props.history.push('/connectedusers/getuserList')
+    }
 
     if(itemName === 'fcnProducts'){
       this.props.history.push('/products/addproducts')
@@ -345,6 +347,20 @@ class Sidebar extends Component {
             </Collapse>
           </li>
   }
+             {["admin"].includes(this.userData?.role) && 
+            <li className={ this.isPathActive('/connectedusers') ? 'nav-item active' : 'nav-item' }>
+              <div className={ this.state.connectedUsers ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('connectedUsers') } data-toggle="collapse">
+                <span className="menu-title"><Trans>Connected Users</Trans></span>
+                <i className="menu-arrow"></i>
+                <i className="mdi mdi-store menu-icon"></i>
+              </div>
+              <Collapse in={this.state.connectedUsers}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item"> <Link className={ this.isPathActive('/connectedusers/getuserList') ? 'nav-link active' : 'nav-link' } to="/connectedusers/getuserList"><Trans>fetch users</Trans></Link></li>
+                </ul>
+              </Collapse>
+            </li>
+            }
            {["admin"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/products') ? 'nav-item active' : 'nav-item' }>
