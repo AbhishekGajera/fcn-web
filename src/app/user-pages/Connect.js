@@ -16,7 +16,7 @@ const Connect = () => {
   };
 
   const handleChangeCourceType = (e) => {
-    setcourceType(e?.target?.value);
+    setcourceType(+e?.target?.value);
   };
 
   const {
