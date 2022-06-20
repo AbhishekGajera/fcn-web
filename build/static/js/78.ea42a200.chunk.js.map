@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Revenues/IboRevenue.js"],"names":["IboRevenue"],"mappings":"+HAAA,2BAQeA,UANI,WACjB,OACE","file":"static/js/78.ea42a200.chunk.js","sourcesContent":["import React from 'react'\n\nconst IboRevenue = () => {\n  return (\n    <div>IboRevenue</div>\n  )\n}\n\nexport default IboRevenue"],"sourceRoot":""}
