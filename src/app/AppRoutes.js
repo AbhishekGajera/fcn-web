@@ -47,9 +47,8 @@ const Targets =  lazy(() => import('./Admin-components/Target/Targets'));
 const ViewTargets =  lazy(() => import('./Admin-components/Target/ViewTargets'));
 const AddExpences = lazy(()=>import ('./Admin-components/Cost/AddExpences'))
 const ExpenceList = lazy(() => import('./Admin-components/Cost/ExpenceList'));
-const EmployeeRevenue = lazy(() => import('./Admin-components/Revenues/EmployeeRevenue'));
-const IboRevenue = lazy(() => import('./Admin-components/Revenues/IboRevenue'));
-const BranchRevenue = lazy(() => import('./Admin-components/Revenues/BranchRevenue'));
+const RevenueAdd = lazy(() => import('./Admin-components/Revenues/RevenueAdd'));
+const RevenueFetch = lazy(() => import('./Admin-components/Revenues/RevenueFetch'));
 const Invoice = lazy(() => import('./Admin-components/Fees/Invoice'));
 const Technology = lazy(() => import('./Admin-components/Fees/Technology'));
 const DepositWithdrawal = lazy(() => import('./Admin-components/Fees/DepositWithdrawal'));
@@ -208,9 +207,8 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/targets/viewtarget" component={ ViewTargets } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/costs/expences" component={AddExpences} accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/costs/fetchExpences" component={ ExpenceList } accesstype={["admin","branch","IBO"]} />
-          <ProtectedRoute path="/revenue/employee" component={ EmployeeRevenue } accesstype={["admin"]} />
-          <ProtectedRoute path="/revenue/ibo" component={ IboRevenue } accesstype={["admin"]} />
-          <ProtectedRoute path="/revenue/branch" component={ BranchRevenue } accesstype={["admin"]} />
+          <ProtectedRoute path="/revenue/addrevenue" component={ RevenueAdd } accesstype={["admin"]} />
+          <ProtectedRoute path="/revenue/revenuelist" component={ RevenueFetch } accesstype={["admin"]} />
           <ProtectedRoute path="/fees/invoice" component={ Invoice } accesstype={["admin"]} />
           <ProtectedRoute path="/fees/technology" component={ Technology } accesstype={["admin"]} />
           <ProtectedRoute path="/fees/deposit" component={ DepositWithdrawal } accesstype={["admin"]} />

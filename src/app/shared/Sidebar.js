@@ -71,7 +71,7 @@ class Sidebar extends Component {
     }
 
     if(itemName === 'fcnRevenues'){
-      this.props.history.push('/revenue/employee')
+      this.props.history.push('/revenue/addrevenue')
     }
 
     if(itemName === 'fcnFees'){
@@ -418,14 +418,12 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnRevenues}>
               <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/revenue/employee') ? 'nav-link active' : 'nav-link' } to="/revenue/employee"><Trans>Employee Revenues</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/revenue/ibo') ? 'nav-link active' : 'nav-link' } to="/revenue/ibo"><Trans>IBO Revenues</Trans></Link></li>
-                <li className="nav-item"> <Link className={ this.isPathActive('/revenue/branch') ? 'nav-link active' : 'nav-link' } to="/revenue/branch"><Trans>Branch Revenues</Trans></Link></li>
-
+                <li className="nav-item"> <Link className={ this.isPathActive('/revenue/addrevenue') ? 'nav-link active' : 'nav-link' } to="/revenue/addrevenue"><Trans>Add Revenue</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/revenue/revenuelist') ? 'nav-link active' : 'nav-link' } to="/revenue/revenuelist"><Trans>Fetch Revenue</Trans></Link></li>
               </ul>
             </Collapse>
           </li>
-  }
+        }
            {["admin"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/fees') ? 'nav-item active' : 'nav-item' }>
@@ -443,7 +441,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-  }
+        }
            {["admin"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/marketing') ? 'nav-item active' : 'nav-item' }>
@@ -460,7 +458,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-  }
+        }
            {["admin"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/employee_manage') ? 'nav-item active' : 'nav-item' }>
@@ -481,7 +479,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-  }
+        }
         {["user","admin","IBO","branch"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/appointment') ? 'nav-item active' : 'nav-item' }>
@@ -516,7 +514,7 @@ class Sidebar extends Component {
               </ul>
             </Collapse>
           </li>
-  }
+        }
            {["admin"].includes(this.userData?.role) && 
 
           <li className={ this.isPathActive('/product-assign') ? 'nav-item active' : 'nav-item' }>
