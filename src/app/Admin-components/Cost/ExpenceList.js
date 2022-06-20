@@ -95,6 +95,7 @@ const ExpenceList = () => {
         )
       ).data;
       setitemlist(items?.results);
+      console.log("res",items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -192,10 +193,12 @@ const ExpenceList = () => {
                         Not Selected
                       </option>
                       {timeOption?.map((i) => {
+                        // console.log("val",i,selectedExpenceTime);
+                        
                         return (
                           <>
                             <option
-                              selected={i.value === selectedExpenceTime}
+                              selected={i.label === selectedExpenceTime}
                               value={i.value}
                             >
                               {i.label}

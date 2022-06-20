@@ -31,7 +31,10 @@ const BookAppoinment = () => {
     try {
       await CreateAppoinments(formData);
       toast.success("Appoinment Booked successfully");
-      history.push("/appoinments/fetch-appoinments");
+      history.push('/appointment/fetchAppoinment');
+
+      
+   
     } catch (error) {
       if (
         error &&
