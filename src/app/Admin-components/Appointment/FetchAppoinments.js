@@ -1,87 +1,136 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { deleteAppoinmentById, getAppoinmentsListByUser,getAppoinmentsList ,userLogout } from "../../../utils/APIs";
-import Swal from "sweetalert2";
-import { useDebounce } from "../../../utils/Functions/useDebounce";
-import Spinner from "../../shared/Spinner";
-import { useUrl } from "../../../utils/Functions/useUrl";
+import { getAppoinmentsList, userLogout, UpdateAppoinments } from "../../../utils/APIs";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
+import Modal from "react-bootstrap/Modal";
+import { useForm } from "react-hook-form";
+import { Form } from 'react-bootstrap';
 
 
 const FetchAppoinments = () => {
-  const [searchTerm, setSearchTerm] = useState("");
-  const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
+  const history = useHistory()
+  const [cookies, setCookie] = useCookies(["user"]);
+  const [itemlist, setitemlist] = useState([]);
+  const [employeeList, setemployeeList] = useState([])
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useUrl("page");
+  const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage] = useState(10);
-  const [cookies,setCookie] = useCookies(["user"]);
-  const [itemlist, setitemlist] = useState([]);
-  const [isLoading, setIsLoading] = useState(true)
-  const history = useHistory()
-  
+  const [show, setShow] = React.useState(false);
+  const [valueToEdit, setvalueToEdit] = useState({});
+
+  const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
+    mode: "onChange"
+  });
+
+  const [modelMode, setmodelMode] = useState('create')
+  const statusChanged = (id, e) => {
+    console.log(e.target.value, id);
+    UpdateAppoinments({
+      "appoinments_id": id,
+      "status": e.target.value
+    })
+    toast.success('Status updated successfully',{
+      autoClose : true
+    })
+  }
+
+  const onSubmit = async (data) => {
+    const date1 = new Date(data?.date_from);
+    const date2 = new Date(data?.date_to);
+    const diffTime = Math.abs(date2 - date1);
+    const diffDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24));
+    //   if(modelMode === 'edit'){
+    //   try {
+    //     const formData = JSON.stringify({
+    //       leave_id: valueToEdit?.id,
+    //       user: data.user,
+    //       reason: data?.reason,
+    //       leave_status: data?.leave_status,
+    //       total_leave : diffDays,
+    //       date_from : new Date(data?.date_from).toISOString(),
+    //       date_to : new Date(data?.date_to).toISOString(),
+    //     });
+    //     await updateEmployeeLeave(formData)
+        // toast.success('Leave updated successfully',{
+        //   autoClose : true
+        // })
+    //   } catch (error) {
+    //     if (
+    //       error &&
+    //       error.response &&
+    //       error.response.data &&
+    //       error.response.data.message
+    //     ) {
+    //       toast.error(error.response.data.message);
+    //     } else {
+    //       toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+    //     }
+    //   }
+    //   finally {
+    //     handleClose()
+    //     getData()
+    //   }
+    // }
+
+
+  };
+
+  const handleClose = () => {
+    setShow(false)
+    setvalueToEdit({})
+    reset()
+  };
+
+
+  const handleShow = (value, mode) => {
+    reset()
+
+    if (mode === 'edit') {
+      setvalueToEdit(value)
+      setmodelMode('edit')
+    }
+
+    if (mode === 'create') {
+      setvalueToEdit(value)
+      setmodelMode('create')
+    }
+    setShow(true);
+  }
+
   useEffect(() => {
-    list();
-  }, [itemOffset, itemsPerPage, debouncedSearchTerm]);
+    getData()
+  }, [itemOffset, itemsPerPage]);
 
-  // Invoke when user click to request another page. 
-  const handlePageClick = (event) => {
-    setItemOffset(event.selected);
-  };
+  // useEffect(() => {
+  //   getEmployeeData()
+  // }, []);
 
-  const deleteAppoinment = (uid) => {
-    Swal.fire({
-      title: "Are you sure?",
-      text: "You will not be able to recover this imaginary file!",
-      icon: "warning",
-      showCancelButton: true,
-      cancelButtonColor: "#DD6B55",
-      confirmButtonColor: "#DD6B55",
-      confirmButtonText: "Yes, delete it!",
-      cancelButtonText: "No, keep it",
-    }).then((result) => {
-      if (result.value) {
-        return (
-          deleteAppoinmentById(uid).finally(() => list()),
-          Swal.fire(
-            "Deleted!",
-            "Your imaginary file has been deleted.",
-            "success"
-          )
-        );
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
-        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
-      }
-    });
-  };
+  // const getEmployeeData = async () => {
+  //     try {
+  //       const result = await getAllEmployee()
+  //       setemployeeList(result.data.results)
+  //     } catch (error) {
+  //       getEmployeeData()
+  //     }
+  // }
 
-  const list = async () => {
-    setIsLoading(true);
+  const getData = async () => {
     try {
-      let items 
-      
-      if(cookies?.user?.role === 'admin'){
-        items = await (
-         await getAppoinmentsList(itemsPerPage, +itemOffset + 1)
-       ).data;
-      }
-
-      if(cookies?.user?.role !== 'admin'){
-        items = await (
-         await getAppoinmentsListByUser(itemsPerPage, +itemOffset + 1, cookies?.user?.id)
-       ).data;
-      }
-
-      setitemlist(items?.results);
-      setPageCount(items?.totalPages);
-      setIsLoading(false);
+      const result = await (await getAppoinmentsList(itemsPerPage, itemOffset)).data;
+      setitemlist(result?.results);
+      console.log("res", result?.results)
+      // Fetch items from another resources.
+      setPageCount(result?.totalPages);
     } catch (error) {
-      if (error?.response?.data?.message) {
+      if (
+        error?.response?.data?.message
+      ) {
         toast.error(error.response.data.message);
       } else {
         toast.error(process.env.REACT_APP_ERROR_MESSAGE);
@@ -89,20 +138,31 @@ const FetchAppoinments = () => {
 
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
+          refreshToken: localStorage.getItem('refreshToken'),
         });
-        setCookie("user", null, { path: "/" });
+        setCookie('user', null, { path: '/' });
         userLogout(formData).finally(() => {
-          history.push("/user-pages/login-1");
-        });
+          history.push('/user-pages/login-1')
+        })
       }
-    }    
-}
+    }
+
+  }
+
+  // Invoke when user click to request another page.
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected + 1);
+    setItemOffset(newOffset);
+  };
+
+
+
 
   return (
     <div>
+
       <div className="page-header">
-        <h3 className="page-title">Appoinments / Fetch Appoinments </h3>
+        <h3 className="page-title">Appoinments / Book Appoinment </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -111,7 +171,7 @@ const FetchAppoinments = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Appoinments
+              Fetch Appoinment
             </li>
           </ol>
         </nav>
@@ -119,68 +179,74 @@ const FetchAppoinments = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-            <div className="row">
-              <div className="col-md-6">
-              </div>
-
-              <div className="col-md-6">
-                <div className="search-field d-none d-md-block">
-                  <form className="d-flex align-items-center h-100" action="#">
-                    <div className="input-group">
-                      <div className="input-group-prepend outline-gray bg-transparent">
-                        <i className="input-group-text border-0 mdi mdi-magnify"></i>
-                      </div>
-                      <input
-                        type="text"
-                        className="form-control outline-gray bg-transparent border-0"
-                        placeholder="Search Appoinments"
-                        value={searchTerm}
-                        onChange={(e) => {
-                          setSearchTerm(e?.target?.value);
-                          setItemOffset(0);
-                        }}
-                      />
-                    </div>
-                  </form>
-                </div>
-              </div>
-
-            </div>
-            <h4 className="card-title">Appoinment list</h4>
+            <h4 className="card-title">Fetch Appoinment</h4>
 
             <div className="table-responsive">
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th> From </th>
-                    <th> To </th>
-                    <th> Description </th>
                     <th> User </th>
-                    <th> User Type </th>
-                    <th> Delete </th>
+                    <th> Date From </th>
+                    <th> Date To </th>
+                    <th> Description </th>
+                    <th > Status </th>
+
                   </tr>
                 </thead>
                 <tbody>
-                  {
-                  isLoading ? <React.Fragment><Spinner /></React.Fragment>
-                    :
-                    itemlist?.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{item?.fromDate}</td>
-                          <td>{item?.toDate}</td>
-                          <td>{item?.Description}</td>
-                          <td>{item?.user?.name}</td>
-                          <td>{item?.user?.role}</td>
-                          <td>
-                            <i
-                              onClick={() => deleteAppoinment(item?.id)}
-                              className="mdi mdi-delete"
-                            ></i>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                  {itemlist?.map((item) => {
+                    return (
+                      <tr>
+                        <td>{item?.user?.name}</td>
+
+                        <td>{new Date(item?.fromDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                        <td>{new Date(item?.toDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
+                        <td>{item?.desc}</td>
+                        <td>
+                          <select
+
+                            id={item.id}
+
+                            onChange={(e) => statusChanged(item.id, e)}
+                          >
+                            <option
+                              value="1"
+                              selected={item.status == 1 ? "selected" : false}
+                            >
+                              Processing
+                            </option>
+                            <option
+                              value="2"
+                              selected={item.status == 2 ? "selected" : false}
+                            >
+                              Approved
+                            </option>
+                            <option
+                              value="3"
+                              selected={item.status == 3 ? "selected" : false}
+                            >
+                              Rejected
+                            </option>
+                            <option
+                              value="4"
+                              selected={item.status == 4 ? "selected" : false}
+                            >
+                              Successfull
+                            </option>
+                            <option
+                              value="5"
+                              selected={item.status == 5 ? "selected" : false}
+                            >
+                              Terminated
+                            </option>
+                          </select>
+                        </td>
+
+
+
+                      </tr>
+                    );
+                  })}
                 </tbody>
               </table>
               <ReactPaginate
@@ -188,11 +254,11 @@ const FetchAppoinments = () => {
                 nextLabel="next >"
                 className="client-list"
                 onPageChange={handlePageClick}
+                forcePage={0}
                 pageRangeDisplayed={5}
                 pageCount={pageCount}
                 previousLabel="< previous"
                 renderOnZeroPageCount={null}
-                forcePage={itemOffset}
               />
             </div>
           </div>

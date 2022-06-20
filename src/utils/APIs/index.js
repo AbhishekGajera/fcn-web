@@ -51,6 +51,7 @@ export const CreateAppoinments = (data) => api(`appoinments/add-appoinment`, 'PO
 export const getAppoinmentsList = (limit = 10,offset = 1) => api(`appoinments/fetch-appoinment?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
 export const getAppoinmentsListByUser = (limit = 10,offset = 1,user = '') => api(`appoinments/fetch-appoinment?limit=${limit}&sortBy=createdAt:desc&page=${offset}&user=${user}`, 'GET');
 export const deleteAppoinmentById = (id) => api(`appoinments/delete-appoinment/${id}`, 'GET');
+export const UpdateAppoinments = (data) => api(`appoinments/update-appoinment`, 'PATCH', data);
 
 
 // connect management
