@@ -13,8 +13,8 @@
     "static/js/5.60813ad3.chunk.js": "/static/js/5.60813ad3.chunk.js",
     "static/js/5.60813ad3.chunk.js.map": "/static/js/5.60813ad3.chunk.js.map",
     "main.css": "/static/css/main.83f81941.chunk.css",
-    "main.js": "/static/js/main.53d45eff.chunk.js",
-    "main.js.map": "/static/js/main.53d45eff.chunk.js.map",
+    "main.js": "/static/js/main.dca7f7cf.chunk.js",
+    "main.js.map": "/static/js/main.dca7f7cf.chunk.js.map",
     "runtime-main.js": "/static/js/runtime-main.b94f9121.js",
     "runtime-main.js.map": "/static/js/runtime-main.b94f9121.js.map",
     "static/css/8.79b159c1.chunk.css": "/static/css/8.79b159c1.chunk.css",
@@ -203,7 +203,7 @@
     "static/js/99.a4c31048.chunk.js": "/static/js/99.a4c31048.chunk.js",
     "static/js/99.a4c31048.chunk.js.map": "/static/js/99.a4c31048.chunk.js.map",
     "index.html": "/index.html",
-    "precache-manifest.2fc6ce985db59493a9be20f63d6aaf3b.js": "/precache-manifest.2fc6ce985db59493a9be20f63d6aaf3b.js",
+    "precache-manifest.80ee5b21ef6cf39fe22c77ae504aad6e.js": "/precache-manifest.80ee5b21ef6cf39fe22c77ae504aad6e.js",
     "service-worker.js": "/service-worker.js",
     "static/css/8.79b159c1.chunk.css.map": "/static/css/8.79b159c1.chunk.css.map",
     "static/css/main.83f81941.chunk.css.map": "/static/css/main.83f81941.chunk.css.map",
@@ -249,7 +249,7 @@
     "static/js/96.62f63d7b.chunk.js.LICENSE.txt": "/static/js/96.62f63d7b.chunk.js.LICENSE.txt",
     "static/js/97.0f62b113.chunk.js.LICENSE.txt": "/static/js/97.0f62b113.chunk.js.LICENSE.txt",
     "static/js/98.3ba39ce0.chunk.js.LICENSE.txt": "/static/js/98.3ba39ce0.chunk.js.LICENSE.txt",
-    "static/js/main.53d45eff.chunk.js.LICENSE.txt": "/static/js/main.53d45eff.chunk.js.LICENSE.txt",
+    "static/js/main.dca7f7cf.chunk.js.LICENSE.txt": "/static/js/main.dca7f7cf.chunk.js.LICENSE.txt",
     "static/media/App.scss": "/static/media/register-bg.2ccde6b9.jpg",
     "static/media/circle.svg": "/static/media/circle.1541da91.svg",
     "static/media/face1.jpg": "/static/media/face1.42d41e61.jpg",
@@ -271,6 +271,6 @@
     "static/css/8.79b159c1.chunk.css",
     "static/js/8.2d7b753e.chunk.js",
     "static/css/main.83f81941.chunk.css",
-    "static/js/main.53d45eff.chunk.js"
+    "static/js/main.dca7f7cf.chunk.js"
   ]
 }
