@@ -159,6 +159,7 @@ const BranchList = () => {
     setIsLoading(true)
     const items = await (await getBranches(itemsPerPage, (+itemOffset + 0), searchTerm)).data;
     setitemlist(items?.results);
+    console.log("lst",items?.results)
     setPageCount(items?.totalPages);
     setIsLoading(false)
   }
@@ -372,7 +373,7 @@ const BranchList = () => {
                       <input
                         type="text"
                         className="form-control outline-gray bg-transparent border-0"
-                        placeholder="Search Clients"
+                        placeholder="Search Branches"
                         value={searchTerm}
                         onChange={(e) => {
                           setSearchTerm(e?.target?.value);
@@ -392,7 +393,6 @@ const BranchList = () => {
                   <tr>
                     <th> Name </th>
                     <th> Contact no. </th>
-                    <th> Branch </th>
                     <th> Email </th>
                     <th> Role </th>
                     <th> Status </th>
@@ -411,7 +411,6 @@ const BranchList = () => {
                       <tr>
                         <td>{item?.name}</td>
                         <td>{item?.contactno}</td>
-                        <td>{item?.branch}</td>
                         <td>{item?.email}</td>
                         <td>{item?.role}</td>
                         <td>{formateStatus(item?.status)}</td>
