@@ -20,6 +20,8 @@ const CreateBranches = () => {
   );
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
+  var strongRegexcode = new RegExp("^[A-Z0-9]");
+
   const onSubmit = async (data) => {
     data.role = 'branch'
       try {
@@ -264,11 +266,19 @@ const CreateBranches = () => {
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
-                          {...register("bankIfscCode", { required: true })}
+                          {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
-                        {errors && errors.bankIfscCode && (
+                        {errors && errors.bankIfscCode &&
+                         errors.bankIfscCode.type === "required" &&(
                           <p>Bank IFSC number is required field</p>
                         )}
+                        {errors &&
+                          errors.bankIfscCode &&
+                          errors.bankIfscCode.type === "pattern" && (
+                            <p>
+                              IFSC code should have Capital latter
+                            </p>
+                          )}
                       </div>
                     </Form.Group>
                   </div>

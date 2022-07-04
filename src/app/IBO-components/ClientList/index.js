@@ -272,10 +272,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             Name
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <Form.Control
                               type="text"
                               name="name"
@@ -293,10 +293,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             Address{" "}
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <Form.Control
                               type="text"
                               name="address"
@@ -314,10 +314,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             Contact No
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <Form.Control
                               type="text"
                               name="contactno"
@@ -347,10 +347,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             Email
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <Form.Control
                               type="text"
                               name="email"
@@ -378,10 +378,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             status
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <select
                               className="form-control form-control-sm"
                               id="exampleFormControlSelect3"
@@ -407,10 +407,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             Search Branch
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <select
                               className="form-control form-control-sm"
                               id="exampleFormControlSelect2"
@@ -438,10 +438,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             Select IBO
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <select
                               className="form-control form-control-sm"
                               id="exampleFormControlSelect2"
@@ -469,10 +469,10 @@ const ClientList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
+                          <label className="col-sm-4 col-form-label">
                             Select Role
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-8">
                             <select
                               className="form-control form-control-sm"
                               id="exampleFormControlSelect2"
@@ -492,6 +492,48 @@ const ClientList = () => {
                                 );
                               })}
                             </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            AadharCard Number
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="text"
+                              name="aadhar_card_no"
+                              defaultValue={valueToEdit.aadhar_card_no}
+                              {...register("aadhar_card_no", { required: true })}
+                            />
+                            {errors && errors.aadhar_card_no && (
+                              <p>Aadharcard number is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            PanCard Number
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="text"
+                              name="pan_card_no"
+                              defaultValue={valueToEdit.pan_card_no}
+                              {...register("pan_card_no", { required: true })}
+                            />
+                            {errors && errors.pan_card_no &&(
+                              <p>PanCard number is required field</p>
+                            )}
                           </div>
                         </Form.Group>
                       </div>

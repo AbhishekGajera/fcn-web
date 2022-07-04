@@ -27,6 +27,8 @@ const CreateClints = () => {
   );
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
+  var strongRegexcode = new RegExp("^[A-Z0-9]");
+
   const onSubmit = async (data) => {
       try {
         console.log("dd",data);
@@ -205,9 +207,8 @@ const CreateClints = () => {
                           })}
                         >
                            {itemlist.map((item, index) => (
-                  <option key={index} value={item?.name} label={item?.name}></option>
-                ))}
-                         
+                            <option key={index} value={item?.name} label={item?.name}></option>
+                          ))}
                         
                         </select>
                         </div>
@@ -372,15 +373,59 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
-                          {...register("bankIfscCode", { required: true })}
+                          {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
-                        {errors && errors.bankIfscCode && (
+                        {errors && errors.bankIfscCode &&
+                         errors.bankIfscCode.type === "required" &&(
                           <p>Bank IFSC number is required field</p>
                         )}
+                        {errors &&
+                          errors.bankIfscCode &&
+                          errors.bankIfscCode.type === "pattern" && (
+                            <p>
+                              IFSC code should have Capital latter
+                            </p>
+                          )}
                       </div>
                     </Form.Group>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">
+                        AadharCard Number
+                      </label>
+                      <div className="col-sm-8">
+                        <Form.Control
+                          type="text"
+                          name="aadhar_card_no"
+                          {...register("aadhar_card_no", { required: true })}
+                        />
+                        {errors && errors.aadhar_card_no && (
+                          <p>Aadharcard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        PanCard Number
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="pan_card_no"
+                          {...register("pan_card_no", { required: true })}
+                        />
+                        {errors && errors.pan_card_no &&(
+                          <p>PanCard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>  
 
                 <div className="mt-3">
                   <button

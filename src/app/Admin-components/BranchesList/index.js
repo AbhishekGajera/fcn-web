@@ -197,6 +197,22 @@ const BranchList = () => {
                             {errors && errors.name && <p>name is required field</p>}
                           </div>
                         </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Address{" "}
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="text"
+                              name="address"
+                              defaultValue={valueToEdit.address}
+                              {...register("address", { required: true })}
+                            />
+                            {errors && errors.address && (
+                              <p>address is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
                       </div>
                     </div>
 
