@@ -32,24 +32,6 @@ const CreateClints = () => {
   var strongRegexcode = new RegExp("^[A-Z0-9]");
 
   const onSubmit = async (data) => {
-<<<<<<< Updated upstream
-      try {
-        console.log("dd",data);
-        await CreateUser(data)
-        toast.success("user crated successfully");
-        history.push('/clients/clientlist')
-      } catch (error) {
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
-=======
     try {
       await CreateUser(data)
       toast.success("user crated successfully");
@@ -64,7 +46,6 @@ const CreateClints = () => {
         toast.error(error.response.data.message);
       } else {
         toast.error(process.env.REACT_APP_ERROR_MESSAGE);
->>>>>>> Stashed changes
       }
     }
   };
@@ -227,18 +208,10 @@ const CreateClints = () => {
                             required: true,
                           })}
                         >
-<<<<<<< Updated upstream
                            {itemlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
                         
-=======
-                          {itemlist.map((item, index) => (
-                            <option key={index} value={item?.name} label={item?.name}></option>
-                          ))}
-
-
->>>>>>> Stashed changes
                         </select>
                       </div>
 
