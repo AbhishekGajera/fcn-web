@@ -121,7 +121,7 @@ const Targets = () => {
         className="row auth"
         style={{ display: "flex", justifyContent: "center" }}
       >
-        <div className="col-6 grid-margin">
+        <div className="col-lg-6 col-md-8 col-sm-12 grid-margin">
           <div className="card">
             <div className="card-body">
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
@@ -189,6 +189,7 @@ const Targets = () => {
                             required: true,
                           })}
                         >
+                          <option value=''>--Select Product--</option>
                           {productList?.map((item, index) => (
                             <option
                               key={index}
@@ -198,7 +199,7 @@ const Targets = () => {
                           ))}
                         </select>
                         {errors && errors.selectProduct && (
-                          <p>Slecting a product is required field</p>
+                          <p>Selecting a product is required field</p>
                         )}
                       </div>
                     </Form.Group>
@@ -220,6 +221,7 @@ const Targets = () => {
                             required: true,
                           })}
                         >
+                          <option value=''>--Select User--</option>
                           {
                             branches?.map((item, index) => (
                               <option
@@ -230,7 +232,7 @@ const Targets = () => {
                             ))}
                         </select>
                         {errors && errors.selectUser && (
-                          <p>Slecting a user is required field</p>
+                          <p>Selecting a user is required field</p>
                         )}
                       </div>
                     </Form.Group>

@@ -317,7 +317,7 @@ const ClientList = () => {
                           <label className="col-sm-4 col-form-label">
                             Contact No
                           </label>
-                          <div className="col-sm-8">
+                          <div className="col-sm-8 contact_no">
                             <Form.Control
                               type="text"
                               name="contactno"

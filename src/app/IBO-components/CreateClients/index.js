@@ -169,7 +169,7 @@ const CreateClints = () => {
                       <label className="col-sm-4 col-form-label">
                         Contact
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-8 contact_no">
                         <Form.Control
                           type="text"
                           name="contactno"
@@ -208,11 +208,12 @@ const CreateClints = () => {
                             required: true,
                           })}
                         >
+                          <option value=''>--Select branch--</option>
                            {itemlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
-                        
                         </select>
+                        {errors && errors.branch && <p>Select branch is required field</p>}
                       </div>
 
                     </Form.Group>
@@ -230,16 +231,18 @@ const CreateClints = () => {
                             required: true,
                           })}
                         >
-                          {branchlist.map((item, index) => (
+                          <option value=''>--Select ibo--</option>
+                           {branchlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
-
+                                                   
                           {/* <option>United States of America</option>
                           <option >India</option>
                           <option>United Kingdom</option>
                           <option>Germany</option>
                           <option>Argentina</option> */}
                         </select>
+                        {errors && errors.ibo && <p>Select Ibo is required field</p>}
                       </div>
                       {/* <div className="col-sm-9">
                         <Form.Control

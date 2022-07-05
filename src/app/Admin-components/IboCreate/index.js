@@ -144,7 +144,7 @@ const CreateIbo = () => {
                       <label className="col-sm-3 col-form-label">
                         Contact No
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-9 contact_no">
                         <Form.Control
                           type="text"
                           name="contactno"
@@ -183,9 +183,10 @@ const CreateIbo = () => {
                             required: true,
                           })}
                         >
+                          <option value=''>--Select branch--</option>
                            {itemlist.map((item, index) => (
-                  <option key={index} value={item?.name} label={item?.name}></option>
-                ))}
+                            <option key={index} value={item?.name} label={item?.name}></option>
+                          ))}
                          
                           {/* <option>United States of America</option>
                           <option >India</option>
@@ -193,6 +194,7 @@ const CreateIbo = () => {
                           <option>Germany</option>
                           <option>Argentina</option> */}
                         </select>
+                        {errors && errors.branch && <p>Select branch is required field</p>}
                         </div>
                       {/* <div className="col-sm-9">
                         <Form.Control

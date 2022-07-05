@@ -130,3 +130,19 @@ ul.client-list {
 ul.client-list li{
     padding: 0px 5px;
 }
+
+
+// contact No
+
+.contact_no::before {
+    position: absolute;
+    content: ' +91 ';
+    top: 11px;
+    left: 28px;
+}
+.contact_no{
+    position: relative;
+}
+.contact_no input.form-control {
+    padding-left: 38px;
+}

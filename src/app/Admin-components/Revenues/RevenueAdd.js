@@ -42,7 +42,6 @@ const RevenueAdd = () => {
 
   const onSubmit = async (data) => {
     console.log("data",data);
-    return;
     const formData = JSON.stringify({
         'branch' : data?.branch,
         'ibo': data?.ibo,
@@ -120,23 +119,24 @@ const RevenueAdd = () => {
                         </label>
                         <div className="col-sm-8">
                             <select
-                                className="form-control form-control-lg"
-                                id="exampleFormControlSelect2"
-                                name="Product"
-                                {...register("Product", {
-                                    required: true,
-                                })}
-                                >
-                                {productList?.map((item, index) => (
-                                    <option
-                                    key={index}
-                                    value={item?.id}
-                                    label={item?.name}
-                                    ></option>
-                                ))}
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="Product"
+                              {...register("Product", {
+                                  required: true,
+                              })}
+                              >
+                              <option value=''>--Select Product--</option>
+                              {productList?.map((item, index) => (
+                                  <option
+                                  key={index}
+                                  value={item?.id}
+                                  label={item?.name}
+                                  ></option>
+                              ))}
                             </select>
                             {errors && errors.Product && (
-                            <p>Selecting a product is required field</p>
+                              <p>Selecting a product is required field</p>
                             )}
                         </div>
                         </Form.Group>
@@ -153,10 +153,14 @@ const RevenueAdd = () => {
                                         required: true,
                                     })}
                                 >
+                                    <option value=''>--Select branch--</option>
                                     {branchList.map((item, index) => (
                                         <option key={index} value={item?.name} label={item?.name}></option>
                                     ))}
                                 </select>
+                                {errors && errors.branch &&  (
+                                  <p>Selecting a branch is required field</p>
+                                )}
                             </div>
                         </Form.Group>
                     </div> 
@@ -171,11 +175,15 @@ const RevenueAdd = () => {
                                     {...register("ibo", {
                                         required: true,
                                     })}
-                                >
+                                  >
+                                    <option value=''>--Select ibo--</option>
                                     {IboList.map((item, index) => (
                                         <option key={index} value={item?.name} label={item?.name}></option>
                                     ))}
                                 </select>
+                                {errors && errors.ibo && (
+                                  <p>Selecting a IBO is required field</p>
+                                )}
                             </div>
                         </Form.Group>
                     </div>      

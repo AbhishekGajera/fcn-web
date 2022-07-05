@@ -64,6 +64,7 @@ const ProductList = () => {
   };
 
   const onClickDownload = (imageURL) => {
+    console.log("imageURL",imageURL);
     window.open(imageURL, '_blank');
   }
 

@@ -222,7 +222,7 @@ const BranchList = () => {
                           <label className="col-sm-3 col-form-label">
                             Contact No
                           </label>
-                          <div className="col-sm-9">
+                          <div className="col-sm-9 contact_no">
                             <Form.Control
                               type="text"
                               name="contactno"

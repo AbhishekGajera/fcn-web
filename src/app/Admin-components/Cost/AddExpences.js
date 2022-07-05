@@ -63,7 +63,7 @@ const AddExpences = () => {
                 <h3 className='page-title'>Add Expences</h3>
             </div>
             <div className="row auth" style={{ display: 'flex', justifyContent: 'center' }}>
-                <div className="col-6 grid-margin" >
+                <div className="col-lg-6 col-md-8 col-sm-12 grid-margin" >
                     <div className="card">
                         <div className="card-body">
                             <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
@@ -80,6 +80,7 @@ const AddExpences = () => {
                                                     {...register("expences", {
                                                         required: true,
                                                     })}>
+                                                    <option value=''>--Select Expence--</option>
                                                    {optionForCostCategory.map((item) => {
                                                        return <option value={item.value}> {item.label} </option>
                                                    })}
@@ -101,11 +102,12 @@ const AddExpences = () => {
                                                     {...register("type", {
                                                         required: true,
                                                     })}>
-                                                {
-                                                    optionForExpenceType?.map((item) => {
-                                                        return <option value={item.value}>{item.label}</option>
-                                                    })
-                                                }
+                                                    <option value=''>--Select Type--</option>
+                                                    {
+                                                        optionForExpenceType?.map((item) => {
+                                                            return <option value={item.value}>{item.label}</option>
+                                                        })
+                                                    }
                                                 </select>
                                             </div>
                                         </Form.Group>
