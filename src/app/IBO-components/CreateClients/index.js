@@ -3,14 +3,16 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser,getBranches,getIBOs,userLogout } from "../../../utils/APIs";
+import { CreateUser, getBranches, getIBOs, userLogout } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
+import moment from 'moment';
 
 
 const CreateClints = () => {
-  const [cookies,setCookie] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [branchlist, setBranchlist] = useState([]);
+  const [isShow, setIsShow] = useState(false);
 
 
   const history = useHistory()
@@ -30,6 +32,7 @@ const CreateClints = () => {
   var strongRegexcode = new RegExp("^[A-Z0-9]");
 
   const onSubmit = async (data) => {
+<<<<<<< Updated upstream
       try {
         console.log("dd",data);
         await CreateUser(data)
@@ -46,7 +49,24 @@ const CreateClints = () => {
         } else {
           toast.error(process.env.REACT_APP_ERROR_MESSAGE);
         }
+=======
+    try {
+      await CreateUser(data)
+      toast.success("user crated successfully");
+      history.push('/clients/clientlist')
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+>>>>>>> Stashed changes
       }
+    }
   };
   useEffect(() => {
     list();
@@ -102,6 +122,7 @@ const CreateClints = () => {
       }
     }
   };
+  
   return (
     <div>
       <div className="page-header">
@@ -193,12 +214,12 @@ const CreateClints = () => {
                     <Form.Group className="row">
                       <label className="col-sm-4 col-form-label">Branch</label>
                       <div className="col-sm-8">
-                      {/* {dataValues.map((tags, index) => (
+                        {/* {dataValues.map((tags, index) => (
                   <MenuItem key={index} value={tags.title}>
                     {tags.title}
                   </MenuItem>
                 ))} */}
-                      <select
+                        <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
                           name="branch"
@@ -206,21 +227,29 @@ const CreateClints = () => {
                             required: true,
                           })}
                         >
+<<<<<<< Updated upstream
                            {itemlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
                         
+=======
+                          {itemlist.map((item, index) => (
+                            <option key={index} value={item?.name} label={item?.name}></option>
+                          ))}
+
+
+>>>>>>> Stashed changes
                         </select>
-                        </div>
-                     
+                      </div>
+
                     </Form.Group>
                   </div>
                   <div className="col-md-4">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Ibo</label>
                       <div className="col-sm-9">
-                     
-                      <select
+
+                        <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
                           name="ibo"
@@ -228,17 +257,17 @@ const CreateClints = () => {
                             required: true,
                           })}
                         >
-                           {branchlist.map((item, index) => (
-                  <option key={index} value={item?.name} label={item?.name}></option>
-                ))}
-                         
+                          {branchlist.map((item, index) => (
+                            <option key={index} value={item?.name} label={item?.name}></option>
+                          ))}
+
                           {/* <option>United States of America</option>
                           <option >India</option>
                           <option>United Kingdom</option>
                           <option>Germany</option>
                           <option>Argentina</option> */}
                         </select>
-                        </div>
+                      </div>
                       {/* <div className="col-sm-9">
                         <Form.Control
                           type="text"
@@ -285,6 +314,7 @@ const CreateClints = () => {
                         <Form.Control
                           type="date"
                           name="dob"
+                          max={moment().format("YYYY-MM-DD")}
                           {...register("dob", { required: true })}
                         />
                         {errors && errors.dob && <p>DOB is required field</p>}
@@ -300,13 +330,24 @@ const CreateClints = () => {
                       </label>
                       <div className="col-sm-9">
                         <Form.Control
-                          type="text"
+                          type={isShow ? "text" : "password"}
                           name="password"
                           {...register("password", {
                             required: true,
                             pattern: strongRegex,
                           })}
                         />
+                        
+                        <span className="d-flex" style={{float:'right',marginTop:"10px"}} >
+                          <input style={{marginRight:"10px"}} type="checkbox" value={isShow} onChange={() => {
+                            if (isShow) {
+                              setIsShow(false)
+                            } else {
+                              setIsShow(true)
+                            }
+                          }} />
+                          show password
+                        </span>
                         {errors &&
                           errors.password &&
                           errors.password.type === "required" && (

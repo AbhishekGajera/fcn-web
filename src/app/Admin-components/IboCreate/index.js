@@ -7,11 +7,15 @@ import { toast } from "react-toastify";
 import { CreateUser,getBranches,  userLogout,
 } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
+import moment from 'moment';
+
 
 const CreateIbo = () => {
   const [cookies,setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();
+  const [isShow, setIsShow] = useState(false);
+
 
   const {
     register,
@@ -236,6 +240,7 @@ const CreateIbo = () => {
                         <Form.Control
                           type="date"
                           name="dob"
+                          max={moment().format("YYYY-MM-DD")}
                           {...register("dob", { required: true })}
                         />
                         {errors && errors.dob && <p>DOB is required field</p>}
@@ -244,20 +249,31 @@ const CreateIbo = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-6">
+                <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
                         Password
                       </label>
                       <div className="col-sm-9">
                         <Form.Control
-                          type="text"
+                          type={isShow ? "text" : "password"}
                           name="password"
                           {...register("password", {
                             required: true,
                             pattern: strongRegex,
                           })}
                         />
+                        
+                        <span className="d-flex" style={{float:'right',marginTop:"10px"}} >
+                          <input style={{marginRight:"10px"}} type="checkbox" value={isShow} onChange={() => {
+                            if (isShow) {
+                              setIsShow(false)
+                            } else {
+                              setIsShow(true)
+                            }
+                          }} />
+                          show password
+                        </span>
                         {errors &&
                           errors.password &&
                           errors.password.type === "required" && (

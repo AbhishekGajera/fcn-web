@@ -1,12 +1,16 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { CreateUser,CreateBranch } from "../../../utils/APIs";
+import moment from 'moment';
+
 
 const CreateBranches = () => {
   const [cookies] = useCookies(["user"]);
+  const [isShow, setIsShow] = useState(false);
+
 
   const {
     register,
@@ -178,6 +182,7 @@ const CreateBranches = () => {
                         <Form.Control
                           type="date"
                           name="dob"
+                          max={moment().format("YYYY-MM-DD")}
                           {...register("dob", { required: true })}
                         />
                         {errors && errors.dob && <p>DOB is required field</p>}
@@ -186,20 +191,31 @@ const CreateBranches = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-6">
+                <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
                         Password
                       </label>
                       <div className="col-sm-9">
                         <Form.Control
-                          type="text"
+                          type={isShow ? "text" : "password"}
                           name="password"
                           {...register("password", {
                             required: true,
                             pattern: strongRegex,
                           })}
                         />
+                        
+                        <span className="d-flex" style={{float:'right',marginTop:"10px"}} >
+                          <input style={{marginRight:"10px"}} type="checkbox" value={isShow} onChange={() => {
+                            if (isShow) {
+                              setIsShow(false)
+                            } else {
+                              setIsShow(true)
+                            }
+                          }} />
+                          show password
+                        </span>
                         {errors &&
                           errors.password &&
                           errors.password.type === "required" && (
@@ -279,6 +295,38 @@ const CreateBranches = () => {
                               IFSC code should have Capital latter
                             </p>
                           )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">Branch Head Name</label>
+                      <div className="col-sm-8">
+                        <Form.Control
+                          type="text"
+                          name="branchHeadName"
+                          {...register("branchHeadName", { required: true })}
+                        />
+                        {errors && errors.branchHeadName && <p>branch head name is required field</p>}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">
+                       Branch Head Contact
+                      </label>
+                      <div className="col-sm-8">
+                        <Form.Control
+                          type="text"
+                          name="branchContact"
+                          {...register("branchContact", { required: true })}
+                        />
+                        {errors && errors.branchContact && (
+                          <p>branch head number is required field</p>
+                        )}
                       </div>
                     </Form.Group>
                   </div>
