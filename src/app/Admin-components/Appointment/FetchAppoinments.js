@@ -171,7 +171,7 @@ const FetchAppoinments = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Appoinment
+              Show Appoinment
             </li>
           </ol>
         </nav>
@@ -179,7 +179,7 @@ const FetchAppoinments = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-            <h4 className="card-title">Fetch Appoinment</h4>
+            <h4 className="card-title">Show Appoinment</h4>
 
             <div className="table-responsive">
               <table className="table table-striped">

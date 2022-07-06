@@ -555,7 +555,7 @@ const ClientList = () => {
         </Modal.Body>
       </Modal>
       <div className="page-header">
-        <h3 className="page-title">Clients / Fetch Clients </h3>
+        <h3 className="page-title">Clients / Show Clients </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -564,7 +564,7 @@ const ClientList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Create clients
+              Show clients
             </li>
           </ol>
         </nav>

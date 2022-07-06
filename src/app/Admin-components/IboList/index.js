@@ -424,7 +424,7 @@ const IboList = () => {
         </Modal.Body>
       </Modal>
       <div className="page-header">
-        <h3 className="page-title">ibos / Fetch Ibos </h3>
+        <h3 className="page-title">ibos / Show Ibos </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -433,7 +433,7 @@ const IboList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Ibos
+              Show Ibos
             </li>
           </ol>
         </nav>

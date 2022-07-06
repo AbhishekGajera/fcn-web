@@ -38,7 +38,7 @@ const ProductAdd = () => {
       formData.append("name",data?.name)
     try {
       await CreateProduct(formData);
-      toast.success("Product crated successfully");
+      toast.success("Product created successfully");
       history.push("/products/productslist");
     } catch (error) {
       if (

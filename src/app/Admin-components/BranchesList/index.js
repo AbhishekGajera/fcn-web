@@ -6,6 +6,7 @@ import {
   deleteUsr,
   updateProfile,
   getBranches,
+  getIBOs
 } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import Modal from "react-bootstrap/Modal";
@@ -21,6 +22,8 @@ import Spinner from "../../shared/Spinner";
 
 const BranchList = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedIBO, setselectedIBO] = useState("");
+
 
 
   // We start with an empty list of items.
@@ -41,6 +44,8 @@ const BranchList = () => {
   }
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const [IBOList, setIBOList] = useState([]);
+
   const history = useHistory()
   const [isLoading, setIsLoading] = useState(true)
 
@@ -50,7 +55,14 @@ const BranchList = () => {
   var strongRegexMo = new RegExp(
     "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
   );
-
+  const getIBOList = async () => {
+    const items = await (await getIBOs(5000, 1, "", "IBO")).data;
+    setIBOList(items?.results);
+  };
+  const onChangeHandlerIBO = (e) => {
+    setItemOffset(0);
+    setselectedIBO(e.target.value);
+  };
   const handleClose = () => {
     setShow(false)
     setvalueToEdit({})
@@ -122,6 +134,9 @@ const BranchList = () => {
     list()
   }, [debouncedSearchTerm]);
 
+  useEffect(() => {
+    getIBOList();
+  }, []);
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
@@ -358,7 +373,7 @@ const BranchList = () => {
 
       </Modal>
       <div className="page-header">
-        <h3 className="page-title">branches / Fetch Branch </h3>
+        <h3 className="page-title">Branches / Show Branch </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -367,7 +382,7 @@ const BranchList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch branches
+              Show branches
             </li>
           </ol>
         </nav>
@@ -376,8 +391,36 @@ const BranchList = () => {
         <div className="card">
           <div className="card-body">
             <div className="row">
-              <div className="col-md-6">
+            <div className="col-md-6">
+                <Form.Group className="row">
+                  <label className="col-sm-5 col-form-label">Search IBO</label>
+                  <div className="col-sm-7">
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect2"
+                      name="branch"
+                      onChange={onChangeHandlerIBO}
+                    >
+                      <option selected={"" === selectedIBO} value={""}>
+                        Not Selected
+                      </option>
+                      {IBOList?.map((i) => {
+                        return (
+                          <>
+                            <option
+                              selected={i.name === selectedIBO}
+                              value={i.name}
+                            >
+                              {i.name}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </Form.Group>
               </div>
+
 
               <div className="col-md-6">
                 <div className="search-field d-none d-md-block">
@@ -410,6 +453,8 @@ const BranchList = () => {
                     <th> Name </th>
                     <th> Contact no. </th>
                     <th> Email </th>
+                    <th> IBO </th>
+
                     <th> Role </th>
                     <th> Status </th>
                     <th> Generate Password </th>
@@ -428,6 +473,7 @@ const BranchList = () => {
                         <td>{item?.name}</td>
                         <td>{item?.contactno}</td>
                         <td>{item?.email}</td>
+                        <td>{item?.IBO}</td>
                         <td>{item?.role}</td>
                         <td>{formateStatus(item?.status)}</td>
                         {/* <td>

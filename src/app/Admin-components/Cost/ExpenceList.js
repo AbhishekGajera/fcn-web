@@ -120,7 +120,7 @@ const ExpenceList = () => {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">costs / Fetch Costs </h3>
+        <h3 className="page-title">costs / Show Costs </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -129,7 +129,7 @@ const ExpenceList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Costs
+              Show Costs
             </li>
           </ol>
         </nav>

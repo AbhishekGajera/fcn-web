@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser, getBranches, getIBOs, userLogout } from "../../../utils/APIs";
+import { CreateUser, getBranches, getIBOs, userLogout,getProductsList } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
 
@@ -12,6 +12,8 @@ const CreateClints = () => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [branchlist, setBranchlist] = useState([]);
+  const [productlist, setproductlist] = useState([]);
+
   const [isShow, setIsShow] = useState(false);
 
 
@@ -55,6 +57,9 @@ const CreateClints = () => {
   useEffect(() => {
     branchList();
   }, []);
+  useEffect(() => {
+    productList();
+  }, []);
 
   const list = async () => {
     try {
@@ -84,6 +89,30 @@ const CreateClints = () => {
       const items = await (await getIBOs()).data;
       // console.log("itm",items)
       setBranchlist(items?.results);
+      // setPageCount(items?.totalPages);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
+  };
+  const productList = async () => {
+    try {
+      const items = await (await getProductsList()).data;
+      // console.log("itm",items)
+      setproductlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -144,12 +173,12 @@ const CreateClints = () => {
                 </div>
 
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Address{" "}
                       </label>
-                      <div className="col-sm-10">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="address"
@@ -159,6 +188,33 @@ const CreateClints = () => {
                           <p>address is required field</p>
                         )}
                       </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-2 col-form-label">Product</label>
+                      <div className="col-sm-10">
+                        {/* {dataValues.map((tags, index) => (
+                  <MenuItem key={index} value={tags.title}>
+                    {tags.title}
+                  </MenuItem>
+                ))} */}
+                        <select
+                          className="form-control form-control-lg"
+                          id="exampleFormControlSelect2"
+                          name="product"
+                          {...register("product", {
+                            required: true,
+                          })}
+                        >
+                          <option value=''>--Select product--</option>
+                           {productlist.map((item, index) => (
+                            <option key={index} value={item?.name} label={item?.name}></option>
+                          ))}
+                        </select>
+                        {errors && errors.product && <p>Select product is required field</p>}
+                      </div>
+
                     </Form.Group>
                   </div>
                 </div>

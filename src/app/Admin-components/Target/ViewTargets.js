@@ -109,7 +109,7 @@ const ViewTargets = () => {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">Targets / Fetch Targets </h3>
+        <h3 className="page-title">Targets / Show Targets </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -118,7 +118,7 @@ const ViewTargets = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Targets
+              Show Targets
             </li>
           </ol>
         </nav>

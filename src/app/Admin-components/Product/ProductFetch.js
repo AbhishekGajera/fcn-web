@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { deleteProductById, getProductsList,userLogout } from "../../../utils/APIs";
+import { deleteProductById, getProductsList,userLogout,UpdateProducts } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
@@ -36,6 +36,16 @@ const ProductList = () => {
   const handlePageClick = (event) => {
     setItemOffset(event.selected);
   };
+  const statusChanged = (id, e) => {
+    console.log(e.target.value, id);
+    UpdateProducts({
+      "productId": id,
+      "status": e.target.value
+    })
+    toast.success('Status updated successfully',{
+      autoClose : true
+    })
+  }
 
   const deleteProduct = (uid) => {
     Swal.fire({
@@ -102,7 +112,7 @@ const ProductList = () => {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">Products / Fetch Products </h3>
+        <h3 className="page-title">Products / Show Products </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -111,7 +121,7 @@ const ProductList = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Products
+              Show Products
             </li>
           </ol>
         </nav>
@@ -155,6 +165,7 @@ const ProductList = () => {
                     <th> Name </th>
                     <th> Category </th>
                     <th> Description </th>
+                    <th > Status </th>
                     <th> Delete </th>
                   </tr>
                 </thead>
@@ -168,6 +179,27 @@ const ProductList = () => {
                           <td>{item?.name}</td>
                           <td>{item?.category}</td>
                           <td>{item?.description}</td>
+                          <td>
+                          <select
+
+                            id={item.id}
+
+                            onChange={(e) => statusChanged(item.id, e)}
+                          >
+                            <option
+                              value="0"
+                              selected={item.status == 0 ? "selected" : false}
+                            >
+                              Active
+                            </option>
+                            <option
+                              value="1"
+                              selected={item.status == 1 ? "selected" : false}
+                            >
+                              InActive
+                            </option>
+                                                      </select>
+                        </td>
                           <td>
                             <i
                               onClick={() => deleteProduct(item?.id)}

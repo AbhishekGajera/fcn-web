@@ -73,7 +73,7 @@ const RevenueFetch = () => {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">Revenue / Fetch Revenue </h3>
+        <h3 className="page-title">Revenue / Show Revenue </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -82,7 +82,7 @@ const RevenueFetch = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Fetch Revenue
+              Show Revenue
             </li>
           </ol>
         </nav>

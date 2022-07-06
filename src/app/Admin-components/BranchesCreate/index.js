@@ -3,13 +3,20 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser,CreateBranch } from "../../../utils/APIs";
+import { useHistory } from "react-router-dom";
+
+import { CreateUser,CreateBranch,getIBOs,userLogout } from "../../../utils/APIs";
 import moment from 'moment';
 
 
 const CreateBranches = () => {
-  const [cookies] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
+
   const [isShow, setIsShow] = useState(false);
+  const [branchlist, setBranchlist] = useState([]);
+  const history = useHistory()
+
+
 
 
   const {
@@ -45,6 +52,33 @@ const CreateBranches = () => {
         }
       }
   };
+  const branchList = async () => {
+    try {
+      const items = await (await getIBOs()).data;
+      // console.log("itm",items)
+      setBranchlist(items?.results);
+      // setPageCount(items?.totalPages);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
+  };
+  useEffect(() => {
+    branchList();
+  }, []);
 
   return (
     <div>
@@ -131,6 +165,44 @@ const CreateBranches = () => {
                             <p>invalid phone number please use valid formate</p>
                           )}
                       </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">Ibo</label>
+                      <div className="col-sm-9">
+
+                        <select
+                          className="form-control form-control-lg"
+                          id="exampleFormControlSelect2"
+                          name="ibo"
+                          {...register("ibo", {
+                            required: true,
+                          })}
+                        >
+                          <option value=''>--Select ibo--</option>
+                           {branchlist.map((item, index) => (
+                            <option key={index} value={item?.name} label={item?.name}></option>
+                          ))}
+                                                   
+                          {/* <option>United States of America</option>
+                          <option >India</option>
+                          <option>United Kingdom</option>
+                          <option>Germany</option>
+                          <option>Argentina</option> */}
+                        </select>
+                        {errors && errors.ibo && <p>Select Ibo is required field</p>}
+                      </div>
+                      {/* <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="branch"
+                          {...register("branch", { required: true })}
+                        />
+                        {errors && errors.branch && (
+                          <p>branch is required field</p>
+                        )}
+                      </div> */}
                     </Form.Group>
                   </div>
                   {/* <div className="col-md-6">
