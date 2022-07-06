@@ -16,9 +16,6 @@ const CreateBranches = () => {
   const [branchlist, setBranchlist] = useState([]);
   const history = useHistory()
 
-
-
-
   const {
     register,
     handleSubmit,
@@ -38,6 +35,7 @@ const CreateBranches = () => {
       try {
         const result = await CreateUser(data)
         toast.success("user crated successfully");
+        history.push('/branches/brancheslist')
       } catch (error) {
           console.info("error ",error)
         if (

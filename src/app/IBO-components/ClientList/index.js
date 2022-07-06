@@ -154,8 +154,7 @@ const ClientList = () => {
   };
 
   const getIBOList = async () => {
-    const items = await (await getIBOs(5000, 1, "", "IBO")).data;
-
+    const items = await (await getIBOs(5000, 1, "")).data;
     setIBOList(items?.results);
   };
 

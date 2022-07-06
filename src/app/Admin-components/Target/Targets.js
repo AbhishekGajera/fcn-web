@@ -29,7 +29,7 @@ const Targets = () => {
   const getAllProducts = async () => {
     const allProducts = await getProductsList(3000);
     setproductList(allProducts?.data?.results);
-    setValue('selectProduct',allProducts?.data?.results[0]?.id)
+    // setValue('selectProduct',allProducts?.data?.results[0]?.id)
   };
 
   const getIBOList = async () => {
@@ -58,7 +58,7 @@ const Targets = () => {
 
   const values = getValues();
   const watchAllFields = watch(); // when pass nothing as argument, you are watching everything
-
+ 
   useEffect(() => {
     if('branch' === watchAllFields?.addto && previousSelectedType !== 'branch'){
       setpreviousSelectedType('branch')

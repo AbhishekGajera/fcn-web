@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect,useState } from "react";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
@@ -8,6 +8,7 @@ import { useHistory } from "react-router-dom";
 
 const ProductAdd = () => {
   const [cookies] = useCookies(["user"]);
+  const [disable,setDisable] = useState(false);
   const history = useHistory();
 
   const handleUpload = (e) => {
@@ -30,12 +31,14 @@ const ProductAdd = () => {
   const values = getValues();
 
   const onSubmit = async (data) => {
+    setDisable(true)
     const formData = new FormData()
       formData.append("user",cookies?.user?.id)
       formData.append("category",data?.category)
       formData.append("description",data?.description)
       formData.append("image",data?.file[0])
       formData.append("name",data?.name)
+      formData.append("status",data?.status)
     try {
       await CreateProduct(formData);
       toast.success("Product created successfully");
@@ -138,6 +141,29 @@ const ProductAdd = () => {
                     </Form.Group>
                   </div>
                 </div>
+                <div className="row" >
+                  <div className="col-md-12">
+                      <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">Status</label>
+                          <div className="col-sm-9">
+                              <select
+                                  className="form-control form-control-lg"
+                                  id="exampleFormControlSelect2"
+                                  name="status"
+                                  {...register("status", {
+                                      required: true,
+                                  })}>
+                                  <option value=''>--Select Status--</option>
+                                  <option value='1'>Active</option>
+                                  <option value='0'>Inactive</option>                                  
+                              </select>
+                              {errors && errors.status && (
+                                  <p>status is required field</p>
+                              )}
+                          </div>
+                      </Form.Group>
+                  </div>
+                </div>
                 <div className="row">
                   <div className="col-md-12">
                     <Form.Group className="row">
@@ -175,7 +201,7 @@ const ProductAdd = () => {
                 >
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
-                    type="submit"
+                    type="submit" disabled={disable}
                   >
                     SUBMIT
                   </button>

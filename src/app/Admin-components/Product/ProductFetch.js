@@ -74,7 +74,6 @@ const ProductList = () => {
   };
 
   const onClickDownload = (imageURL) => {
-    console.log("imageURL",imageURL);
     window.open(imageURL, '_blank');
   }
 
@@ -106,6 +105,17 @@ const ProductList = () => {
         history.push("/user-pages/login-1");
       });
     }
+  }
+}
+
+const formateStatus = (status) =>{
+  switch (status) {
+    case '0':
+      return "Inactive";
+    case '1':
+      return "Active";
+    default:
+      return 'Active';
   }
 }
 
@@ -179,6 +189,7 @@ const ProductList = () => {
                           <td>{item?.name}</td>
                           <td>{item?.category}</td>
                           <td>{item?.description}</td>
+                          <td>{formateStatus(item?.status)}</td>
                           <td>
                           <select
 

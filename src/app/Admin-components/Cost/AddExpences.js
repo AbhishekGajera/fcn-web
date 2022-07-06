@@ -39,7 +39,6 @@ const AddExpences = () => {
         formData.append("description",data?.desc)
         formData.append("image",data?.file[0])
         formData.append("type",data?.type)
-
         try {
             await addCost(formData)
             toast.success("Invoice added Succesfully",{ autoClose : 4000 })
@@ -85,6 +84,9 @@ const AddExpences = () => {
                                                        return <option value={item.value}> {item.label} </option>
                                                    })}
                                                 </select>
+                                                {errors && errors.expences && (
+                                                    <p>Expences is required field</p>
+                                                )}
                                             </div>
                                         </Form.Group>
                                     </div>
@@ -109,6 +111,9 @@ const AddExpences = () => {
                                                         })
                                                     }
                                                 </select>
+                                                {errors && errors.type && (
+                                                    <p>Type is required field</p>
+                                                )}
                                             </div>
                                         </Form.Group>
                                     </div>
