@@ -190,13 +190,13 @@ const ProductList = () => {
                               value="0"
                               selected={item.status == 0 ? "selected" : false}
                             >
-                              Active
+                              InActive
                             </option>
                             <option
                               value="1"
                               selected={item.status == 1 ? "selected" : false}
                             >
-                              InActive
+                              Active
                             </option>
                                                       </select>
                         </td>
