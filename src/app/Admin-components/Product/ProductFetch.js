@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { deleteProductById, getProductsList,userLogout,UpdateProducts } from "../../../utils/APIs";
+import { deleteProductById, getProductsList, userLogout, UpdateProducts } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
@@ -16,6 +16,7 @@ const ProductList = () => {
 
   const [selectedProductType, setselectedProductType] = useState("");
   const [selectedProductCategory, setselectedProductCategory] = useState("");
+  const [isChecked, setIsChecked] = useState("");
 
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
@@ -23,11 +24,11 @@ const ProductList = () => {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
-  const [cookies,setCookie] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
-  
+
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage, selectedProductType, selectedProductCategory, debouncedSearchTerm]);
@@ -42,8 +43,8 @@ const ProductList = () => {
       "productId": id,
       "status": e.target.value
     })
-    toast.success('Status updated successfully',{
-      autoClose : true
+    toast.success('Status updated successfully', {
+      autoClose: true
     })
   }
 
@@ -59,15 +60,31 @@ const ProductList = () => {
       cancelButtonText: "No, keep it",
     }).then((result) => {
       if (result.value) {
-        return (
-          deleteProductById(uid).finally(() => list()),
-          Swal.fire(
-            "Deleted!",
-            "Your imaginary file has been deleted.",
-            "success"
-          )
-        );
-      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        if (isChecked == '') {
+          return (
+            deleteProductById(uid).finally(() => list()),
+            Swal.fire(
+              "Deleted!",
+              "Your imaginary file has been deleted.",
+              "success"
+            )
+          );
+        } else {
+          const itemList = Object.keys(isChecked).map((id) => {
+            if (isChecked[id] === true) {
+              deleteProductById(id)
+            }
+            Swal.fire(
+              "Deleted!",
+              "Your imaginary file has been deleted.",
+              "success"
+            )
+          })
+          Promise.all(itemList).then(() => {
+            list();
+          });
+        }
+      }else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
       }
     });
@@ -79,45 +96,50 @@ const ProductList = () => {
 
   const list = async () => {
     setIsLoading(true)
- try { const items = await (
-      await getProductsList(
-        itemsPerPage,
-        +itemOffset + 1,
-        searchTerm,
-      )
-    ).data;
-    setitemlist(items?.results);
-    setPageCount(items?.totalPages);
-    setIsLoading(false)
-  }catch(error){
-    if (error?.response?.data?.message) {
-      toast.error(error.response.data.message);
-    } else {
-      toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-    }
+    try {
+      const items = await (
+        await getProductsList(
+          itemsPerPage,
+          +itemOffset + 1,
+          searchTerm,
+        )
+      ).data;
+      setitemlist(items?.results);
+      setPageCount(items?.totalPages);
+      setIsLoading(false)
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
 
-    if (error?.response?.data?.code === 401) {
-      const formData = JSON.stringify({
-        refreshToken: localStorage.getItem("refreshToken"),
-      });
-      setCookie("user", null, { path: "/" });
-      userLogout(formData).finally(() => {
-        history.push("/user-pages/login-1");
-      });
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
     }
   }
-}
 
-const formateStatus = (status) =>{
-  switch (status) {
-    case '0':
-      return "Inactive";
-    case '1':
-      return "Active";
-    default:
-      return 'Active';
+  const formateStatus = (status) => {
+    switch (status) {
+      case '0':
+        return "Inactive";
+      case '1':
+        return "Active";
+      default:
+        return 'Active';
+    }
   }
-}
+
+  const handleMultiChange = (e) => {
+    setIsChecked({ ...isChecked, [e.target.id]: e.target.checked });
+  }
 
   return (
     <div>
@@ -172,6 +194,7 @@ const formateStatus = (status) =>{
               <table className="table table-striped">
                 <thead>
                   <tr>
+                    <th></th>
                     <th> Name </th>
                     <th> Category </th>
                     <th> Description </th>
@@ -181,54 +204,55 @@ const formateStatus = (status) =>{
                 </thead>
                 <tbody>
                   {
-                  isLoading ? <React.Fragment><Spinner /></React.Fragment>
-                    :
-                    itemlist?.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{item?.name}</td>
-                          <td>{item?.category}</td>
-                          <td>{item?.description}</td>
-                          <td>{formateStatus(item?.status)}</td>
-                          <td>
-                          <select
-
-                            id={item.id}
-
-                            onChange={(e) => statusChanged(item.id, e)}
-                          >
-                            <option
-                              value="0"
-                              selected={item.status == 0 ? "selected" : false}
-                            >
-                              InActive
-                            </option>
-                            <option
-                              value="1"
-                              selected={item.status == 1 ? "selected" : false}
-                            >
-                              Active
-                            </option>
-                                                      </select>
-                        </td>
-                          <td>
-                            <i
-                              onClick={() => deleteProduct(item?.id)}
-                              className="mdi mdi-delete"
-                            ></i>
-                          </td>
-                          <td>
-                            <button
-                              type="button"
-                              className="btn btn-gradient-primary btn-sm "
-                              onClick={() => onClickDownload(item?.image)}
-                            >
-                              Download Product Image
-                            </button>
-                          </td>
-                        </tr>
-                      );
-                    })}
+                    isLoading ? <React.Fragment><Spinner /></React.Fragment>
+                      :
+                      itemlist?.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>
+                              <input type="checkbox" id={item?.id} value={item?.id} onChange={handleMultiChange} />
+                            </td>
+                            <td>{item?.name}</td>
+                            <td>{item?.category}</td>
+                            <td>{item?.description}</td>
+                            <td>{formateStatus(item?.status)}</td>
+                            <td>
+                              <select
+                                id={item.id}
+                                onChange={(e) => statusChanged(item.id, e)}
+                              >
+                                <option
+                                  value="0"
+                                  selected={item.status == 0 ? "selected" : false}
+                                >
+                                  InActive
+                                </option>
+                                <option
+                                  value="1"
+                                  selected={item.status == 1 ? "selected" : false}
+                                >
+                                  Active
+                                </option>
+                              </select>
+                            </td>
+                            <td>
+                              <i
+                                onClick={() => deleteProduct(item?.id)}
+                                className="mdi mdi-delete"
+                              ></i>
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-gradient-primary btn-sm "
+                                onClick={() => onClickDownload(item?.image)}
+                              >
+                                Download Product Image
+                              </button>
+                            </td>
+                          </tr>
+                        );
+                      })}
                 </tbody>
               </table>
               <ReactPaginate
