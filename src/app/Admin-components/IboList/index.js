@@ -484,7 +484,7 @@ const IboList = () => {
                       <input
                         type="text"
                         className="form-control outline-gray bg-transparent border-0"
-                        placeholder="Search Clients"
+                        placeholder="Search IBO"
                         value={searchTerm}
                         onChange={(e) => {
                           setSearchTerm(e?.target?.value);

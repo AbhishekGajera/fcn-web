@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
-import { CreateUser,CreateBranch,getIBOs,userLogout } from "../../../utils/APIs";
+import { CreateUser, CreateBranch, getIBOs, userLogout } from "../../../utils/APIs";
 import moment from 'moment';
 
 
@@ -32,23 +32,23 @@ const CreateBranches = () => {
 
   const onSubmit = async (data) => {
     data.role = 'branch'
-      try {
-        const result = await CreateUser(data)
-        toast.success("user crated successfully");
-        history.push('/branches/brancheslist')
-      } catch (error) {
-          console.info("error ",error)
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+    try {
+      const result = await CreateUser(data)
+      toast.success("user crated successfully");
+      history.push('/branches/brancheslist')
+    } catch (error) {
+      console.info("error ", error)
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
+    }
   };
   const branchList = async () => {
     try {
@@ -179,10 +179,10 @@ const CreateBranches = () => {
                           })}
                         >
                           <option value=''>--Select ibo--</option>
-                           {branchlist.map((item, index) => (
+                          {branchlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
-                                                   
+
                           {/* <option>United States of America</option>
                           <option >India</option>
                           <option>United Kingdom</option>
@@ -261,7 +261,7 @@ const CreateBranches = () => {
                   </div>
                 </div>
                 <div className="row">
-                <div className="col-md-6">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
                         Password
@@ -275,9 +275,9 @@ const CreateBranches = () => {
                             pattern: strongRegex,
                           })}
                         />
-                        
-                        <span className="d-flex" style={{float:'right',marginTop:"10px"}} >
-                          <input style={{marginRight:"10px"}} type="checkbox" value={isShow} onChange={() => {
+
+                        <span className="d-flex" style={{ float: 'right', marginTop: "10px" }} >
+                          <input style={{ marginRight: "10px" }} type="checkbox" value={isShow} onChange={() => {
                             if (isShow) {
                               setIsShow(false)
                             } else {
@@ -355,9 +355,9 @@ const CreateBranches = () => {
                           {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
                         {errors && errors.bankIfscCode &&
-                         errors.bankIfscCode.type === "required" &&(
-                          <p>Bank IFSC number is required field</p>
-                        )}
+                          errors.bankIfscCode.type === "required" && (
+                            <p>Bank IFSC number is required field</p>
+                          )}
                         {errors &&
                           errors.bankIfscCode &&
                           errors.bankIfscCode.type === "pattern" && (
@@ -386,7 +386,7 @@ const CreateBranches = () => {
                   <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-4 col-form-label">
-                       Branch Head Contact
+                        Branch Head Contact
                       </label>
                       <div className="col-sm-8">
                         <Form.Control
@@ -401,7 +401,61 @@ const CreateBranches = () => {
                     </Form.Group>
                   </div>
                 </div>
-
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        PanCard Number
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="pan_card_no"
+                          {...register("pan_card_no", { required: true })}
+                        />
+                        {errors && errors.pan_card_no && (
+                          <p>PanCard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        AadharCard Number
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="aadharcardNumber"
+                          {...register("aadharcardNumber", { required: true })}
+                        />
+                        {errors && errors.aadharcardNumber && (
+                          <p>Aadharcard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Head Office Number
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="headofficeNo"
+                          {...register("headofficeNo", { required: true })}
+                        />
+                        {errors && errors.headofficeNo && (
+                          <p> Head Office Number number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"

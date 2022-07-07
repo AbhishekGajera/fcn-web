@@ -4,14 +4,15 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser,getBranches,  userLogout,
+import {
+  CreateUser, getBranches, userLogout,
 } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
 
 
 const CreateIbo = () => {
-  const [cookies,setCookie] = useCookies(["user"]);
+  const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
@@ -21,6 +22,7 @@ const CreateIbo = () => {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
+    getValues,
   } = useForm({
     mode: "onChange",
   });
@@ -31,24 +33,28 @@ const CreateIbo = () => {
 
   var strongRegexcode = new RegExp("^[A-Z0-9]");
 
+  const values = getValues();
+
+
   const onSubmit = async (data) => {
+    console.info(data,'data++')
     data.role = 'IBO'
-      try {
-        const result = await CreateUser(data)
-        toast.success("user crated successfully");
-      } catch (error) {
-          console.info("error ",error)
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+    try {
+      const result = await CreateUser(data)
+      toast.success("user crated successfully");
+    } catch (error) {
+      console.info("error ", error)
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
+    }
   };
   useEffect(() => {
     list();
@@ -57,7 +63,7 @@ const CreateIbo = () => {
   const list = async () => {
     try {
       const items = await (await getBranches()).data;
-      console.log("itm",items)
+      console.log("itm", items)
       setitemlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
@@ -76,6 +82,14 @@ const CreateIbo = () => {
           history.push("/user-pages/login-1");
         });
       }
+    }
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-id');
+    if (element) {
+      element.click()
     }
   };
 
@@ -170,12 +184,12 @@ const CreateIbo = () => {
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Branch</label>
                       <div className="col-sm-9">
-                      {/* {dataValues.map((tags, index) => (
+                        {/* {dataValues.map((tags, index) => (
                   <MenuItem key={index} value={tags.title}>
                     {tags.title}
                   </MenuItem>
                 ))} */}
-                      <select
+                        <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
                           name="branch"
@@ -184,10 +198,10 @@ const CreateIbo = () => {
                           })}
                         >
                           <option value=''>--Select branch--</option>
-                           {itemlist.map((item, index) => (
+                          {itemlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
-                         
+
                           {/* <option>United States of America</option>
                           <option >India</option>
                           <option>United Kingdom</option>
@@ -195,7 +209,7 @@ const CreateIbo = () => {
                           <option>Argentina</option> */}
                         </select>
                         {errors && errors.branch && <p>Select branch is required field</p>}
-                        </div>
+                      </div>
                       {/* <div className="col-sm-9">
                         <Form.Control
                           type="text"
@@ -251,7 +265,7 @@ const CreateIbo = () => {
                   </div>
                 </div>
                 <div className="row">
-                <div className="col-md-6">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
                         Password
@@ -265,9 +279,9 @@ const CreateIbo = () => {
                             pattern: strongRegex,
                           })}
                         />
-                        
-                        <span className="d-flex" style={{float:'right',marginTop:"10px"}} >
-                          <input style={{marginRight:"10px"}} type="checkbox" value={isShow} onChange={() => {
+
+                        <span className="d-flex" style={{ float: 'right', marginTop: "10px" }} >
+                          <input style={{ marginRight: "10px" }} type="checkbox" value={isShow} onChange={() => {
                             if (isShow) {
                               setIsShow(false)
                             } else {
@@ -342,12 +356,12 @@ const CreateIbo = () => {
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
-                          {...register("bankIfscCode", { required: true ,pattern: strongRegexcode})}
+                          {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
-                         {errors && errors.bankIfscCode &&
-                          errors.bankIfscCode.type === "required" &&(
-                          <p>Bank IFSC number is required field</p>
-                        )}
+                        {errors && errors.bankIfscCode &&
+                          errors.bankIfscCode.type === "required" && (
+                            <p>Bank IFSC number is required field</p>
+                          )}
                         {errors &&
                           errors.bankIfscCode &&
                           errors.bankIfscCode.type === "pattern" && (
@@ -359,7 +373,89 @@ const CreateIbo = () => {
                     </Form.Group>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        PanCard Number
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="pan_card_no"
+                          {...register("pan_card_no", { required: true })}
+                        />
+                        {errors && errors.pan_card_no && (
+                          <p>PanCard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        AadharCard Number
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="aadharcardNumber"
+                          {...register("aadharcardNumber", { required: true })}
+                        />
+                        {errors && errors.aadharcardNumber && (
+                          <p>Aadharcard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-2 col-form-label">
+                        Self Declaration{" "}
+                      </label>
+                      <div className="col-sm-10">
+                        <Form.Control
+                          type="text"
+                          name="selfDeclaration"
+                          {...register("selfDeclaration", { required: true })}
+                        />
+                        {errors && errors.selfDeclaration && (
+                          <p>Self Declaration is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">
+                        Upload Cancel cheque copy{" "}</label>
 
+                      <div className="col-sm-8">
+                        <Form.Control
+                          id="input-id"
+                          className="d-none"
+                          type="file"
+                          name="file"
+                          multiple={false}
+                          {...register("file", { required: true })}
+                        />
+
+                        <button
+                          onClick={handleUpload}
+                          className={`btn btn-outline-${values?.file?.[0]?.name ? " btn-primary" : " btn-primary"
+                            }`}
+                        >
+                          {values?.file?.[0]?.name ? values?.file?.[0]?.name : "Upload Image"}
+                        </button>
+                        {errors && errors.file && (
+                          <p>Upload image is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
