@@ -56,9 +56,11 @@ const BranchList = () => {
     "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
   );
   const getIBOList = async () => {
-    const items = await (await getIBOs(5000, 1, "", "IBO")).data;
+    const items = await (await getIBOs(5000, 1, "")).data;
     setIBOList(items?.results);
+    // console.log("rs",items?.results)
   };
+  
   const onChangeHandlerIBO = (e) => {
     setItemOffset(0);
     setselectedIBO(e.target.value);
@@ -128,7 +130,7 @@ const BranchList = () => {
 
   useEffect(() => {
     list()
-  }, [itemOffset, itemsPerPage]);
+  }, [itemOffset, itemsPerPage, selectedIBO]);
 
   useEffect(() => {
     list()
@@ -454,7 +456,6 @@ const BranchList = () => {
                     <th> Contact no. </th>
                     <th> Email </th>
                     <th> IBO </th>
-
                     <th> Role </th>
                     <th> Status </th>
                     <th> Generate Password </th>
@@ -468,6 +469,8 @@ const BranchList = () => {
                 <Spinner />
                   :
                   itemlist?.map((item) => {
+                    console.log("it",item)
+                    
                     return (
                       <tr>
                         <td>{item?.name}</td>

@@ -17,7 +17,9 @@ const CreateIbo = () => {
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
 
-
+  const toInputUppercase = e => {
+    e.target.value = ("" + e.target.value).toUpperCase();
+  };
   const {
     register,
     handleSubmit,
@@ -356,6 +358,7 @@ const CreateIbo = () => {
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
+                          onInput={toInputUppercase}
                           {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
                         {errors && errors.bankIfscCode &&

@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser, getBranches, getIBOs, userLogout,getProductsList } from "../../../utils/APIs";
+import { CreateUser, getBranches, getIBOs, userLogout,getProductsList, getProductsListClient } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
 
@@ -16,7 +16,9 @@ const CreateClints = () => {
 
   const [isShow, setIsShow] = useState(false);
 
-
+  const toInputUppercase = e => {
+    e.target.value = ("" + e.target.value).toUpperCase();
+  };
   const history = useHistory()
 
   const {
@@ -110,8 +112,8 @@ const CreateClints = () => {
   };
   const productList = async () => {
     try {
-      const items = await (await getProductsList()).data;
-      // console.log("itm",items)
+      const items = await (await getProductsListClient()).data;
+      console.log("itm",items)
       setproductlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
@@ -446,6 +448,7 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
+                          onInput={toInputUppercase}
                           {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
                         {errors && errors.bankIfscCode &&

@@ -38,6 +38,8 @@ export const deleteCost = (id) => api(`cost/delete-cost/${id}`, 'GET');
 // Product management
 export const CreateProduct = (data) => multipartApi(`product`, 'POST', data);
 export const getProductsList = (limit = 10,offset = 1,name = '') => api(`product?limit=${limit}&sortBy=createdAt:desc&page=${offset}&name=${name}&custom=true`, 'GET');
+export const getProductsListClient = (limit = 500,name = '') => api(`product?limit=${limit}&sortBy=createdAt:desc&name=${name}&custom=true`, 'GET');
+
 export const deleteProductById = (id) => api(`product/${id}`, 'GET');
 export const UpdateProducts = (data) => api(`product/update-product`, 'PATCH', data);
 
