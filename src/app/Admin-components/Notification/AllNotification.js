@@ -1,17 +1,33 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
+import MultiSearchSelect from "react-search-multi-select";
+import { getusersbyfilter } from "../../../utils/APIs";
 // import { useCookies } from "react-cookie"
 
-const IboNotification = () => {
+const AllNotification = () => {
 
   // const [cookies, setCookie] = useCookies(["user"]);
   const [show, setShow] = React.useState(false);
+  const [searchTerm, setsearchTerm] = React.useState('');
 
   const handleClose = () => {
     setShow(false)
   };
+
+  useEffect(() => {
+    getUserlist();
+  }, [searchTerm]);
+
+  const getUserlist = async () => {
+    const items = await (await getusersbyfilter(searchTerm));
+    const Userlist = items?.data?.results;
+    const dropDownValue = Userlist.map((response) => ({
+      "value": response.email
+    }))
+    // console.log("dropDownValue",dropDownValue)
+  }
 
   const handleUpload = (e) => {
     e.preventDefault()
@@ -24,7 +40,7 @@ const IboNotification = () => {
   const {
     register,
     handleSubmit,
-        formState: { errors, isDirty, isValid },
+    formState: { errors, isDirty, isValid },
     getValues,
   } = useForm({
     mode: "onChange",
@@ -35,6 +51,11 @@ const IboNotification = () => {
   const onSubmit = async (data) => {
     console.log("data", data);
     setShow(false);
+  }
+
+  const searchUpdated = (term) => {
+    console.log("term", term);
+    setsearchTerm(term)
   }
 
   return (
@@ -68,6 +89,14 @@ const IboNotification = () => {
                             />
                             {errors && errors.title && <p>Title is required field</p>}
                           </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Select User{" "}
+                          </label>
+                          {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
+                            <MultiSearchSelect searchable={true} showTags={true} multiSelect={true} width="500px" onSelect={searchUpdated} options={} />
+                          </div> */}
                         </Form.Group>
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">
@@ -128,7 +157,7 @@ const IboNotification = () => {
         </Modal.Body>
       </Modal>
       <div className="page-header">
-        <h3 className="page-title">Notification / IBO </h3>
+        <h3 className="page-title">Notification / All </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -138,7 +167,7 @@ const IboNotification = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              IBO
+              All
             </li>
           </ol>
         </nav>
@@ -178,5 +207,5 @@ const IboNotification = () => {
   );
 }
 
-export default IboNotification;
+export default AllNotification;
 
