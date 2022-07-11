@@ -65,7 +65,7 @@ const Branch = lazy(() => import('./Admin-components/Product-Assign/Branch'));
 const BranchPerformance = lazy(() => import('./Admin-components/Performance/BranchPerformance'));
 const Employee = lazy(() => import('./Admin-components/Performance/Employee'));
 const IboPerformance = lazy(() => import('./Admin-components/Performance/IboPerformance'));
-const EmployeeNotification = lazy(() => import('./Admin-components/Notification/EmployeeNotification'));
+const AllNotification = lazy(() => import('./Admin-components/Notification/AllNotification'));
 const IboNotification = lazy(() => import('./Admin-components/Notification/IboNotification'));
 const BranchNotification = lazy(() => import('./Admin-components/Notification/BranchNotification'));
 const ClientNotification = lazy(() => import('./Admin-components/Notification/ClientNotification'));
@@ -225,7 +225,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/performance/employee" component={ Employee } accesstype={["admin"]} />
           <ProtectedRoute path="/performance/ibo" component={ IboPerformance } accesstype={["admin"]} />
           <ProtectedRoute path="/performance/branch" component={ BranchPerformance } accesstype={["admin"]} />
-          <ProtectedRoute path="/notification/employee" component={ EmployeeNotification } accesstype={["admin"]} />
+          <ProtectedRoute path="/notification/all" component={ AllNotification } accesstype={["admin"]} />
           <ProtectedRoute path="/notification/ibo" component={ IboNotification } accesstype={["admin"]} />
           <ProtectedRoute path="/notification/branch" component={ BranchNotification } accesstype={["admin"]} />
           <ProtectedRoute path="/notification/client" component={ ClientNotification } accesstype={["admin"]} />

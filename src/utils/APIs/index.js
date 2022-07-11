@@ -11,6 +11,7 @@ export const ResetUserPasswod = (data) => api('auth/forgot-password', 'POST', da
 export const CreateUser = (data) => api('users', 'POST', data);
 export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const deleteUsr = (id) => api(`users/${id}`, 'DELETE');
+export const getusersbyfilter = (email='') => api(`users?custom=true&email=${email}`, 'GET');
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
 export const getUsers = (limit = 10,offset = 1,name = '',role='user',branch='',IBO='') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=asc&name=${name}&custom=true&branch=${branch}&IBO=${IBO}`, 'GET');
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
