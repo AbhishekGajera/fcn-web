@@ -194,13 +194,27 @@ const CreateClints = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">Product</label>
-                      <div className="col-sm-10">
-                        {/* {dataValues.map((tags, index) => (
-                  <MenuItem key={index} value={tags.title}>
-                    {tags.title}
-                  </MenuItem>
-                ))} */}
+                      <label className="col-sm-3 col-form-label">DOB</label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="date"
+                          name="dob"
+                          max={moment().format("YYYY-MM-DD")}
+                          {...register("dob", { required: true })}
+                        />
+                        {errors && errors.dob && <p>DOB is required field</p>}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  
+                </div>
+
+                <div className="row">
+                <div className="col-md-4">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">Product</label>
+                      <div className="col-sm-8">
+                      
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
@@ -219,45 +233,12 @@ const CreateClints = () => {
 
                     </Form.Group>
                   </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-4">
-                    <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
-                        Contact
-                      </label>
-                      <div className="col-sm-8 contact_no">
-                        <Form.Control
-                          type="text"
-                          name="contactno"
-                          {...register("contactno", {
-                            required: true,
-                            pattern: strongRegexMo,
-                          })}
-                        />
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "required" && (
-                            <p>contact number is required field</p>
-                          )}
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "pattern" && (
-                            <p>invalid phone number please use valid formate</p>
-                          )}
-                      </div>
-                    </Form.Group>
-                  </div>
+                
                   <div className="col-md-4">
                     <Form.Group className="row">
                       <label className="col-sm-4 col-form-label">Branch</label>
                       <div className="col-sm-8">
-                        {/* {dataValues.map((tags, index) => (
-                  <MenuItem key={index} value={tags.title}>
-                    {tags.title}
-                  </MenuItem>
-                ))} */}
+                      
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
@@ -294,24 +275,11 @@ const CreateClints = () => {
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
                                                    
-                          {/* <option>United States of America</option>
-                          <option >India</option>
-                          <option>United Kingdom</option>
-                          <option>Germany</option>
-                          <option>Argentina</option> */}
+                        
                         </select>
                         {errors && errors.ibo && <p>Select Ibo is required field</p>}
                       </div>
-                      {/* <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="branch"
-                          {...register("branch", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>branch is required field</p>
-                        )}
-                      </div> */}
+                     
                     </Form.Group>
                   </div>
                 </div>
@@ -341,22 +309,6 @@ const CreateClints = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  <div className="col-md-6">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">DOB</label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="date"
-                          name="dob"
-                          max={moment().format("YYYY-MM-DD")}
-                          {...register("dob", { required: true })}
-                        />
-                        {errors && errors.dob && <p>DOB is required field</p>}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-                <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
@@ -398,7 +350,9 @@ const CreateClints = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  <div className="col-md-6">
+                </div>
+                <div className="row">
+                <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-4 col-form-label">Select Country</label>
                       <div className="col-sm-8">
@@ -420,6 +374,34 @@ const CreateClints = () => {
                       </div>
                     </Form.Group>
                   </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">
+                        Contact
+                      </label>
+                      <div className="col-sm-8 contact_no">
+                        <Form.Control
+                          type="text"
+                          name="contactno"
+                          {...register("contactno", {
+                            required: true,
+                            pattern: strongRegexMo,
+                          })}
+                        />
+                        {errors &&
+                          errors.contactno &&
+                          errors.contactno.type === "required" && (
+                            <p>contact number is required field</p>
+                          )}
+                        {errors &&
+                          errors.contactno &&
+                          errors.contactno.type === "pattern" && (
+                            <p>invalid phone number please use valid formate</p>
+                          )}
+                      </div>
+                    </Form.Group>
+                  </div>
+              
                 </div>
                 <div className="row">
                   <div className="col-md-6">
