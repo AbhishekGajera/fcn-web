@@ -476,7 +476,7 @@ const BranchList = () => {
                         <td>{item?.name}</td>
                         <td>{item?.contactno}</td>
                         <td>{item?.email}</td>
-                        <td>{item?.IBO}</td>
+                        <td>{item?.ibo}</td>
                         <td>{item?.role}</td>
                         <td>{formateStatus(item?.status)}</td>
                         {/* <td>

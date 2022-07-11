@@ -14,6 +14,7 @@ import moment from 'moment';
 const CreateIbo = () => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const [imageUrl, setImageUrl] = useState("");
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
 
@@ -39,7 +40,15 @@ const CreateIbo = () => {
 
 
   const onSubmit = async (data) => {
-    console.info(data,'data++')
+    console.info(data, 'data++')
+    const Data =  new FormData();
+    Data.append('file', data.file)
+    Data.append('upload_preset', 'userDetail');
+    const fileResult = await fetch('https://api.cloudinary.com/v1_1/dihq2mfsj/image/upload', {
+      method: 'POST',
+      body: Data
+    }).then(r => r.json());
+    return;
     data.role = 'IBO'
     try {
       const result = await CreateUser(data)
@@ -415,7 +424,7 @@ const CreateIbo = () => {
                   </div>
                 </div>
                 <div className="row">
-                <div className="col-md-6">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-2 col-form-label">
                         Self Declaration{" "}

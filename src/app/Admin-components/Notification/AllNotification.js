@@ -2,15 +2,16 @@ import React, { useEffect } from "react";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
-import MultiSearchSelect from "react-search-multi-select";
 import { getusersbyfilter } from "../../../utils/APIs";
 // import { useCookies } from "react-cookie"
+import Select from 'react-select'
 
 const AllNotification = () => {
 
   // const [cookies, setCookie] = useCookies(["user"]);
   const [show, setShow] = React.useState(false);
   const [searchTerm, setsearchTerm] = React.useState('');
+  const [dropDownOpt, setdropDownOpt] = React.useState([]);
 
   const handleClose = () => {
     setShow(false)
@@ -24,9 +25,11 @@ const AllNotification = () => {
     const items = await (await getusersbyfilter(searchTerm));
     const Userlist = items?.data?.results;
     const dropDownValue = Userlist.map((response) => ({
-      "value": response.email
+      "value": response.email,
+      "label" : response.email
     }))
     // console.log("dropDownValue",dropDownValue)
+    setdropDownOpt(dropDownValue)
   }
 
   const handleUpload = (e) => {
@@ -94,9 +97,14 @@ const AllNotification = () => {
                           <label className="col-sm-3 col-form-label">
                             Select User{" "}
                           </label>
-                          {/* <div style={{ display: 'flex', justifyContent: 'center' }}>
-                            <MultiSearchSelect searchable={true} showTags={true} multiSelect={true} width="500px" onSelect={searchUpdated} options={} />
-                          </div> */}
+                          <div className="col-sm-8">
+                            <Select
+                              options={dropDownOpt}
+                              onChange={searchUpdated}
+                              name='user'
+                              isMulti
+                            />
+                          </div>
                         </Form.Group>
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">
@@ -175,7 +183,7 @@ const AllNotification = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-            <div className="row" style={{ 'margin-bottom': '14px' }}>
+            <div className="row" style={{ marginBottom: '14px' }}>
               <div className="col-md-3">
                 <button className="btn btn-gradient-primary btn-lg" type="button" onClick={() => setShow(true)}>
                   Send Notification

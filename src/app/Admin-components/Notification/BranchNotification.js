@@ -146,7 +146,7 @@ const BranchNotification = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-            <div className="row" style={{ 'margin-bottom': '14px' }}>
+            <div className="row" style={{ marginBottom: '14px' }}>
               <div className="col-md-3">
                 <button className="btn btn-gradient-primary btn-lg" type="button" onClick={() => setShow(true)}>
                   Send Notification

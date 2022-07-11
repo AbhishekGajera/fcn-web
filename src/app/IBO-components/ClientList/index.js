@@ -36,6 +36,7 @@ const ClientList = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm({
     mode: "onChange",
@@ -118,9 +119,11 @@ const ClientList = () => {
     setbranchUpdate('');
     setIBOUpdate('');
     setroleUpdate('')
+    reset()
   };
 
   const handleShow = (value) => {
+    reset()
     setvalueToEdit(value);
     setupdateStatus(value?.status || 0);
     setbranchUpdate(value?.branch)
@@ -128,7 +131,7 @@ const ClientList = () => {
     setroleUpdate(value?.role)
     setShow(true);
   };
-
+  
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage, selectedBranch, selectedIBO]);
