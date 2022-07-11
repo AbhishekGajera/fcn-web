@@ -386,6 +386,8 @@ const CreateIbo = () => {
                         <Form.Control
                           type="text"
                           name="pan_card_no"
+                          onInput={toInputUppercase}
+
                           {...register("pan_card_no", { required: true })}
                         />
                         {errors && errors.pan_card_no && (

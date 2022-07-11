@@ -476,11 +476,18 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="aadhar_card_no"
-                          {...register("aadhar_card_no", { required: true })}
+                          {...register("aadhar_card_no", { required: true,pattern: strongRegexcode })}
                         />
                         {errors && errors.aadhar_card_no && (
                           <p>Aadharcard number is required field</p>
                         )}
+                         {errors &&
+                          errors.bankIfscCode &&
+                          errors.bankIfscCode.type === "pattern" && (
+                            <p>
+                             Aadharcard number should have Capital latter
+                            </p>
+                          )}
                       </div>
                     </Form.Group>
                   </div>
@@ -493,6 +500,7 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="pan_card_no"
+                          onInput={toInputUppercase}
                           {...register("pan_card_no", { required: true })}
                         />
                         {errors && errors.pan_card_no &&(

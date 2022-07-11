@@ -415,6 +415,8 @@ const CreateBranches = () => {
                         <Form.Control
                           type="text"
                           name="b_pan_card_no"
+                          onInput={toInputUppercase}
+
                           {...register("b_pan_card_no", { required: true })}
                         />
                         {errors && errors.b_pan_card_no && (
