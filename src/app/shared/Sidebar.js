@@ -104,7 +104,7 @@ class Sidebar extends Component {
     }
 
     if(itemName === 'fcnNotification'){
-      this.props.history.push('/notification/employee')
+      this.props.history.push('/notification/all')
     }
 
     if(itemName === 'fcnCalculation'){
@@ -576,7 +576,7 @@ class Sidebar extends Component {
             </div>
             <Collapse in={this.state.fcnNotification}>
               <ul className="nav flex-column sub-menu">
-                <li className="nav-item"> <Link className={ this.isPathActive('/notification/employee') ? 'nav-link active' : 'nav-link' } to="/notification/employee"><Trans>Employee</Trans></Link></li>
+                <li className="nav-item"> <Link className={ this.isPathActive('/notification/all') ? 'nav-link active' : 'nav-link' } to="/notification/all"><Trans>All</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/notification/ibo') ? 'nav-link active' : 'nav-link' } to="/notification/ibo"><Trans>IBO</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/notification/branch') ? 'nav-link active' : 'nav-link' } to="/notification/branch"><Trans>Branch</Trans></Link></li>
                 <li className="nav-item"> <Link className={ this.isPathActive('/notification/client') ? 'nav-link active' : 'nav-link' } to="/notification/client"><Trans>Client</Trans></Link></li>

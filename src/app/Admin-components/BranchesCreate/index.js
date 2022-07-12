@@ -50,6 +50,9 @@ const CreateBranches = () => {
       }
     }
   };
+  const toInputUppercase = e => {
+    e.target.value = ("" + e.target.value).toUpperCase();
+  };
   const branchList = async () => {
     try {
       const items = await (await getIBOs()).data;
@@ -352,6 +355,7 @@ const CreateBranches = () => {
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
+                          onInput={toInputUppercase}
                           {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
                         {errors && errors.bankIfscCode &&
@@ -376,10 +380,10 @@ const CreateBranches = () => {
                       <div className="col-sm-8">
                         <Form.Control
                           type="text"
-                          name="branchHeadName"
-                          {...register("branchHeadName", { required: true })}
+                          name="b_head_name"
+                          {...register("b_head_name", { required: true })}
                         />
-                        {errors && errors.branchHeadName && <p>branch head name is required field</p>}
+                        {errors && errors.b_head_name && <p>branch head name is required field</p>}
                       </div>
                     </Form.Group>
                   </div>
@@ -391,10 +395,10 @@ const CreateBranches = () => {
                       <div className="col-sm-8">
                         <Form.Control
                           type="text"
-                          name="branchContact"
-                          {...register("branchContact", { required: true })}
+                          name="b_head_contact_no"
+                          {...register("b_head_contact_no", { required: true })}
                         />
-                        {errors && errors.branchContact && (
+                        {errors && errors.b_head_contact_no && (
                           <p>branch head number is required field</p>
                         )}
                       </div>
@@ -410,10 +414,12 @@ const CreateBranches = () => {
                       <div className="col-sm-9">
                         <Form.Control
                           type="text"
-                          name="pan_card_no"
-                          {...register("pan_card_no", { required: true })}
+                          name="b_pan_card_no"
+                          onInput={toInputUppercase}
+
+                          {...register("b_pan_card_no", { required: true })}
                         />
-                        {errors && errors.pan_card_no && (
+                        {errors && errors.b_pan_card_no && (
                           <p>PanCard number is required field</p>
                         )}
                       </div>
@@ -427,17 +433,17 @@ const CreateBranches = () => {
                       <div className="col-sm-9">
                         <Form.Control
                           type="text"
-                          name="aadharcardNumber"
-                          {...register("aadharcardNumber", { required: true })}
+                          name="b_aadhar_card_no"
+                          {...register("b_aadhar_card_no", { required: true })}
                         />
-                        {errors && errors.aadharcardNumber && (
+                        {errors && errors.b_aadhar_card_no && (
                           <p>Aadharcard number is required field</p>
                         )}
                       </div>
                     </Form.Group>
                   </div>
                 </div>
-                <div className="row">
+                {/* <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
@@ -455,7 +461,7 @@ const CreateBranches = () => {
                       </div>
                     </Form.Group>
                   </div>
-                </div>
+                </div> */}
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
