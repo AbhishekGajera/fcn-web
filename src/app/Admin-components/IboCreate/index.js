@@ -40,33 +40,38 @@ const CreateIbo = () => {
 
 
   const onSubmit = async (data) => {
-    console.info(data, 'data++')
     const Data =  new FormData();
-    Data.append('file', data.file)
+    Data.append('file', data.file[0]);
     Data.append('upload_preset', 'userDetail');
     const fileResult = await fetch('https://api.cloudinary.com/v1_1/dihq2mfsj/image/upload', {
       method: 'POST',
       body: Data
-    }).then(r => r.json());
-    return;
-    data.role = 'IBO'
-    try {
-      const result = await CreateUser(data)
-      toast.success("user crated successfully");
-    } catch (error) {
-      console.info("error ", error)
-      if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+    }).then(response => response.json());
+    if(fileResult.error)
+    {
+      toast.error(fileResult.error.message);
+    }else{
+      data.file = fileResult.secure_url;
+      data.role = 'IBO';
+      try {
+        const result = await CreateUser(data)
+        toast.success("user crated successfully");
+      }catch (error) {
+        console.info("error ", error)
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
       }
     }
   };
+  
   useEffect(() => {
     list();
   }, []);
@@ -74,7 +79,6 @@ const CreateIbo = () => {
   const list = async () => {
     try {
       const items = await (await getBranches()).data;
-      console.log("itm", items)
       setitemlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
