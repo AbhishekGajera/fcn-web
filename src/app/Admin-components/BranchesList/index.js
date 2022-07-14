@@ -190,7 +190,7 @@ const BranchList = () => {
         keyboard={false}
       >
         <Modal.Header closeButton>
-          <Modal.Title>Update Client</Modal.Title>
+          <Modal.Title>Update Branch</Modal.Title>
         </Modal.Header>
         <Modal.Body>
           <div className="row auth">
@@ -198,7 +198,7 @@ const BranchList = () => {
               <div className="card">
                 <div className="card-body">
                   <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                    <p className="card-description"> Update Client </p>
+                    <p className="card-description"> Update Branch </p>
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">

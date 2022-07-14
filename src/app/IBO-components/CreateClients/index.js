@@ -159,16 +159,29 @@ const CreateClints = () => {
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
                 <p className="card-description"> Personal info </p>
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">Name</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-4 col-form-label">First Name</label>
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
-                          name="name"
-                          {...register("name", { required: true })}
+                          name="first_name"
+                          {...register("first_name", { required: true })}
                         />
-                        {errors && errors.name && <p>name is required field</p>}
+                        {errors && errors.first_name && <p>first name is required field</p>}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">Last Name</label>
+                      <div className="col-sm-8">
+                        <Form.Control
+                          type="text"
+                          name="last_name"
+                          {...register("last_name", { required: true })}
+                        />
+                        {errors && errors.last_name && <p>last name is required field</p>}
                       </div>
                     </Form.Group>
                   </div>

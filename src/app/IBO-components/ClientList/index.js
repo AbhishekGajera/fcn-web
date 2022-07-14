@@ -683,7 +683,7 @@ const ClientList = () => {
                   itemlist?.map((item) => {
                     return (
                       <tr>
-                        <td>{item?.name}</td>
+                        <td>{item?.first_name} {item?.last_name}</td>
                         <td>{item?.contactno}</td>
                         <td>{item?.branch}</td>
                         <td>{item?.IBO}</td>

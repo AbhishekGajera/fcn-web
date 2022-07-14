@@ -168,6 +168,28 @@ const CreateIbo = () => {
                 </div>
 
                 <div className="row">
+                <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">Select Country</label>
+                      <div className="col-sm-9">
+                        <select
+                          className="form-control form-control-lg"
+                          id="exampleFormControlSelect2"
+                          name="country"
+                          {...register("country", {
+                            required: true,
+                          })}
+                        >
+                          <option>Country</option>
+                          <option>United States of America</option>
+                          <option selected>India</option>
+                          <option>United Kingdom</option>
+                          <option>Germany</option>
+                          <option>Argentina</option>
+                        </select>
+                      </div>
+                    </Form.Group>
+                  </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
@@ -195,48 +217,7 @@ const CreateIbo = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  <div className="col-md-6">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Branch</label>
-                      <div className="col-sm-9">
-                        {/* {dataValues.map((tags, index) => (
-                  <MenuItem key={index} value={tags.title}>
-                    {tags.title}
-                  </MenuItem>
-                ))} */}
-                        <select
-                          className="form-control form-control-lg"
-                          id="exampleFormControlSelect2"
-                          name="branch"
-                          {...register("branch", {
-                            required: true,
-                          })}
-                        >
-                          <option value=''>--Select branch--</option>
-                          {itemlist.map((item, index) => (
-                            <option key={index} value={item?.name} label={item?.name}></option>
-                          ))}
-
-                          {/* <option>United States of America</option>
-                          <option >India</option>
-                          <option>United Kingdom</option>
-                          <option>Germany</option>
-                          <option>Argentina</option> */}
-                        </select>
-                        {errors && errors.branch && <p>Select branch is required field</p>}
-                      </div>
-                      {/* <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="branch"
-                          {...register("branch", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>branch is required field</p>
-                        )}
-                      </div> */}
-                    </Form.Group>
-                  </div>
+               
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -323,26 +304,47 @@ const CreateIbo = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Select Country</label>
+                      <label className="col-sm-3 col-form-label">Branch</label>
                       <div className="col-sm-9">
+                        {/* {dataValues.map((tags, index) => (
+                  <MenuItem key={index} value={tags.title}>
+                    {tags.title}
+                  </MenuItem>
+                ))} */}
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
-                          name="country"
-                          {...register("country", {
+                          name="branch"
+                          {...register("branch", {
                             required: true,
                           })}
                         >
-                          <option>Country</option>
-                          <option>United States of America</option>
-                          <option selected>India</option>
+                          <option value=''>--Select branch--</option>
+                          {itemlist.map((item, index) => (
+                            <option key={index} value={item?.name} label={item?.name}></option>
+                          ))}
+
+                          {/* <option>United States of America</option>
+                          <option >India</option>
                           <option>United Kingdom</option>
                           <option>Germany</option>
-                          <option>Argentina</option>
+                          <option>Argentina</option> */}
                         </select>
+                        {errors && errors.branch && <p>Select branch is required field</p>}
                       </div>
+                      {/* <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="branch"
+                          {...register("branch", { required: true })}
+                        />
+                        {errors && errors.branch && (
+                          <p>branch is required field</p>
+                        )}
+                      </div> */}
                     </Form.Group>
                   </div>
+                  
                 </div>
                 <div className="row">
                   <div className="col-md-6">
