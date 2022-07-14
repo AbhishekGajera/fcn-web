@@ -62,6 +62,22 @@ const api = (url = "", method, data = {}) => {
 
 export default api;
 
+const apiImage = (method, data = {}) => {
+  
+  data.append("api_key", "519415831796165");
+  data.append("folder", "UserDetail");
+  data.append('upload_preset', 'UserDetail');
+
+  const fileResult = fetch('https://api.cloudinary.com/v1_1/dihq2mfsj/image/upload', {
+      method: method,
+      body: data
+    }).then(response => response.json());
+ 
+  return fileResult;
+};
+
+export {apiImage};
+
 const multipartApi = (url = "", method, data = {}) => {
   if (url.includes("?")) {
     const updatedURL1 = url?.split("?")[0];

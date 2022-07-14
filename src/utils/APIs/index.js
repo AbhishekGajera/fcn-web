@@ -1,4 +1,4 @@
-import api, { refreshTokenApi, multipartApi } from './axios';
+import api, { apiImage, refreshTokenApi, multipartApi } from './axios';
 
 // user apis
 export const registration = (data) => api('auth/register', 'POST', data);
@@ -62,3 +62,6 @@ export const UpdateAppoinments = (data) => api(`appoinments/update-appoinment`, 
 // connect management
 export const CreateConnect = (data) => api('contact/add-contact', 'POST', data);
 export const getConnect = (limit = 10,offset = 1,name = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&sortBy=createdAt:desc&custom=true`, 'GET');
+
+//image upload in cloudinary 
+export const ImageUpload = (data) => apiImage('POST', data);

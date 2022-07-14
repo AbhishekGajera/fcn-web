@@ -5,7 +5,7 @@ import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import {
-  CreateUser, getBranches, userLogout,
+  CreateUser, getBranches, userLogout, ImageUpload
 } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
@@ -14,7 +14,6 @@ import moment from 'moment';
 const CreateIbo = () => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
-  const [imageUrl, setImageUrl] = useState("");
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
 
@@ -41,23 +40,18 @@ const CreateIbo = () => {
 
   const onSubmit = async (data) => {
     const Data =  new FormData();
-    Data.append('file', data.file[0]);
-    Data.append('upload_preset', 'userDetail');
-    const fileResult = await fetch('https://api.cloudinary.com/v1_1/dihq2mfsj/image/upload', {
-      method: 'POST',
-      body: Data
-    }).then(response => response.json());
+    Data.append('file', data.image[0]);
+    const fileResult = await ImageUpload(Data)
     if(fileResult.error)
     {
       toast.error(fileResult.error.message);
-    }else{
-      data.file = fileResult.secure_url;
-      data.role = 'IBO';
+    }else{      
       try {
+        data.image = fileResult.secure_url;
+        data.role = 'IBO';
         const result = await CreateUser(data)
         toast.success("user crated successfully");
       }catch (error) {
-        console.info("error ", error)
         if (
           error &&
           error.response &&
@@ -419,10 +413,10 @@ const CreateIbo = () => {
                       <div className="col-sm-9">
                         <Form.Control
                           type="text"
-                          name="aadharcardNumber"
-                          {...register("aadharcardNumber", { required: true })}
+                          name="aadhar_card_no"
+                          {...register("aadhar_card_no", { required: true })}
                         />
-                        {errors && errors.aadharcardNumber && (
+                        {errors && errors.aadhar_card_no  && (
                           <p>Aadharcard number is required field</p>
                         )}
                       </div>
@@ -438,10 +432,10 @@ const CreateIbo = () => {
                       <div className="col-sm-10">
                         <Form.Control
                           type="text"
-                          name="selfDeclaration"
-                          {...register("selfDeclaration", { required: true })}
+                          name="self_declaration "
+                          {...register("self_declaration", { required: true })}
                         />
-                        {errors && errors.selfDeclaration && (
+                        {errors && errors.self_declaration  && (
                           <p>Self Declaration is required field</p>
                         )}
                       </div>
@@ -457,19 +451,19 @@ const CreateIbo = () => {
                           id="input-id"
                           className="d-none"
                           type="file"
-                          name="file"
+                          name="image"
                           multiple={false}
-                          {...register("file", { required: true })}
+                          {...register("image", { required: true })}
                         />
 
                         <button
                           onClick={handleUpload}
-                          className={`btn btn-outline-${values?.file?.[0]?.name ? " btn-primary" : " btn-primary"
+                          className={`btn btn-outline-${values?.image?.[0]?.name ? " btn-primary" : " btn-primary"
                             }`}
                         >
-                          {values?.file?.[0]?.name ? values?.file?.[0]?.name : "Upload Image"}
+                          {values?.image?.[0]?.name ? values?.image?.[0]?.name : "Upload Image"}
                         </button>
-                        {errors && errors.file && (
+                        {errors && errors.image && (
                           <p>Upload image is required field</p>
                         )}
                       </div>
