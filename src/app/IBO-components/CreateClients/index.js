@@ -3,9 +3,11 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser, getBranches, getIBOs, userLogout,getProductsList, getProductsListClient } from "../../../utils/APIs";
+import { CreateUser, getBranches, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css'
 
 
 const CreateClints = () => {
@@ -13,6 +15,7 @@ const CreateClints = () => {
   const [itemlist, setitemlist] = useState([]);
   const [branchlist, setBranchlist] = useState([]);
   const [productlist, setproductlist] = useState([]);
+  const [phone, setPhone] = useState('+91');
 
   const [isShow, setIsShow] = useState(false);
 
@@ -35,8 +38,13 @@ const CreateClints = () => {
 
   var strongRegexcode = new RegExp("^[A-Z0-9]");
 
+  const handleOnChange = value => {
+    setPhone(value);
+  }
+
   const onSubmit = async (data) => {
     try {
+      data.contactno = phone;
       await CreateUser(data)
       toast.success("user crated successfully");
       history.push('/clients/clientlist')
@@ -113,7 +121,7 @@ const CreateClints = () => {
   const productList = async () => {
     try {
       const items = await (await getProductsListClient()).data;
-      console.log("itm",items)
+      console.log("itm", items)
       setproductlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
@@ -134,7 +142,7 @@ const CreateClints = () => {
       }
     }
   };
-  
+
   return (
     <div>
       <div className="page-header">
@@ -219,15 +227,15 @@ const CreateClints = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  
+
                 </div>
 
                 <div className="row">
-                <div className="col-md-4">
+                  <div className="col-md-4">
                     <Form.Group className="row">
                       <label className="col-sm-4 col-form-label">Product</label>
                       <div className="col-sm-8">
-                      
+
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
@@ -237,7 +245,7 @@ const CreateClints = () => {
                           })}
                         >
                           <option value=''>--Select product--</option>
-                           {productlist.map((item, index) => (
+                          {productlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
                         </select>
@@ -246,12 +254,12 @@ const CreateClints = () => {
 
                     </Form.Group>
                   </div>
-                
+
                   <div className="col-md-4">
                     <Form.Group className="row">
                       <label className="col-sm-4 col-form-label">Branch</label>
                       <div className="col-sm-8">
-                      
+
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
@@ -261,7 +269,7 @@ const CreateClints = () => {
                           })}
                         >
                           <option value=''>--Select branch--</option>
-                           {itemlist.map((item, index) => (
+                          {itemlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
                         </select>
@@ -284,15 +292,15 @@ const CreateClints = () => {
                           })}
                         >
                           <option value=''>--Select ibo--</option>
-                           {branchlist.map((item, index) => (
+                          {branchlist.map((item, index) => (
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
-                                                   
-                        
+
+
                         </select>
                         {errors && errors.ibo && <p>Select Ibo is required field</p>}
                       </div>
-                     
+
                     </Form.Group>
                   </div>
                 </div>
@@ -336,9 +344,9 @@ const CreateClints = () => {
                             pattern: strongRegex,
                           })}
                         />
-                        
-                        <span className="d-flex" style={{float:'right',marginTop:"10px"}} >
-                          <input style={{marginRight:"10px"}} type="checkbox" value={isShow} onChange={() => {
+
+                        <span className="d-flex" style={{ float: 'right', marginTop: "10px" }} >
+                          <input style={{ marginRight: "10px" }} type="checkbox" value={isShow} onChange={() => {
                             if (isShow) {
                               setIsShow(false)
                             } else {
@@ -365,7 +373,7 @@ const CreateClints = () => {
                   </div>
                 </div>
                 <div className="row">
-                <div className="col-md-6">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-4 col-form-label">Select Country</label>
                       <div className="col-sm-8">
@@ -393,28 +401,20 @@ const CreateClints = () => {
                         Contact
                       </label>
                       <div className="col-sm-8 contact_no">
-                        <Form.Control
-                          type="text"
-                          name="contactno"
-                          {...register("contactno", {
+                        <PhoneInput
+                          inputExtraProps={{
+                            name: "contactno",
                             required: true,
-                            pattern: strongRegexMo,
-                          })}
+                            autoFocus: true
+                          }}
+                          country={"US"}
+                          value={phone}
+                          onChange={handleOnChange}
                         />
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "required" && (
-                            <p>contact number is required field</p>
-                          )}
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "pattern" && (
-                            <p>invalid phone number please use valid formate</p>
-                          )}
                       </div>
                     </Form.Group>
                   </div>
-              
+
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -447,9 +447,9 @@ const CreateClints = () => {
                           {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
                         />
                         {errors && errors.bankIfscCode &&
-                         errors.bankIfscCode.type === "required" &&(
-                          <p>Bank IFSC number is required field</p>
-                        )}
+                          errors.bankIfscCode.type === "required" && (
+                            <p>Bank IFSC number is required field</p>
+                          )}
                         {errors &&
                           errors.bankIfscCode &&
                           errors.bankIfscCode.type === "pattern" && (
@@ -471,16 +471,16 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="aadhar_card_no"
-                          {...register("aadhar_card_no", { required: true,pattern: strongRegexcode })}
+                          {...register("aadhar_card_no", { required: true, pattern: strongRegexcode })}
                         />
                         {errors && errors.aadhar_card_no && (
                           <p>Aadharcard number is required field</p>
                         )}
-                         {errors &&
+                        {errors &&
                           errors.bankIfscCode &&
                           errors.bankIfscCode.type === "pattern" && (
                             <p>
-                             Aadharcard number should have Capital latter
+                              Aadharcard number should have Capital latter
                             </p>
                           )}
                       </div>
@@ -498,13 +498,13 @@ const CreateClints = () => {
                           onInput={toInputUppercase}
                           {...register("pan_card_no", { required: true })}
                         />
-                        {errors && errors.pan_card_no &&(
+                        {errors && errors.pan_card_no && (
                           <p>PanCard number is required field</p>
                         )}
                       </div>
                     </Form.Group>
                   </div>
-                </div>  
+                </div>
 
                 <div className="mt-3">
                   <button

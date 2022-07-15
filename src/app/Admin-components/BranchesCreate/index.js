@@ -5,8 +5,10 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
-import { CreateUser, CreateBranch, getIBOs, userLogout } from "../../../utils/APIs";
+import { CreateUser, ImageUpload, getIBOs, userLogout } from "../../../utils/APIs";
 import moment from 'moment';
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css'
 
 
 const CreateBranches = () => {
@@ -14,12 +16,14 @@ const CreateBranches = () => {
 
   const [isShow, setIsShow] = useState(false);
   const [branchlist, setBranchlist] = useState([]);
-  const history = useHistory()
+  const history = useHistory();
+  const [phone, setPhone] = useState('+91');
 
   const {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
+    getValues,
   } = useForm({
     mode: "onChange",
   });
@@ -30,23 +34,38 @@ const CreateBranches = () => {
 
   var strongRegexcode = new RegExp("^[A-Z0-9]");
 
+  const values = getValues();
+
+  const handleOnChange = value => {
+    setPhone(value);
+  }
+
   const onSubmit = async (data) => {
-    data.role = 'branch'
-    try {
-      const result = await CreateUser(data)
-      toast.success("user crated successfully");
-      history.push('/branches/brancheslist')
-    } catch (error) {
-      console.info("error ", error)
-      if (
-        error &&
-        error.response &&
-        error.response.data &&
-        error.response.data.message
-      ) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+    const Data = new FormData();
+    Data.append('file', data.image[0]);
+    const fileResult = await ImageUpload(Data)
+    if (fileResult.error) {
+      toast.error(fileResult.error.message);
+    } else {
+      try {
+        data.image = fileResult.secure_url;
+        data.role = 'branch'
+        data.contactno = phone;
+        const result = await CreateUser(data)
+        toast.success("user crated successfully");
+        history.push('/branches/brancheslist')
+      } catch (error) {
+        console.info("error ", error)
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
       }
     }
   };
@@ -80,6 +99,14 @@ const CreateBranches = () => {
   useEffect(() => {
     branchList();
   }, []);
+
+  const handleUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-id');
+    if (element) {
+      element.click()
+    }
+  };
 
   return (
     <div>
@@ -141,7 +168,7 @@ const CreateBranches = () => {
                 </div>
 
                 <div className="row">
-                <div className="col-md-6">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Select Country</label>
                       <div className="col-sm-9">
@@ -169,30 +196,20 @@ const CreateBranches = () => {
                         Contact No
                       </label>
                       <div className="col-sm-9 contact_no">
-                        <Form.Control
-                          type="text"
-                          name="contactno"
-                          {...register("contactno", {
+                        <PhoneInput
+                          inputExtraProps={{
+                            name: "contactno",
                             required: true,
-                            pattern: strongRegexMo,
-                          })}
+                            autoFocus: true
+                          }}
+                          country={"US"}
+                          value={phone}
+                          onChange={handleOnChange}
                         />
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "required" && (
-                            <p>contact number is required field</p>
-                          )}
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "pattern" && (
-                            <p>invalid phone number please use valid formate</p>
-                          )}
                       </div>
                     </Form.Group>
                   </div>
-                  
-                
-                 
+
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -448,6 +465,36 @@ const CreateBranches = () => {
                         />
                         {errors && errors.b_aadhar_card_no && (
                           <p>Aadharcard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">
+                        Upload Cancel cheque copy{" "}</label>
+
+                      <div className="col-sm-8">
+                        <Form.Control
+                          id="input-id"
+                          className="d-none"
+                          type="file"
+                          name="image"
+                          multiple={false}
+                          {...register("image", { required: true })}
+                        />
+
+                        <button
+                          onClick={handleUpload}
+                          className={`btn btn-outline-${values?.image?.[0]?.name ? " btn-primary" : " btn-primary"
+                            }`}
+                        >
+                          {values?.image?.[0]?.name ? values?.image?.[0]?.name : "Upload Image"}
+                        </button>
+                        {errors && errors.image && (
+                          <p>Upload image is required field</p>
                         )}
                       </div>
                     </Form.Group>

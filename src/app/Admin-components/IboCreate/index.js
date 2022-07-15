@@ -9,6 +9,8 @@ import {
 } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
+import PhoneInput from "react-phone-input-2";
+import 'react-phone-input-2/lib/style.css'
 
 
 const CreateIbo = () => {
@@ -16,6 +18,7 @@ const CreateIbo = () => {
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
+  const [phone, setPhone] = useState('+91');
 
   const toInputUppercase = e => {
     e.target.value = ("" + e.target.value).toUpperCase();
@@ -37,21 +40,24 @@ const CreateIbo = () => {
 
   const values = getValues();
 
+  const handleOnChange = value =>{
+    setPhone(value);
+  }
 
   const onSubmit = async (data) => {
-    const Data =  new FormData();
+    const Data = new FormData();
     Data.append('file', data.image[0]);
     const fileResult = await ImageUpload(Data)
-    if(fileResult.error)
-    {
+    if (fileResult.error) {
       toast.error(fileResult.error.message);
-    }else{      
+    } else {
       try {
         data.image = fileResult.secure_url;
         data.role = 'IBO';
+        data.contactno = phone;
         const result = await CreateUser(data)
         toast.success("user crated successfully");
-      }catch (error) {
+      } catch (error) {
         if (
           error &&
           error.response &&
@@ -65,7 +71,7 @@ const CreateIbo = () => {
       }
     }
   };
-  
+
   useEffect(() => {
     list();
   }, []);
@@ -162,7 +168,7 @@ const CreateIbo = () => {
                 </div>
 
                 <div className="row">
-                <div className="col-md-6">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">Select Country</label>
                       <div className="col-sm-9">
@@ -190,28 +196,24 @@ const CreateIbo = () => {
                         Contact No
                       </label>
                       <div className="col-sm-9 contact_no">
-                        <Form.Control
-                          type="text"
-                          name="contactno"
-                          {...register("contactno", {
+                        <PhoneInput 
+                          inputExtraProps={{
+                            name:"contactno",
                             required: true,
-                            pattern: strongRegexMo,
-                          })}
+                            autoFocus: true
+                          }}
+                          country={"US"}
+                          value={phone}
+                          onChange={handleOnChange}
                         />
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "required" && (
+                        {/* {phone === "" && (
                             <p>contact number is required field</p>
-                          )}
-                        {errors &&
-                          errors.contactno &&
-                          errors.contactno.type === "pattern" && (
-                            <p>invalid phone number please use valid formate</p>
-                          )}
+                          )} */}
+                       
                       </div>
                     </Form.Group>
                   </div>
-               
+
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -338,7 +340,7 @@ const CreateIbo = () => {
                       </div> */}
                     </Form.Group>
                   </div>
-                  
+
                 </div>
                 <div className="row">
                   <div className="col-md-6">
@@ -416,7 +418,7 @@ const CreateIbo = () => {
                           name="aadhar_card_no"
                           {...register("aadhar_card_no", { required: true })}
                         />
-                        {errors && errors.aadhar_card_no  && (
+                        {errors && errors.aadhar_card_no && (
                           <p>Aadharcard number is required field</p>
                         )}
                       </div>
@@ -435,7 +437,7 @@ const CreateIbo = () => {
                           name="self_declaration "
                           {...register("self_declaration", { required: true })}
                         />
-                        {errors && errors.self_declaration  && (
+                        {errors && errors.self_declaration && (
                           <p>Self Declaration is required field</p>
                         )}
                       </div>
@@ -468,6 +470,14 @@ const CreateIbo = () => {
                         )}
                       </div>
                     </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-2">
+                    <span className="d-flex" style={{ float: 'left', marginTop: "10px" }} >
+                      <input style={{ marginRight: "10px" }} type="checkbox" name='agreement' />
+                      Agreement
+                    </span>
                   </div>
                 </div>
                 <div className="mt-3">
