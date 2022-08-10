@@ -38,6 +38,8 @@ const CreateClints = () => {
 
   var strongRegexcode = new RegExp("^[A-Z0-9]");
 
+  var strongaadharcode = new RegExp("^[0-9]");
+
   const handleOnChange = value => {
     setPhone(value);
   }
@@ -472,16 +474,17 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="aadhar_card_no"
-                          {...register("aadhar_card_no", { required: true, pattern: strongRegexcode })}
+                          {...register("aadhar_card_no", { required: true, pattern: strongaadharcode })}
                         />
-                        {errors && errors.aadhar_card_no && (
+                        {errors && errors.aadhar_card_no && 
+                          errors.aadhar_card_no.type === "required" && (
                           <p>Aadharcard number is required field</p>
                         )}
                         {errors &&
-                          errors.bankIfscCode &&
-                          errors.bankIfscCode.type === "pattern" && (
+                          errors.aadhar_card_no &&
+                          errors.aadhar_card_no.type === "pattern" && (
                             <p>
-                              Aadharcard number should have Capital latter
+                              Aadharcard should have number
                             </p>
                           )}
                       </div>

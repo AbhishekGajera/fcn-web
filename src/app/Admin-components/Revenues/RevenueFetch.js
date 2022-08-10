@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getAppoinmentsList ,userLogout } from "../../../utils/APIs";
+import { getRevenueList ,userLogout } from "../../../utils/APIs";
 import { Form } from "react-bootstrap";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
@@ -45,7 +45,7 @@ const RevenueFetch = () => {
     try {
       
       const items = await (
-         await getAppoinmentsList(itemsPerPage, +itemOffset + 1)
+         await getRevenueList(itemsPerPage, +itemOffset + 1)
        ).data;
 
       setitemlist(items?.results);
@@ -170,11 +170,12 @@ const RevenueFetch = () => {
                     itemlist?.map((item, index) => {
                       return (
                         <tr key={index}>
-                          <td>{item?.fromDate}</td>
-                          <td>{item?.toDate}</td>
-                          <td>{item?.Description}</td>
-                          <td>{item?.user?.name}</td>
-                          <td>{item?.user?.role}</td>
+                          <td>{item?.earning_from}</td>
+                          <td>{item?.product?.name}</td>
+                          <td>{item?.total_revenue}</td>
+                          <td>{item?.net_revenue}</td>
+                          <td>{item?.commision_branch}</td>
+                          <td>{item?.commision_ibo}</td>
                           <td></td>
                         </tr>
                       );

@@ -1,9 +1,13 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
+import Modal from "react-bootstrap/Modal";
+import { useForm } from "react-hook-form";
+import { Form } from 'react-bootstrap';
 import {
   deleteTargetById,
   getTargetsList,
+  UpdateTargets,
   userLogout,
   getTargetsListByUser
 } from "../../../utils/APIs";
@@ -13,7 +17,7 @@ import Spinner from "../../shared/Spinner";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { formateStatusForTargets } from "../../../utils/Functions/commonOptions";
+import { formateStatusForTargets, roleOptionForAmin } from "../../../utils/Functions/commonOptions";
 
 const ViewTargets = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -25,6 +29,8 @@ const ViewTargets = () => {
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
+  const [show, setShow] = React.useState(false);
+  const [valueToEdit, setvalueToEdit] = useState({});
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
@@ -38,6 +44,23 @@ const ViewTargets = () => {
   const handlePageClick = (event) => {
     setItemOffset(event.selected);
   };
+
+  const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
+    mode: "onChange"
+  });
+
+  const handleClose = () => {
+    setShow(false)
+    setvalueToEdit({})
+    reset()
+
+  };
+
+  const handleShow = (value) => {
+    reset()
+    setvalueToEdit(value)
+    setShow(true);
+  }
 
   const deleteTarget = (uid) => {
     Swal.fire({
@@ -65,22 +88,47 @@ const ViewTargets = () => {
     });
   };
 
+  const onSubmit = async (data) => {
+    try {
+      data.target_id =  valueToEdit?.id;
+      const updatedData = JSON.stringify(data)
+      await UpdateTargets(updatedData)
+      toast.success('Target updated Successfully', {
+        autoClose: 3000
+      })
+      list()
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    } finally {
+      setShow(false)
+    }
+  };
+
   const list = async () => {
-    console.info("cookies++ ",cookies?.user?.role)
+    console.info("cookies++ ", cookies?.user?.role)
     setIsLoading(true);
     try {
-      let items 
-      
-      if(cookies?.user?.role === 'admin'){
+      let items
+
+      if (cookies?.user?.role === 'admin') {
         items = await (
-         await getTargetsList(itemsPerPage, +itemOffset + 1)
-       ).data;
+          await getTargetsList(itemsPerPage, +itemOffset + 1)
+        ).data;
       }
 
-      if(cookies?.user?.role !== 'admin'){
+      if (cookies?.user?.role !== 'admin') {
         items = await (
-         await getTargetsListByUser(itemsPerPage, +itemOffset + 1, cookies?.user?.id)
-       ).data;
+          await getTargetsListByUser(itemsPerPage, +itemOffset + 1, cookies?.user?.id)
+        ).data;
       }
 
 
@@ -108,6 +156,90 @@ const ViewTargets = () => {
 
   return (
     <div>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Update Target</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row auth">
+            <div className="col-12 grid-margin">
+              <div className="card">
+                <div className="card-body">
+                  <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+                    <p className="card-description"> Update Target </p>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Description
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              as="textarea"
+                              type="text"
+                              name="Description"
+                              defaultValue={valueToEdit.Description}
+                              {...register("Description", { required: true })}
+                              placeholder="Description"
+                            />
+                            {errors && errors.Description && (
+                              <p>Description is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label"> User Type</label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="userType"
+                              {...register("userType", {
+                                required: true,
+                              })}
+                            >
+                              {roleOptionForAmin.map((item, index) => (
+                                <option
+                                  key={index}
+                                  value={item?.value}
+                                  label={item?.label}
+                                  selected={valueToEdit.userType === item?.value}
+                                ></option>
+                              ))}
+                            </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+
+                      </div>
+                    </div>
+
+                    <div className="mt-3">
+                      <button
+                        className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                        type="submit"
+                      >
+                        UPDATE
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+
+
+      </Modal>
       <div className="page-header">
         <h3 className="page-title">Targets / Show Targets </h3>
         <nav aria-label="breadcrumb">
@@ -164,6 +296,7 @@ const ViewTargets = () => {
                     <th> User </th>
                     <th> Description </th>
                     <th> Status </th>
+                    <th> Edit </th>
                     {["admin"].includes(cookies?.user?.role) && <th> Delete </th>}
                   </tr>
                 </thead>
@@ -183,7 +316,8 @@ const ViewTargets = () => {
                           <td>{item?.user?.name}</td>
                           <td>{item?.Description}</td>
                           <td>{formateStatusForTargets(item?.status)}</td>
-                          { ["admin"].includes(cookies?.user?.role) && <td>
+                          <td><i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i></td>
+                          {["admin"].includes(cookies?.user?.role) && <td>
                             <i
                               onClick={() => deleteTarget(item?.id)}
                               className="mdi mdi-delete"

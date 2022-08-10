@@ -47,6 +47,7 @@ export const UpdateProducts = (data) => api(`product/update-product`, 'PATCH', d
 
 // Target management
 export const CreateTargets = (data) => api(`target/add-target`, 'POST', data);
+export const UpdateTargets = (data) => api(`target/update-target`, 'PATCH', data);
 export const getTargetsList = (limit = 10,offset = 1) => api(`target/fetch-target?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
 export const getTargetsListByUser = (limit = 10,offset = 1,user = '') => api(`target/fetch-target?limit=${limit}&sortBy=createdAt:desc&page=${offset}&user=${user}`, 'GET');
 export const deleteTargetById = (id) => api(`target/delete-target/${id}`, 'GET');
@@ -57,6 +58,11 @@ export const getAppoinmentsList = (limit = 10,offset = 1) => api(`appoinments/fe
 export const getAppoinmentsListByUser = (limit = 10,offset = 1,user = '') => api(`appoinments/fetch-appoinment?limit=${limit}&sortBy=createdAt:desc&page=${offset}&user=${user}`, 'GET');
 export const deleteAppoinmentById = (id) => api(`appoinments/delete-appoinment/${id}`, 'GET');
 export const UpdateAppoinments = (data) => api(`appoinments/update-appoinment`, 'PATCH', data);
+
+
+// Revenue management
+export const CreateRevenue = (data) => api(`revenue/add-revenue`, 'POST', data);
+export const getRevenueList = (limit = 10,offset = 1) => api(`revenue/fetch-revenue?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
 
 
 // connect management
