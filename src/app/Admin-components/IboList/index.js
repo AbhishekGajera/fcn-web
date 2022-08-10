@@ -55,6 +55,7 @@ const IboList = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
   } = useForm({
     mode: "onChange",
@@ -67,9 +68,11 @@ const IboList = () => {
     setShow(false);
     setvalueToEdit({});
     setupdateStatus(0)
+    reset()
   };
 
   const handleShow = (value) => {
+    reset()
     setvalueToEdit(value);
     setShow(true);
   };

@@ -45,6 +45,7 @@ const CreateClints = () => {
   const onSubmit = async (data) => {
     try {
       data.contactno = phone;
+      data.name = data.first_name +' '+ data.last_name;
       await CreateUser(data)
       toast.success("user crated successfully");
       history.push('/clients/clientlist')

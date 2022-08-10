@@ -49,7 +49,7 @@ const BranchList = () => {
   const history = useHistory()
   const [isLoading, setIsLoading] = useState(true)
 
-  const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
+  const { register, handleSubmit,reset, formState: { errors, isDirty, isValid } } = useForm({
     mode: "onChange"
   });
   var strongRegexMo = new RegExp(
@@ -69,6 +69,8 @@ const BranchList = () => {
     setShow(false)
     setvalueToEdit({})
     setupdateStatus(0)
+    reset()
+
   };
 
   const onChangeStatusForm = (e) => {
@@ -76,6 +78,7 @@ const BranchList = () => {
   }
 
   const handleShow = (value) => {
+    reset()
     setvalueToEdit(value)
     setupdateStatus(value?.status || 0)
     setroleUpdate(value?.role)

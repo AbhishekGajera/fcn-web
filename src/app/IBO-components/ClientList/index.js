@@ -281,7 +281,7 @@ const ClientList = () => {
                             <Form.Control
                               type="text"
                               name="name"
-                              defaultValue={valueToEdit.name}
+                              defaultValue={valueToEdit.name }
                               {...register("name", { required: true })}
                             />
                             {errors && errors.name && (
@@ -683,7 +683,7 @@ const ClientList = () => {
                   itemlist?.map((item) => {
                     return (
                       <tr>
-                        <td>{item?.first_name} {item?.last_name}</td>
+                        <td>{item?.name}</td>
                         <td>{item?.contactno}</td>
                         <td>{item?.branch}</td>
                         <td>{item?.IBO}</td>
