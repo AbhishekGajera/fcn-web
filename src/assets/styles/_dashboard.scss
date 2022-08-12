@@ -468,4 +468,10 @@
   &.hide {
     display: none;
   }
+  .thead-light{
+    th {
+      background-color: #f8fafd;
+      padding: 12px;
+    }
+  }
 }
