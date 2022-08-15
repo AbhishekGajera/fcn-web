@@ -94,7 +94,7 @@ const Dashboard = () => {
               </nav>
             </div>
             <div className="row">
-              <div className="col-md-4 text-white" style={{ borderRadius: '8px', padding: '26px 20px', background: '#d9251d' }}>
+              <div className="col-md-4 text-white" style={{ borderRadius: '8px', padding: '26px 20px', background: '#6A6CFF' }}>
                 <div>
                   <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
                     <div className="symbol" style={{ marginRight: '16px' }}>
