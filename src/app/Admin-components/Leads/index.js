@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { deleteProductById, getProductsList, userLogout, UpdateProducts } from "../../../utils/APIs";
+import { CreateLead,getLeads,updateLead,deleteProductById,deleteLead, getProductsList, userLogout, UpdateProducts } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
@@ -38,7 +38,7 @@ const Leads = () => {
 
     useEffect(() => {
         list();
-    }, [itemOffset, itemsPerPage, selectedProductType, selectedProductCategory, debouncedSearchTerm]);
+    }, [itemOffset, itemsPerPage,debouncedSearchTerm]);
 
     // Invoke when user click to request another page. 
     const handlePageClick = (event) => {
@@ -64,7 +64,7 @@ const Leads = () => {
 
                 const itemList = Object.keys(isChecked).map((id) => {
                     if (isChecked[id] === true) {
-                        deleteProductById(id)
+                        deleteLead(id)
                     }
                     Swal.fire(
                         "Deleted!",
@@ -89,10 +89,10 @@ const Leads = () => {
         setIsLoading(true)
         try {
             const items = await (
-                await getProductsList(
+                await getLeads(
                     itemsPerPage,
                     +itemOffset + 1,
-                    searchTerm,
+                    searchTerm
                 )
             ).data;
             setitemlist(items?.results);
@@ -117,16 +117,17 @@ const Leads = () => {
         }
     }
 
-    const formateStatus = (status) => {
-        switch (status) {
-            case '0':
-                return "Inactive";
-            case '1':
-                return "Active";
-            default:
-                return 'Active';
-        }
-    }
+   
+    const statusChanged = (id, e) => {
+        console.log(e.target.value, id);
+        updateLead({
+          "lead_id": id,
+          "status": e.target.value
+        })
+        toast.success('Status updated successfully',{
+          autoClose : true
+        })
+      }
 
     const handleMultiChange = (e) => {
         setIsChecked({ ...isChecked, [e.target.id]: e.target.checked });
@@ -138,7 +139,10 @@ const Leads = () => {
     };
 
     const onSubmit = async (data) => {
-        console.log("data", data)
+        await CreateLead(data)
+      toast.success('Lead added successfully',{
+        autoClose : true
+      })
     }
 
     const handleShow = () => {
@@ -163,68 +167,27 @@ const Leads = () => {
                             <div className="card">
                                 <div className="card-body">
                                     <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <Form.Group className="row">
-                                                    <label className="col-sm-3 col-form-label">status</label>
-                                                    <div className="col-sm-9">
-                                                        <select
-                                                            name="status"
-                                                            {...register("status")}
-                                                        >
-                                                            <option>New</option>
-                                                            <option>Working</option>
-                                                        </select>
-                                                        {errors && errors.status && <p> select Status is required field</p>}
-                                                    </div>
-                                                </Form.Group>
-                                            </div>
-                                        </div>
+                                      
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
                                                     <label className="col-sm-3 col-form-label">
-                                                        First Name
+                                                    Name
                                                     </label>
                                                     <div className="col-sm-9">
                                                         <Form.Control
                                                             type="text"
-                                                            name="firstName"
-                                                            placeholder="First Name"
+                                                            name="name"
+                                                            placeholder="Name"
                                                             autoFocus
-                                                            {...register("firstName", {
+                                                            {...register("name", {
                                                                 required: true,
                                                             })}
                                                         />
                                                         {errors &&
-                                                            errors.firstName &&
-                                                            errors.firstName.type === "required" && (
-                                                                <p>FirstName is required field</p>
-                                                            )}
-                                                    </div>
-                                                </Form.Group>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <Form.Group className="row">
-                                                    <label className="col-sm-3 col-form-label">
-                                                        Last Name
-                                                    </label>
-                                                    <div className="col-sm-9">
-                                                        <Form.Control
-                                                            type="text"
-                                                            name="LastName"
-                                                            placeholder="Last Name"
-                                                            autoFocus
-                                                            {...register("LastName", {
-                                                                required: true,
-                                                            })}
-                                                        />
-                                                        {errors &&
-                                                            errors.LastName &&
-                                                            errors.LastName.type === "required" && (
-                                                                <p>LastName is required field</p>
+                                                            errors.Name &&
+                                                            errors.Name.type === "required" && (
+                                                                <p>Name is required field</p>
                                                             )}
                                                     </div>
                                                 </Form.Group>
@@ -239,10 +202,10 @@ const Leads = () => {
                                                     <div className="col-sm-9">
                                                         <Form.Control
                                                             type="text"
-                                                            name="Title"
+                                                            name="title"
                                                             placeholder="Title"
                                                             autoFocus
-                                                            {...register("Title", {
+                                                            {...register("title", {
                                                                 required: true,
                                                             })}
                                                         />
@@ -283,60 +246,57 @@ const Leads = () => {
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
-                                                    <label className="col-sm-3 col-form-label">Contact No</label>
-                                                    <div className="col-sm-9">
-                                                        <PhoneInput
-                                                            inputExtraProps={{
-                                                                name: "contactno",
-                                                                required: true,
-                                                                autoFocus: true
-                                                            }}
-                                                            country={"US"}
-                                                            value={phone}
-                                                            onChange={handleOnChange}
-                                                        />
-                                                    </div>
-                                                </Form.Group>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <Form.Group className="row">
-                                                    <label className="col-sm-3 col-form-label">Source</label>
-                                                    <div className="col-sm-9">
-                                                        <select
-                                                            name="source"
-                                                            {...register("source")}
-                                                        >
-                                                            <option>Other</option>
-                                                            <option>Partner</option>
-                                                        </select>
-                                                        {errors && errors.source && <p> select Source is required field</p>}
-                                                    </div>
-                                                </Form.Group>
-                                            </div>
-                                        </div>
-                                        <div className="row">
-                                            <div className="col-md-12">
-                                                <Form.Group className="row">
-                                                    <label className="col-sm-3 col-form-label">Address</label>
+                                                    <label className="col-sm-3 col-form-label">
+                                                        Company Name
+                                                    </label>
                                                     <div className="col-sm-9">
                                                         <Form.Control
                                                             type="text"
-                                                            name="address"
-                                                            placeholder="Address"
-                                                            {...register("address", { required: true })}
+                                                            name="company_name"
+                                                            placeholder="Company Name"
+                                                            autoFocus
+                                                            {...register("company_name", {
+                                                                required: true,
+                                                            })}
                                                         />
-                                                        {errors && errors.address && (
-                                                            <p>Address is required field</p>
-                                                        )}
+                                                        {errors &&
+                                                            errors.company_name &&
+                                                            errors.company_name.type === "required" && (
+                                                                <p>Company Name is required field</p>
+                                                            )}
                                                     </div>
                                                 </Form.Group>
                                             </div>
                                         </div>
+                                       
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <Form.Group className="row">
+                                                    <label className="col-sm-3 col-form-label">Contact No</label>
+                                                    <div className="col-sm-9">
+                                                    <Form.Control
+                                                            type="text"
+                                                            name="contactno"
+                                                            placeholder="Contact Number"
+                                                            autoFocus
+                                                            {...register("contactno", {
+                                                                required: true,
+                                                            })}
+                                                        />
+                                                        {errors &&
+                                                            errors.contactno &&
+                                                            errors.contactno.type === "required" && (
+                                                                <p>Contact Number is required field</p>
+                                                            )}
+                                                        
+                                                    </div>
+                                                </Form.Group>
+                                            </div>
+                                        </div>
+                                       
                                         <div className="mt-3">
                                             <button
-                                                className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                                                className="btn  btn-primary btn-sm font-weight-medium auth-form-btn"
                                                 type="submit"
                                             >
                                                 CREATE
@@ -408,8 +368,10 @@ const Leads = () => {
                                     <tr>
                                         <th> Name </th>
                                         <th> Title </th>
+                                        <th> Company Name</th>
                                         <th> Email </th>
-                                        <th> Source </th>
+                                        <th> Phone </th>
+                                        <th> Status </th>
                                         <th> Delete </th>
                                     </tr>
                                 </thead>
@@ -421,11 +383,36 @@ const Leads = () => {
                                                 return (
                                                     <tr key={index}>
                                                         <td>{item?.name}</td>
-                                                        <td>{item?.category}</td>
-                                                        <td>{item?.description}</td>
-                                                        <td>{formateStatus(item?.status)}</td>
+                                                        <td>{item?.title}</td>
+                                                        <td>{item?.company_name}</td>
+                                                        <td>{item?.email}</td>
+                                                        <td>{item?.contactno}</td>
                                                         <td>
-                                                        </td>
+                          <select
+
+                            id={item.id}
+
+                            onChange={(e) => statusChanged(item.id, e)}
+                          >
+                            <option
+                              value="0"
+                              selected={item.status == 0 ? "selected" : true}
+                            >
+                              New
+                            </option>
+                            <option
+                              value="1"
+                              selected={item.status == 1 ? "selected" : false}
+                            >
+                              Working
+                            </option>
+                           
+                          </select>
+                        </td>
+
+                                                        
+                                                        
+                                                        
                                                         <td>
                                                             <i
                                                                 onClick={() => deleteProduct(item?.id)}

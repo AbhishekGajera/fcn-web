@@ -84,36 +84,8 @@ const Lead = lazy(() => import('./Admin-components/Leads'));
 const Salaries = lazy(() => import('./Admin-components/Employee-Management/Salaries'));
 const BookAppoinments = lazy(() => import('./Admin-components/Appointment/BookAppoinments'));
 const FetchAppoinments = lazy(() => import('./Admin-components/Appointment/FetchAppoinments'));
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 const CreateEmployee = lazy(() => import('./BranchComponents/CreateEmployee'));
 const EmployeeList = lazy(() => import('./BranchComponents/EmployeeList'));
-
 const Buttons = lazy(() => import('./basic-ui/Buttons'));
 const Dropdowns = lazy(() => import('./basic-ui/Dropdowns'));
 const Typography = lazy(() => import('./basic-ui/Typography'));
@@ -254,16 +226,6 @@ class AppRoutes extends Component {
 
 
 
-
-
-
-
-
-
-
-          
-
-          
 
 
 

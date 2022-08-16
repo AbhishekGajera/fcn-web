@@ -645,7 +645,7 @@ const ClientList = () => {
                         <i className="input-group-text border-0 mdi mdi-magnify"></i>
                       </div>
                       <input
-                        type="text"
+                        type="text" 
                         className="form-control outline-gray bg-transparent border-0"
                         placeholder="Search Clients"
                         value={searchTerm}

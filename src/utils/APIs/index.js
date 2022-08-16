@@ -23,6 +23,14 @@ export const getAllEmployee = (limit = 1000,offset = 1) => api(`users?limit=${li
 export const updateEmployeeLeave = (data) => api(`employee/update-leave`, 'POST',data);
 export const approveEmployee = (data) => api(`employee/approve-leave`, 'POST', data);
 
+//lead management
+export const CreateLead = (data) => api('leads/add-lead', 'POST', data);
+export const updateLead = (data) => api(`leads/update-lead`, 'POST',data);
+export const getLeads = (limit = 10,offset = 1,name = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&name=${name}`, 'GET');
+export const deleteLead = (id) => api(`delete-lead/${id}`, 'DELETE');
+
+
+
 
 // branch management
 export const getBranches = (limit = 10,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');

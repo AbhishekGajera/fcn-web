@@ -472,7 +472,7 @@ class Sidebar extends Component {
             <div className={ this.state.fcnLeads ? 'nav-link menu-expanded' : 'nav-link' } onClick={ () => this.toggleMenuState('fcnLeads') } data-toggle="collapse">
               <span className="menu-title"><Trans>Leads</Trans></span>
               <i className="menu-arrow"></i>
-              <i className="mdi mdi-account-switch menu-icon"></i>
+              <i className="mdi mdi-logout-variant menu-icon"></i>
             </div>
             <Collapse in={this.state.fcnLeads}>
               <ul className="nav flex-column sub-menu">
