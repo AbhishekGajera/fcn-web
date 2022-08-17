@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Employee-Management/Salaries.js"],"names":["Salaries"],"mappings":"+HAAA,2BAQeA,UANE,WACf,OACE","file":"static/js/60.1189886c.chunk.js","sourcesContent":["import React from 'react'\n\nconst Salaries = () => {\n  return (\n    <div>Salaries</div>\n  )\n}\n\nexport default Salaries"],"sourceRoot":""}

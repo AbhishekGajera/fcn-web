@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Password/Otp.js"],"names":["Otp"],"mappings":"+HAAA,2BAQeA,UANH,WACV,OACE","file":"static/js/72.693a37d2.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Otp = () => {\r\n  return (\r\n    <div>Otp</div>\r\n  )\r\n}\r\n\r\nexport default Otp"],"sourceRoot":""}
