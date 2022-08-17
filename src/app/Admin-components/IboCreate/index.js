@@ -5,7 +5,7 @@ import { Form, Modal } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import {
-  CreateUser, getBranches, userLogout, ImageUpload
+  CreateUser, userLogout, ImageUpload, getBranchesClient
 } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
@@ -40,6 +40,8 @@ const CreateIbo = () => {
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   var strongRegexcode = new RegExp("^[A-Z0-9]");
+
+  var strongaadharcode = new RegExp("^([0-9]){12}$");
 
   const values = getValues();
 
@@ -84,7 +86,7 @@ const CreateIbo = () => {
 
   const list = async () => {
     try {
-      const items = await (await getBranches()).data;
+      const items = await (await getBranchesClient()).data;
       setitemlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
@@ -463,11 +465,19 @@ const CreateIbo = () => {
                         <Form.Control
                           type="text"
                           name="aadhar_card_no"
-                          {...register("aadhar_card_no", { required: true })}
+                          {...register("aadhar_card_no", { required: true, pattern: strongaadharcode })}
                         />
-                        {errors && errors.aadhar_card_no && (
+                        {errors && errors.aadhar_card_no && 
+                          errors.aadhar_card_no.type === "required" && (
                           <p>Aadharcard number is required field</p>
                         )}
+                        {errors &&
+                          errors.aadhar_card_no &&
+                          errors.aadhar_card_no.type === "pattern" && (
+                            <p>
+                              Aadharcard should have number
+                            </p>
+                          )}
                       </div>
                     </Form.Group>
                   </div>

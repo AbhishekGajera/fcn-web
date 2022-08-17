@@ -492,11 +492,8 @@ class Sidebar extends Component {
               <Collapse in={this.state.fcnEmployee}>
                 <ul className="nav flex-column sub-menu">
                   <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/leave') ? 'nav-link active' : 'nav-link'} to="/employee_manage/leave"><Trans>Leave</Trans></Link></li>
-                  <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/advances') ? 'nav-link active' : 'nav-link'} to="/employee_manage/advances"><Trans>Advances</Trans></Link></li>
-                  <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/salary') ? 'nav-link active' : 'nav-link'} to="/employee_manage/salary"><Trans>salary</Trans></Link></li>
-                  <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/bonus') ? 'nav-link active' : 'nav-link'} to="/employee_manage/bonus"><Trans>Bonus</Trans></Link></li>
-                  <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/commision') ? 'nav-link active' : 'nav-link'} to="/employee_manage/commision"><Trans>Commision</Trans></Link></li>
-                  <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/brokerages') ? 'nav-link active' : 'nav-link'} to="/employee_manage_manage/browchures"><Trans>Browchures</Trans></Link></li>
+                  <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/attendance') ? 'nav-link active' : 'nav-link'} to="/employee_manage/attendance"><Trans>Attendance</Trans></Link></li>
+                  <li className="nav-item"> <Link className={this.isPathActive('/employee_manage/payroll') || this.isPathActive('/employee_manage/run-payroll') ? 'nav-link active' : 'nav-link'} to="/employee_manage/payroll"><Trans>Payroll</Trans></Link></li>
 
                 </ul>
               </Collapse>

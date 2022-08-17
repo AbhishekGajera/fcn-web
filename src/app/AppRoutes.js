@@ -75,13 +75,11 @@ const Otp = lazy(() => import('./Admin-components/Password/Otp'));
 const CpTravels = lazy(() => import('./Admin-components/Auto-Calculation/CpTravels'));
 const PoEquity = lazy(() => import('./Admin-components/Auto-Calculation/PoEquity'));
 const Ssp = lazy(() => import('./Admin-components/Auto-Calculation/Ssp'));
-const Advances = lazy(() => import('./Admin-components/Employee-Management/Advances'));
-const Bonus = lazy(() => import('./Admin-components/Employee-Management/Bonus'));
-const Brokerages = lazy(() => import('./Admin-components/Employee-Management/Brokerages'));
-const Commision = lazy(() => import('./Admin-components/Employee-Management/Commision'));
+const Attendance = lazy(() => import('./Admin-components/Employee-Management/Attendance'));
+const Payroll = lazy(() => import('./Admin-components/Employee-Management/Payroll'));
+const PayrollDetail = lazy(() => import('./Admin-components/Employee-Management/PayrollDetail'));
 const Leave = lazy(() => import('./Admin-components/Employee-Management/Leave'));
 const Lead = lazy(() => import('./Admin-components/Leads'));
-const Salaries = lazy(() => import('./Admin-components/Employee-Management/Salaries'));
 const BookAppoinments = lazy(() => import('./Admin-components/Appointment/BookAppoinments'));
 const FetchAppoinments = lazy(() => import('./Admin-components/Appointment/FetchAppoinments'));
 const CreateEmployee = lazy(() => import('./BranchComponents/CreateEmployee'));
@@ -210,11 +208,9 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/calculation/cp" component={ CpTravels } accesstype={["admin"]} />
           <ProtectedRoute path="/leads/lead" component={ Lead } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/leave" component={ Leave } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee_manage/advances" component={ Advances } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee_manage/salary" component={ Salaries } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee_manage/bonus" component={ Bonus } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee_manage/commision" component={ Commision } accesstype={["admin"]} />
-          <ProtectedRoute path="/employee_manage/brokerages" component={ Brokerages } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/attendance" component={ Attendance } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/payroll" component={ Payroll } accesstype={["admin"]} />
+          <ProtectedRoute path="/employee_manage/run-payroll" component={ PayrollDetail } accesstype={["admin"]} />
           <ProtectedRoute path="/appointment/book-appoinment" component={ BookAppoinments } accesstype={["user","IBO","branch"]} />
           <ProtectedRoute path="/appointment/fetch-appoinment" component={ FetchAppoinments } accesstype={["user","IBO","branch","admin"]} />
 

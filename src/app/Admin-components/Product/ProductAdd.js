@@ -8,7 +8,6 @@ import { useHistory } from "react-router-dom";
 
 const ProductAdd = () => {
   const [cookies] = useCookies(["user"]);
-  const [disable, setDisable] = useState(false);
   const history = useHistory();
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
@@ -33,16 +32,16 @@ const ProductAdd = () => {
   const values = getValues();
 
   const onSubmit = async (data) => {
-    setShow(true);
-    setDisable(true)
+    setShow(true);  
+    const formData = new FormData()
+    formData.append("user", cookies?.user?.id)
+    formData.append("category", data?.category)
+    formData.append("description", data?.description)
+    formData.append("image", data?.file[0])
+    formData.append("name", data?.name)
+    formData.append("status", data?.status)
+    console.log("show++",show)
     if (!show) {
-      const formData = new FormData()
-      formData.append("user", cookies?.user?.id)
-      formData.append("category", data?.category)
-      formData.append("description", data?.description)
-      formData.append("image", data?.file[0])
-      formData.append("name", data?.name)
-      formData.append("status", data?.status)
       try {
         await CreateProduct(formData);
         toast.success("Product created successfully");
@@ -247,7 +246,7 @@ const ProductAdd = () => {
                 >
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
-                    type="submit" disabled={disable}
+                    type="submit"
                   >
                     SUBMIT
                   </button>

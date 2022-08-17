@@ -1,57 +1,46 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getRevenueList ,userLogout } from "../../../utils/APIs";
-import { Form } from "react-bootstrap";
+import { getLeads, getBranchesClient, deleteLead, userLogout, getBranches } from "../../../utils/APIs";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { timeOption } from "../../../utils/Functions/commonOptions";
 
-
-const RevenueFetch = () => {
+const Attendance = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
 
-  // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
-  const [selectedExpenceTime, setselectedExpenceTime] = useState("");
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
-  const [cookies,setCookie] = useCookies(["user"]);
+
+  const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const [branchlist, setbranchlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
-  
-  const onChangeHandlerForExpenceTime = (e) => {
-    setItemOffset(0);
-    setselectedExpenceTime(e.target.value);
-  };
 
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage, debouncedSearchTerm]);
 
-  // Invoke when user click to request another page. 
-  const handlePageClick = (event) => {
-    window.scrollTo(0, 0);
-    setItemOffset(event.selected);
-  };
-
-
   const list = async () => {
-    setIsLoading(true);
+    setIsLoading(true)
     try {
-      
+      const branch = await (await getBranchesClient()).data;
+      setbranchlist(branch?.results);
       const items = await (
-         await getRevenueList(itemsPerPage, +itemOffset + 1)
-       ).data;
-
+        await getLeads(
+          itemsPerPage,
+          +itemOffset + 1,
+          searchTerm
+        )
+      ).data;
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
-      setIsLoading(false);
+      setIsLoading(false)
     } catch (error) {
       if (error?.response?.data?.message) {
         toast.error(error.response.data.message);
@@ -68,13 +57,16 @@ const RevenueFetch = () => {
           history.push("/user-pages/login-1");
         });
       }
-    }    
-}
+    }
+  }
+  const handlePageClick = (event) => {
+    setItemOffset(event.selected);
+  };
 
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title">Revenue / Show Revenue </h3>
+        <h3 className="page-title">Employee / Show Attendance </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item">
@@ -83,7 +75,7 @@ const RevenueFetch = () => {
               </a>
             </li>
             <li className="breadcrumb-item active" aria-current="page">
-              Show Revenue
+              Show Attendance
             </li>
           </ol>
         </nav>
@@ -91,42 +83,10 @@ const RevenueFetch = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-            <div className="row">
-            <div className="col-md-6">
-                <Form.Group className="row">
-                  <label className="col-sm-4 col-form-label">
-                    Select Time
-                  </label>
-                  <div className="col-sm-8">
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect2"
-                      name="branch"
-                      onChange={onChangeHandlerForExpenceTime}
-                    >
-                      <option
-                        selected={"" === selectedExpenceTime}
-                        value={""}
-                      >
-                        Not Selected
-                      </option>
-                      {timeOption?.map((i) => {
-                        return (
-                          <>
-                            <option
-                              selected={i.value === selectedExpenceTime}
-                              value={i.value}
-                            >
-                              {i.label}
-                            </option>
-                          </>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </Form.Group>
+            <div className="row mb-3">
+              <div className="col-md-6">
+                <h4 className="card-title">Attendance list</h4>
               </div>
-
               <div className="col-md-6">
                 <div className="search-field d-none d-md-block">
                   <form className="d-flex align-items-center h-100" action="#">
@@ -137,7 +97,7 @@ const RevenueFetch = () => {
                       <input
                         type="text"
                         className="form-control outline-gray bg-transparent border-0"
-                        placeholder="Search Revenue"
+                        placeholder="Search Attendance"
                         value={searchTerm}
                         onChange={(e) => {
                           setSearchTerm(e?.target?.value);
@@ -148,39 +108,29 @@ const RevenueFetch = () => {
                   </form>
                 </div>
               </div>
-
             </div>
-            <h4 className="card-title">Revenue list</h4>
-
             <div className="table-responsive">
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th>Earning From </th>
-                    <th> Product </th>
-                    <th> Total Revenue </th>
-                    <th> Net Profit </th>
-                    <th> Commision To Branch </th>
-                    <th> Commission To IBO </th>
+                    <th> Name </th>
+                    <th> Status </th>
+                    <th> Note </th>
                   </tr>
                 </thead>
                 <tbody>
                   {
-                  isLoading ? <React.Fragment><Spinner /></React.Fragment>
-                    :
-                    itemlist?.map((item, index) => {
-                      return (
-                        <tr key={index}>
-                          <td>{item?.earning_from}</td>
-                          <td>{item?.product?.name}</td>
-                          <td>{item?.total_revenue}</td>
-                          <td>{item?.net_revenue}</td>
-                          <td>{item?.commision_branch}</td>
-                          <td>{item?.commision_ibo}</td>
-                          <td></td>
-                        </tr>
-                      );
-                    })}
+                    isLoading ? <React.Fragment><Spinner /></React.Fragment>
+                      :
+                      itemlist?.map((item, index) => {
+                        return (
+                          <tr key={index}>
+                            <td>{item?.name}</td>
+                            <td>{item?.title}</td>
+                            <td><input type='text' name='note' /></td>
+                          </tr>
+                        );
+                      })}
                 </tbody>
               </table>
               <ReactPaginate
@@ -202,4 +152,8 @@ const RevenueFetch = () => {
   );
 };
 
-export default RevenueFetch;
+export default Attendance
+
+
+
+

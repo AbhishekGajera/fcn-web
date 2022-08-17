@@ -50,6 +50,7 @@ const ExpenceList = () => {
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
+    window.scrollTo(0, 0);
     setItemOffset(event.selected);
   };
 
@@ -88,7 +89,7 @@ const ExpenceList = () => {
       const items = await (
         await getCostList(
           itemsPerPage,
-          +itemOffset + 0,
+          +itemOffset + 1,
           selectedExpenceCategory,
           selectedExpenceType,
           ["IBO", "branch"].includes(cookies?.user?.role) ? cookies?.user?.id : ''

@@ -145,6 +145,7 @@ const BranchList = () => {
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
+    window.scrollTo(0, 0);
     setItemOffset(event.selected);
   };
 
@@ -177,7 +178,7 @@ const BranchList = () => {
 
   const list = async () => {
     setIsLoading(true)
-    const items = await (await getBranches(itemsPerPage, (+itemOffset + 0), searchTerm)).data;
+    const items = await (await getBranches(itemsPerPage, (+itemOffset + 1), searchTerm)).data;
     setitemlist(items?.results);
     console.log("lst",items?.results)
     setPageCount(items?.totalPages);

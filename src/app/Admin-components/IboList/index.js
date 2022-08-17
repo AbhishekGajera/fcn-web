@@ -132,8 +132,8 @@ const IboList = () => {
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % itemlist.length;
-    setItemOffset(newOffset);
+    window.scrollTo(0, 0);
+    setItemOffset(event.selected);
   };
   
   useEffect(() => {
@@ -182,7 +182,7 @@ const IboList = () => {
   const list = async () => {
     setIsLoading(true)
     try {
-      const items = await (await getIBOs(itemsPerPage, itemOffset,searchTerm,selectedBranch)).data;
+      const items = await (await getIBOs(itemsPerPage, +itemOffset + 1,searchTerm,selectedBranch)).data;
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
@@ -512,7 +512,6 @@ const IboList = () => {
                     <th> Role </th>
                     <th> Status </th>
                     <th> Generate Password </th>
-
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -573,6 +572,7 @@ const IboList = () => {
                 pageCount={pageCount}
                 previousLabel="< previous"
                 renderOnZeroPageCount={null}
+                forcePage={itemOffset}
               />
             </div>
           </div>

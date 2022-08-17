@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
-import { CreateUser, ImageUpload, getIBOs, userLogout } from "../../../utils/APIs";
+import { CreateUser, ImageUpload, getIBOsClient, userLogout } from "../../../utils/APIs";
 import moment from 'moment';
 import PhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css'
@@ -33,6 +33,8 @@ const CreateBranches = () => {
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   var strongRegexcode = new RegExp("^[A-Z0-9]");
+
+  var strongaadharcode = new RegExp("^([0-9]){12}$");
 
   const values = getValues();
 
@@ -74,7 +76,7 @@ const CreateBranches = () => {
   };
   const branchList = async () => {
     try {
-      const items = await (await getIBOs()).data;
+      const items = await (await getIBOsClient()).data;
       // console.log("itm",items)
       setBranchlist(items?.results);
       // setPageCount(items?.totalPages);
@@ -461,11 +463,19 @@ const CreateBranches = () => {
                         <Form.Control
                           type="text"
                           name="b_aadhar_card_no"
-                          {...register("b_aadhar_card_no", { required: true })}
+                          {...register("b_aadhar_card_no", { required: true, pattern: strongaadharcode  })}
                         />
-                        {errors && errors.b_aadhar_card_no && (
+                        {errors && errors.b_aadhar_card_no && 
+                          errors.b_aadhar_card_no.type === "required" && (
                           <p>Aadharcard number is required field</p>
                         )}
+                         {errors &&
+                          errors.b_aadhar_card_no &&
+                          errors.b_aadhar_card_no.type === "pattern" && (
+                            <p>
+                              Aadharcard should have number
+                            </p>
+                          )}
                       </div>
                     </Form.Group>
                   </div>

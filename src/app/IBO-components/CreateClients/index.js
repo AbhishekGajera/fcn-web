@@ -38,7 +38,7 @@ const CreateClints = () => {
 
   var strongRegexcode = new RegExp("^[A-Z0-9]");
 
-  var strongaadharcode = new RegExp("^[0-9]");
+  var strongaadharcode = new RegExp("^([0-9]){12}$");
 
   const handleOnChange = value => {
     setPhone(value);

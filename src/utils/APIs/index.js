@@ -39,7 +39,7 @@ export const getBranchesClient = (limit = 500,offset = 1,name = '') => api(`user
 
 // IBO management
 export const getIBOs = (limit = 10,offset = 1,name = '',branch = '',) => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
-export const getIBOsClient = (limit = 500,offset = 1,name = '',branch = '',) => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
+export const getIBOsClient = (limit = 500,offset = 1,name = '',branch = '') => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
 
 
 

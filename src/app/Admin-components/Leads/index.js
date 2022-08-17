@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { CreateLead,getLeads,getBranchesClient,updateLead,deleteProductById,deleteLead, getProductsList, userLogout, UpdateProducts } from "../../../utils/APIs";
+import { CreateLead, getLeads, getBranchesClient, updateLead, deleteLead, userLogout } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
@@ -34,14 +34,13 @@ const Leads = () => {
     const [show, setShow] = React.useState(false);
     const [itemlist, setitemlist] = useState([]);
     const [branchlist, setbranchlist] = useState([]);
-
     const [isLoading, setIsLoading] = useState(true)
     const [phone, setPhone] = useState('+91');
     const history = useHistory()
 
     useEffect(() => {
         list();
-    }, [itemOffset, itemsPerPage,debouncedSearchTerm]);
+    }, [itemOffset, itemsPerPage, debouncedSearchTerm]);
 
     // Invoke when user click to request another page. 
     const handlePageClick = (event) => {
@@ -87,10 +86,12 @@ const Leads = () => {
     const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
         mode: "onChange"
     });
-        
+
     const list = async () => {
         setIsLoading(true)
         try {
+            const branch = await (await getBranchesClient()).data;
+            setbranchlist(branch?.results);
             const items = await (
                 await getLeads(
                     itemsPerPage,
@@ -120,17 +121,17 @@ const Leads = () => {
         }
     }
 
-   
+
     const statusChanged = (id, e) => {
         console.log(e.target.value, id);
         updateLead({
-          "lead_id": id,
-          "status": e.target.value
+            "lead_id": id,
+            "status": e.target.value
         })
-        toast.success('Status updated successfully',{
-          autoClose : true
+        toast.success('Status updated successfully', {
+            autoClose: true
         })
-      }
+    }
 
     const handleMultiChange = (e) => {
         setIsChecked({ ...isChecked, [e.target.id]: e.target.checked });
@@ -143,9 +144,9 @@ const Leads = () => {
 
     const onSubmit = async (data) => {
         await CreateLead(data)
-      toast.success('Lead added successfully',{
-        autoClose : true
-      })
+        toast.success('Lead added successfully', {
+            autoClose: true
+        })
     }
 
     const handleShow = () => {
@@ -170,12 +171,12 @@ const Leads = () => {
                             <div className="card">
                                 <div className="card-body">
                                     <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                                      
+
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
                                                     <label className="col-sm-3 col-form-label">
-                                                    Name
+                                                        Name
                                                     </label>
                                                     <div className="col-sm-9">
                                                         <Form.Control
@@ -250,34 +251,34 @@ const Leads = () => {
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
                                                     <label className="col-sm-3 col-form-label">
-                                                        Company Name
+                                                        Branch
                                                     </label>
                                                     <div className="col-sm-9">
-                                                        <Form.Control
-                                                            type="text"
-                                                            name="company_name"
-                                                            placeholder="Company Name"
-                                                            autoFocus
-                                                            {...register("company_name", {
+                                                        <select
+                                                            className="form-control form-control-lg"
+                                                            id="exampleFormControlSelect2"
+                                                            name="branch"
+                                                            {...register("branch", {
                                                                 required: true,
                                                             })}
-                                                        />
-                                                        {errors &&
-                                                            errors.company_name &&
-                                                            errors.company_name.type === "required" && (
-                                                                <p>Company Name is required field</p>
-                                                            )}
+                                                        >
+                                                            <option value=''>--Select branch--</option>
+                                                            {branchlist.map((item, index) => (
+                                                                <option key={index} value={item?.name} label={item?.name}></option>
+                                                            ))}
+                                                        </select>
+                                                        {errors && errors.branch && <p>Select branch is required field</p>}
                                                     </div>
                                                 </Form.Group>
                                             </div>
                                         </div>
-                                       
+
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
                                                     <label className="col-sm-3 col-form-label">Contact No</label>
                                                     <div className="col-sm-9">
-                                                    <Form.Control
+                                                        <Form.Control
                                                             type="text"
                                                             name="contactno"
                                                             placeholder="Contact Number"
@@ -291,12 +292,12 @@ const Leads = () => {
                                                             errors.contactno.type === "required" && (
                                                                 <p>Contact Number is required field</p>
                                                             )}
-                                                        
+
                                                     </div>
                                                 </Form.Group>
                                             </div>
                                         </div>
-                                       
+
                                         <div className="mt-3">
                                             <button
                                                 className="btn  btn-primary btn-sm font-weight-medium auth-form-btn"
@@ -371,7 +372,7 @@ const Leads = () => {
                                     <tr>
                                         <th> Name </th>
                                         <th> Title </th>
-                                        <th> Company Name</th>
+                                        <th> Branch Name </th>
                                         <th> Email </th>
                                         <th> Phone </th>
                                         <th> Status </th>
@@ -391,31 +392,31 @@ const Leads = () => {
                                                         <td>{item?.email}</td>
                                                         <td>{item?.contactno}</td>
                                                         <td>
-                          <select
+                                                            <select
 
-                            id={item.id}
+                                                                id={item.id}
 
-                            onChange={(e) => statusChanged(item.id, e)}
-                          >
-                            <option
-                              value="0"
-                              selected={item.status == 0 ? "selected" : true}
-                            >
-                              New
-                            </option>
-                            <option
-                              value="1"
-                              selected={item.status == 1 ? "selected" : false}
-                            >
-                              Working
-                            </option>
-                           
-                          </select>
-                        </td>
+                                                                onChange={(e) => statusChanged(item.id, e)}
+                                                            >
+                                                                <option
+                                                                    value="0"
+                                                                    selected={item.status == 0 ? "selected" : true}
+                                                                >
+                                                                    New
+                                                                </option>
+                                                                <option
+                                                                    value="1"
+                                                                    selected={item.status == 1 ? "selected" : false}
+                                                                >
+                                                                    Working
+                                                                </option>
 
-                                                        
-                                                        
-                                                        
+                                                            </select>
+                                                        </td>
+
+
+
+
                                                         <td>
                                                             <i
                                                                 onClick={() => deleteProduct(item?.id)}
