@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { CreateLead,getLeads,updateLead,deleteProductById,deleteLead, getProductsList, userLogout, UpdateProducts } from "../../../utils/APIs";
+import { CreateLead,getLeads,getBranchesClient,updateLead,deleteProductById,deleteLead, getProductsList, userLogout, UpdateProducts } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
@@ -29,9 +29,12 @@ const Leads = () => {
     // following the API or data you're working with.
     const [itemOffset, setItemOffset] = useUrl("page");
     const [itemsPerPage] = useState(10);
+
     const [cookies, setCookie] = useCookies(["user"]);
     const [show, setShow] = React.useState(false);
     const [itemlist, setitemlist] = useState([]);
+    const [branchlist, setbranchlist] = useState([]);
+
     const [isLoading, setIsLoading] = useState(true)
     const [phone, setPhone] = useState('+91');
     const history = useHistory()
@@ -84,7 +87,7 @@ const Leads = () => {
     const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
         mode: "onChange"
     });
-
+        
     const list = async () => {
         setIsLoading(true)
         try {

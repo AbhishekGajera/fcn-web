@@ -34,9 +34,13 @@ export const deleteLead = (id) => api(`delete-lead/${id}`, 'DELETE');
 
 // branch management
 export const getBranches = (limit = 10,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');
+export const getBranchesClient = (limit = 500,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');
+
 
 // IBO management
 export const getIBOs = (limit = 10,offset = 1,name = '',branch = '',) => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
+export const getIBOsClient = (limit = 500,offset = 1,name = '',branch = '',) => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
+
 
 
 // Cost management

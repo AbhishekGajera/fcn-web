@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser, getBranches, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
+import { CreateUser, getBranches,getBranchesClient,getIBOsClient, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
 import PhoneInput from "react-phone-input-2";
@@ -76,7 +76,7 @@ const CreateClints = () => {
 
   const list = async () => {
     try {
-      const items = await (await getBranches()).data;
+      const items = await (await getBranchesClient()).data;
       setitemlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
@@ -99,7 +99,7 @@ const CreateClints = () => {
   };
   const branchList = async () => {
     try {
-      const items = await (await getIBOs()).data;
+      const items = await (await getIBOsClient()).data;
       // console.log("itm",items)
       setBranchlist(items?.results);
       // setPageCount(items?.totalPages);
