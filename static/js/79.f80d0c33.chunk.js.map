@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Welcome/AccountOpening.js"],"names":["AccountOpening"],"mappings":"+HAAA,2BAQeA,UANQ,WACrB,OACE","file":"static/js/79.f80d0c33.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst AccountOpening = () => {\r\n  return (\r\n    <div>AccountOpening</div>\r\n  )\r\n}\r\n\r\nexport default AccountOpening"],"sourceRoot":""}
