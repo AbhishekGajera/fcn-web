@@ -519,14 +519,7 @@ const CreateIbo = () => {
                     </Form.Group>
                   </div>
                 </div>
-                <div className="row">
-                  <div className="col-md-2">
-                    <span className="d-flex" style={{ float: 'left', marginTop: "10px" }} >
-                      <input style={{ marginRight: "10px" }} type="checkbox" name='agreement' />
-                      Agreement
-                    </span>
-                  </div>
-                </div>
+               
                 <div className="mt-3">
                   <button
 
