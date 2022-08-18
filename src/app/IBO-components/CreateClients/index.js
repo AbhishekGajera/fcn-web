@@ -46,7 +46,9 @@ const CreateClints = () => {
 
   const onSubmit = async (data) => {
     try {
+      
       data.contactno = phone;
+
       data.name = data.first_name +' '+ data.last_name;
       await CreateUser(data)
       toast.success("user crated successfully");
@@ -249,6 +251,7 @@ const CreateClints = () => {
                         >
                           <option value=''>--Select product--</option>
                           {productlist.map((item, index) => (
+                         
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
                         </select>
@@ -289,8 +292,8 @@ const CreateClints = () => {
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
-                          name="ibo"
-                          {...register("ibo", {
+                          name="IBO"
+                          {...register("IBO", {
                             required: true,
                           })}
                         >

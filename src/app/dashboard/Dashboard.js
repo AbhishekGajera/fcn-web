@@ -1,12 +1,35 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
+
 import { Bar } from "react-chartjs-2";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckSquare, faCoffee, } from '@fortawesome/fontawesome-free-solid'
 
+import {
+  getUsers,
+  getUsersRecent,
+  getLeadsDash,
+  getLeads,
+  getBranches,
+  getIBOs,
+} from "../../utils/APIs";
+import { useUrl } from "../../utils/Functions/useUrl";
+
+
 
 const Dashboard = () => {
   const history = useHistory();
+  const [itemlist, setitemlist] = useState([]);
+  const [itemlistdash, setitemlistdash] = useState([]);
+
+  
+  const [isLoading, setIsLoading] = useState(true)
+  const [itemOffset, setItemOffset] = useUrl("page");
+  const [itemsPerPage] = useState(10);
+  const [pageCount, setPageCount] = useState(0);
+
+
+
 
   const options = {
     scales: {
@@ -71,6 +94,57 @@ const Dashboard = () => {
       },
     ],
   });
+  
+  const list = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getUsersRecent(
+          itemsPerPage,
+          +itemOffset + 1
+        )
+      ).data;
+      setitemlist(items?.results);
+      setPageCount(items?.totalPages);
+    } catch (error) {
+      
+      
+    }
+    setIsLoading(false)
+  };
+
+  const leadlist = async () => {
+    setIsLoading(true)
+    try {
+        
+        const items = await (
+            await getLeadsDash(
+                itemsPerPage,
+                +itemOffset + 1
+                
+            )
+        ).data;
+        setitemlistdash(items?.results);
+        setPageCount(items?.totalPages);
+        setIsLoading(false)
+    } catch (error) {
+        
+
+        if (error?.response?.data?.code === 401) {
+            const formData = JSON.stringify({
+                refreshToken: localStorage.getItem("refreshToken"),
+            });
+           
+        }
+    }
+}
+  useEffect(() => {
+    list();
+  }, [itemOffset, itemsPerPage]);
+  useEffect(() => {
+    leadlist();
+  }, [itemOffset, itemsPerPage]);
+console.log("it",itemlist)
 
   return (
     <>
@@ -360,17 +434,28 @@ const Dashboard = () => {
                         <table className="table">
                           <thead className="thead-light">
                             <tr>
-                              <th className="h6">Image</th>
-                              <th className="h6">Name</th>
-                              <th className="h6">Created At</th>
+                            <th> Name </th>
+                            <th> Contact no. </th>
+                            <th> Branch </th>
+                            <th> IBO </th>
+                            <th> Email </th>
+                                
+                        
                             </tr>
                           </thead>
                           <tbody>
+                          {itemlist?.map((item) => {
+                    return (
                             <tr>
-                              <td></td>
-                              <td>dorris.nitzsche@kunze.net</td>
-                              <td>2022-08-12</td>
+                              <td>{item?.name}</td>
+                              <td>{item?.contactno}</td>
+                              <td>{item?.branch}</td>
+                              <td>{item?.IBO}</td>
+                              <td>{item?.email}</td>
+                       
                             </tr>
+                              );
+                            })}
                           </tbody>
                         </table>
                       </div>
@@ -386,24 +471,32 @@ const Dashboard = () => {
                 <div className="row">
                   <div className="col-md-12">
                     <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
-                      <h6>Recent Clients</h6>
+                      <h6>Recent Leads</h6>
                     </div>
                     <div className="panel-container show p-3">
                       <div className="table-responsive">
                         <table className="table">
                           <thead className="thead-light">
                             <tr>
-                              <th className="h6">Image</th>
-                              <th className="h6">Name</th>
-                              <th className="h6">Created At</th>
+                                        <th> Name </th>
+                                        <th> Title </th>
+                                        <th> Branch Name </th>
+                                        <th> Email </th>
+                                        <th> Phone </th>
                             </tr>
                           </thead>
                           <tbody>
-                            <tr>
-                              <td></td>
-                              <td>dorris.nitzsche@kunze.net</td>
-                              <td>2022-08-12</td>
-                            </tr>
+                          { itemlistdash?.map((item, index) => {
+                            return (
+                              <tr>
+                                 <td>{item?.name}</td>
+                                                        <td>{item?.title}</td>
+                                                        <td>{item?.branch}</td>
+                                                        <td>{item?.email}</td>
+                                                        <td>{item?.contactno}</td>
+                             </tr>
+                            )
+                          })}
                           </tbody>
                         </table>
                       </div>

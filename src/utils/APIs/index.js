@@ -15,6 +15,7 @@ export const getusersbyfilter = (email='') => api(`users?custom=true&email=${ema
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
 export const getUsers = (limit = 10,offset = 1,name = '',role='user',branch='',IBO='') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=asc&name=${name}&custom=true&branch=${branch}&IBO=${IBO}`, 'GET');
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
+export const getUsersRecent = (limit = 5,offset = 1,role='user') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=createdAt:desc`, 'GET');
 
 // employee management
 export const getEmployeeLeaves = (limit = 10,offset = 1) => api(`employee/getLeaves?limit=${limit}&page=${offset}&sortBy=createdAt:desc`, 'GET');
@@ -27,6 +28,8 @@ export const approveEmployee = (data) => api(`employee/approve-leave`, 'POST', d
 export const CreateLead = (data) => api('leads/add-lead', 'POST', data);
 export const updateLead = (data) => api(`leads/update-lead`, 'POST',data);
 export const getLeads = (limit = 10,offset = 1,name = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&name=${name}`, 'GET');
+export const getLeadsDash = (limit = 10,offset = 1) => api(`leads/get-lead?limit=${limit}&page=${offset}&sortBy=createdAt:desc`, 'GET');
+
 export const deleteLead = (id) => api(`delete-lead/${id}`, 'DELETE');
 
 
@@ -51,7 +54,7 @@ export const deleteCost = (id) => api(`cost/delete-cost/${id}`, 'GET');
 // Product management
 export const CreateProduct = (data) => multipartApi(`product`, 'POST', data);
 export const getProductsList = (limit = 10,offset = 1,name = '') => api(`product?limit=${limit}&sortBy=createdAt:desc&page=${offset}&name=${name}&custom=true`, 'GET');
-export const getProductsListClient = (limit = 500,name = '') => api(`product?limit=${limit}&sortBy=createdAt:desc&name=${name}&custom=true`, 'GET');
+export const getProductsListClient = (limit = 500,status="1") => api(`product?limit=${limit}&sortBy=createdAt:desc&status=${status}`, 'GET');
 
 export const deleteProductById = (id) => api(`product/${id}`, 'GET');
 export const UpdateProducts = (data) => api(`product/update-product`, 'PATCH', data);

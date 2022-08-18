@@ -37,16 +37,7 @@ const ProductList = () => {
   const handlePageClick = (event) => {
     setItemOffset(event.selected);
   };
-  const statusChanged = (id, e) => {
-    console.log(e.target.value, id);
-    UpdateProducts({
-      "productId": id,
-      "status": e.target.value
-    })
-    toast.success('Status updated successfully', {
-      autoClose: true
-    })
-  }
+  
 
   const deleteProduct = (uid) => {
     Swal.fire({
@@ -125,7 +116,16 @@ const ProductList = () => {
       }
     }
   }
-
+  const statusChanged = (id, e) => {
+    console.log("ei",e.target.value, id);
+    UpdateProducts({
+      "productId": id,
+      "status": e.target.value
+    })
+    toast.success('Status updated successfully', {
+      autoClose: true
+    })
+  } 
   const formateStatus = (status) => {
     switch (status) {
       case '0':
@@ -140,6 +140,9 @@ const ProductList = () => {
   const handleMultiChange = (e) => {
     setIsChecked({ ...isChecked, [e.target.id]: e.target.checked });
   }
+  
+  
+
 
   return (
     <div>
@@ -194,7 +197,7 @@ const ProductList = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th></th>
+                    
                     <th> Name </th>
                     <th> Category </th>
                     <th> Description </th>
@@ -209,13 +212,11 @@ const ProductList = () => {
                       itemlist?.map((item, index) => {
                         return (
                           <tr key={index}>
-                            <td>
-                              <input type="checkbox" id={item?.id} value={item?.id} onChange={handleMultiChange} />
-                            </td>
+                         
                             <td>{item?.name}</td>
                             <td>{item?.category}</td>
                             <td>{item?.description}</td>
-                            <td>{formateStatus(item?.status)}</td>
+                           
                             <td>
                               <select
                                 id={item.id}

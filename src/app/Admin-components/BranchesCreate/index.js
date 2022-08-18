@@ -150,7 +150,7 @@ const CreateBranches = () => {
                 </div>
 
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-2 col-form-label">
                         Address{" "}
@@ -164,31 +164,6 @@ const CreateBranches = () => {
                         {errors && errors.address && (
                           <p>address is required field</p>
                         )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-
-                <div className="row">
-                  <div className="col-md-6">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Select Country</label>
-                      <div className="col-sm-9">
-                        <select
-                          className="form-control form-control-lg"
-                          id="exampleFormControlSelect2"
-                          name="country"
-                          {...register("country", {
-                            required: true,
-                          })}
-                        >
-                          <option>Country</option>
-                          <option>United States of America</option>
-                          <option selected>India</option>
-                          <option>United Kingdom</option>
-                          <option>Germany</option>
-                          <option>Argentina</option>
-                        </select>
                       </div>
                     </Form.Group>
                   </div>
@@ -211,8 +186,8 @@ const CreateBranches = () => {
                       </div>
                     </Form.Group>
                   </div>
-
                 </div>
+
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
@@ -304,8 +279,8 @@ const CreateBranches = () => {
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
-                          name="ibo"
-                          {...register("ibo", {
+                          name="IBO"
+                          {...register("IBO", {
                             required: true,
                           })}
                         >
