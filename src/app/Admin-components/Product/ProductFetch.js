@@ -126,16 +126,6 @@ const ProductList = () => {
       autoClose: true
     })
   } 
-  const formateStatus = (status) => {
-    switch (status) {
-      case '0':
-        return "Inactive";
-      case '1':
-        return "Active";
-      default:
-        return 'Active';
-    }
-  }
 
   const handleMultiChange = (e) => {
     setIsChecked({ ...isChecked, [e.target.id]: e.target.checked });
@@ -212,7 +202,6 @@ const ProductList = () => {
                       itemlist?.map((item, index) => {
                         return (
                           <tr key={index}>
-                         
                             <td>{item?.name}</td>
                             <td>{item?.category}</td>
                             <td>{item?.description}</td>

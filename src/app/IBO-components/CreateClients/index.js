@@ -36,7 +36,7 @@ const CreateClints = () => {
   );
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
-  var strongRegexcode = new RegExp("^[A-Z0-9]");
+  var strongRegexcode = new RegExp("^[A-Z]{4}0[A-Z0-9]{6}$");
 
   var strongaadharcode = new RegExp("^([0-9]){12}$");
 
@@ -460,7 +460,7 @@ const CreateClints = () => {
                           errors.bankIfscCode &&
                           errors.bankIfscCode.type === "pattern" && (
                             <p>
-                              IFSC code should have Capital latter
+                              IFSC code should have Capital latter and Number
                             </p>
                           )}
                       </div>

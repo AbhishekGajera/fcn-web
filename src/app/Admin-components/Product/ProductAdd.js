@@ -9,6 +9,7 @@ import { useHistory } from "react-router-dom";
 const ProductAdd = () => {
   const [cookies] = useCookies(["user"]);
   const history = useHistory();
+  const [data, setdata] = useState(false);
   const [show, setShow] = useState(false);
   const handleClose = () => setShow(false);
 
@@ -31,8 +32,7 @@ const ProductAdd = () => {
 
   const values = getValues();
 
-  const onSubmit = async (data) => {
-    setShow(true);  
+  const submit = async () => {
     const formData = new FormData()
     formData.append("user", cookies?.user?.id)
     formData.append("category", data?.category)
@@ -40,25 +40,26 @@ const ProductAdd = () => {
     formData.append("image", data?.file[0])
     formData.append("name", data?.name)
     formData.append("status", data?.status)
-    console.log("show++",show)
-    if (!show) {
-      try {
-        await CreateProduct(formData);
-        toast.success("Product created successfully");
-        history.push("/products/productslist");
-      } catch (error) {
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+    try {
+      await CreateProduct(formData);
+      toast.success("Product created successfully");
+      history.push("/products/productslist");
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
     }
+  }
+  const onSubmit = async (data) => {
+    setdata(data)
+    setShow(!show)
   };
 
   return (
@@ -98,7 +99,7 @@ const ProductAdd = () => {
         <div >
           <p style={{
             marginLeft: '35%'
-          }}><input type="checkbox" id="agree" />
+          }}><input type="checkbox" id="agree" onClick={submit} />
             <label htmlFor="agree" style={{
               marginLeft: '1%'
             }}> I agree to <b>terms and conditions</b></label></p>

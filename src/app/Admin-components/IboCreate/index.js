@@ -21,6 +21,7 @@ const CreateIbo = () => {
   const [isShow, setIsShow] = useState(false);
   const [phone, setPhone] = useState('+91');
   const [show, setShow] = useState(false);
+  const [data, setData] = useState(false);
   const handleClose = () => setShow(false);
 
   const toInputUppercase = e => {
@@ -39,7 +40,7 @@ const CreateIbo = () => {
   );
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
-  var strongRegexcode = new RegExp("^[A-Z0-9]");
+  var strongRegexcode = new RegExp("^[A-Z]{4}0[A-Z0-9]{6}$");
 
   var strongaadharcode = new RegExp("^([0-9]){12}$");
 
@@ -49,35 +50,38 @@ const CreateIbo = () => {
     setPhone(value);
   }
 
-  const onSubmit = async (data) => {
-    setShow(true);
+  const submit = async () => {
+    handleClose()
     const Data = new FormData();
     Data.append('file', data.image[0]);
-    if(!show) {
-      const fileResult = await ImageUpload(Data)
-      if (fileResult.error) {
-        toast.error(fileResult.error.message);
-      } else {
-        try {
-          data.image = fileResult.secure_url;
-          data.role = 'IBO';
-          data.contactno = phone;
-          const result = await CreateUser(data)
-          toast.success("user created successfully");
-        } catch (error) {
-          if (
-            error &&
-            error.response &&
-            error.response.data &&
-            error.response.data.message
-          ) {
-            toast.error(error.response.data.message);
-          } else {
-            toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-          }
+    const fileResult = await ImageUpload(Data)
+    if (fileResult.error) {
+      toast.error(fileResult.error.message);
+    } else {
+      try {
+        data.image = fileResult.secure_url;
+        data.role = 'IBO';
+        data.contactno = phone;
+        const result = await CreateUser(data)
+        toast.success("user created successfully");
+      } catch (error) {
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
         }
       }
     }
+  }
+
+  const onSubmit = async (data) => {
+    setShow(true)
+    setData(data)
   };
 
   useEffect(() => {
@@ -153,7 +157,7 @@ const CreateIbo = () => {
         <div >
           <p style={{
             marginLeft: '35%'
-          }}><input type="checkbox" id="agree" />
+          }}><input type="checkbox" id="agree" onClick={submit} />
             <label htmlFor="agree" style={{
               marginLeft: '1%'
             }}> I agree to <b>terms and conditions</b></label></p>
@@ -429,7 +433,7 @@ const CreateIbo = () => {
                           errors.bankIfscCode &&
                           errors.bankIfscCode.type === "pattern" && (
                             <p>
-                              IFSC code should have Capital latter
+                              IFSC code should have Capital latter and Number
                             </p>
                           )}
                       </div>
@@ -467,10 +471,10 @@ const CreateIbo = () => {
                           name="aadhar_card_no"
                           {...register("aadhar_card_no", { required: true, pattern: strongaadharcode })}
                         />
-                        {errors && errors.aadhar_card_no && 
+                        {errors && errors.aadhar_card_no &&
                           errors.aadhar_card_no.type === "required" && (
-                          <p>Aadharcard number is required field</p>
-                        )}
+                            <p>Aadharcard number is required field</p>
+                          )}
                         {errors &&
                           errors.aadhar_card_no &&
                           errors.aadhar_card_no.type === "pattern" && (
@@ -529,7 +533,7 @@ const CreateIbo = () => {
                     </Form.Group>
                   </div>
                 </div>
-               
+
                 <div className="mt-3">
                   <button
 
