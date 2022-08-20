@@ -7,6 +7,9 @@ import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { toast } from "react-toastify";
+import Modal from "react-bootstrap/Modal";
+import { useForm } from "react-hook-form";
+import { Form } from 'react-bootstrap';
 import { useHistory } from "react-router-dom";
 
 
@@ -25,6 +28,8 @@ const ProductList = () => {
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
   const [cookies, setCookie] = useCookies(["user"]);
+  const [show, setShow] = React.useState(false);
+  const [valueToEdit, setvalueToEdit] = useState({});
   const [itemlist, setitemlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true)
   const history = useHistory()
@@ -37,7 +42,22 @@ const ProductList = () => {
   const handlePageClick = (event) => {
     setItemOffset(event.selected);
   };
-  
+
+  const handleClose = () => {
+    setShow(false)
+    setvalueToEdit({})
+    reset()
+  };
+
+  const handleShow = (value) => {
+    reset()
+    setvalueToEdit(value)
+    setShow(true);
+  }
+
+  const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
+    mode: "onChange"
+  });
 
   const deleteProduct = (uid) => {
     Swal.fire({
@@ -75,10 +95,41 @@ const ProductList = () => {
             list();
           });
         }
-      }else if (result.dismiss === Swal.DismissReason.cancel) {
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
       }
     });
+  };
+
+  const onSubmit = async (data) => {
+    try {
+      const formData = new FormData()
+      formData.append("productId", valueToEdit?.id);
+      formData.append("user", cookies?.user?.id)
+      formData.append("category", data?.category)
+      formData.append("description", data?.description)
+      formData.append("name", data?.name)
+      formData.append("commision", data?.commision)
+      formData.append("status", data?.status)
+      await UpdateProducts(formData)
+      toast.success('Product updated Successfully', {
+        autoClose: 3000
+      })
+      list()
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    } finally {
+      setShow(false)
+    }
   };
 
   const onClickDownload = (imageURL) => {
@@ -117,27 +168,163 @@ const ProductList = () => {
     }
   }
   const statusChanged = (id, e) => {
-    console.log("ei",e.target.value, id);
+    console.log("ei", e.target.value, id);
 
     const formdata = new FormData();
-    formdata.append("productId",id);
-    formdata.append("status",e.target.value);
+    formdata.append("productId", id);
+    formdata.append("status", e.target.value);
 
     UpdateProducts(formdata)
     toast.success('Status updated successfully', {
       autoClose: true
     })
-  } 
+  }
 
   const handleMultiChange = (e) => {
     setIsChecked({ ...isChecked, [e.target.id]: e.target.checked });
   }
-  
-  
+
+
 
 
   return (
     <div>
+      <Modal
+        show={show}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Update Product</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row auth">
+            <div className="col-12 grid-margin">
+              <div className="card">
+                <div className="card-body">
+                  <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+                    <p className="card-description"> Update Product </p>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Name
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              name="name"
+                              defaultValue={valueToEdit.name}
+                              {...register("name", { required: true })}
+                              placeholder="name"
+                            />
+                            {errors && errors.name && <p>name is required field</p>}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Category{" "}
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              name="category"
+                              defaultValue={valueToEdit.category}
+                              {...register("category", { required: true })}
+                              placeholder="category"
+                            />
+                            {errors && errors.address && (
+                              <p>Category is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Description{" "}
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              as="textarea"
+                              name="description"
+                              defaultValue={valueToEdit.description}
+                              {...register("description", { required: true })}
+                              placeholder="description"
+                            />
+                            {errors && errors.desc && (
+                              <p>Description is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="row" >
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">Status</label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="status"
+                              {...register("status", {
+                                required: true,
+                              })}>
+                              <option value=''>--Select Status--</option>
+                              <option value='1' selected={valueToEdit.status === '1'}>Active</option>
+                              <option value='0' selected={valueToEdit.status === '0'}>Inactive</option>
+                            </select>
+                            {errors && errors.status && (
+                              <p>status is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Commision{" "}
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="number"
+                              name="commision"
+                              defaultValue={valueToEdit.commision}
+                              {...register("commision", { required: true })}
+                              placeholder="commision"
+                            />
+                            {errors && errors.commision && (
+                              <p>Commision is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <button
+                        className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                        type="submit"
+                      >
+                        UPDATE
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div >
+        </Modal.Body >
+      </Modal >
       <div className="page-header">
         <h3 className="page-title">Products / Show Products </h3>
         <nav aria-label="breadcrumb">
@@ -189,11 +376,12 @@ const ProductList = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    
                     <th> Name </th>
                     <th> Category </th>
                     <th> Description </th>
-                    <th > Status </th>
+                    <th> Commision</th>
+                    <th> Status </th>
+                    <th> Edit </th>
                     <th> Delete </th>
                   </tr>
                 </thead>
@@ -207,7 +395,7 @@ const ProductList = () => {
                             <td>{item?.name}</td>
                             <td>{item?.category}</td>
                             <td>{item?.description}</td>
-                           
+                            <td>{item?.commision}</td>
                             <td>
                               <select
                                 id={item.id}
@@ -227,6 +415,7 @@ const ProductList = () => {
                                 </option>
                               </select>
                             </td>
+                            <td><i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i></td>
                             <td>
                               <i
                                 onClick={() => deleteProduct(item?.id)}
@@ -262,7 +451,7 @@ const ProductList = () => {
           </div>
         </div>
       </div>
-    </div>
+    </div >
   );
 };
 

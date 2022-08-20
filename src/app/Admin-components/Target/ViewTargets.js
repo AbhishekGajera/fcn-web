@@ -53,7 +53,6 @@ const ViewTargets = () => {
     setShow(false)
     setvalueToEdit({})
     reset()
-
   };
 
   const handleShow = (value) => {

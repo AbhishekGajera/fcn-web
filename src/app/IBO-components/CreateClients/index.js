@@ -512,7 +512,48 @@ const CreateClints = () => {
                     </Form.Group>
                   </div>
                 </div>
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Min Amount{" "}</label>
 
+                      <div className="col-sm-9">
+                        <Form.Control
+                          id="minamount"
+                          className="form-control"
+                          type="number"
+                          name="minamount"
+                          placeholder="minamount"
+                          {...register("minamount", { required: true })}
+                        />
+                        {errors && errors.minamount && (
+                          <p>Product minamount is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Max Amount{" "}</label>
+
+                      <div className="col-sm-9">
+                        <Form.Control
+                          id="maxamount"
+                          className="form-control"
+                          type="number"
+                          name="maxamount"
+                          placeholder="maxamount"
+                          {...register("maxamount", { required: true })}
+                        />
+                        {errors && errors.maxamount && (
+                          <p>Product maxamount is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"

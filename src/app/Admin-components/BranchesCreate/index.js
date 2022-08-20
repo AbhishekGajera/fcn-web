@@ -5,7 +5,7 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
-import { CreateUser, ImageUpload, getIBOsClient, userLogout } from "../../../utils/APIs";
+import { CreateUser, ImageUpload, getProductsList, getIBOsClient, userLogout } from "../../../utils/APIs";
 import moment from 'moment';
 import PhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css'
@@ -13,7 +13,7 @@ import 'react-phone-input-2/lib/style.css'
 
 const CreateBranches = () => {
   const [cookies, setCookie] = useCookies(["user"]);
-
+  const [productList, setproductList] = useState([]);
   const [isShow, setIsShow] = useState(false);
   const [branchlist, setBranchlist] = useState([]);
   const history = useHistory();
@@ -98,8 +98,15 @@ const CreateBranches = () => {
       }
     }
   };
+
+  const getAllProducts = async () => {
+    const allProducts = await getProductsList(3000);
+    setproductList(allProducts?.data?.results);
+  };
+
   useEffect(() => {
     branchList();
+    getAllProducts();
   }, []);
 
   const handleUpload = (e) => {
@@ -438,13 +445,13 @@ const CreateBranches = () => {
                         <Form.Control
                           type="text"
                           name="b_aadhar_card_no"
-                          {...register("b_aadhar_card_no", { required: true, pattern: strongaadharcode  })}
+                          {...register("b_aadhar_card_no", { required: true, pattern: strongaadharcode })}
                         />
-                        {errors && errors.b_aadhar_card_no && 
+                        {errors && errors.b_aadhar_card_no &&
                           errors.b_aadhar_card_no.type === "required" && (
-                          <p>Aadharcard number is required field</p>
-                        )}
-                         {errors &&
+                            <p>Aadharcard number is required field</p>
+                          )}
+                        {errors &&
                           errors.b_aadhar_card_no &&
                           errors.b_aadhar_card_no.type === "pattern" && (
                             <p>
@@ -484,6 +491,26 @@ const CreateBranches = () => {
                       </div>
                     </Form.Group>
                   </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Max Amount{" "}</label>
+
+                      <div className="col-sm-9">
+                        <Form.Control
+                          id="maxamount"
+                          className="form-control"
+                          type="number"
+                          name="maxamount"
+                          placeholder="maxamount"
+                          {...register("maxamount", { required: true })}
+                        />
+                        {errors && errors.maxamount && (
+                          <p>Product maxamount is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
                 </div>
                 {/* <div className="row">
                   <div className="col-md-6">
@@ -504,6 +531,57 @@ const CreateBranches = () => {
                     </Form.Group>
                   </div>
                 </div> */}
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Select Product
+                      </label>
+                      <div className="col-sm-9">
+                        <select
+                          className="form-control form-control-lg"
+                          id="exampleFormControlSelect2"
+                          name="selectProduct"
+                          {...register("selectProduct", {
+                            required: true,
+                          })}
+                        >
+                          <option value=''>--Select Product--</option>
+                          {productList?.map((item, index) => (
+                            <option
+                              key={index}
+                              value={item?.id}
+                              label={item?.name}
+                            ></option>
+                          ))}
+                        </select>
+                        {errors && errors.selectProduct && (
+                          <p>Selecting a product is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Min Amount{" "}</label>
+
+                      <div className="col-sm-9">
+                        <Form.Control
+                          id="minamount"
+                          className="form-control"
+                          type="number"
+                          name="minamount"
+                          placeholder="minamount"
+                          {...register("minamount", { required: true })}
+                        />
+                        {errors && errors.minamount && (
+                          <p>Product minamount is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"

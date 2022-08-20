@@ -39,6 +39,7 @@ const ProductAdd = () => {
     formData.append("description", data?.description)
     formData.append("image", data?.file[0])
     formData.append("name", data?.name)
+    formData.append("commision", data?.commision)
     formData.append("status", data?.status)
     try {
       await CreateProduct(formData);
@@ -205,6 +206,26 @@ const ProductAdd = () => {
                         </select>
                         {errors && errors.status && (
                           <p>status is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-12">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Commision{" "}
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="number"
+                          name="commision"
+                          {...register("commision", { required: true })}
+                          placeholder="commision"
+                        />
+                        {errors && errors.commision && (
+                          <p>Commision is required field</p>
                         )}
                       </div>
                     </Form.Group>

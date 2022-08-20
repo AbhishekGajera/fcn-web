@@ -5,7 +5,7 @@ import { Form, Modal } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import {
-  CreateUser, userLogout, ImageUpload, getBranchesClient
+  CreateUser, userLogout, ImageUpload, getBranchesClient, getProductsList
 } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
@@ -19,6 +19,7 @@ const CreateIbo = () => {
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();
   const [isShow, setIsShow] = useState(false);
+  const [productList, setproductList] = useState([]);
   const [phone, setPhone] = useState('+91');
   const [show, setShow] = useState(false);
   const [data, setData] = useState(false);
@@ -49,6 +50,11 @@ const CreateIbo = () => {
   const handleOnChange = value => {
     setPhone(value);
   }
+  
+  const getAllProducts = async () => {
+    const allProducts = await getProductsList(3000);
+    setproductList(allProducts?.data?.results);
+  };
 
   const submit = async () => {
     handleClose()
@@ -85,6 +91,7 @@ const CreateIbo = () => {
   };
 
   useEffect(() => {
+    getAllProducts();
     list();
   }, []);
 
@@ -528,6 +535,79 @@ const CreateIbo = () => {
                         </button>
                         {errors && errors.image && (
                           <p>Upload image is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-6">
+                  <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Select Product
+                      </label>
+                      <div className="col-sm-9">
+                        <select
+                          className="form-control form-control-lg"
+                          id="exampleFormControlSelect2"
+                          name="selectProduct"
+                          {...register("selectProduct", {
+                            required: true,
+                          })}
+                        >
+                          <option value=''>--Select Product--</option>
+                          {productList?.map((item, index) => (
+                            <option
+                              key={index}
+                              value={item?.id}
+                              label={item?.name}
+                            ></option>
+                          ))}
+                        </select>
+                        {errors && errors.selectProduct && (
+                          <p>Selecting a product is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Min Amount{" "}</label>
+
+                      <div className="col-sm-9">
+                        <Form.Control
+                          id="minamount"
+                          className="form-control"
+                          type="number"
+                          name="minamount"
+                          placeholder="minamount"
+                          {...register("minamount", { required: true })}
+                        />
+                        {errors && errors.minamount && (
+                          <p>Product minamount is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        Max Amount{" "}</label>
+
+                      <div className="col-sm-9">
+                        <Form.Control
+                          id="maxamount"
+                          className="form-control"
+                          type="number"
+                          name="maxamount"
+                          placeholder="maxamount"
+                          {...register("maxamount", { required: true })}
+                        />
+                        {errors && errors.maxamount && (
+                          <p>Product maxamount is required field</p>
                         )}
                       </div>
                     </Form.Group>
