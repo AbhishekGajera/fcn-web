@@ -127,7 +127,7 @@ const ProductAdd = () => {
         <div className="col-lg-6 col-md-8 col-sm-12 col-xs-12 grid-margin">
           <div className="card">
             <div className="card-body">
-              <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+              <form className="form-sample" onSubmit={handleSubmit(onSubmit)} enctype="multipart/form-data">
                 <p className="card-description"> Add Product </p>
                 <div className="row">
                   <div className="col-md-12">

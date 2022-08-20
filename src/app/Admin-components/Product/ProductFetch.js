@@ -118,10 +118,12 @@ const ProductList = () => {
   }
   const statusChanged = (id, e) => {
     console.log("ei",e.target.value, id);
-    UpdateProducts({
-      "productId": id,
-      "status": e.target.value
-    })
+
+    const formdata = new FormData();
+    formdata.append("productId",id);
+    formdata.append("status",e.target.value);
+
+    UpdateProducts(formdata)
     toast.success('Status updated successfully', {
       autoClose: true
     })

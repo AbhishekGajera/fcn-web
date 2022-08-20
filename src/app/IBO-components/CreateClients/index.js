@@ -51,8 +51,8 @@ const CreateClints = () => {
 
       data.name = data.first_name +' '+ data.last_name;
       await CreateUser(data)
-      toast.success("user crated successfully");
-      history.push('/clients/clientlist')
+      toast.success("user created successfully");
+      // history.push('/clients/clientlist')
     } catch (error) {
       if (
         error &&
@@ -450,7 +450,7 @@ const CreateClints = () => {
                           type="text"
                           name="bankIfscCode"
                           onInput={toInputUppercase}
-                          {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
+                          {...register("bankIfscCode", { required: true, pattern: strongRegex })}
                         />
                         {errors && errors.bankIfscCode &&
                           errors.bankIfscCode.type === "required" && (

@@ -517,23 +517,7 @@ class Sidebar extends Component {
               </Collapse>
             </li>
           }
-          {["admin"].includes(this.userData?.role) &&
 
-            <li className={this.isPathActive('/welcome') ? 'nav-item active' : 'nav-item'}>
-              <div className={this.state.fcnWelcome ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('fcnWelcome')} data-toggle="collapse">
-                <span className="menu-title"><Trans>Welcome</Trans></span>
-                <i className="menu-arrow"></i>
-                <i className="mdi mdi-logout-variant menu-icon"></i>
-              </div>
-              <Collapse in={this.state.fcnWelcome}>
-                <ul className="nav flex-column sub-menu">
-                  <li className="nav-item"> <Link className={this.isPathActive('/welcome/account_opening') ? 'nav-link active' : 'nav-link'} to="/welcome/account_opening"><Trans>Account Opening Welcome Letter</Trans></Link></li>
-                  <li className="nav-item"> <Link className={this.isPathActive('/welcome/product_aquire') ? 'nav-link active' : 'nav-link'} to="/welcome/product_aquire"><Trans>Prodict Aquire IBO Letter</Trans></Link></li>
-                  <li className="nav-item"> <Link className={this.isPathActive('/welcome/terminate_branch') ? 'nav-link active' : 'nav-link'} to="/welcome/terminate_branch"><Trans>Terminate Branch Letter</Trans></Link></li>
-                </ul>
-              </Collapse>
-            </li>
-          }
           {["admin"].includes(this.userData?.role) &&
 
             <li className={this.isPathActive('/product-assign') ? 'nav-item active' : 'nav-item'}>

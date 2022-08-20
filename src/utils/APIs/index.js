@@ -14,6 +14,8 @@ export const deleteUsr = (id) => api(`users/${id}`, 'DELETE');
 export const getusersbyfilter = (email='') => api(`users?custom=true&email=${email}`, 'GET');
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
 export const getUsers = (limit = 10,offset = 1,name = '',role='user',branch='',IBO='') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=asc&name=${name}&custom=true&branch=${branch}&IBO=${IBO}`, 'GET');
+export const getUsersList = (limit = 500,offset = 1,role='user') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=asc`, 'GET');
+
 export const refreshTokens = (data) => refreshTokenApi(`auth/refresh-tokens`, 'POST', data);
 export const getUsersRecent = (limit = 5,offset = 1,role='user') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=createdAt:desc`, 'GET');
 

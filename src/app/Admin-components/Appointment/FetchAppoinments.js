@@ -201,7 +201,7 @@ const FetchAppoinments = () => {
 
                         <td>{new Date(item?.fromDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                         <td>{new Date(item?.toDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                        <td>{item?.desc}</td>
+                        <td>{item?.Description}</td>
                         <td>
                           <select
 

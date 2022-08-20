@@ -1,8 +1,65 @@
-import React from 'react'
+import React, { useEffect, useState } from "react";
+
 import { Form } from 'react-bootstrap';
 import { useForm } from 'react-hook-form';
+import { useCookies } from "react-cookie";
+import { useHistory } from "react-router-dom";
+
+import { CreateUser, getBranches,getUsersList,getBranchesClient,getIBOsClient, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
+
 
 const AssignProduct = () => {
+  const [productlist, setproductlist] = useState([]);
+  const [userlist, setuserlist] = useState([]);
+
+  const [cookies, setCookie] = useCookies(["user"]);
+
+  const history = useHistory()
+
+
+  const productList = async () => {
+    try {
+      const items = await (await getProductsListClient()).data;
+      console.log("itm", items)
+      setproductlist(items?.results);
+      // setPageCount(items?.totalPages);
+    } catch (error) {
+     
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
+  };
+
+  const userList = async () => {
+    try {
+      const items = await (await getUsersList()).data;
+      console.log("itm", items)
+      setuserlist(items?.results);
+      // setPageCount(items?.totalPages);
+    } catch (error) {
+     
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
+  };
+
+
 
   // form validation
   const {
@@ -20,6 +77,10 @@ const values = getValues();
 const onSubmit =(data)=>{
 console.log(data)
 }
+useEffect(() => {
+    productList();
+    userList();
+  }, []);
 
   return (
     <div>
@@ -44,9 +105,12 @@ console.log(data)
                                                     {...register("user", {
                                                         required: true,
                                                     })}>
-                                                       return <option value="user"> User List </option>
+                                                       {userlist.map((item, index) => (
+                                                    
+                                                    <option key={index} value={item?.name} label={item?.name}></option>
+                                                    ))}
                                                 </select>
-                                            </div>
+                                              </div>
                                         </Form.Group>
                                     </div>
                                 </div>
@@ -64,7 +128,11 @@ console.log(data)
                                                         required: true,
                                                     })}>
                                                 
-                                                       <option value="product">product</option>
+                                                <option value=''>--Select product--</option>
+                                                    {productlist.map((item, index) => (
+                                                    
+                                                        <option key={index} value={item?.name} label={item?.name}></option>
+                                                        ))}
                                                 
                                                 </select>
                                             </div>
