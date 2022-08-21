@@ -252,7 +252,7 @@ const CreateClints = () => {
                           <option value=''>--Select product--</option>
                           {productlist.map((item, index) => (
                          
-                            <option key={index} value={item?.name} label={item?.name}></option>
+                            <option key={index} value={item?.id} label={item?.name}></option>
                           ))}
                         </select>
                         {errors && errors.product && <p>Select product is required field</p>}
@@ -299,7 +299,7 @@ const CreateClints = () => {
                         >
                           <option value=''>--Select ibo--</option>
                           {branchlist.map((item, index) => (
-                            <option key={index} value={item?.name} label={item?.name}></option>
+                            <option key={index} value={item?.id} label={item?.name}></option>
                           ))}
 
 
@@ -523,11 +523,11 @@ const CreateClints = () => {
                           id="minamount"
                           className="form-control"
                           type="number"
-                          name="minamount"
+                          name="minAmount"
                           placeholder="minamount"
-                          {...register("minamount", { required: true })}
+                          {...register("minAmount", { required: true })}
                         />
-                        {errors && errors.minamount && (
+                        {errors && errors.minAmount && (
                           <p>Product minamount is required field</p>
                         )}
                       </div>
@@ -543,11 +543,11 @@ const CreateClints = () => {
                           id="maxamount"
                           className="form-control"
                           type="number"
-                          name="maxamount"
+                          name="maxAmount"
                           placeholder="maxamount"
-                          {...register("maxamount", { required: true })}
+                          {...register("maxAmount", { required: true })}
                         />
-                        {errors && errors.maxamount && (
+                        {errors && errors.maxAmount && (
                           <p>Product maxamount is required field</p>
                         )}
                       </div>

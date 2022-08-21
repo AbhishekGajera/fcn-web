@@ -68,6 +68,7 @@ const CreateIbo = () => {
         data.image = fileResult.secure_url;
         data.role = 'IBO';
         data.contactno = phone;
+        
         const result = await CreateUser(data)
         toast.success("user created successfully");
       } catch (error) {
@@ -380,24 +381,10 @@ const CreateIbo = () => {
                             <option key={index} value={item?.name} label={item?.name}></option>
                           ))}
 
-                          {/* <option>United States of America</option>
-                          <option >India</option>
-                          <option>United Kingdom</option>
-                          <option>Germany</option>
-                          <option>Argentina</option> */}
                         </select>
                         {errors && errors.branch && <p>Select branch is required field</p>}
                       </div>
-                      {/* <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="branch"
-                          {...register("branch", { required: true })}
-                        />
-                        {errors && errors.branch && (
-                          <p>branch is required field</p>
-                        )}
-                      </div> */}
+                     
                     </Form.Group>
                   </div>
 
@@ -430,7 +417,7 @@ const CreateIbo = () => {
                           type="text"
                           name="bankIfscCode"
                           onInput={toInputUppercase}
-                          {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
+                          {...register("bankIfscCode", { required: true, pattern: strongRegex })}
                         />
                         {errors && errors.bankIfscCode &&
                           errors.bankIfscCode.type === "required" && (
@@ -550,8 +537,8 @@ const CreateIbo = () => {
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
-                          name="selectProduct"
-                          {...register("selectProduct", {
+                          name="product"
+                          {...register("product", {
                             required: true,
                           })}
                         >
@@ -580,12 +567,12 @@ const CreateIbo = () => {
                           id="minamount"
                           className="form-control"
                           type="number"
-                          name="minamount"
-                          placeholder="minamount"
-                          {...register("minamount", { required: true })}
+                          name="minAmount"
+                          placeholder="minAmount"
+                          {...register("minAmount", { required: true })}
                         />
-                        {errors && errors.minamount && (
-                          <p>Product minamount is required field</p>
+                        {errors && errors.minAmount && (
+                          <p>Product min amount is required field</p>
                         )}
                       </div>
                     </Form.Group>
@@ -602,11 +589,11 @@ const CreateIbo = () => {
                           id="maxamount"
                           className="form-control"
                           type="number"
-                          name="maxamount"
+                          name="maxAmount"
                           placeholder="maxamount"
-                          {...register("maxamount", { required: true })}
+                          {...register("maxAmount", { required: true })}
                         />
-                        {errors && errors.maxamount && (
+                        {errors && errors.maxAmount && (
                           <p>Product maxamount is required field</p>
                         )}
                       </div>

@@ -501,9 +501,9 @@ const CreateBranches = () => {
                           id="maxamount"
                           className="form-control"
                           type="number"
-                          name="maxamount"
+                          name="maxAmount"
                           placeholder="maxamount"
-                          {...register("maxamount", { required: true })}
+                          {...register("maxAmount", { required: true })}
                         />
                         {errors && errors.maxamount && (
                           <p>Product maxamount is required field</p>
@@ -571,9 +571,9 @@ const CreateBranches = () => {
                           id="minamount"
                           className="form-control"
                           type="number"
-                          name="minamount"
-                          placeholder="minamount"
-                          {...register("minamount", { required: true })}
+                          name="minAmount"
+                          placeholder="minAmount"
+                          {...register("minAmount", { required: true })}
                         />
                         {errors && errors.minamount && (
                           <p>Product minamount is required field</p>
