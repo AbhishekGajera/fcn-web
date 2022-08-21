@@ -62,6 +62,9 @@ export const deleteProductById = (id) => api(`product/${id}`, 'GET');
 export const UpdateProducts = (data) => api(`product/update-product`, 'PATCH', data);
 
 
+//Product Assign management
+export const CreateAssignProduct = (data) => api(`users/product-assign`, 'PATCH', data);
+
 // Target management
 export const CreateTargets = (data) => api(`target/add-target`, 'POST', data);
 export const UpdateTargets = (data) => api(`target/update-target`, 'PATCH', data);

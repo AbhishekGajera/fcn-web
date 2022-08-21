@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser, getBranches,getBranchesClient,getIBOsClient, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
+import { CreateUser,getBranchesClient,getIBOsClient, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import moment from 'moment';
 import PhoneInput from "react-phone-input-2";
@@ -52,7 +52,7 @@ const CreateClints = () => {
       data.name = data.first_name +' '+ data.last_name;
       await CreateUser(data)
       toast.success("user created successfully");
-      // history.push('/clients/clientlist')
+      history.push('/clients/clientlist')
     } catch (error) {
       if (
         error &&
