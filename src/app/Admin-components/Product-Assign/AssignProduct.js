@@ -117,7 +117,6 @@ const AssignProduct = () => {
                                                     className="form-control form-control-lg"
                                                     id="exampleFormControlSelect2"
                                                     name="userId"
-                                                    multiple
                                                     {...register("userId", {
                                                         required: true,
                                                     })}>
@@ -166,6 +165,7 @@ const AssignProduct = () => {
                                                 <Form.Control
                                                     type="number"
                                                     name="cost"
+                                                    placeholder="Total Product"
                                                     {...register("cost", {
                                                         required: true,
                                                     })}
@@ -235,6 +235,7 @@ const AssignProduct = () => {
                                                     type="text"
                                                     name="desc"
                                                     as="textarea"
+                                                    placeholder="Description"
                                                     {...register("desc", { required: true })}
                                                 />
                                                 {errors && errors.desc && (
