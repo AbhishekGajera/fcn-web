@@ -155,28 +155,6 @@ const AssignProduct = () => {
                                     </div>
                                 </div>
 
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <Form.Group className="row">
-                                            <label className="col-sm-4 col-form-label">
-                                                Total Product{" "}
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <Form.Control
-                                                    type="number"
-                                                    name="cost"
-                                                    placeholder="Total Product"
-                                                    {...register("cost", {
-                                                        required: true,
-                                                    })}
-                                                />
-                                                {errors && errors.cost && (
-                                                    <p>Total product is required field</p>
-                                                )}
-                                            </div>
-                                        </Form.Group>
-                                    </div>
-                                </div>
 
                                 <div className="row">
                                     <div className="col-md-12">
@@ -224,27 +202,7 @@ const AssignProduct = () => {
                                     </div>
                                 </div>
 
-                                <div className="row">
-                                    <div className="col-md-12">
-                                        <Form.Group className="row">
-                                            <label className="col-sm-4 col-form-label">
-                                                Description{" "}
-                                            </label>
-                                            <div className="col-sm-8">
-                                                <Form.Control
-                                                    type="text"
-                                                    name="desc"
-                                                    as="textarea"
-                                                    placeholder="Description"
-                                                    {...register("desc", { required: true })}
-                                                />
-                                                {errors && errors.desc && (
-                                                    <p>description is required field</p>
-                                                )}
-                                            </div>
-                                        </Form.Group>
-                                    </div>
-                                </div>
+                               
 
 
                                 <div className="mt-3" style={{ display: 'flex', justifyContent: 'center' }}>
