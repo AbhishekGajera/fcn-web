@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Performance/Employee.js"],"names":["Employee"],"mappings":"+HAAA,2BAQeA,UANE,WACf,OACE","file":"static/js/75.e84b9827.chunk.js","sourcesContent":["import React from 'react'\n\nconst Employee = () => {\n  return (\n    <div>Employee</div>\n  )\n}\n\nexport default Employee"],"sourceRoot":""}
