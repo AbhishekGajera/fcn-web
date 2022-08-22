@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Fees/Technology.js"],"names":["Technology"],"mappings":"+HAAA,2BAQeA,UANI,WACjB,OACE","file":"static/js/61.7f9072fb.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Technology = () => {\r\n  return (\r\n    <div>Technology</div>\r\n  )\r\n}\r\n\r\nexport default Technology"],"sourceRoot":""}
