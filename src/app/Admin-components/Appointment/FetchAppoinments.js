@@ -189,7 +189,7 @@ const FetchAppoinments = () => {
                     <th> Date From </th>
                     <th> Date To </th>
                     <th> Description </th>
-                    <th > Status </th>
+                    <th> Status </th>
 
                   </tr>
                 </thead>

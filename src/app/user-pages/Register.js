@@ -24,7 +24,6 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     delete data.terms;
-
     try {
       const result = await registration(data);
       result.data.user.auth = "verified";

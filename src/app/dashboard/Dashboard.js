@@ -22,7 +22,7 @@ const Dashboard = () => {
   const [itemlist, setitemlist] = useState([]);
   const [itemlistdash, setitemlistdash] = useState([]);
 
-  
+
   const [isLoading, setIsLoading] = useState(true)
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
@@ -94,7 +94,7 @@ const Dashboard = () => {
       },
     ],
   });
-  
+
   const list = async () => {
     setIsLoading(true)
     try {
@@ -107,8 +107,8 @@ const Dashboard = () => {
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
-      
-      
+
+
     }
     setIsLoading(false)
   };
@@ -116,35 +116,31 @@ const Dashboard = () => {
   const leadlist = async () => {
     setIsLoading(true)
     try {
-        
-        const items = await (
-            await getLeadsDash(
-                itemsPerPage,
-                +itemOffset + 1
-                
-            )
-        ).data;
-        setitemlistdash(items?.results);
-        setPageCount(items?.totalPages);
-        setIsLoading(false)
+      const items = await (
+        await getLeadsDash(
+          itemsPerPage,
+          +itemOffset + 1
+        )
+      ).data;
+      setitemlistdash(items?.results);
+      setPageCount(items?.totalPages);
+      setIsLoading(false)
     } catch (error) {
-        
-
-        if (error?.response?.data?.code === 401) {
-            const formData = JSON.stringify({
-                refreshToken: localStorage.getItem("refreshToken"),
-            });
-           
-        }
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
     }
-}
+  }
+
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage]);
   useEffect(() => {
     leadlist();
   }, [itemOffset, itemsPerPage]);
-console.log("it",itemlist)
+  console.log("it", itemlist)
 
   return (
     <>
@@ -434,26 +430,26 @@ console.log("it",itemlist)
                         <table className="table">
                           <thead className="thead-light">
                             <tr>
-                            <th> Name </th>
-                            <th> Contact no. </th>
-                            <th> Branch </th>
-                            <th> IBO </th>
-                            <th> Email </th>
-                                
-                        
+                              <th> Name </th>
+                              <th> Contact no. </th>
+                              <th> Branch </th>
+                              <th> IBO </th>
+                              <th> Email </th>
+
+
                             </tr>
                           </thead>
                           <tbody>
-                          {itemlist?.map((item) => {
-                    return (
-                            <tr>
-                              <td>{item?.name}</td>
-                              <td>{item?.contactno}</td>
-                              <td>{item?.branch}</td>
-                              <td>{item?.IBO}</td>
-                              <td>{item?.email}</td>
-                       
-                            </tr>
+                            {itemlist?.map((item) => {
+                              return (
+                                <tr>
+                                  <td>{item?.name}</td>
+                                  <td>{item?.contactno}</td>
+                                  <td>{item?.branch}</td>
+                                  <td>{item?.IBO}</td>
+                                  <td>{item?.email}</td>
+
+                                </tr>
                               );
                             })}
                           </tbody>
@@ -478,25 +474,25 @@ console.log("it",itemlist)
                         <table className="table">
                           <thead className="thead-light">
                             <tr>
-                                        <th> Name </th>
-                                        <th> Title </th>
-                                        <th> Branch Name </th>
-                                        <th> Email </th>
-                                        <th> Phone </th>
+                              <th> Name </th>
+                              <th> Title </th>
+                              <th> Branch Name </th>
+                              <th> Email </th>
+                              <th> Phone </th>
                             </tr>
                           </thead>
                           <tbody>
-                          { itemlistdash?.map((item, index) => {
-                            return (
-                              <tr>
-                                 <td>{item?.name}</td>
-                                                        <td>{item?.title}</td>
-                                                        <td>{item?.branch}</td>
-                                                        <td>{item?.email}</td>
-                                                        <td>{item?.contactno}</td>
-                             </tr>
-                            )
-                          })}
+                            {itemlistdash?.map((item, index) => {
+                              return (
+                                <tr>
+                                  <td>{item?.name}</td>
+                                  <td>{item?.title}</td>
+                                  <td>{item?.branch}</td>
+                                  <td>{item?.email}</td>
+                                  <td>{item?.contactno}</td>
+                                </tr>
+                              )
+                            })}
                           </tbody>
                         </table>
                       </div>
