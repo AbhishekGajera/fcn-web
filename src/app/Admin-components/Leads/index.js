@@ -51,7 +51,8 @@ const Leads = () => {
         setPhone(value);
     }
 
-    const deleteProduct = (uid) => {
+    const deleteLeads = (uid) => {
+        console.log("uid",uid)
         Swal.fire({
             title: "Are you sure?",
             text: "You will not be able to recover this imaginary file!",
@@ -66,7 +67,7 @@ const Leads = () => {
 
                 const itemList = Object.keys(isChecked).map((id) => {
                     if (isChecked[id] === true) {
-                        deleteLead(id)
+                        deleteLead(uid)
                     }
                     Swal.fire(
                         "Deleted!",
@@ -419,7 +420,7 @@ const Leads = () => {
 
                                                         <td>
                                                             <i
-                                                                onClick={() => deleteProduct(item?.id)}
+                                                                onClick={() => deleteLeads(item?.id)}
                                                                 className="mdi mdi-delete"
                                                             ></i>
                                                         </td>

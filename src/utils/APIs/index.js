@@ -32,7 +32,9 @@ export const updateLead = (data) => api(`leads/update-lead`, 'POST',data);
 export const getLeads = (limit = 10,offset = 1,name = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&name=${name}`, 'GET');
 export const getLeadsDash = (limit = 10,offset = 1) => api(`leads/get-lead?limit=${limit}&page=${offset}&sortBy=createdAt:desc`, 'GET');
 
-export const deleteLead = (id) => api(`delete-lead/${id}`, 'DELETE');
+export const deleteLead = (data) => api(`leads/delete-lead`, 'DELETE',data);
+
+
 
 
 
