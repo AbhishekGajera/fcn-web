@@ -48,7 +48,7 @@ const ClientList = () => {
   const onSubmit = async (data) => {
     data.status = updateStatus;
     data.branch = branchUpdate;
-    data.IBO = IBOUpdate;
+    // data.IBO = IBOUpdate;
     data.role = roleUpdate
 
     try {
