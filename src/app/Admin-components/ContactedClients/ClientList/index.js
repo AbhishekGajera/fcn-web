@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useUrl } from "../../../../utils/Functions/useUrl";
 import { useDebounce } from "../../../../utils/Functions/useDebounce";
 import Spinner from "../../../shared/Spinner";
+import moment from 'moment';
 
 const ClientList = () => {
   const history = useHistory();
@@ -190,7 +191,9 @@ const ClientList = () => {
                           <td>{item?.name}</td>
                           <td>{item?.contactno}</td>
                           <td>{item?.branch}</td>
-                          <td>{item?.date}</td>
+                        <td>{moment(item?.fromDate).format('DD-MM-YYYY')}</td>
+
+                          
                           <td>{item?.type === 1 ? "Free" : "Paid"}</td>
                         </tr>
                       );

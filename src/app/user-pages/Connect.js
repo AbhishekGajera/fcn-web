@@ -28,7 +28,7 @@ const Connect = () => {
       contactno,
       branch,
       type: courceType,
-      date,
+      fromDate:date,
     });
 
     try {
