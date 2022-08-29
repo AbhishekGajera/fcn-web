@@ -4,7 +4,8 @@ import { Bar } from "react-chartjs-2";
 import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckSquare, faCoffee, } from '@fortawesome/fontawesome-free-solid'
-
+import { Trans } from 'react-i18next';
+import { useCookies  } from 'react-cookie';
 import {
   getUsers,
   getUsersRecent,
@@ -19,6 +20,7 @@ import { useUrl } from "../../utils/Functions/useUrl";
 
 const Dashboard = () => {
   const history = useHistory();
+  const [cookies, setCookie] = useCookies(['user']);
   const [itemlist, setitemlist] = useState([]);
   const [itemlistdash, setitemlistdash] = useState([]);
 
@@ -144,6 +146,13 @@ const Dashboard = () => {
 
   return (
     <>
+    <div className="mb-3">
+        <div className="card">
+          <div className="card-body">
+            <h4 className="welcome-text mb-0">Welcome , <Trans>{cookies?.user?.name}</Trans></h4>
+          </div>
+        </div>
+      </div>
       <div className="mb-3">
         <div className="card">
           <div className="card-body">

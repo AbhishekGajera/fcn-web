@@ -179,6 +179,7 @@ const ClientList = () => {
                     <th> Branch </th>
                     <th> Date </th>
                     <th> Type </th>
+                    <th> Convert </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -191,10 +192,15 @@ const ClientList = () => {
                           <td>{item?.name}</td>
                           <td>{item?.contactno}</td>
                           <td>{item?.branch}</td>
-                        <td>{moment(item?.fromDate).format('DD-MM-YYYY')}</td>
-
-                          
+                          <td>{moment(item?.fromDate).format('DD-MM-YYYY')}</td>
                           <td>{item?.type === 1 ? "Free" : "Paid"}</td>
+                          <td><button
+                            type="button"
+                            className="btn btn-gradient-primary btn-sm "
+                            onClick={() => {history.push('/clients/createclient')}}
+                          >
+                            Convert
+                          </button></td>
                         </tr>
                       );
                     })
