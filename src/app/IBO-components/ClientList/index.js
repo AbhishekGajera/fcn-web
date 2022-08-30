@@ -49,8 +49,10 @@ const ClientList = () => {
     data.status = updateStatus;
     data.branch = branchUpdate;
     // data.IBO = IBOUpdate;
-    data.role = roleUpdate
-
+    data.role = roleUpdate;
+    if(data.password === ""){
+      delete data.password;
+    }
     try {
       const updatedData = JSON.stringify(data);
       await updateProfile(updatedData, valueToEdit?.id);
@@ -536,6 +538,23 @@ const ClientList = () => {
                             {errors && errors.pan_card_no &&(
                               <p>PanCard number is required field</p>
                             )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Password
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="password"
+                              name="password"
+                              {...register("password")}
+                            />
                           </div>
                         </Form.Group>
                       </div>

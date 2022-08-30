@@ -4,7 +4,7 @@ import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import { CreateUser,getBranchesClient,getIBOsClient, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
-import { useHistory } from "react-router-dom";
+import { useHistory, useParams } from "react-router-dom";
 import moment from 'moment';
 import PhoneInput from "react-phone-input-2";
 import 'react-phone-input-2/lib/style.css'

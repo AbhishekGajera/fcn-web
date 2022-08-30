@@ -16,7 +16,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import { statusOption,formateStatus } from "../../../utils/Functions/commonOptions";
+import { statusOption, formateStatus } from "../../../utils/Functions/commonOptions";
 import { password_generator } from "../../../utils/Functions/passwordGenerator";
 import Spinner from "../../shared/Spinner";
 
@@ -26,7 +26,7 @@ const IboList = () => {
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();
   const [searchTerm, setSearchTerm] = useState("");
-  const [isLoading,setIsLoading] = useState(true)
+  const [isLoading, setIsLoading] = useState(true)
 
 
   // We start with an empty list of items.
@@ -83,11 +83,14 @@ const IboList = () => {
 
   const onSubmit = async (data) => {
     data.status = updateStatus
+    if (data.password === "") {
+      delete data.password;
+    }
     try {
       const updatedData = JSON.stringify(data);
       await updateProfile(updatedData, valueToEdit?.id);
-      toast.success('User updated Successfully',{
-        autoClose : 3000
+      toast.success('User updated Successfully', {
+        autoClose: 3000
       })
       list();
     } catch (error) {
@@ -117,17 +120,17 @@ const IboList = () => {
   const generatePassword = async (id) => {
     const randomPassword = password_generator();
     const newPassword = JSON.stringify({
-      password : randomPassword
+      password: randomPassword
     })
-    
+
 
     try {
-     await updateProfile(newPassword,id)
-     toast.success('Password generated and sended to user via Email successfully',{ autoClose : 3000 })
+      await updateProfile(newPassword, id)
+      toast.success('Password generated and sended to user via Email successfully', { autoClose: 3000 })
     } catch (error) {
       toast.error('Password generation failed, please try again later')
     }
-    
+
   };
 
   // Invoke when user click to request another page.
@@ -135,7 +138,7 @@ const IboList = () => {
     window.scrollTo(0, 0);
     setItemOffset(event.selected);
   };
-  
+
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage, selectedBranch]);
@@ -182,7 +185,7 @@ const IboList = () => {
   const list = async () => {
     setIsLoading(true)
     try {
-      const items = await (await getIBOs(itemsPerPage, +itemOffset + 1,searchTerm,selectedBranch)).data;
+      const items = await (await getIBOs(itemsPerPage, +itemOffset + 1, searchTerm, selectedBranch)).data;
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
@@ -247,26 +250,26 @@ const IboList = () => {
                       </div>
                     </div>
 
-                    
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
-                        Address{" "}
-                      </label>
-                      <div className="col-sm-10">
-                        <Form.Control
-                          type="text"
-                          name="address"
-                          {...register("address", { required: true })}
-                        />
-                        {errors && errors.address && (
-                          <p>address is required field</p>
-                        )}
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-2 col-form-label">
+                            Address{" "}
+                          </label>
+                          <div className="col-sm-10">
+                            <Form.Control
+                              type="text"
+                              name="address"
+                              {...register("address", { required: true })}
+                            />
+                            {errors && errors.address && (
+                              <p>address is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
                       </div>
-                    </Form.Group>
-                  </div>
-                </div>
+                    </div>
 
                     <div className="row">
                       <div className="col-md-12">
@@ -411,6 +414,23 @@ const IboList = () => {
                       </div>
                     </div>
 
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Password
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="password"
+                              name="password"
+                              {...register("password")}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
                     <div className="mt-3">
                       <button
                         className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
@@ -444,7 +464,7 @@ const IboList = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-          <div className="row">
+            <div className="row">
               <div className="col-md-6">
                 <Form.Group className="row">
                   <label className="col-sm-4 col-form-label">
@@ -518,18 +538,18 @@ const IboList = () => {
                 </thead>
                 <tbody>
                   {
-                   isLoading ?
-                    <Spinner />
-                      :itemlist?.map((item) => {
-                    return (
-                      <tr>
-                        <td>{item?.name}</td>
-                        <td>{item?.contactno}</td>
-                        <td>{item?.branch}</td>
-                        <td>{item?.email}</td>
-                        <td>{item?.role}</td>
-                        <td>{formateStatus(item?.status)}</td>
-                        {/* <td>
+                    isLoading ?
+                      <Spinner />
+                      : itemlist?.map((item) => {
+                        return (
+                          <tr>
+                            <td>{item?.name}</td>
+                            <td>{item?.contactno}</td>
+                            <td>{item?.branch}</td>
+                            <td>{item?.email}</td>
+                            <td>{item?.role}</td>
+                            <td>{formateStatus(item?.status)}</td>
+                            {/* <td>
                           <label className="badge badge-gradient-success">
                             Active
                           </label>
@@ -537,30 +557,30 @@ const IboList = () => {
                             Inactive
                           </label>
                         </td> */}
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-gradient-primary btn-sm "
-                            onClick={() => generatePassword(item?.id)}
-                          >
-                            Generate
-                          </button>
-                        </td>
-                        <td>
-                          <i
-                            onClick={() => handleShow(item)}
-                            className="mdi mdi-lead-pencil"
-                          ></i>
-                        </td>
-                        <td>
-                          <i
-                            onClick={() => deleteBranch(item?.id)}
-                            className="mdi mdi-delete"
-                          ></i>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-gradient-primary btn-sm "
+                                onClick={() => generatePassword(item?.id)}
+                              >
+                                Generate
+                              </button>
+                            </td>
+                            <td>
+                              <i
+                                onClick={() => handleShow(item)}
+                                className="mdi mdi-lead-pencil"
+                              ></i>
+                            </td>
+                            <td>
+                              <i
+                                onClick={() => deleteBranch(item?.id)}
+                                className="mdi mdi-delete"
+                              ></i>
+                            </td>
+                          </tr>
+                        );
+                      })}
                 </tbody>
               </table>
               <ReactPaginate

@@ -20,7 +20,7 @@ const ClientList = () => {
   const [itemlist, setitemlist] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
+console.log("itemlist",itemlist)
   const {
     formState: { errors, isDirty, isValid },
   } = useForm({

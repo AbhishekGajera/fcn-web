@@ -49,7 +49,7 @@ const BranchList = () => {
   const history = useHistory()
   const [isLoading, setIsLoading] = useState(true)
 
-  const { register, handleSubmit,reset, formState: { errors, isDirty, isValid } } = useForm({
+  const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
     mode: "onChange"
   });
   var strongRegexMo = new RegExp(
@@ -60,7 +60,7 @@ const BranchList = () => {
     setIBOList(items?.results);
     // console.log("rs",items?.results)
   };
-  
+
   const onChangeHandlerIBO = (e) => {
     setItemOffset(0);
     setselectedIBO(e.target.value);
@@ -100,7 +100,10 @@ const BranchList = () => {
   };
   const onSubmit = async (data) => {
     data.status = updateStatus;
-    data.role = roleUpdate
+    data.role = roleUpdate;
+    if (data.password === "") {
+      delete data.password;
+    }
     try {
       const updatedData = JSON.stringify(data)
       await updateProfile(updatedData, valueToEdit?.id)
@@ -180,7 +183,7 @@ const BranchList = () => {
     setIsLoading(true)
     const items = await (await getBranches(itemsPerPage, (+itemOffset + 1), searchTerm)).data;
     setitemlist(items?.results);
-    console.log("lst",items?.results)
+    console.log("lst", items?.results)
     setPageCount(items?.totalPages);
     setIsLoading(false)
   }
@@ -359,7 +362,22 @@ const BranchList = () => {
                       </div>
                     </div>
 
-
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Password
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="password"
+                              name="password"
+                              {...register("password")}
+                            />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
 
                     <div className="mt-3">
                       <button
@@ -397,7 +415,7 @@ const BranchList = () => {
         <div className="card">
           <div className="card-body">
             <div className="row">
-            <div className="col-md-6">
+              <div className="col-md-6">
                 <Form.Group className="row">
                   <label className="col-sm-5 col-form-label">Search IBO</label>
                   <div className="col-sm-7">
@@ -468,22 +486,22 @@ const BranchList = () => {
                   </tr>
                 </thead>
                 <tbody>
-               
-                   {isLoading ?
-                <Spinner />
-                  :
-                  itemlist?.map((item) => {
-                    console.log("it",item)
-                    
-                    return (
-                      <tr>
-                        <td>{item?.name}</td>
-                        <td>{item?.contactno}</td>
-                        <td>{item?.email}</td>
-                        <td>{item?.ibo}</td>
-                        <td>{item?.role}</td>
-                        <td>{formateStatus(item?.status)}</td>
-                        {/* <td>
+
+                  {isLoading ?
+                    <Spinner />
+                    :
+                    itemlist?.map((item) => {
+                      console.log("it", item)
+
+                      return (
+                        <tr>
+                          <td>{item?.name}</td>
+                          <td>{item?.contactno}</td>
+                          <td>{item?.email}</td>
+                          <td>{item?.ibo}</td>
+                          <td>{item?.role}</td>
+                          <td>{formateStatus(item?.status)}</td>
+                          {/* <td>
                           <label className="badge badge-gradient-success">
                             Active
                           </label>
@@ -491,24 +509,24 @@ const BranchList = () => {
                             Inactive
                           </label>
                         </td> */}
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-gradient-primary btn-sm "
-                            onClick={() => generatePassword(item?.id)}
-                          >
-                            Generate
-                          </button>
-                        </td>
-                        <td>
-                          <i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i>
-                        </td>
-                        <td>
-                          <i onClick={() => deleteBranch(item?.id)} className="mdi mdi-delete"></i>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-gradient-primary btn-sm "
+                              onClick={() => generatePassword(item?.id)}
+                            >
+                              Generate
+                            </button>
+                          </td>
+                          <td>
+                            <i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i>
+                          </td>
+                          <td>
+                            <i onClick={() => deleteBranch(item?.id)} className="mdi mdi-delete"></i>
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
               <ReactPaginate
