@@ -20,7 +20,6 @@ const ClientList = () => {
   const [itemlist, setitemlist] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-console.log("itemlist",itemlist)
   const {
     formState: { errors, isDirty, isValid },
   } = useForm({
@@ -94,11 +93,11 @@ console.log("itemlist",itemlist)
   };
 
   const headers = [
-     { label: "Name", key: "name", },
-     { label: "Contact no", key: "contactno", },
-     { label: "Branch", key: "branch", },
-     { label: "Date", key: "date", },
-     { label: "Type", key: "type", },
+    { label: "Name", key: "name", },
+    { label: "Contact no", key: "contactno", },
+    { label: "Branch", key: "branch", },
+    { label: "Date", key: "date", },
+    { label: "Type", key: "type", },
   ]
 
   const csvreport = {
@@ -197,7 +196,10 @@ console.log("itemlist",itemlist)
                           <td><button
                             type="button"
                             className="btn btn-gradient-primary btn-sm "
-                            onClick={() => {history.push('/clients/createclient')}}
+                            onclick={history.push({
+                              pathname: '/clients/createclient',
+                              search: "?" + new URLSearchParams({ id: item?.id }).toString()
+                            })}
                           >
                             Convert
                           </button></td>
