@@ -156,7 +156,6 @@ const RevenueFetch = () => {
               <table className="table table-striped">
                 <thead>
                   <tr>
-                    <th>Earning From </th>
                     <th> Product </th>
                     <th> Total Revenue </th>
                     <th> Net Profit </th>
@@ -171,7 +170,6 @@ const RevenueFetch = () => {
                     itemlist?.map((item, index) => {
                       return (
                         <tr key={index}>
-                          <td>{item?.earning_from}</td>
                           <td>{item?.product?.name}</td>
                           <td>{item?.total_revenue}</td>
                           <td>{item?.net_revenue}</td>

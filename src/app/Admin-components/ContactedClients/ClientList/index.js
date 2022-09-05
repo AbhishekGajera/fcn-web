@@ -76,6 +76,13 @@ const ClientList = () => {
     setItemOffset(event.selected);
   };
 
+  const convertClient = (Id) =>{   
+    history.push({
+      pathname: '/clients/createclient',
+      search: "?" + new URLSearchParams({ id: Id }).toString()
+    })
+  }
+
 
   // excel export
   const fileType =
@@ -196,10 +203,7 @@ const ClientList = () => {
                           <td><button
                             type="button"
                             className="btn btn-gradient-primary btn-sm "
-                            onclick={history.push({
-                              pathname: '/clients/createclient',
-                              search: "?" + new URLSearchParams({ id: item?.id }).toString()
-                            })}
+                            onClick={() => {convertClient(item?.id)}}
                           >
                             Convert
                           </button></td>

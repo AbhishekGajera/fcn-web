@@ -8,6 +8,8 @@ import {
   updateProfile,
   getBranches,
   getIBOs,
+  getUserBranch,
+  getUserIbo
 } from "../../../utils/APIs";
 
 import { toast } from "react-toastify";
@@ -168,38 +170,76 @@ const ClientList = () => {
     setselectedIBO(e.target.value);
   };
 
-
+  console.log("cookies", cookies)
   const list = async () => {
     setIsLoading(true)
-    try {
-      const items = await (
-        await getUsers(
-          itemsPerPage,
-          +itemOffset + 1,
-          searchTerm,
-          "user",
-          selectedBranch,
-          selectedIBO
-        )
-      ).data;
-      setitemlist(items?.results);
-      setPageCount(items?.totalPages);
 
-    } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+    if (cookies?.user?.role === "branch") {
+      try {
+        const items = await (
+          await getUserBranch(
+            cookies?.user?.name
+          )
+        ).data;
+        setitemlist(items?.results);
+        setPageCount(items?.totalPages);
+
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
       }
+    } else if(cookies?.user?.role === "IBO"){
+      try {
+        const items = await (
+          await getUserIbo(
+            cookies?.user?.name
+          )
+        ).data;
+        setitemlist(items?.results);
+        setPageCount(items?.totalPages);
 
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-        setCookie("user", null, { path: "/" });
-        userLogout(formData).finally(() => {
-          history.push("/user-pages/login-1");
-        });
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
+    }else {
+      try {
+        const items = await (
+          await getUsers(
+            itemsPerPage,
+            +itemOffset + 1,
+            searchTerm,
+            "user",
+            selectedBranch,
+            selectedIBO
+          )
+        ).data;
+        setitemlist(items?.results);
+        setPageCount(items?.totalPages);
+
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+
+
+        if (error?.response?.data?.code === 401) {
+          const formData = JSON.stringify({
+            refreshToken: localStorage.getItem("refreshToken"),
+          });
+          setCookie("user", null, { path: "/" });
+          userLogout(formData).finally(() => {
+            history.push("/user-pages/login-1");
+          });
+        }
       }
     }
     setIsLoading(false)

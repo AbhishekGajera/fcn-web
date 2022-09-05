@@ -142,7 +142,7 @@ const Dashboard = () => {
   useEffect(() => {
     leadlist();
   }, [itemOffset, itemsPerPage]);
-  console.log("it", itemlist)
+  // console.log("it", itemlist)
 
   return (
     <>

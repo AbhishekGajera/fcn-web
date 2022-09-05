@@ -42,11 +42,13 @@ export const deleteLead = (id) => api(`leads/delete-lead/${id}`, 'DELETE');
 // branch management
 export const getBranches = (limit = 10,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');
 export const getBranchesClient = (limit = 500,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');
+export const getUserBranch = (branch = '',role = 'user') => api(`users/get-user-branch?branch=${branch}&role=${role}`, 'GET');
 
 
 // IBO management
 export const getIBOs = (limit = 10,offset = 1,name = '',branch = '',) => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
 export const getIBOsClient = (limit = 500,offset = 1,name = '',branch = '') => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
+export const getUserIbo = (IBO = '',role = 'user') => api(`users/get-user-branch?IBO=${IBO}&role=${role}`, 'GET');
 
 
 
@@ -90,6 +92,10 @@ export const getRevenueList = (limit = 10,offset = 1) => api(`revenue/fetch-reve
 // connect management
 export const CreateConnect = (data) => api('contact/add-contact', 'POST', data);
 export const getConnect = (limit = 10,offset = 1,name = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&sortBy=createdAt:desc&custom=true`, 'GET');
+export const getConnectedById = (id = '') => api(`contact/get-connected-id/${id}`, 'GET');
 
 //image upload in cloudinary 
 export const ImageUpload = (data) => apiImage('POST', data);
+
+// video management
+export const addVideo = (data) => api(`video `, 'POST', data);

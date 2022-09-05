@@ -3,7 +3,7 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateProduct, ImageUpload } from "../../../utils/APIs";
+import { addVideo, ImageUpload } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 
 const AddVideo = () => {
@@ -21,6 +21,7 @@ const AddVideo = () => {
     const {
         register,
         handleSubmit,
+        reset,
         formState: { errors, isDirty, isValid },
         getValues,
     } = useForm({
@@ -32,15 +33,18 @@ const AddVideo = () => {
     const onSubmit = async (data) => {
         const formData = new FormData()
         formData.append("user", cookies?.user?.id)
-        formData.append("image", data?.file[0])
-        const fileResult = await ImageUpload(formData)
-        return;
-        if (fileResult.error) {
-            toast.error(fileResult.error.message);
-        } else {
+        formData.append("url", data?.file[0])
+        formData.append("type", data?.category)
+        formData.append("title", 'sample')
+        // const fileResult = await ImageUpload(formData)
+
+        // if (fileResult.error) {
+        //     toast.error(fileResult.error.message);
+        // } else {
             try {
-                await CreateProduct(formData);
+                await addVideo(formData);
                 toast.success("Add Video successfully");
+                reset()
                 history.push("/video/addVideo");
             } catch (error) {
                 if (
@@ -54,7 +58,7 @@ const AddVideo = () => {
                     toast.error(process.env.REACT_APP_ERROR_MESSAGE);
                 }
             }
-        }
+        // }
     }
 
     return (
