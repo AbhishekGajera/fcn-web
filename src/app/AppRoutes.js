@@ -80,6 +80,7 @@ const Payroll = lazy(() => import('./Admin-components/Employee-Management/Payrol
 const PayrollDetail = lazy(() => import('./Admin-components/Employee-Management/PayrollDetail'));
 const Leave = lazy(() => import('./Admin-components/Employee-Management/Leave'));
 const Lead = lazy(() => import('./Admin-components/Leads'));
+const Video = lazy(() => import('./Admin-components/Video/AddVideo'));
 const BookAppoinments = lazy(() => import('./Admin-components/Appointment/BookAppoinments'));
 const FetchAppoinments = lazy(() => import('./Admin-components/Appointment/FetchAppoinments'));
 const CreateEmployee = lazy(() => import('./BranchComponents/CreateEmployee'));
@@ -207,6 +208,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/calculation/powerone" component={ PoEquity } accesstype={["admin"]} />
           <ProtectedRoute path="/calculation/cp" component={ CpTravels } accesstype={["admin"]} />
           <ProtectedRoute path="/leads/lead" component={ Lead } accesstype={["admin"]} />
+          <ProtectedRoute path="/video/addvideo" component={ Video } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/leave" component={ Leave } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/attendance" component={ Attendance } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/payroll" component={ Payroll } accesstype={["admin"]} />

@@ -36,7 +36,7 @@ const ProductList = () => {
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, selectedProductType, selectedProductCategory, debouncedSearchTerm]);
+  }, [itemOffset, itemsPerPage, debouncedSearchTerm]);
 
   // Invoke when user click to request another page. 
   const handlePageClick = (event) => {

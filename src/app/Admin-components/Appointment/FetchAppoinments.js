@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getAppoinmentsList, userLogout, UpdateAppoinments } from "../../../utils/APIs";
+import { getAppoinmentsList, getAppoinmentsListByUser, userLogout, UpdateAppoinments } from "../../../utils/APIs";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
@@ -35,10 +35,11 @@ const FetchAppoinments = () => {
       "appoinments_id": id,
       "status": e.target.value
     })
-    toast.success('Status updated successfully',{
-      autoClose : true
+    toast.success('Status updated successfully', {
+      autoClose: true
     })
   }
+
 
   const onSubmit = async (data) => {
     const date1 = new Date(data?.date_from);
@@ -57,9 +58,9 @@ const FetchAppoinments = () => {
     //       date_to : new Date(data?.date_to).toISOString(),
     //     });
     //     await updateEmployeeLeave(formData)
-        // toast.success('Leave updated successfully',{
-        //   autoClose : true
-        // })
+    // toast.success('Leave updated successfully',{
+    //   autoClose : true
+    // })
     //   } catch (error) {
     //     if (
     //       error &&
@@ -122,11 +123,18 @@ const FetchAppoinments = () => {
 
   const getData = async () => {
     try {
-      const result = await (await getAppoinmentsList(itemsPerPage, itemOffset)).data;
-      setitemlist(result?.results);
-      console.log("res", result?.results)
+      if(cookies?.user?.role === 'admin'){
+        const result = await (await getAppoinmentsList(itemsPerPage, itemOffset)).data;
+        setitemlist(result?.results);
+        setPageCount(result?.totalPages);
+      }else{
+        const result = await (await getAppoinmentsListByUser(itemsPerPage, itemOffset,cookies?.user?.id)).data;
+        setitemlist(result?.results);
+        setPageCount(result?.totalPages);
+      }      
+      // console.log("res", result?.results)
       // Fetch items from another resources.
-      setPageCount(result?.totalPages);
+      
     } catch (error) {
       if (
         error?.response?.data?.message
@@ -155,12 +163,25 @@ const FetchAppoinments = () => {
     setItemOffset(newOffset);
   };
 
-
-
+  const showStatus = (status) => {
+    switch (+status) {
+      case (1):
+        return 'Processing';
+      case (2):
+        return 'Approved';
+      case (3):
+        return 'Rejected';
+      case (4):
+        return 'Successfull';
+      case (5):
+        return 'Terminated'
+      default:
+        return 'Processing';
+    }
+  }
 
   return (
     <div>
-
       <div className="page-header">
         <h3 className="page-title">Appoinments / Book Appoinment </h3>
         <nav aria-label="breadcrumb">
@@ -189,8 +210,7 @@ const FetchAppoinments = () => {
                     <th> Date From </th>
                     <th> Date To </th>
                     <th> Description </th>
-                    <th > Status </th>
-
+                    <th> Status </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -198,11 +218,10 @@ const FetchAppoinments = () => {
                     return (
                       <tr>
                         <td>{item?.user?.name}</td>
-
                         <td>{new Date(item?.fromDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                         <td>{new Date(item?.toDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                         <td>{item?.Description}</td>
-                        <td>
+                        <td>{cookies?.user?.role === 'admin' ? (
                           <select
 
                             id={item.id}
@@ -240,6 +259,9 @@ const FetchAppoinments = () => {
                               Terminated
                             </option>
                           </select>
+                        ) : (
+                          showStatus(item.status)
+                        )}
                         </td>
 
 

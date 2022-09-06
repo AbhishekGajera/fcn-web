@@ -3,17 +3,12 @@ import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { CreateConnect } from "../../utils/APIs";
 import { toast } from "react-toastify";
-import DatePicker from "react-datepicker";
 import { Form } from "react-bootstrap";
+import moment from 'moment';
 
 const Connect = () => {
   const history = useHistory();
-  const [selectedDate, setselectedDate] = useState("");
   const [courceType, setcourceType] = useState(1)
-
-  const handleChange = (date) => {
-    setselectedDate(date);
-  };
 
   const handleChangeCourceType = (e) => {
     setcourceType(+e?.target?.value);
@@ -27,19 +22,19 @@ const Connect = () => {
     mode: "onChange",
   });
 
-  const onSubmit = async ({ name, branch, contactno }) => {
+  const onSubmit = async ({ first_name,last_name, branch, contactno, date }) => {
     const formData = JSON.stringify({
-      name,
+      name:first_name.concat(' ',last_name),
       contactno,
       branch,
       type: courceType,
-      date: selectedDate,
+      fromDate:date,
     });
 
     try {
       await CreateConnect(formData);
       toast.success("registerd sucssefully");
-      history.push("/dashboard");
+      history.push("/connectedusers/getuserList");
     } catch (error) {
       if (
         error &&
@@ -84,11 +79,22 @@ const Connect = () => {
                     type="text"
                     className="form-control form-control-lg"
                     id="exampleInputUsername1"
-                    placeholder="name"
-                    name="name"
-                    {...register("name", { required: true })}
+                    placeholder="First Name"
+                    name="first_name"
+                    {...register("first_name", { required: true })}
                   />
-                  {errors && errors.name && <p>name is required field</p>}
+                  {errors && errors.first_name && <p> last name is required field</p>}
+                </div>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    id="exampleInputUsername1"
+                    placeholder="Last Name"
+                    name="last_name"
+                    {...register("last_name", { required: true })}
+                  />
+                  {errors && errors.last_name && <p>last name is required field</p>}
                 </div>
                 <div className="form-group">
                   <input
@@ -124,7 +130,6 @@ const Connect = () => {
                     })}
                   >
                     <option selected>Pal - Adajan</option>
-                    <option>Majuragate</option>
                     <option>Nanpura</option>
                     <option>Sumul-dairy Road</option>
                     <option>Katargam</option>
@@ -169,11 +174,13 @@ const Connect = () => {
                     Date of Appoinment
                   </label>
                   <div className="col-sm-9">
-                    <DatePicker
-                      className="form-control w-100"
-                      selected={selectedDate}
-                      onChange={handleChange}
+                    <Form.Control
+                      type="date"
+                      name="date"
+                      min={moment().format("YYYY-MM-DD")}
+                      {...register("date", { required: true })}
                     />
+                    {errors && errors.date && <p>Date of Appoinment is required field</p>}
                   </div>
                 </Form.Group>
 

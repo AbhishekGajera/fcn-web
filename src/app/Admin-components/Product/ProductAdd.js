@@ -220,6 +220,7 @@ const ProductAdd = () => {
                       <div className="col-sm-9">
                         <Form.Control
                           type="number"
+                          step="0.01"
                           name="commision"
                           {...register("commision", { required: true })}
                           placeholder="commision"

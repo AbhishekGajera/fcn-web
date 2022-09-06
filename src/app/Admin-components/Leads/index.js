@@ -11,17 +11,11 @@ import { useHistory } from "react-router-dom";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
-import PhoneInput from "react-phone-input-2";
-import 'react-phone-input-2/lib/style.css'
 
 
 const Leads = () => {
     const [searchTerm, setSearchTerm] = useState("");
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
-    const [selectedProductType, setselectedProductType] = useState("");
-    const [selectedProductCategory, setselectedProductCategory] = useState("");
-    const [isChecked, setIsChecked] = useState("");
 
     // We start with an empty list of items.
     const [pageCount, setPageCount] = useState(0);
@@ -35,7 +29,6 @@ const Leads = () => {
     const [itemlist, setitemlist] = useState([]);
     const [branchlist, setbranchlist] = useState([]);
     const [isLoading, setIsLoading] = useState(true)
-    const [phone, setPhone] = useState('+91');
     const history = useHistory()
 
     useEffect(() => {
@@ -47,11 +40,8 @@ const Leads = () => {
         setItemOffset(event.selected);
     };
 
-    const handleOnChange = value => {
-        setPhone(value);
-    }
-
-    const deleteProduct = (uid) => {
+    const deleteLeads = (uid) => {
+        // console.log("uid", uid)
         Swal.fire({
             title: "Are you sure?",
             text: "You will not be able to recover this imaginary file!",
@@ -63,22 +53,16 @@ const Leads = () => {
             cancelButtonText: "No, keep it",
         }).then((result) => {
             if (result.value) {
-
-                const itemList = Object.keys(isChecked).map((id) => {
-                    if (isChecked[id] === true) {
-                        deleteLead(id)
-                    }
+                return (
+                    deleteLead(uid).finally(() => list()),
                     Swal.fire(
                         "Deleted!",
-                        "Your imaginary file has been deleted.",
+                        "Your Lead has been deleted.",
                         "success"
                     )
-                })
-                Promise.all(itemList).then(() => {
-                    list();
-                });
+                );
             } else if (result.dismiss === Swal.DismissReason.cancel) {
-                Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+                Swal.fire("Cancelled", "Your Lead is safe :)", "error");
             }
         });
     };
@@ -131,10 +115,6 @@ const Leads = () => {
         toast.success('Status updated successfully', {
             autoClose: true
         })
-    }
-
-    const handleMultiChange = (e) => {
-        setIsChecked({ ...isChecked, [e.target.id]: e.target.checked });
     }
 
     const handleClose = () => {
@@ -413,13 +393,9 @@ const Leads = () => {
 
                                                             </select>
                                                         </td>
-
-
-
-
                                                         <td>
                                                             <i
-                                                                onClick={() => deleteProduct(item?.id)}
+                                                                onClick={() => deleteLeads(item?.id)}
                                                                 className="mdi mdi-delete"
                                                             ></i>
                                                         </td>

@@ -60,11 +60,10 @@ const RevenueAdd = () => {
     const formData = JSON.stringify({
       'branch': data?.branch,
       'IBO': data?.ibo,
-      'contactno':data?.contactno,
-      'user':data?.user,
+      'contactno': data?.contactno,
+      'user': data?.user,
       'commision_branch': data?.commissionBranch,
       'commision_ibo': data?.commissionIbo,
-      'earning_from': data?.earningFrom,
       'net_revenue': data?.netProfit,
       'product': data?.Product,
       'total_revenue': data?.totalRevenue,
@@ -113,22 +112,6 @@ const RevenueAdd = () => {
             <div className="card-body">
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
                 <p className="card-description"> Add Revenue </p>
-                <div className="row">
-                  <div className="col-md-12">
-                    <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">Earning From</label>
-                      <div className="col-sm-10">
-                        <Form.Control
-                          type="text"
-                          name="earningFrom"
-                          {...register("earningFrom", { required: true })}
-                        />
-                        {errors && errors.earningFrom && <p>Earning From is required field</p>}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-
                 <div className="row">
                   <div className="col-md-4">
                     <Form.Group className="row">

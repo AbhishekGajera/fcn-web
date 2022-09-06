@@ -12,6 +12,7 @@ import { useForm } from "react-hook-form";
 import { useUrl } from "../../../../utils/Functions/useUrl";
 import { useDebounce } from "../../../../utils/Functions/useDebounce";
 import Spinner from "../../../shared/Spinner";
+import moment from 'moment';
 
 const ClientList = () => {
   const history = useHistory();
@@ -19,7 +20,6 @@ const ClientList = () => {
   const [itemlist, setitemlist] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
-
   const {
     formState: { errors, isDirty, isValid },
   } = useForm({
@@ -76,6 +76,13 @@ const ClientList = () => {
     setItemOffset(event.selected);
   };
 
+  const convertClient = (Id) =>{   
+    history.push({
+      pathname: '/clients/createclient',
+      search: "?" + new URLSearchParams({ id: Id }).toString()
+    })
+  }
+
 
   // excel export
   const fileType =
@@ -93,11 +100,11 @@ const ClientList = () => {
   };
 
   const headers = [
-     { label: "Name", key: "name", },
-     { label: "Contact no", key: "contactno", },
-     { label: "Branch", key: "branch", },
-     { label: "Date", key: "date", },
-     { label: "Type", key: "type", },
+    { label: "Name", key: "name", },
+    { label: "Contact no", key: "contactno", },
+    { label: "Branch", key: "branch", },
+    { label: "Date", key: "date", },
+    { label: "Type", key: "type", },
   ]
 
   const csvreport = {
@@ -178,6 +185,7 @@ const ClientList = () => {
                     <th> Branch </th>
                     <th> Date </th>
                     <th> Type </th>
+                    <th> Convert </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -190,8 +198,15 @@ const ClientList = () => {
                           <td>{item?.name}</td>
                           <td>{item?.contactno}</td>
                           <td>{item?.branch}</td>
-                          <td>{item?.date}</td>
+                          <td>{moment(item?.fromDate).format('DD-MM-YYYY')}</td>
                           <td>{item?.type === 1 ? "Free" : "Paid"}</td>
+                          <td><button
+                            type="button"
+                            className="btn btn-gradient-primary btn-sm "
+                            onClick={() => {convertClient(item?.id)}}
+                          >
+                            Convert
+                          </button></td>
                         </tr>
                       );
                     })

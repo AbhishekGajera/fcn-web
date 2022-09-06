@@ -6,6 +6,8 @@ import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 import GoogleLogin from "react-google-login";
 import { useLinkedIn } from "react-linkedin-login-oauth2";
+import moment from 'moment';
+
 
 const Register = () => {
   const history = useHistory();
@@ -22,7 +24,6 @@ const Register = () => {
 
   const onSubmit = async (data) => {
     delete data.terms;
-
     try {
       const result = await registration(data);
       result.data.user.auth = "verified";
@@ -119,11 +120,22 @@ const Register = () => {
                     type="text"
                     className="form-control form-control-lg"
                     id="exampleInputUsername1"
-                    placeholder="Username"
-                    name="name"
-                    {...register("name", { required: true })}
+                    placeholder="First Name"
+                    name="first_name"
+                    {...register("first_name", { required: true })}
                   />
-                  {errors && errors.name && <p>name is required field</p>}
+                  {errors && errors.first_name && <p> last name is required field</p>}
+                </div>
+                <div className="form-group">
+                  <input
+                    type="text"
+                    className="form-control form-control-lg"
+                    id="exampleInputUsername1"
+                    placeholder="Last Name"
+                    name="last_name"
+                    {...register("last_name", { required: true })}
+                  />
+                  {errors && errors.last_name && <p>last name is required field</p>}
                 </div>
                 <div className="form-group">
                   <input
@@ -155,6 +167,7 @@ const Register = () => {
                     id="exampleInputUsername1"
                     placeholder="Date of birth"
                     name="dob"
+                    min={moment().format("YYYY-MM-DD")}
                     {...register("dob", { required: true })}
                   />
                   {errors && errors.dob && <p>birthdate is required field</p>}

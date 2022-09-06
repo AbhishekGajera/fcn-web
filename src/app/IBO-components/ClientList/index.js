@@ -8,6 +8,8 @@ import {
   updateProfile,
   getBranches,
   getIBOs,
+  getUserBranch,
+  getUserIbo
 } from "../../../utils/APIs";
 
 import { toast } from "react-toastify";
@@ -48,9 +50,11 @@ const ClientList = () => {
   const onSubmit = async (data) => {
     data.status = updateStatus;
     data.branch = branchUpdate;
-    data.IBO = IBOUpdate;
-    data.role = roleUpdate
-
+    // data.IBO = IBOUpdate;
+    data.role = roleUpdate;
+    if (data.password === "") {
+      delete data.password;
+    }
     try {
       const updatedData = JSON.stringify(data);
       await updateProfile(updatedData, valueToEdit?.id);
@@ -131,7 +135,7 @@ const ClientList = () => {
     setroleUpdate(value?.role)
     setShow(true);
   };
-  
+
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage, selectedBranch, selectedIBO]);
@@ -166,36 +170,76 @@ const ClientList = () => {
     setselectedIBO(e.target.value);
   };
 
+  console.log("cookies", cookies)
   const list = async () => {
     setIsLoading(true)
-    try {
-      const items = await (
-        await getUsers(
-          itemsPerPage,
-          +itemOffset + 1,
-          searchTerm,
-          "user",
-          selectedBranch,
-          selectedIBO
-        )
-      ).data;
-      setitemlist(items?.results);
-      setPageCount(items?.totalPages);
-    } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-      }
 
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-        setCookie("user", null, { path: "/" });
-        userLogout(formData).finally(() => {
-          history.push("/user-pages/login-1");
-        });
+    if (cookies?.user?.role === "branch") {
+      try {
+        const items = await (
+          await getUserBranch(
+            cookies?.user?.name
+          )
+        ).data;
+        setitemlist(items?.results);
+        setPageCount(items?.totalPages);
+
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
+    } else if(cookies?.user?.role === "IBO"){
+      try {
+        const items = await (
+          await getUserIbo(
+            cookies?.user?.name
+          )
+        ).data;
+        setitemlist(items?.results);
+        setPageCount(items?.totalPages);
+
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
+    }else {
+      try {
+        const items = await (
+          await getUsers(
+            itemsPerPage,
+            +itemOffset + 1,
+            searchTerm,
+            "user",
+            selectedBranch,
+            selectedIBO
+          )
+        ).data;
+        setitemlist(items?.results);
+        setPageCount(items?.totalPages);
+
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+
+
+        if (error?.response?.data?.code === 401) {
+          const formData = JSON.stringify({
+            refreshToken: localStorage.getItem("refreshToken"),
+          });
+          setCookie("user", null, { path: "/" });
+          userLogout(formData).finally(() => {
+            history.push("/user-pages/login-1");
+          });
+        }
       }
     }
     setIsLoading(false)
@@ -281,7 +325,7 @@ const ClientList = () => {
                             <Form.Control
                               type="text"
                               name="name"
-                              defaultValue={valueToEdit.name }
+                              defaultValue={valueToEdit.name}
                               {...register("name", { required: true })}
                             />
                             {errors && errors.name && (
@@ -533,9 +577,26 @@ const ClientList = () => {
                               defaultValue={valueToEdit.pan_card_no}
                               {...register("pan_card_no", { required: true })}
                             />
-                            {errors && errors.pan_card_no &&(
+                            {errors && errors.pan_card_no && (
                               <p>PanCard number is required field</p>
                             )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Password
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="password"
+                              name="password"
+                              {...register("password")}
+                            />
                           </div>
                         </Form.Group>
                       </div>
@@ -575,89 +636,93 @@ const ClientList = () => {
         <div className="card">
           <div className="card-body">
             <div className="row">
-              <div className="col-md-4">
-                <Form.Group className="row">
-                  <label className="col-sm-6 col-form-label">
-                    Search Branch
-                  </label>
-                  <div className="col-sm-6">
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect2"
-                      name="branch"
-                      onChange={onChangeHandlerBranch}
-                    >
-                      <option selected={"" === selectedBranch} value={""}>
-                        Not Selected
-                      </option>
-                      {branchList?.map((i) => {
-                        return (
-                          <>
-                            <option
-                              selected={i.name === selectedBranch}
-                              value={i.name}
-                            >
-                              {i.name}
-                            </option>
-                          </>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </Form.Group>
-              </div>
-
-              <div className="col-md-4">
-                <Form.Group className="row">
-                  <label className="col-sm-5 col-form-label">Search IBO</label>
-                  <div className="col-sm-7">
-                    <select
-                      className="form-control form-control-sm"
-                      id="exampleFormControlSelect2"
-                      name="branch"
-                      onChange={onChangeHandlerIBO}
-                    >
-                      <option selected={"" === selectedIBO} value={""}>
-                        Not Selected
-                      </option>
-                      {IBOList?.map((i) => {
-                        return (
-                          <>
-                            <option
-                              selected={i.name === selectedIBO}
-                              value={i.name}
-                            >
-                              {i.name}
-                            </option>
-                          </>
-                        );
-                      })}
-                    </select>
-                  </div>
-                </Form.Group>
-              </div>
-
-              <div className="col-md-4">
-                <div className="search-field d-none d-md-block">
-                  <form className="d-flex align-items-center h-100" action="#">
-                    <div className="input-group">
-                      <div className="input-group-prepend outline-gray bg-transparent">
-                        <i className="input-group-text border-0 mdi mdi-magnify"></i>
+              {cookies?.user?.role !== "IBO" && cookies?.user?.role !== "branch" && (
+                <>
+                  <div className="col-md-4">
+                    <Form.Group className="row">
+                      <label className="col-sm-6 col-form-label">
+                        Search Branch
+                      </label>
+                      <div className="col-sm-6">
+                        <select
+                          className="form-control form-control-sm"
+                          id="exampleFormControlSelect2"
+                          name="branch"
+                          onChange={onChangeHandlerBranch}
+                        >
+                          <option selected={"" === selectedBranch} value={""}>
+                            Not Selected
+                          </option>
+                          {branchList?.map((i) => {
+                            return (
+                              <>
+                                <option
+                                  selected={i.name === selectedBranch}
+                                  value={i.name}
+                                >
+                                  {i.name}
+                                </option>
+                              </>
+                            );
+                          })}
+                        </select>
                       </div>
-                      <input
-                        type="text" 
-                        className="form-control outline-gray bg-transparent border-0"
-                        placeholder="Search Clients"
-                        value={searchTerm}
-                        onChange={(e) => {
-                          setSearchTerm(e?.target?.value);
-                          setItemOffset(0);
-                        }}
-                      />
+                    </Form.Group>
+                  </div>
+
+                  <div className="col-md-4">
+                    <Form.Group className="row">
+                      <label className="col-sm-5 col-form-label">Search IBO</label>
+                      <div className="col-sm-7">
+                        <select
+                          className="form-control form-control-sm"
+                          id="exampleFormControlSelect2"
+                          name="branch"
+                          onChange={onChangeHandlerIBO}
+                        >
+                          <option selected={"" === selectedIBO} value={""}>
+                            Not Selected
+                          </option>
+                          {IBOList?.map((i) => {
+                            return (
+                              <>
+                                <option
+                                  selected={i.name === selectedIBO}
+                                  value={i.name}
+                                >
+                                  {i.name}
+                                </option>
+                              </>
+                            );
+                          })}
+                        </select>
+                      </div>
+                    </Form.Group>
+                  </div>
+
+                  <div className="col-md-4">
+                    <div className="search-field d-none d-md-block">
+                      <form className="d-flex align-items-center h-100" action="#">
+                        <div className="input-group">
+                          <div className="input-group-prepend outline-gray bg-transparent">
+                            <i className="input-group-text border-0 mdi mdi-magnify"></i>
+                          </div>
+                          <input
+                            type="text"
+                            className="form-control outline-gray bg-transparent border-0"
+                            placeholder="Search Clients"
+                            value={searchTerm}
+                            onChange={(e) => {
+                              setSearchTerm(e?.target?.value);
+                              setItemOffset(0);
+                            }}
+                          />
+                        </div>
+                      </form>
                     </div>
-                  </form>
-                </div>
-              </div>
+                  </div>
+                </>
+              )}
             </div>
             <h4 className="card-title">Client list</h4>
 
@@ -679,43 +744,43 @@ const ClientList = () => {
                 </thead>
                 <tbody>
                   {isLoading ? <Spinner />
-                  :
-                  itemlist?.map((item) => {
-                    return (
-                      <tr>
-                        <td>{item?.name}</td>
-                        <td>{item?.contactno}</td>
-                        <td>{item?.branch}</td>
-                        <td>{item?.IBO}</td>
-                        <td>{item?.email}</td>
-                        <td>{item?.role}</td>
-                        <td>{formateStatus(item?.status)}</td>
-                        <td>
-                          <button
-                            type="button"
-                            className="btn btn-gradient-primary btn-sm "
-                            onClick={() => generatePassword(item?.id)}
-                          >
-                            Generate
-                          </button>
-                        </td>
-                        <td>
-                          <i
-                            onClick={() => handleShow(item)}
-                            className="mdi mdi-lead-pencil"
-                          ></i>
-                        </td>
-                        <td>
-                          <i
-                            onClick={() => deleteData(item?.id)}
-                            className="mdi mdi-delete"
-                          >
-                            {" "}
-                          </i>
-                        </td>
-                      </tr>
-                    );
-                  })}
+                    :
+                    itemlist?.map((item) => {
+                      return (
+                        <tr>
+                          <td>{item?.name}</td>
+                          <td>{item?.contactno}</td>
+                          <td>{item?.branch}</td>
+                          <td>{item?.IBO}</td>
+                          <td>{item?.email}</td>
+                          <td>{item?.role}</td>
+                          <td>{formateStatus(item?.status)}</td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-gradient-primary btn-sm "
+                              onClick={() => generatePassword(item?.id)}
+                            >
+                              Generate
+                            </button>
+                          </td>
+                          <td>
+                            <i
+                              onClick={() => handleShow(item)}
+                              className="mdi mdi-lead-pencil"
+                            ></i>
+                          </td>
+                          <td>
+                            <i
+                              onClick={() => deleteData(item?.id)}
+                              className="mdi mdi-delete"
+                            >
+                              {" "}
+                            </i>
+                          </td>
+                        </tr>
+                      );
+                    })}
                 </tbody>
               </table>
               <ReactPaginate

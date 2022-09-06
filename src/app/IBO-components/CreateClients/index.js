@@ -3,20 +3,22 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
-import { CreateUser,getBranchesClient,getIBOsClient, getIBOs, userLogout, getProductsList, getProductsListClient } from "../../../utils/APIs";
-import { useHistory } from "react-router-dom";
+import { CreateUser, getBranchesClient, getIBOsClient, getConnect, getIBOs, userLogout, getProductsList, getProductsListClient, getConnectedById } from "../../../utils/APIs";
+import { useHistory, useLocation } from "react-router-dom";
 import moment from 'moment';
 import PhoneInput from "react-phone-input-2";
+import queryString from "query-string";
 import 'react-phone-input-2/lib/style.css'
 
 
 const CreateClints = () => {
+  const queryParams = queryString.parse(window.location.search)
+  const [clientlist, setClientlist] = useState();
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [branchlist, setBranchlist] = useState([]);
   const [productlist, setproductlist] = useState([]);
-  const [phone, setPhone] = useState('+91');
-
+  const [phone, setPhone] = useState(clientlist?.contactno || '+91');
   const [isShow, setIsShow] = useState(false);
 
   const toInputUppercase = e => {
@@ -44,12 +46,27 @@ const CreateClints = () => {
     setPhone(value);
   }
 
+  const getClientDetail = async () => {
+    try {
+      const items = await (
+        await getConnectedById(queryParams.id)
+      ).data;
+      setClientlist(items);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
+  }
+
   const onSubmit = async (data) => {
     try {
-      
+
       data.contactno = phone;
 
-      data.name = data.first_name +' '+ data.last_name;
+      data.name = data.first_name + ' ' + data.last_name;
       await CreateUser(data)
       toast.success("user created successfully");
       history.push('/clients/clientlist')
@@ -70,6 +87,9 @@ const CreateClints = () => {
     list();
   }, []);
   useEffect(() => {
+    if (queryParams.id) {
+      getClientDetail();
+    }
     branchList();
   }, []);
   useEffect(() => {
@@ -126,7 +146,7 @@ const CreateClints = () => {
   const productList = async () => {
     try {
       const items = await (await getProductsListClient()).data;
-      console.log("itm", items)
+      // console.log("itm", items)
       setproductlist(items?.results);
       // setPageCount(items?.totalPages);
     } catch (error) {
@@ -179,6 +199,7 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="first_name"
+                          defaulValue={clientlist ? clientlist.name : ''}
                           {...register("first_name", { required: true })}
                         />
                         {errors && errors.first_name && <p>first name is required field</p>}
@@ -251,7 +272,7 @@ const CreateClints = () => {
                         >
                           <option value=''>--Select product--</option>
                           {productlist.map((item, index) => (
-                         
+
                             <option key={index} value={item?.id} label={item?.name}></option>
                           ))}
                         </select>
@@ -276,7 +297,7 @@ const CreateClints = () => {
                         >
                           <option value=''>--Select branch--</option>
                           {itemlist.map((item, index) => (
-                            <option key={index} value={item?.name} label={item?.name}></option>
+                            <option key={index} value={item?.name} label={item?.name} ></option>
                           ))}
                         </select>
                         {errors && errors.branch && <p>Select branch is required field</p>}
@@ -415,6 +436,7 @@ const CreateClints = () => {
                           }}
                           country={"US"}
                           value={phone}
+                          // value={clientlist? clientlist.contactno : phone}
                           onChange={handleOnChange}
                         />
                       </div>
@@ -479,10 +501,10 @@ const CreateClints = () => {
                           name="aadhar_card_no"
                           {...register("aadhar_card_no", { required: true, pattern: strongaadharcode })}
                         />
-                        {errors && errors.aadhar_card_no && 
+                        {errors && errors.aadhar_card_no &&
                           errors.aadhar_card_no.type === "required" && (
-                          <p>Aadharcard number is required field</p>
-                        )}
+                            <p>Aadharcard number is required field</p>
+                          )}
                         {errors &&
                           errors.aadhar_card_no &&
                           errors.aadhar_card_no.type === "pattern" && (
