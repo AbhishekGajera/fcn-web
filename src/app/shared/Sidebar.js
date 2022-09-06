@@ -44,6 +44,10 @@ class Sidebar extends Component {
       this.props.history.push('/connectedusers/getuserList')
     }
 
+    if (itemName === 'fcnTransaction') {
+      this.props.history.push('/transaction/transactionList')
+    }
+
     if (itemName === 'fcnProducts') {
       this.props.history.push('/products/addproducts')
     }
@@ -193,6 +197,8 @@ class Sidebar extends Component {
       { path: '/general-pages', state: 'generalPagesMenuOpen' },
       { path: '/ecommerce', state: 'ecommercePagesMenuOpen' },
       { path: '/video', state: 'fcnVideo' },
+      { path: '/transaction', state: 'fcnTransaction' },
+      
     ];
 
     dropdownPaths.forEach((obj => {
@@ -213,7 +219,7 @@ class Sidebar extends Component {
               <i className="mdi mdi-home menu-icon"></i>
             </Link>
           </li>
-         
+
           {["IBO", "user"].includes(this.userData?.role) && <>
             <li className={this.isPathActive('/training') ? 'nav-item active' : 'nav-item'}>
               <div className={this.state.ourTraining ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('ourTraining')} data-toggle="collapse">
@@ -299,7 +305,7 @@ class Sidebar extends Component {
               </Collapse>
             </li>
           </>}
-          {["admin", "branch","IBO"].includes(this.userData?.role) &&
+          {["admin", "branch", "IBO"].includes(this.userData?.role) &&
             <>
               <li className={this.isPathActive('/clients') ? 'nav-item active' : 'nav-item'}>
                 <div className={this.state.fcnClients ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('fcnClients')} data-toggle="collapse">
@@ -422,6 +428,20 @@ class Sidebar extends Component {
               </Collapse>
             </li>
           }
+          {["admin"].includes(this.userData?.role) &&
+            <li className={this.isPathActive('/transaction') ? 'nav-item active' : 'nav-item'}>
+              <div className={this.state.fcnTransaction ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('fcnTransaction')} data-toggle="collapse">
+                <span className="menu-title"><Trans>Transaction</Trans></span>
+                <i className="menu-arrow"></i>
+                <i className="mdi mdi-store menu-icon"></i>
+              </div>
+              <Collapse in={this.state.fcnTransaction}>
+                <ul className="nav flex-column sub-menu">
+                  <li className="nav-item"> <Link className={this.isPathActive('/transaction/transactionList') ? 'nav-link active' : 'nav-link'} to="/transaction/transactionList"><Trans>Show Transaction</Trans></Link></li>
+                </ul>
+              </Collapse>
+            </li>
+          }
           {/* {["admin"].includes(this.userData?.role) &&
 
             <li className={this.isPathActive('/fees') ? 'nav-item active' : 'nav-item'}>
@@ -468,6 +488,7 @@ class Sidebar extends Component {
               <Collapse in={this.state.fcnVideo}>
                 <ul className="nav flex-column sub-menu">
                   <li className="nav-item"> <Link className={this.isPathActive('/video/addVideo') ? 'nav-link active' : 'nav-link'} to="/video/addVideo"><Trans>Add Video</Trans></Link></li>
+                  <li className="nav-item"> <Link className={this.isPathActive('/video/fetch-video') ? 'nav-link active' : 'nav-link'} to="/video/fetch-video"><Trans>Show Video</Trans></Link></li>
                 </ul>
               </Collapse>
             </li>

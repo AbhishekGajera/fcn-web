@@ -5,13 +5,14 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckSquare, faCoffee, } from '@fortawesome/fontawesome-free-solid'
 import { Trans } from 'react-i18next';
-import { useCookies  } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import {
   getUsers,
   getUsersRecent,
   getLeadsDash,
   getLeads,
   getBranches,
+  getTransaction,
   getIBOs,
 } from "../../utils/APIs";
 import { useUrl } from "../../utils/Functions/useUrl";
@@ -23,6 +24,8 @@ const Dashboard = () => {
   const [cookies, setCookie] = useCookies(['user']);
   const [itemlist, setitemlist] = useState([]);
   const [itemlistdash, setitemlistdash] = useState([]);
+  const [itemlistTransaction, setitemlistTransaction] = useState([]);
+  const [withdrawTransaction, setWithdrawTransaction] = useState([]);
 
 
   const [isLoading, setIsLoading] = useState(true)
@@ -30,8 +33,30 @@ const Dashboard = () => {
   const [itemsPerPage] = useState(10);
   const [pageCount, setPageCount] = useState(0);
 
+  const getTransactionList = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getTransaction()
+      ).data;
+      const depositData = items.results.filter((item) => item.type === 'deposit')
+      const withdrawData = items.results.filter((item) => item.type === 'withdraw')
+      setitemlistTransaction(depositData);
+      setWithdrawTransaction(withdrawData)
+      setPageCount(items?.totalPages);
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
 
-
+  useEffect(() => {
+    getTransactionList();
+  }, [])
 
   const options = {
     scales: {
@@ -146,7 +171,7 @@ const Dashboard = () => {
 
   return (
     <>
-    <div className="mb-3">
+      <div className="mb-3">
         <div className="card">
           <div className="card-body">
             <h4 className="welcome-text mb-0">Welcome , <Trans>{cookies?.user?.name}</Trans></h4>
@@ -501,6 +526,84 @@ const Dashboard = () => {
                                   <td>{item?.contactno}</td>
                                 </tr>
                               )
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div className="mb-3">
+        <div className="row">
+          <div className="col-md-6">
+            <div className="card">
+              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                      <h6>Recent Deposit</h6>
+                    </div>
+                    <div className="panel-container show p-3">
+                      <div className="table-responsive">
+                        <table className="table">
+                          <thead className="thead-light">
+                            <tr>
+                              <th> From </th>
+                              <th> To </th>
+                              <th> Amount </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {itemlistTransaction?.map((item) => {
+                              return (
+                                <tr>
+                                  <td>{item?.from_user?.name}</td>
+                                  <td>{item?.to_user?.name}</td>
+                                  <td>{item?.total}</td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div className="col-md-6">
+            <div className="card">
+              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                <div className="row">
+                  <div className="col-md-12">
+                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                      <h6>Recent Withdraw</h6>
+                    </div>
+                    <div className="panel-container show p-3">
+                      <div className="table-responsive">
+                        <table className="table">
+                          <thead className="thead-light">
+                            <tr>
+                              <th> From </th>
+                              <th> To </th>
+                              <th> Amount </th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                            {withdrawTransaction?.map((item) => {
+                              return (
+                                <tr>
+                                  <td>{item?.from_user?.name}</td>
+                                  <td>{item?.to_user?.name}</td>
+                                  <td>{item?.total}</td>
+                                </tr>
+                              );
                             })}
                           </tbody>
                         </table>

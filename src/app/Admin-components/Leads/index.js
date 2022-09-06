@@ -124,6 +124,7 @@ const Leads = () => {
 
     const onSubmit = async (data) => {
         await CreateLead(data)
+        setShow(false);
         toast.success('Lead added successfully', {
             autoClose: true
         })
