@@ -368,7 +368,7 @@ const Leads = () => {
                                                     <tr key={index}>
                                                         <td>{item?.name}</td>
                                                         <td>{item?.title}</td>
-                                                        <td>{item?.company_name}</td>
+                                                        <td>{item?.branch}</td>
                                                         <td>{item?.email}</td>
                                                         <td>{item?.contactno}</td>
                                                         <td>

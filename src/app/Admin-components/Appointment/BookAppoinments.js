@@ -24,7 +24,7 @@ const BookAppoinment = () => {
       'user' : cookies?.user?.id,
       'toDate' : data?.toDate,
       'fromDate' : data?.fromDate,
-      'Description' : data?.Description,
+      'desc' : data?.Description,
       'status' : 1
     })
 
