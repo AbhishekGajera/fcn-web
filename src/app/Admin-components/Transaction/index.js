@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import {
     getTransaction,
     userLogout,
+    updateTransaction,
     deleteTransaction,
 } from "../../../utils/APIs";
 
@@ -11,12 +12,17 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 import Swal from "sweetalert2";
 import { useUrl } from "../../../utils/Functions/useUrl";
+import Modal from "react-bootstrap/Modal";
+import { useForm } from "react-hook-form";
+import { Form } from 'react-bootstrap';
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
 
 const Transaction = () => {
     const history = useHistory();
     const [cookies, setCookie] = useCookies(["user"]);
+    const [show, setShow] = React.useState(false);
+    const [valueToEdit, setvalueToEdit] = useState({});
     const [itemlist, setitemlist] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
     const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -72,6 +78,22 @@ const Transaction = () => {
         setItemOffset(event.selected);
     };
 
+    const handleClose = () => {
+        setShow(false)
+        setvalueToEdit({})
+        reset()
+    };
+
+    const handleShow = (value) => {
+        reset()
+        setvalueToEdit(value)
+        setShow(true);
+    }
+
+    const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
+        mode: "onChange"
+    });
+
     const deleteData = (uid) => {
         Swal.fire({
             title: "Are you sure?",
@@ -98,8 +120,89 @@ const Transaction = () => {
         });
     };
 
+    const onSubmit = async (data) => {
+        try {
+            const formData = new FormData()
+            formData.append("trasaction_id", valueToEdit?.id);
+            formData.append("status", data?.status)
+            await updateTransaction(formData)
+            toast.success('Transaction updated Successfully', {
+                autoClose: 3000
+            })
+            list()
+        } catch (error) {
+            if (
+                error &&
+                error.response &&
+                error.response.data &&
+                error.response.data.message
+            ) {
+                toast.error(error.response.data.message);
+            } else {
+                toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+            }
+        } finally {
+            setShow(false)
+        }
+    };
+
     return (
         <div>
+            <Modal
+                show={show}
+                onHide={handleClose}
+                backdrop="static"
+                keyboard={false}
+            >
+                <Modal.Header closeButton>
+                    <Modal.Title>Update Transaction</Modal.Title>
+                </Modal.Header>
+                <Modal.Body>
+                    <div className="row auth">
+                        <div className="col-12 grid-margin">
+                            <div className="card">
+                                <div className="card-body">
+                                    <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+                                        <p className="card-description"> Update Transaction </p>
+                                        <div className="row" >
+                                            <div className="col-md-12">
+                                                <Form.Group className="row">
+                                                    <label className="col-sm-3 col-form-label">Status</label>
+                                                    <div className="col-sm-9">
+                                                        <select
+                                                            className="form-control form-control-lg"
+                                                            id="exampleFormControlSelect2"
+                                                            name="status"
+                                                            {...register("status", {
+                                                                required: true,
+                                                            })}>
+                                                            <option value=''>--Select Status--</option>
+                                                            <option value='0' selected={valueToEdit.status === 0}>Pending</option>
+                                                            <option value='1' selected={valueToEdit.status === 1}>approved</option>
+                                                            <option value='2' selected={valueToEdit.status === 2}>Declined</option>
+                                                        </select>
+                                                        {errors && errors.status && (
+                                                            <p>status is required field</p>
+                                                        )}
+                                                    </div>
+                                                </Form.Group>
+                                            </div>
+                                        </div>
+                                        <div className="mt-3">
+                                            <button
+                                                className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                                                type="submit"
+                                            >
+                                                UPDATE
+                                            </button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div >
+                </Modal.Body>
+            </Modal>
             <div className="page-header">
                 <h3 className="page-title">Transaction / Show Transaction </h3>
                 <nav aria-label="breadcrumb">
@@ -152,6 +255,7 @@ const Transaction = () => {
                                         <th> TO </th>
                                         <th> Amount </th>
                                         <th> Type </th>
+                                        <th> Edit </th>
                                         <th> Delete </th>
                                     </tr>
                                 </thead>
@@ -165,6 +269,7 @@ const Transaction = () => {
                                                     <td>{item?.to_user?.name}</td>
                                                     <td>{item?.total}</td>
                                                     <td>{item?.type}</td>
+                                                    <td><i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i></td>
                                                     <td>
                                                         <i
                                                             onClick={() => deleteData(item?.id)}

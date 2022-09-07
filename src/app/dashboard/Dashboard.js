@@ -449,86 +449,90 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="mb-3">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="card">
-              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
-                      <h6>Recent Clients</h6>
-                    </div>
-                    <div className="panel-container show p-3">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead className="thead-light">
-                            <tr>
-                              <th> Name </th>
-                              <th> Contact no. </th>
-                              <th> Branch </th>
-                              <th> IBO </th>
-                              <th> Email </th>
+      {cookies?.user?.role !== 'IBO' && (
+        <>
+          <div className="mb-3">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Clients</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
+                                <tr>
+                                  <th> Name </th>
+                                  <th> Contact no. </th>
+                                  <th> Branch </th>
+                                  <th> IBO </th>
+                                  <th> Email </th>
 
 
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {itemlist?.map((item) => {
-                              return (
-                                <tr>
-                                  <td>{item?.name}</td>
-                                  <td>{item?.contactno}</td>
-                                  <td>{item?.branch}</td>
-                                  <td>{item?.IBO}</td>
-                                  <td>{item?.email}</td>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {itemlist?.map((item) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.name}</td>
+                                      <td>{item?.contactno}</td>
+                                      <td>{item?.branch}</td>
+                                      <td>{item?.IBO}</td>
+                                      <td>{item?.email}</td>
 
-                                </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="card">
-              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
-                      <h6>Recent Leads</h6>
-                    </div>
-                    <div className="panel-container show p-3">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead className="thead-light">
-                            <tr>
-                              <th> Name </th>
-                              <th> Title </th>
-                              <th> Branch Name </th>
-                              <th> Email </th>
-                              <th> Phone </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {itemlistdash?.map((item, index) => {
-                              return (
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Leads</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
                                 <tr>
-                                  <td>{item?.name}</td>
-                                  <td>{item?.title}</td>
-                                  <td>{item?.branch}</td>
-                                  <td>{item?.email}</td>
-                                  <td>{item?.contactno}</td>
+                                  <th> Name </th>
+                                  <th> Title </th>
+                                  <th> Branch Name </th>
+                                  <th> Email </th>
+                                  <th> Phone </th>
                                 </tr>
-                              )
-                            })}
-                          </tbody>
-                        </table>
+                              </thead>
+                              <tbody>
+                                {itemlistdash?.map((item, index) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.name}</td>
+                                      <td>{item?.title}</td>
+                                      <td>{item?.branch}</td>
+                                      <td>{item?.email}</td>
+                                      <td>{item?.contactno}</td>
+                                    </tr>
+                                  )
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -536,77 +540,77 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
-      <div className="mb-3">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="card">
-              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
-                      <h6>Recent Deposit</h6>
-                    </div>
-                    <div className="panel-container show p-3">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead className="thead-light">
-                            <tr>
-                              <th> From </th>
-                              <th> To </th>
-                              <th> Amount </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {itemlistTransaction?.map((item) => {
-                              return (
+          <div className="mb-3">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Deposit</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
                                 <tr>
-                                  <td>{item?.from_user?.name}</td>
-                                  <td>{item?.to_user?.name}</td>
-                                  <td>{item?.total}</td>
+                                  <th> From </th>
+                                  <th> To </th>
+                                  <th> Amount </th>
                                 </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                              </thead>
+                              <tbody>
+                                {itemlistTransaction?.map((item) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.from_user?.name}</td>
+                                      <td>{item?.to_user?.name}</td>
+                                      <td>{item?.total}</td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-            </div>
-          </div>
-          <div className="col-md-6">
-            <div className="card">
-              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
-                      <h6>Recent Withdraw</h6>
-                    </div>
-                    <div className="panel-container show p-3">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead className="thead-light">
-                            <tr>
-                              <th> From </th>
-                              <th> To </th>
-                              <th> Amount </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {withdrawTransaction?.map((item) => {
-                              return (
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Withdraw</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
                                 <tr>
-                                  <td>{item?.from_user?.name}</td>
-                                  <td>{item?.to_user?.name}</td>
-                                  <td>{item?.total}</td>
+                                  <th> From </th>
+                                  <th> To </th>
+                                  <th> Amount </th>
                                 </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                              </thead>
+                              <tbody>
+                                {withdrawTransaction?.map((item) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.from_user?.name}</td>
+                                      <td>{item?.to_user?.name}</td>
+                                      <td>{item?.total}</td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -614,8 +618,8 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };

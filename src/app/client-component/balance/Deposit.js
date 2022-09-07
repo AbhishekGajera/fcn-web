@@ -61,6 +61,7 @@ const Deposit = () => {
       'from_user': data.branch,
       'to_user': cookies?.user?.id,
       'type': "deposit",
+      'status': 0
     })
     try {
       await addTransaction(formData);

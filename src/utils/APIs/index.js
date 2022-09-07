@@ -106,5 +106,6 @@ export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 
 export const addTransaction = (data) => api(`transaction/add-transaction `, 'POST', data);
 export const getTransaction = () => api(`transaction/fetch-transaction `, 'GET');
+export const updateTransaction = (data) => api(`transaction/update-transaction `, 'PATCH',data);
 export const deleteTransaction = (id) => api(`transaction/delete-transaction/${id}`, 'GET');
 

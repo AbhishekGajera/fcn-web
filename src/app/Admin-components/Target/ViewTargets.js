@@ -113,7 +113,6 @@ const ViewTargets = () => {
   };
 
   const list = async () => {
-    console.info("cookies++ ", cookies?.user?.role)
     setIsLoading(true);
     try {
       let items
@@ -129,8 +128,6 @@ const ViewTargets = () => {
           await getTargetsListByUser(itemsPerPage, +itemOffset + 1, cookies?.user?.id)
         ).data;
       }
-
-
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
       setIsLoading(false);
@@ -270,7 +267,7 @@ const ViewTargets = () => {
                       <input
                         type="text"
                         className="form-control outline-gray bg-transparent border-0"
-                        placeholder="Search Products"
+                        placeholder="Search Target"
                         value={searchTerm}
                         onChange={(e) => {
                           setSearchTerm(e?.target?.value);

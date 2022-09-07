@@ -58,6 +58,7 @@ const Withdraw = () => {
       'from_user': data.branch,
       'to_user': cookies?.user?.id,
       'type': "withdraw",
+      'status': 0
     })
     try {
       await addTransaction(formData);
@@ -77,6 +78,10 @@ const Withdraw = () => {
       }
     }
   };
+
+  React.useEffect(() => {
+    list();
+  }, []);
 
   return (
     <>
@@ -129,7 +134,7 @@ const Withdraw = () => {
                             >
                               <option value=''>--Select branch--</option>
                               {itemlist.map((item, index) => (
-                                <option key={index} value={item?.name} label={item?.name} ></option>
+                                <option key={index} value={item?.id} label={item?.name} ></option>
                               ))}
                             </select>
                             {errors && errors.branch && <p>Select branch is required field</p>}

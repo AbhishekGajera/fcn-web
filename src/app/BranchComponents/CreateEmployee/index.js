@@ -3,11 +3,12 @@ import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
 import { CreateUser } from "../../../utils/APIs";
 
 const CreateEmployee = () => {
   const [cookies] = useCookies(["user"]);
-
+  const history = useHistory()
   const {
     register,
     handleSubmit,
@@ -21,22 +22,24 @@ const CreateEmployee = () => {
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
   const onSubmit = async (data) => {
-      try {
-        const result = await CreateUser(data)
-        toast.success("user crated successfully");
-      } catch (error) {
-          console.info("error ",error)
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+    try {
+      data.name = data.first_name + ' ' + data.last_name;
+      const result = await CreateUser(data)
+      toast.success("user crated successfully");
+      history.push('/employees/listEmployee')
+    } catch (error) {
+      console.info("error ", error)
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
+    }
   };
 
   return (
@@ -63,16 +66,29 @@ const CreateEmployee = () => {
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
                 <p className="card-description"> Personal info </p>
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">Name</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-4 col-form-label">First Name</label>
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
-                          name="name"
-                          {...register("name", { required: true })}
+                          name="first_name"
+                          {...register("first_name", { required: true })}
                         />
-                        {errors && errors.name && <p>name is required field</p>}
+                        {errors && errors.first_name && <p>first name is required field</p>}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">Last Name</label>
+                      <div className="col-sm-8">
+                        <Form.Control
+                          type="text"
+                          name="last_name"
+                          {...register("last_name", { required: true })}
+                        />
+                        {errors && errors.last_name && <p>last name is required field</p>}
                       </div>
                     </Form.Group>
                   </div>

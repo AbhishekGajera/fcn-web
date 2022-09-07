@@ -298,6 +298,7 @@ const ProductList = () => {
                           <div className="col-sm-9">
                             <Form.Control
                               type="number"
+                              step="0.00001"
                               name="commision"
                               defaultValue={valueToEdit.commision}
                               {...register("commision", { required: true })}
