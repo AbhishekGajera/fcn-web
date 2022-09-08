@@ -67,6 +67,7 @@ const apiImage = (method, data = {}) => {
   data.append("api_key", "519415831796165");
   data.append("folder", "UserDetail");
   data.append('upload_preset', 'UserDetail');
+  data.append("resource_type", "auto");
 
   const fileResult = fetch('https://api.cloudinary.com/v1_1/dihq2mfsj/image/upload', {
       method: method,

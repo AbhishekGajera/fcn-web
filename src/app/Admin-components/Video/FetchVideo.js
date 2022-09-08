@@ -17,7 +17,7 @@ import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
 const FetchVideo = () => {
-    
+
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useUrl("page");
     const [itemsPerPage] = useState(10);
@@ -132,6 +132,10 @@ const FetchVideo = () => {
         }
     };
 
+    const onClickDownload = (videoURL) => {
+        window.open(videoURL, '_blank');
+    }
+
     return (
         <div>
             <Modal
@@ -222,7 +226,6 @@ const FetchVideo = () => {
                                     <tr>
                                         <th> Type </th>
                                         <th> Title </th>
-                                        {/* <th> Edit </th> */}
                                         <th> Delete </th>
                                     </tr>
                                 </thead>
@@ -237,12 +240,20 @@ const FetchVideo = () => {
                                                 <tr key={index}>
                                                     <td>{item?.type}</td>
                                                     <td>{item?.title}</td>
-                                                    {/* <td><i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i></td> */}
                                                     <td>
                                                         <i
                                                             onClick={() => deleteData(item?.id)}
                                                             className="mdi mdi-delete"
                                                         ></i>
+                                                    </td>
+                                                    <td>
+                                                        <button
+                                                            type="button"
+                                                            className="btn btn-gradient-primary btn-sm "
+                                                            onClick={() => onClickDownload(item?.url)}
+                                                        >
+                                                            Download Video
+                                                        </button>
                                                     </td>
                                                 </tr>
                                             );

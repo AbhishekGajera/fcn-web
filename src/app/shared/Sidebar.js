@@ -18,7 +18,11 @@ class Sidebar extends Component {
     }
 
     if (itemName === 'ourInvestment') {
-      this.props.history.push('/investment/powerone')
+      if (["admin"].includes(this.userData?.role)) {
+        this.props.history.push('/investment/calculator')
+      }else{
+        this.props.history.push('/investment/powerone')
+      }
     }
 
     if (itemName === 'ourUtils') {
@@ -198,7 +202,7 @@ class Sidebar extends Component {
       { path: '/ecommerce', state: 'ecommercePagesMenuOpen' },
       { path: '/video', state: 'fcnVideo' },
       { path: '/transaction', state: 'fcnTransaction' },
-      
+
     ];
 
     dropdownPaths.forEach((obj => {
@@ -220,7 +224,7 @@ class Sidebar extends Component {
             </Link>
           </li>
 
-          {["IBO", "user"].includes(this.userData?.role) && <>
+          {["IBO", "user", "admin"].includes(this.userData?.role) && <>
             <li className={this.isPathActive('/training') ? 'nav-item active' : 'nav-item'}>
               <div className={this.state.ourTraining ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('ourTraining')} data-toggle="collapse">
                 <span className="menu-title"><Trans>Training</Trans></span>
@@ -257,8 +261,11 @@ class Sidebar extends Component {
               </div>
               <Collapse in={this.state.ourInvestment}>
                 <ul className="nav flex-column sub-menu">
-                  <li className="nav-item"> <Link className={this.isPathActive('/investment/powerone') ? 'nav-link active' : 'nav-link'} to="/investment/powerone"><Trans>PowerOne</Trans></Link></li>
+                  {["admin"].includes(this.userData?.role) && <>
+                    <li className="nav-item"> <Link className={this.isPathActive('/investment/calculator') ? 'nav-link active' : 'nav-link'} to="/investment/calculator"><Trans>Calculator</Trans></Link></li>
+                  </>}
                   {["IBO", "user", "branch"].includes(this.userData?.role) && <>
+                    <li className="nav-item"> <Link className={this.isPathActive('/investment/powerone') ? 'nav-link active' : 'nav-link'} to="/investment/powerone"><Trans>PowerOne</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/ssp') ? 'nav-link active' : 'nav-link'} to="/investment/ssp"><Trans>SSP</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/cp') ? 'nav-link active' : 'nav-link'} to="/investment/cp"><Trans>CP</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/insurance') ? 'nav-link active' : 'nav-link'} to="/investment/insurance"><Trans>Insurance</Trans></Link></li>

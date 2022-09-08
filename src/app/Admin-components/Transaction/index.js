@@ -122,10 +122,9 @@ const Transaction = () => {
 
     const onSubmit = async (data) => {
         try {
-            const formData = new FormData()
-            formData.append("trasaction_id", valueToEdit?.id);
-            formData.append("status", data?.status)
-            await updateTransaction(formData)
+            data.trasaction_id = valueToEdit?.id;
+            const updatedData = JSON.stringify(data)
+            await updateTransaction(updatedData)
             toast.success('Transaction updated Successfully', {
                 autoClose: 3000
             })
@@ -145,6 +144,19 @@ const Transaction = () => {
             setShow(false)
         }
     };
+
+    const formateStatus = (status) => {
+        switch (+status) {
+            case (0):
+                return 'Pending';
+            case (1):
+                return 'approved';
+            case (2):
+                return 'Declined'            
+            default:
+                return 'Pending';
+        }
+    }
 
     return (
         <div>
@@ -255,6 +267,7 @@ const Transaction = () => {
                                         <th> TO </th>
                                         <th> Amount </th>
                                         <th> Type </th>
+                                        <th> Status </th>
                                         <th> Edit </th>
                                         <th> Delete </th>
                                     </tr>
@@ -269,6 +282,7 @@ const Transaction = () => {
                                                     <td>{item?.to_user?.name}</td>
                                                     <td>{item?.total}</td>
                                                     <td>{item?.type}</td>
+                                                    <td>{formateStatus(item?.status)}</td>
                                                     <td><i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i></td>
                                                     <td>
                                                         <i

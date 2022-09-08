@@ -180,12 +180,14 @@ const ClientList = () => {
             cookies?.user?.name
           )
         ).data;
+        setitemlist(items);
       } else if (cookies?.user?.role === "IBO") {
         items = await (
           await getUserIbo(
-            cookies?.user?.name
+            cookies?.user?.id
           )
         ).data;
+        setitemlist([items]);
       } else {
         items = await (
           await getUsers(
@@ -197,8 +199,8 @@ const ClientList = () => {
             selectedIBO
           )
         ).data;
+        setitemlist(items?.results);
       }
-      setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
       if (error?.response?.data?.message) {

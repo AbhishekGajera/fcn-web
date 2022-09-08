@@ -27,7 +27,7 @@ const Dashboard = () => {
   const [itemlistTransaction, setitemlistTransaction] = useState([]);
   const [withdrawTransaction, setWithdrawTransaction] = useState([]);
 
-
+console.log("cookies",cookies);
   const [isLoading, setIsLoading] = useState(true)
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
@@ -200,6 +200,17 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-4 text-white" style={{ borderRadius: '8px', padding: '26px 20px', background: '#6A6CFF' }}>
                 <div>
+                <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
+                    <div className="symbol" style={{ marginRight: '16px' }}>
+                      <div className="symbol-label">
+                        <FontAwesomeIcon icon={["fas", "fa-coins"]} className="float-right" size="xl" />
+                      </div>
+                    </div>
+                    <div style={{ marginLeft: '16px' }}>
+                      <h4>{cookies?.user?.total_earning.toFixed(2)}+</h4>
+                      <h6 className="card-text">Commission Earned</h6>
+                    </div>
+                  </div>
                   <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
                     <div className="symbol" style={{ marginRight: '16px' }}>
                       <div className="symbol-label">
