@@ -170,47 +170,26 @@ const ClientList = () => {
     setselectedIBO(e.target.value);
   };
 
-  console.log("cookies", cookies)
   const list = async () => {
     setIsLoading(true)
-
-    if (cookies?.user?.role === "branch") {
-      try {
-        const items = await (
+    try {
+      let items
+      if (cookies?.user?.role === "branch") {
+        items = await (
           await getUserBranch(
             cookies?.user?.name
           )
         ).data;
-        setitemlist(items?.results);
-        setPageCount(items?.totalPages);
-
-      } catch (error) {
-        if (error?.response?.data?.message) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
-      }
-    } else if(cookies?.user?.role === "IBO"){
-      try {
-        const items = await (
+        setitemlist(items);
+      } else if (cookies?.user?.role === "IBO") {
+        items = await (
           await getUserIbo(
-            cookies?.user?.name
+            cookies?.user?.id
           )
         ).data;
-        setitemlist(items?.results);
-        setPageCount(items?.totalPages);
-
-      } catch (error) {
-        if (error?.response?.data?.message) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
-      }
-    }else {
-      try {
-        const items = await (
+        setitemlist([items]);
+      } else {
+        items = await (
           await getUsers(
             itemsPerPage,
             +itemOffset + 1,
@@ -221,25 +200,22 @@ const ClientList = () => {
           )
         ).data;
         setitemlist(items?.results);
-        setPageCount(items?.totalPages);
-
-      } catch (error) {
-        if (error?.response?.data?.message) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
-
-
-        if (error?.response?.data?.code === 401) {
-          const formData = JSON.stringify({
-            refreshToken: localStorage.getItem("refreshToken"),
-          });
-          setCookie("user", null, { path: "/" });
-          userLogout(formData).finally(() => {
-            history.push("/user-pages/login-1");
-          });
-        }
+      }
+      setPageCount(items?.totalPages);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
       }
     }
     setIsLoading(false)

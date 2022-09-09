@@ -32,20 +32,21 @@ const AddVideo = () => {
 
     const onSubmit = async (data) => {
         const formData = new FormData()
+        formData.append('file', data.file[0]);
+        const fileResult = await ImageUpload(formData)
         formData.append("user", cookies?.user?.id)
-        formData.append("url", data?.file[0])
         formData.append("type", data?.category)
         formData.append("title", 'sample')
-        // const fileResult = await ImageUpload(formData)
 
-        // if (fileResult.error) {
-        //     toast.error(fileResult.error.message);
-        // } else {
+        if (fileResult.error) {
+            toast.error(fileResult.error.message);
+        } else {
             try {
+                formData.url = fileResult.secure_url;
                 await addVideo(formData);
                 toast.success("Add Video successfully");
                 reset()
-                history.push("/video/addVideo");
+                history.push("/video/fetch-video");
             } catch (error) {
                 if (
                     error &&
@@ -58,7 +59,7 @@ const AddVideo = () => {
                     toast.error(process.env.REACT_APP_ERROR_MESSAGE);
                 }
             }
-        // }
+        }
     }
 
     return (
@@ -138,6 +139,7 @@ const AddVideo = () => {
                                                 {errors && errors.file && (
                                                     <p>Upload Video is required field</p>
                                                 )}
+                                                
                                             </div>
                                         </Form.Group>
                                     </div>

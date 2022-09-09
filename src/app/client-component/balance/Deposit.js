@@ -3,12 +3,49 @@ import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import {
+  addTransaction,
+  getBranchesClient,
+  userLogout
+} from "../../../utils/APIs";
 
 const Deposit = () => {
+  const history = useHistory();
+  const [cookies, setCookie] = useCookies(["user"]);
   const [show, setShow] = React.useState(false);
+  const [itemlist, setitemlist] = React.useState([]);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
+
+  const list = async () => {
+    try {
+      const items = await (await getBranchesClient()).data;
+      setitemlist(items?.results);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    list();
+  }, []);
 
   const {
     register,
@@ -18,9 +55,30 @@ const Deposit = () => {
     mode: "onChange",
   });
   const onSubmit = async (data) => {
-    handleClose()
-    toast.success('Your request sended successfully')
-    console.log(data);
+    handleClose();
+    const formData = JSON.stringify({
+      'total': data.amount,
+      'from_user': cookies?.user?.id,
+      'to_user': data.branch,
+      'type': "deposit",
+      'status': 0
+    })
+    try {
+      await addTransaction(formData);
+      toast.success("Deposit successfully");
+      history.push("/balance");
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
   };
 
   return (
@@ -61,91 +119,26 @@ const Deposit = () => {
                         </Form.Group>
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">
-                            Enter Account-number
+                            From
                           </label>
                           <div className="col-sm-9">
-                            <Form.Control
-                              type="text"
-                              placeholder="Enter Account-number"
-                              name="account-number"
-                              {...register("account-number", {
-                                required: false,
+                            <select
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              {...register("branch", {
+                                required: true,
                               })}
-                            />
-                          </div>
-                        </Form.Group>
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
-                            Enter Account-number
-                          </label>
-                          <div className="col-sm-9">
-                            <select className="form-select">
-                              <option selected={true}>Surat</option>
-                              <option>Masma</option>
-                              <option>Olpad</option>
-                              <option>Navsari</option>
-                              <option>Valsad</option>
+                            >
+                              <option value=''>--Select branch--</option>
+                              {itemlist.map((item, index) => (
+                                <option key={index} value={item?.id} label={item?.name} ></option>
+                              ))}
                             </select>
-                          </div>
-                        </Form.Group>
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">
-                            Training Type
-                          </label>
-                          <div className="col-sm-3">
-                            <div className="form-check">
-                              <label className="form-check-label">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  name="demat"
-                                  {...register("demat", { required: false })}
-                                />
-                                <i className="input-helper"></i>
-                                Demat
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-sm-3">
-                            <div className="form-check">
-                              <label className="form-check-label">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  name="commoditiy"
-                                  {...register("commoditiy", { required: false })}
-                                />
-                                <i className="input-helper"></i>
-                                Commoditiy
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-sm-3">
-                            <div className="form-check">
-                              <label className="form-check-label">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  name="forex"
-                                  {...register("forex", { required: false })}
-                                />
-                                <i className="input-helper"></i>
-                                Forex
-                              </label>
-                            </div>
+                            {errors && errors.branch && <p>Select branch is required field</p>}
                           </div>
                         </Form.Group>
                       </div>
-                    </div>
-
-                    <div className="text-center mb-4 font-weight-light">
-                      for bank details{" "}
-                      <a
-                        onClick={() => window.open("/user-pages/bank-details")}
-                        className="text-primary"
-                      >
-                        click here
-                      </a>
                     </div>
                     <div className="text-center">
                       <button

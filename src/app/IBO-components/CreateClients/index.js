@@ -168,6 +168,7 @@ const CreateClints = () => {
     }
   };
 
+
   return (
     <div>
       <div className="page-header">
@@ -199,7 +200,8 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="first_name"
-                          defaulValue={clientlist ? clientlist.name : ''}
+                          defaultValue={clientlist?.name.split(" ")[0]}
+                          onChange={(e) => setClientlist({ ...clientlist, name: e?.target?.value })}
                           {...register("first_name", { required: true })}
                         />
                         {errors && errors.first_name && <p>first name is required field</p>}
@@ -213,6 +215,8 @@ const CreateClints = () => {
                         <Form.Control
                           type="text"
                           name="last_name"
+                          defaultValue={clientlist?.name.split(" ")[1]}
+                          onChange={(e) => setClientlist({ ...clientlist, name: e?.target?.value })}
                           {...register("last_name", { required: true })}
                         />
                         {errors && errors.last_name && <p>last name is required field</p>}
@@ -297,7 +301,7 @@ const CreateClints = () => {
                         >
                           <option value=''>--Select branch--</option>
                           {itemlist.map((item, index) => (
-                            <option key={index} value={item?.name} label={item?.name} ></option>
+                            <option key={index} value={item?.name} label={item?.name} selected={clientlist?.branch === item?.name}></option>
                           ))}
                         </select>
                         {errors && errors.branch && <p>Select branch is required field</p>}

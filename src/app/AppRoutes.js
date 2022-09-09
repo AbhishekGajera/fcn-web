@@ -4,6 +4,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 import Spinner from '../app/shared/Spinner';
 import ProtectedRoute from '../common/ProtectedRoute';
 
+const Transaction = lazy(() => import('./Admin-components/Transaction'));
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
 const SipCalc   = lazy(() => import('./client-component/SipCalc'));
 const FreeVideo   = lazy(() => import('./client-component/training/FreeVideo'));
@@ -81,6 +82,7 @@ const PayrollDetail = lazy(() => import('./Admin-components/Employee-Management/
 const Leave = lazy(() => import('./Admin-components/Employee-Management/Leave'));
 const Lead = lazy(() => import('./Admin-components/Leads'));
 const Video = lazy(() => import('./Admin-components/Video/AddVideo'));
+const FetchVideo = lazy(() => import('./Admin-components/Video/FetchVideo'));
 const BookAppoinments = lazy(() => import('./Admin-components/Appointment/BookAppoinments'));
 const FetchAppoinments = lazy(() => import('./Admin-components/Appointment/FetchAppoinments'));
 const CreateEmployee = lazy(() => import('./BranchComponents/CreateEmployee'));
@@ -108,6 +110,7 @@ class AppRoutes extends Component {
            {/* client routes */}
           <ProtectedRoute exact path="/dashboard" component={ Dashboard } accesstype={["user","admin","IBO","branch"]}/>
           <Route exact path="/appoinment" component={ Dashboard }  accesstype={["user","admin","IBO","branch"]}/>
+          <Route exact path="/transaction/transactionList" component={ Transaction }  accesstype={["admin"]}/>
           {/* <Route exact path="/training" component={ Dashboard } /> */}
 
           <ProtectedRoute path="/training/free" component={ FreeVideo  }  accesstype={["user","admin","IBO","branch"]}/>
@@ -115,7 +118,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/trading/demat" component={ Demat }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/trading/commodity" component={ Commodity }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/trading/forex" component={ Forex }  accesstype={["user","admin","IBO","branch"]}/>
-
+          
           <ProtectedRoute path="/investment/powerone" component={ PowerOne }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/investment/ssp" component={ SystematicSaving }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/investment/cp" component={ Currency } accesstype={["user","admin","IBO","branch"]} />
@@ -209,6 +212,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/calculation/cp" component={ CpTravels } accesstype={["admin"]} />
           <ProtectedRoute path="/leads/lead" component={ Lead } accesstype={["admin"]} />
           <ProtectedRoute path="/video/addvideo" component={ Video } accesstype={["admin"]} />
+          <ProtectedRoute path="/video/fetch-video" component={ FetchVideo } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/leave" component={ Leave } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/attendance" component={ Attendance } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/payroll" component={ Payroll } accesstype={["admin"]} />

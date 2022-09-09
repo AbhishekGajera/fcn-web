@@ -48,7 +48,7 @@ export const getUserBranch = (branch = '',role = 'user') => api(`users/get-user-
 // IBO management
 export const getIBOs = (limit = 10,offset = 1,name = '',branch = '',) => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
 export const getIBOsClient = (limit = 500,offset = 1,name = '',branch = '') => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
-export const getUserIbo = (IBO = '',role = 'user') => api(`users/get-user-branch?IBO=${IBO}&role=${role}`, 'GET');
+export const getUserIbo = (id) => api(`users/get-user-ibo/${id}`, 'GET');
 
 
 
@@ -99,3 +99,13 @@ export const ImageUpload = (data) => apiImage('POST', data);
 
 // video management
 export const addVideo = (data) => api(`video `, 'POST', data);
+export const getVideo = (data) => api(`video `, 'GET', data);
+export const deleteVideo = (id) => api(`video/${id}`, 'GET');
+
+//  Transaction Management
+
+export const addTransaction = (data) => api(`transaction/add-transaction `, 'POST', data);
+export const getTransaction = () => api(`transaction/fetch-transaction `, 'GET');
+export const updateTransaction = (data) => api(`transaction/update-transaction`, 'PATCH', data);
+export const deleteTransaction = (id) => api(`transaction/delete-transaction/${id}`, 'GET');
+

@@ -220,7 +220,7 @@ const FetchAppoinments = () => {
                         <td>{item?.user?.name}</td>
                         <td>{new Date(item?.fromDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
                         <td>{new Date(item?.toDate)?.toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' })}</td>
-                        <td>{item?.Description}</td>
+                        <td>{item?.desc}</td>
                         <td>{cookies?.user?.role === 'admin' ? (
                           <select
 

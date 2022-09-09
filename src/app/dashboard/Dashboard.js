@@ -5,13 +5,15 @@ import { useHistory } from "react-router-dom";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faCheckSquare, faCoffee, } from '@fortawesome/fontawesome-free-solid'
 import { Trans } from 'react-i18next';
-import { useCookies  } from 'react-cookie';
+import { useCookies } from 'react-cookie';
 import {
   getUsers,
   getUsersRecent,
   getLeadsDash,
+  getProductsListClient,
   getLeads,
   getBranches,
+  getTransaction,
   getIBOs,
 } from "../../utils/APIs";
 import { useUrl } from "../../utils/Functions/useUrl";
@@ -21,17 +23,62 @@ import { useUrl } from "../../utils/Functions/useUrl";
 const Dashboard = () => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(['user']);
+  
   const [itemlist, setitemlist] = useState([]);
   const [itemlistdash, setitemlistdash] = useState([]);
-
+  const [itemlistTransaction, setitemlistTransaction] = useState([]);
+  const [withdrawTransaction, setWithdrawTransaction] = useState([]);
+  const [productList, setProductList] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true)
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
   const [pageCount, setPageCount] = useState(0);
 
+  const getTransactionList = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getTransaction()
+      ).data;
+      const depositData = items.results.filter((item) => item.type === 'deposit')
+      const withdrawData = items.results.filter((item) => item.type === 'withdraw')
+      setitemlistTransaction(depositData);
+      setWithdrawTransaction(withdrawData)
+      setPageCount(items?.totalPages);
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
 
+  const getProductsList = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getProductsListClient()
+      ).data;
+      const productData = items.results.filter((item) => item?.user?.id === cookies?.user?.id)
+      console.log("productData",productData)
+      setProductList(productData);
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
 
+  useEffect(() => {
+    getTransactionList();
+    getProductsList();
+  }, [])
 
   const options = {
     scales: {
@@ -146,7 +193,7 @@ const Dashboard = () => {
 
   return (
     <>
-    <div className="mb-3">
+      <div className="mb-3">
         <div className="card">
           <div className="card-body">
             <h4 className="welcome-text mb-0">Welcome , <Trans>{cookies?.user?.name}</Trans></h4>
@@ -175,6 +222,19 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-4 text-white" style={{ borderRadius: '8px', padding: '26px 20px', background: '#6A6CFF' }}>
                 <div>
+                  {cookies?.user?.role === 'IBO' && (
+                    <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
+                      <div className="symbol" style={{ marginRight: '16px' }}>
+                        <div className="symbol-label">
+                          <FontAwesomeIcon icon={["fas", "fa-coins"]} className="float-right" size="xl" />
+                        </div>
+                      </div>
+                      <div style={{ marginLeft: '16px' }}>
+                        <h4>{cookies?.user?.total_earning.toFixed(2)}+</h4>
+                        <h6 className="card-text">Commission Earned</h6>
+                      </div>
+                    </div>
+                  )}
                   <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
                     <div className="symbol" style={{ marginRight: '16px' }}>
                       <div className="symbol-label">
@@ -424,45 +484,90 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      <div className="mb-3">
-        <div className="row">
-          <div className="col-md-6">
-            <div className="card">
-              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
-                      <h6>Recent Clients</h6>
-                    </div>
-                    <div className="panel-container show p-3">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead className="thead-light">
-                            <tr>
-                              <th> Name </th>
-                              <th> Contact no. </th>
-                              <th> Branch </th>
-                              <th> IBO </th>
-                              <th> Email </th>
-
-
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {itemlist?.map((item) => {
-                              return (
+      {["admin", "branch"].includes(cookies?.user?.role) &&(
+        <>
+          <div className="mb-3">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Clients</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
                                 <tr>
-                                  <td>{item?.name}</td>
-                                  <td>{item?.contactno}</td>
-                                  <td>{item?.branch}</td>
-                                  <td>{item?.IBO}</td>
-                                  <td>{item?.email}</td>
+                                  <th> Name </th>
+                                  <th> Contact no. </th>
+                                  <th> Branch </th>
+                                  <th> IBO </th>
+                                  <th> Email </th>
+
 
                                 </tr>
-                              );
-                            })}
-                          </tbody>
-                        </table>
+                              </thead>
+                              <tbody>
+                                {itemlist?.map((item) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.name}</td>
+                                      <td>{item?.contactno}</td>
+                                      <td>{item?.branch}</td>
+                                      <td>{item?.IBO}</td>
+                                      <td>{item?.email}</td>
+
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Leads</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
+                                <tr>
+                                  <th> Name </th>
+                                  <th> Title </th>
+                                  <th> Branch Name </th>
+                                  <th> Email </th>
+                                  <th> Phone </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {itemlistdash?.map((item, index) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.name}</td>
+                                      <td>{item?.title}</td>
+                                      <td>{item?.branch}</td>
+                                      <td>{item?.email}</td>
+                                      <td>{item?.contactno}</td>
+                                    </tr>
+                                  )
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -470,40 +575,77 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-          <div className="col-md-6">
-            <div className="card">
-              <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
-                <div className="row">
-                  <div className="col-md-12">
-                    <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
-                      <h6>Recent Leads</h6>
-                    </div>
-                    <div className="panel-container show p-3">
-                      <div className="table-responsive">
-                        <table className="table">
-                          <thead className="thead-light">
-                            <tr>
-                              <th> Name </th>
-                              <th> Title </th>
-                              <th> Branch Name </th>
-                              <th> Email </th>
-                              <th> Phone </th>
-                            </tr>
-                          </thead>
-                          <tbody>
-                            {itemlistdash?.map((item, index) => {
-                              return (
+          <div className="mb-3">
+            <div className="row">
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Deposit</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
                                 <tr>
-                                  <td>{item?.name}</td>
-                                  <td>{item?.title}</td>
-                                  <td>{item?.branch}</td>
-                                  <td>{item?.email}</td>
-                                  <td>{item?.contactno}</td>
+                                  <th> From </th>
+                                  <th> To </th>
+                                  <th> Amount </th>
                                 </tr>
-                              )
-                            })}
-                          </tbody>
-                        </table>
+                              </thead>
+                              <tbody>
+                                {itemlistTransaction?.map((item) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.from_user?.name}</td>
+                                      <td>{item?.to_user?.name}</td>
+                                      <td>{item?.total}</td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              <div className="col-md-6">
+                <div className="card">
+                  <div style={{ padding: '16px', borderRadius: '0.375rem' }}>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <div className="panel-hdr" style={{ borderBottom: '1px solid rgba(0, 0, 0, 0.07)' }}>
+                          <h6>Recent Withdraw</h6>
+                        </div>
+                        <div className="panel-container show p-3">
+                          <div className="table-responsive">
+                            <table className="table">
+                              <thead className="thead-light">
+                                <tr>
+                                  <th> From </th>
+                                  <th> To </th>
+                                  <th> Amount </th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {withdrawTransaction?.map((item) => {
+                                  return (
+                                    <tr>
+                                      <td>{item?.from_user?.name}</td>
+                                      <td>{item?.to_user?.name}</td>
+                                      <td>{item?.total}</td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </table>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -511,8 +653,8 @@ const Dashboard = () => {
               </div>
             </div>
           </div>
-        </div>
-      </div>
+        </>
+      )}
     </>
   );
 };

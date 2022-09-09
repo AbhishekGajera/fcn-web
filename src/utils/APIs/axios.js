@@ -68,7 +68,7 @@ const apiImage = (method, data = {}) => {
   data.append("folder", "UserDetail");
   data.append('upload_preset', 'UserDetail');
 
-  const fileResult = fetch('https://api.cloudinary.com/v1_1/dihq2mfsj/image/upload', {
+  const fileResult = fetch('https://api.cloudinary.com/v1_1/dihq2mfsj/auto/upload', {
       method: method,
       body: data
     }).then(response => response.json());

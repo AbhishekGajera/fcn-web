@@ -3,8 +3,18 @@ import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from "react-bootstrap";
 import { toast } from "react-toastify";
+import { useHistory } from "react-router-dom";
+import { useCookies } from "react-cookie";
+import {
+  addTransaction,
+  getBranchesClient,
+  userLogout
+} from "../../../utils/APIs";
 
 const Withdraw = () => {
+  const history = useHistory();
+  const [cookies, setCookie] = useCookies(["user"]);
+  const [itemlist, setitemlist] = React.useState([]);
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
@@ -17,11 +27,60 @@ const Withdraw = () => {
   } = useForm({
     mode: "onChange",
   });
-  const onSubmit = async (data) => {
-    handleClose()
-    toast.success('Your request sended successfully')
-    console.log(data);
+
+  const list = async () => {
+    try {
+      const items = await (await getBranchesClient()).data;
+      setitemlist(items?.results);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
   };
+
+  const onSubmit = async (data) => {
+    handleClose();
+    const formData = JSON.stringify({
+      'total': data.amount,
+      'from_user': cookies?.user?.id,
+      'to_user': data.branch,
+      'type': "withdraw",
+      'status': 0
+    })
+    try {
+      await addTransaction(formData);
+      toast.success("Withdraw Request successfully");
+      history.push("/balance");
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
+  };
+
+  React.useEffect(() => {
+    list();
+  }, []);
 
   return (
     <>
@@ -59,25 +118,27 @@ const Withdraw = () => {
                             {errors?.amount && <p>amount is required field</p>}
                           </div>
                         </Form.Group>
-
-                          <div className="card">
-                            <div className="card-body">
-                              <h4 className="card-title">Your bank details</h4>
-                              <div className="media">
-                                <i className="mdi mdi-pencil icon-md text-info d-flex align-self-start mr-3"></i>
-                                <div className="media-body">
-                                  <p className="card-text">
-                                    FCN ADMIN
-                                  </p>
-                                  <address>IDBI Bank Katargam Branch</address>
-                                  <p className="card-text">IFSC: IBKLO001337</p>
-                                  <p className="card-text">
-                                    A/c. No.: 1337102000010168
-                                  </p>
-                                </div>
-                              </div>
-                            </div>
-                        </div>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            From
+                          </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              {...register("branch", {
+                                required: true,
+                              })}
+                            >
+                              <option value=''>--Select branch--</option>
+                              {itemlist.map((item, index) => (
+                                <option key={index} value={item?.id} label={item?.name} ></option>
+                              ))}
+                            </select>
+                            {errors && errors.branch && <p>Select branch is required field</p>}
+                          </div>
+                        </Form.Group>
                       </div>
                     </div>
                     <div className="text-center">
