@@ -10,6 +10,7 @@ import {
   getUsers,
   getUsersRecent,
   getLeadsDash,
+  getProductsListClient,
   getLeads,
   getBranches,
   getTransaction,
@@ -22,10 +23,12 @@ import { useUrl } from "../../utils/Functions/useUrl";
 const Dashboard = () => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(['user']);
+  
   const [itemlist, setitemlist] = useState([]);
   const [itemlistdash, setitemlistdash] = useState([]);
   const [itemlistTransaction, setitemlistTransaction] = useState([]);
   const [withdrawTransaction, setWithdrawTransaction] = useState([]);
+  const [productList, setProductList] = useState([]);
 
   const [isLoading, setIsLoading] = useState(true)
   const [itemOffset, setItemOffset] = useUrl("page");
@@ -53,8 +56,28 @@ const Dashboard = () => {
     setIsLoading(false)
   };
 
+  const getProductsList = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getProductsListClient()
+      ).data;
+      const productData = items.results.filter((item) => item?.user?.id === cookies?.user?.id)
+      console.log("productData",productData)
+      setProductList(productData);
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
+
   useEffect(() => {
     getTransactionList();
+    getProductsList();
   }, [])
 
   const options = {
@@ -199,17 +222,19 @@ const Dashboard = () => {
             <div className="row">
               <div className="col-md-4 text-white" style={{ borderRadius: '8px', padding: '26px 20px', background: '#6A6CFF' }}>
                 <div>
-                <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
-                    <div className="symbol" style={{ marginRight: '16px' }}>
-                      <div className="symbol-label">
-                        <FontAwesomeIcon icon={["fas", "fa-coins"]} className="float-right" size="xl" />
+                  {cookies?.user?.role === 'IBO' && (
+                    <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
+                      <div className="symbol" style={{ marginRight: '16px' }}>
+                        <div className="symbol-label">
+                          <FontAwesomeIcon icon={["fas", "fa-coins"]} className="float-right" size="xl" />
+                        </div>
+                      </div>
+                      <div style={{ marginLeft: '16px' }}>
+                        <h4>{cookies?.user?.total_earning.toFixed(2)}+</h4>
+                        <h6 className="card-text">Commission Earned</h6>
                       </div>
                     </div>
-                    <div style={{ marginLeft: '16px' }}>
-                      <h4>{cookies?.user?.total_earning.toFixed(2)}+</h4>
-                      <h6 className="card-text">Commission Earned</h6>
-                    </div>
-                  </div>
+                  )}
                   <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
                     <div className="symbol" style={{ marginRight: '16px' }}>
                       <div className="symbol-label">
@@ -459,7 +484,7 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-      {cookies?.user?.role !== 'IBO' && (
+      {["admin", "branch"].includes(cookies?.user?.role) &&(
         <>
           <div className="mb-3">
             <div className="row">

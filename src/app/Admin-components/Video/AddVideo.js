@@ -37,6 +37,7 @@ const AddVideo = () => {
         formData.append("user", cookies?.user?.id)
         formData.append("type", data?.category)
         formData.append("title", 'sample')
+
         if (fileResult.error) {
             toast.error(fileResult.error.message);
         } else {

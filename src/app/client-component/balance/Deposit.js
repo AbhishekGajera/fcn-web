@@ -58,8 +58,8 @@ const Deposit = () => {
     handleClose();
     const formData = JSON.stringify({
       'total': data.amount,
-      'from_user': data.branch,
-      'to_user': cookies?.user?.id,
+      'from_user': cookies?.user?.id,
+      'to_user': data.branch,
       'type': "deposit",
       'status': 0
     })

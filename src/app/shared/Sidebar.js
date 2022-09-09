@@ -18,15 +18,15 @@ class Sidebar extends Component {
     }
 
     if (itemName === 'ourInvestment') {
-      if (["admin"].includes(this.userData?.role)) {
-        this.props.history.push('/investment/calculator')
-      }else{
-        this.props.history.push('/investment/powerone')
-      }
+      this.props.history.push('/investment/powerone')
     }
 
     if (itemName === 'ourUtils') {
-      this.props.history.push('/utilities/offers')
+      if (["admin"].includes(this.userData?.role)) {
+        this.props.history.push('/utilities/calculator')
+      } else {
+        this.props.history.push('/utilities/offers')
+      }
     }
     if (itemName === 'ourTravels') {
       this.props.history.push('/travel/ourplan')
@@ -261,16 +261,10 @@ class Sidebar extends Component {
               </div>
               <Collapse in={this.state.ourInvestment}>
                 <ul className="nav flex-column sub-menu">
-                  {["admin"].includes(this.userData?.role) && <>
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/calculator') ? 'nav-link active' : 'nav-link'} to="/investment/calculator"><Trans>Calculator</Trans></Link></li>
-                  </>}
-                  {["IBO", "user", "branch"].includes(this.userData?.role) && <>
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/powerone') ? 'nav-link active' : 'nav-link'} to="/investment/powerone"><Trans>PowerOne</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/ssp') ? 'nav-link active' : 'nav-link'} to="/investment/ssp"><Trans>SSP</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/cp') ? 'nav-link active' : 'nav-link'} to="/investment/cp"><Trans>CP</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/insurance') ? 'nav-link active' : 'nav-link'} to="/investment/insurance"><Trans>Insurance</Trans></Link></li>
-                  </>
-                  }
+                  <li className="nav-item"> <Link className={this.isPathActive('/investment/powerone') ? 'nav-link active' : 'nav-link'} to="/investment/powerone"><Trans>PowerOne</Trans></Link></li>
+                  <li className="nav-item"> <Link className={this.isPathActive('/investment/ssp') ? 'nav-link active' : 'nav-link'} to="/investment/ssp"><Trans>SSP</Trans></Link></li>
+                  <li className="nav-item"> <Link className={this.isPathActive('/investment/cp') ? 'nav-link active' : 'nav-link'} to="/investment/cp"><Trans>CP</Trans></Link></li>
+                  <li className="nav-item"> <Link className={this.isPathActive('/investment/insurance') ? 'nav-link active' : 'nav-link'} to="/investment/insurance"><Trans>Insurance</Trans></Link></li>
                 </ul>
               </Collapse>
             </li>
