@@ -50,7 +50,7 @@ const Deposit = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, isDirty, isValid, reset },
+    formState: { errors, isDirty, isValid },
   } = useForm({
     mode: "onChange",
   });
@@ -66,7 +66,6 @@ const Deposit = () => {
     try {
       await addTransaction(formData);
       toast.success("Deposit successfully");
-      reset()
       history.push("/balance");
     } catch (error) {
       if (

@@ -30,13 +30,8 @@ const AddVideo = () => {
 
     const values = getValues();
 
-    var sizeLimit = (file) => values?.file?.[0]?.size < 10000;
-
-
     const onSubmit = async (data) => {
         const formData = new FormData()
-        // console.log("data", data.file[0].size);
-        // return;
         formData.append('file', data.file[0]);
         const fileResult = await ImageUpload(formData)
         formData.append("user", cookies?.user?.id)
@@ -130,7 +125,7 @@ const AddVideo = () => {
                                                     name="file"
                                                     accept="video/mp4,video/x-m4v,video/*"
                                                     multiple={false}
-                                                    {...register("file", { required: true, pattern: sizeLimit })}
+                                                    {...register("file", { required: true })}
                                                 />
 
                                                 <button
@@ -140,16 +135,10 @@ const AddVideo = () => {
                                                 >
                                                     {values?.file?.[0]?.name ? values?.file?.[0]?.name : "Upload Video"}
                                                 </button>
-                                                {errors && errors.file && errors.file.type === "required" && (
+                                                {errors && errors.file && (
                                                     <p>Upload Video is required field</p>
                                                 )}
-                                                {errors &&
-                                                    errors.file &&
-                                                    errors.file.type === "pattern" && (
-                                                        <p>
-                                                            Video size must be less than 10mb.
-                                                        </p>
-                                                    )}
+                                                
                                             </div>
                                         </Form.Group>
                                     </div>

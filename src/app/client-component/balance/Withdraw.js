@@ -23,7 +23,7 @@ const Withdraw = () => {
   const {
     register,
     handleSubmit,
-    formState: { errors, reset, isDirty, isValid },
+    formState: { errors, isDirty, isValid },
   } = useForm({
     mode: "onChange",
   });
@@ -63,7 +63,6 @@ const Withdraw = () => {
     try {
       await addTransaction(formData);
       toast.success("Withdraw Request successfully");
-      reset()
       history.push("/balance");
     } catch (error) {
       if (

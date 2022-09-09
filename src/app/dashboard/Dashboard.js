@@ -27,7 +27,6 @@ const Dashboard = () => {
   const [itemlistTransaction, setitemlistTransaction] = useState([]);
   const [withdrawTransaction, setWithdrawTransaction] = useState([]);
 
-console.log("cookies",cookies);
   const [isLoading, setIsLoading] = useState(true)
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
