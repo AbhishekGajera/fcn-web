@@ -220,7 +220,7 @@ const Dashboard = () => {
               </nav>
             </div>
             <div className="row">
-              <div className="col-md-4 text-white" style={{ borderRadius: '8px', padding: '26px 20px', background: '#6A6CFF' }}>
+              <div className="col-md-4 text-white" style={{ borderRadius: '8px', padding: '26px 20px'}}>
                 <div>
                   {cookies?.user?.role === 'IBO' && (
                     <div className="d-flex align-items-center mb-3" onClick={() => history.push("/training/free")}>
@@ -352,7 +352,7 @@ const Dashboard = () => {
                 <div>
                   <div className="row">
                     <div className="col-md-4 mb-3" onClick={() => history.push("/travel/ourplan")}>
-                      <div className="card">
+                      <div className="card dashboard-card">
                         <div className="card-body" style={{ padding: '16px', height: '130px', border: '1px solid rgba(0,0,0,.05)', borderRadius: '0.375rem', boxShadow: '0px 0px 13px 0px rgb(35 19 196 / 8%)' }}>
                           <div className="row">
                             <div className="col-md-6">
@@ -364,14 +364,14 @@ const Dashboard = () => {
                           </div>
                           <div className="row">
                             <div className="col-md-12">
-                              <h6 className="text-muted card-text">Travels</h6>
+                              <h6 className="card-text">Travels</h6>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="col-md-4 mb-3" onClick={() => history.push("/travel/ourplan")}>
-                      <div className="card">
+                      <div className="card dashboard-card">
                         <div className="card-body" style={{ padding: '16px', height: '130px', border: '1px solid rgba(0,0,0,.05)', borderRadius: '0.375rem', boxShadow: '0px 0px 13px 0px rgb(35 19 196 / 8%)' }}>
                           <div className="row">
                             <div className="col-md-6">
@@ -383,14 +383,14 @@ const Dashboard = () => {
                           </div>
                           <div className="row">
                             <div className="col-md-12">
-                              <h6 className="text-muted card-text">Demat Account</h6>
+                              <h6 className="card-text">Demat Account</h6>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="col-md-4 mb-3" onClick={() => history.push("/travel/ourplan")}>
-                      <div className="card">
+                      <div className="card dashboard-card">
                         <div className="card-body" style={{ padding: '16px', height: '130px', border: '1px solid rgba(0,0,0,.05)', borderRadius: '0.375rem', boxShadow: '0px 0px 13px 0px rgb(35 19 196 / 8%)' }}>
                           <div className="row">
                             <div className="col-md-6">
@@ -402,14 +402,14 @@ const Dashboard = () => {
                           </div>
                           <div className="row">
                             <div className="col-md-12">
-                              <h6 className="text-muted card-text">Financial Planning</h6>
+                              <h6 className="card-text">Financial Planning</h6>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="col-md-4 mb-3" onClick={() => history.push("/travel/ourplan")}>
-                      <div className="card">
+                      <div className="card dashboard-card">
                         <div className="card-body" style={{ padding: '16px', height: '130px', border: '1px solid rgba(0,0,0,.05)', borderRadius: '0.375rem', boxShadow: '0px 0px 13px 0px rgb(35 19 196 / 8%)' }}>
                           <div className="row">
                             <div className="col-md-6">
@@ -421,14 +421,14 @@ const Dashboard = () => {
                           </div>
                           <div className="row">
                             <div className="col-md-12">
-                              <h6 className="text-muted card-text">SIP</h6>
+                              <h6 className="card-text">SIP</h6>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="col-md-4 mb-3" onClick={() => history.push("/travel/ourplan")}>
-                      <div className="card">
+                      <div className="card dashboard-card">
                         <div className="card-body" style={{ padding: '16px', height: '130px', border: '1px solid rgba(0,0,0,.05)', borderRadius: '0.375rem', boxShadow: '0px 0px 13px 0px rgb(35 19 196 / 8%)' }}>
                           <div className="row">
                             <div className="col-md-6">
@@ -440,14 +440,14 @@ const Dashboard = () => {
                           </div>
                           <div className="row">
                             <div className="col-md-12">
-                              <h6 className="text-muted card-text">Insurance</h6>
+                              <h6 className="card-text">Insurance</h6>
                             </div>
                           </div>
                         </div>
                       </div>
                     </div>
                     <div className="col-md-4 mb-3" onClick={() => history.push("/travel/ourplan")}>
-                      <div className="card">
+                      <div className="card dashboard-card">
                         <div className="card-body" style={{ padding: '16px', height: '130px', border: '1px solid rgba(0,0,0,.05)', borderRadius: '0.375rem', boxShadow: '0px 0px 13px 0px rgb(35 19 196 / 8%)' }}>
                           <div className="row">
                             <div className="col-md-6">
@@ -459,7 +459,7 @@ const Dashboard = () => {
                           </div>
                           <div className="row">
                             <div className="col-md-12">
-                              <h6 className="text-muted card-text"> Passport</h6>
+                              <h6 className="card-text"> Passport</h6>
                             </div>
                           </div>
                         </div>

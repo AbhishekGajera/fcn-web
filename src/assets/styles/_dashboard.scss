@@ -478,3 +478,21 @@
     }
   }
 }
+.dashboard-card{
+  background-color: rgb(255, 255, 255)!important;
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms!important;
+  overflow: hidden;
+  background-image: linear-gradient(rgb(193, 178, 230), rgb(115, 82, 199));
+  position: relative;
+  color: rgb(255, 255, 255)!important;
+  border-top: 4px solid rgb(115, 82, 199)!important;
+}
+.col-md-4.text-white {
+  background-color: rgb(255, 255, 255);
+  transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms!important;
+  overflow: hidden;
+  border-radius: 12px;
+  background-image: linear-gradient(-135deg, rgb(228, 74, 119), rgb(115, 82, 199));
+  position: relative;
+  color: rgb(255, 255, 255);
+}
