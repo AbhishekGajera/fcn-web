@@ -46,7 +46,7 @@ const Navbar = () => {
             <div className="input-group-prepend bg-transparent">
               <i className="input-group-text border-0 mdi mdi-magnify"></i>
             </div>
-            <input type="text" className="form-control bg-transparent border-0" placeholder="Search projects"/>
+            <input type="text" className="form-control bg-transparent border-0" placeholder="Search Anything"/>
           </div>
         </form>
       </div>
