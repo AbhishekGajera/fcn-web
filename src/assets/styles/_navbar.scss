@@ -66,6 +66,7 @@
     padding-right: 24px;
     width: calc(100% - #{$sidebar-width-lg});
     height: $navbar-height;
+    background: #f2edf3;
     @media (max-width: 991px) {
       width: auto;
       padding-left: 15px;
@@ -367,4 +368,20 @@
       }
     }
   }
+}
+
+.search-field .input-group {
+  font-size: 0.875rem;
+  font-family: NoirPro, Arial;
+  font-weight: 400;
+  line-height: 1.4375em;
+  box-sizing: border-box;
+  position: relative;
+  cursor: text;
+  -webkit-box-align: center;
+  align-items: center;
+  background: rgb(255, 255, 255);
+  color: inherit;
+  display: flex;
+  border-radius: 24px;
 }

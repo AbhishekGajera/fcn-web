@@ -119,7 +119,7 @@ const Deposit = () => {
                         </Form.Group>
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">
-                            From
+                            To
                           </label>
                           <div className="col-sm-9">
                             <select

@@ -248,3 +248,11 @@
     }
   }
 }
+
+.sidebar .nav .nav-item.active{
+  background: #eae5f7;
+  border-left: 4px solid #8163cc;
+}
+.sidebar .nav .nav-item:hover{
+  background: #eae5f7;
+}

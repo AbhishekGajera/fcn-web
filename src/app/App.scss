@@ -146,3 +146,278 @@ ul.client-list li{
 .contact_no input.form-control {
     padding-left: 38px;
 }
+
+//dashboard
+.css-1r9i9ek {
+    display: flex;
+    padding: 0px;
+    -webkit-box-align: stretch;
+    align-items: stretch;
+    height: 100%;
+}
+.css-1v3kl7i {
+    display: flex;
+    min-width: 56px;
+    height: 56px;
+    margin-right: 6px;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+}
+.css-1jxw1sp {
+    background-color: RGBA(255, 255, 255);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    height: 115px;
+    background-image: linear-gradient(135deg, RGBA(56, 184, 242), RGBA(132, 60, 246));
+}
+.css-622j8h {
+    display: flex;
+    width: 126px;
+    -webkit-box-pack: end;
+    justify-content: flex-end;
+    -webkit-box-align: center;
+    align-items: center;
+    background-color: RGBA(255, 255, 255);
+    border-radius: 60%;
+    outline: RGBA(255, 255, 255, 0.2) solid 10px;
+    margin: 0px 10px 0px -70px;
+}
+.css-1cdh7ge {
+    padding: 10px;
+    flex: 1 1 0%;
+    align-self: center;
+}
+.css-uicpbe {
+    margin: 0px 0px 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1.2;
+    font-weight: 400;
+    font-family: NoirPro, Arial;
+    color: RGBA(255, 255, 255);
+}
+.css-5pv1sx {
+    margin: 0px;
+    font-size: 1rem;
+    line-height: 1.2;
+    font-weight: 400;
+    font-family: NoirPro, Arial;
+    color: RGBA(255, 255, 255);
+}
+.css-1h2yj1z {
+    user-select: none;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    fill: currentcolor;
+    flex-shrink: 0;
+    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    font-size: 36px;
+}
+.css-1jxw1sp2 { 
+    background-color: RGBA(255, 255, 255);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    height: 115px;
+    background-image: linear-gradient(135deg, rgb(251, 199, 154), rgb(215, 62, 104));
+}
+.css-1jxw1sp3 {
+    background-color: RGBA(255, 255, 255);
+    background-color: RGBA(0, 196, 180);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    height: 115px;
+    background-image: linear-gradient(135deg, rgb(0, 199, 154), rgb(0, 196, 180));
+}
+.css-1jxw1sp4 {
+    background-color: RGBA(255, 255, 255);
+    background-color: RGBA(0, 196, 180);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    height: 115px;
+    background-image: linear-gradient(135deg, rgb(242, 199, 154), rgb(243, 151, 17));
+}
+.css-1jxw1sp5 {
+    background-color: RGBA(255, 255, 255);
+    background-color: RGBA(0, 196, 180);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;   
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    height: 115px;
+    background-image: linear-gradient(135deg, rgb(125, 199, 154), rgb(125, 9, 119));
+}
+.css-1jxw1sp6 {
+    background-color: RGBA(255, 255, 255);
+    background-color: RGBA(0, 196, 180);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    height: 115px;
+    background-image: linear-gradient(135deg, rgb(255, 199, 154), rgb(255, 243, 23));
+}
+.css-1oiueny {
+    background-color: RGBA(255, 255, 255);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    position: relative;
+}
+.css-o2tasi {
+    background-color: RGBA(255, 255, 255);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    position: relative;
+    height: 116px;
+}
+.css-o2tasi .MuiCardHeader-avatar::before {
+    content: "";
+    position: absolute;
+    top: -35px;
+    left: -55px;
+    width: 165px;
+    height: 165px;
+    background-color: RGBA(0, 196, 180);
+    border-radius: 50%;
+}
+.css-1p83tvv {
+    display: flex;
+    flex: 0 0 auto;
+    margin-right: 16px;
+}
+.css-11qjisw {
+    flex: 1 1 auto;
+}
+.css-1hy9t21 {
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    object-fit: cover;
+    color: transparent;
+    text-indent: 10000px;
+}
+.css-1m53fs5 {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    flex-shrink: 0;
+    font-family: NoirPro, Arial;
+    font-size: 1.25rem;
+    line-height: 1;
+    border-radius: 50%;
+    overflow: hidden;
+    user-select: none;
+    width: 60px;
+    height: 60px;
+    box-shadow: RGBA(0 0 0 / 20%) 0px 3px 1px -2px, RGBA(0 0 0 / 14%) 0px 2px 2px 0px, RGBA(0 0 0 / 12%) 0px 1px 5px 0px;
+    position: relative;
+}
+.css-xjuj3x {
+    display: flex;
+    -webkit-box-align: center;
+    align-items: center;
+    padding: 18px 24px;
+    z-index: 2;
+    position: relative;
+}
+.css-1oiueny {
+    background-color: RGBA(255, 255, 255);
+    color: RGBA(71, 82, 89);
+    transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    overflow: hidden;
+    border-radius: 12px;
+    box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
+    position: relative;
+}
+.css-jwj1vn {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 4px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    font-family: NoirPro, Arial;
+    line-height: 1.75;
+    text-transform: uppercase;
+    min-width: 64px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    transition: background-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, box-shadow 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, border-color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms, color 250ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    color: RGBA(255, 255, 255);
+    background-color: RGBA(115, 82, 199);
+    box-shadow: RGBA(0 0 0 / 20%) 0px 3px 1px -2px, RGBA(0 0 0 / 14%) 0px 2px 2px 0px, RGBA(0 0 0 / 12%) 0px 1px 5px 0px;
+    font-weight: 400;
+    letter-spacing: 1px;
+    font-size: 12px;
+}
+.css-qjljdp {
+    margin: 0px 0px 0.5rem;
+    font-size: 1.1rem;
+    line-height: 1.2;
+    font-weight: 400;
+    color: RGBA(55, 55, 60);
+    font-family: NoirPro, Arial;
+}
+
+//button css
+.btn-gradient-primary {
+    background: #8163cc!important;
+}
+
+// background css
+.bg-gradient-success.card-img-holder{
+    background-image: linear-gradient(rgb(163, 234, 211), rgb(59, 210, 162))!important;
+    border-top: 4px solid rgb(59, 210, 162);
+}
+
+.bg-gradient-danger.card-img-holder{
+    background-image: linear-gradient(rgb(244, 163, 172), rgb(231, 49, 69))!important;
+    border-top: 4px solid rgb(231, 49, 69);
+}
+
+.bg-gradient-info.card-img-holder{
+    background-image: linear-gradient(rgb(193, 178, 230), rgb(115, 82, 199));
+    border-top: 4px solid rgb(115, 82, 199);
+}
+
+.sipInput {
+    color: #8163cc!important;
+}
+
+.text-success{
+    color: #8163cc!important;
+}
+
