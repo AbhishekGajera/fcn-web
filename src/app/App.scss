@@ -391,3 +391,33 @@ ul.client-list li{
     color: RGBA(55, 55, 60);
     font-family: NoirPro, Arial;
 }
+
+//button css
+.btn-gradient-primary {
+    background: #8163cc!important;
+}
+
+// background css
+.bg-gradient-success.card-img-holder{
+    background-image: linear-gradient(rgb(163, 234, 211), rgb(59, 210, 162))!important;
+    border-top: 4px solid rgb(59, 210, 162);
+}
+
+.bg-gradient-danger.card-img-holder{
+    background-image: linear-gradient(rgb(244, 163, 172), rgb(231, 49, 69))!important;
+    border-top: 4px solid rgb(231, 49, 69);
+}
+
+.bg-gradient-info.card-img-holder{
+    background-image: linear-gradient(rgb(193, 178, 230), rgb(115, 82, 199));
+    border-top: 4px solid rgb(115, 82, 199);
+}
+
+.sipInput {
+    color: #8163cc!important;
+}
+
+.text-success{
+    color: #8163cc!important;
+}
+

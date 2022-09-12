@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { updateProfile, userLogout } from "../../utils/APIs";
+import { updateProfile, userLogout, ImageUpload } from "../../utils/APIs";
 import { useCookies } from "react-cookie";
 import { toast } from "react-toastify";
 
@@ -12,11 +12,13 @@ const Settings = () => {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
+    getValues,
   } = useForm({
     mode: "onChange",
   });
 
   const [cookie, setCookie] = useCookies(["user"]);
+
 
   const onClickLogoutHandler = async () => {
     const formData = JSON.stringify({
@@ -30,25 +32,43 @@ const Settings = () => {
 
   const onSubmit = async (data) => {
     delete data.terms;
-
-    if(!data.password){
-        delete data.password
+    if (!data.password) {
+      delete data.password
     }
-
-    try {
-      const result = await updateProfile(data, cookie?.user?.id);
-      setCookie('user', result.data , { path: '/' });
-      toast.success("Profile updated sucssefully");
-    } catch (error) {
+    const Data = new FormData();
+    Data.append('file', data.image[0]);
+    const fileResult = await ImageUpload(Data)
+    if (fileResult.error) {
+      toast.error(fileResult.error.message);
+    } else {
+      try {
+        delete data.image;
+        data.avatar = fileResult.secure_url;
+        console.log("data", data)
+        const result = await updateProfile(data, cookie?.user?.id);
+        setCookie('user', result.data, { path: '/' });
+        toast.success("Profile updated sucssefully");
+      } catch (error) {
         if (error?.response?.data?.message) {
-            toast.error(error?.response?.data.message);
+          toast.error(error?.response?.data.message);
         } else {
-            toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
         }
 
         if (error?.response?.data?.code === 401) {
           onClickLogoutHandler();
         }
+      }
+    }
+  };
+
+  const values = getValues();
+
+  const handleUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-id');
+    if (element) {
+      element.click()
     }
   };
 
@@ -65,10 +85,13 @@ const Settings = () => {
             <div className="auth-form-light text-left py-5 px-4 px-sm-5">
               <div className="d-flex align-items-center justify-content-center">
                 <div className="nav-profile-img">
-                  <img
-                    src={require("../../assets/images/faces/face1.jpg")}
-                    alt="user"
-                  />
+                  {cookie.user.avatar ? (
+                    <img src={cookie?.user?.avatar} alt="user" />
+                  ) : (
+                    <img src={require("../../assets/images/faces/face1.jpg")}
+                      alt="user"
+                    />
+                  )}
                   <span className="availability-status online"></span>
                 </div>
               </div>
@@ -171,7 +194,6 @@ const Settings = () => {
                     <option>Argentina</option>
                   </select>
                 </div>
-
                 {cookie?.user?.registrationType !== 'google' && <div className="form-group">
                   <input
                     type="password"
@@ -186,7 +208,7 @@ const Settings = () => {
                     })}
                   />
                   <p>
-                   Note :- if you don't want to update your password then simply leave it blank or fill your new password
+                    Note :- if you don't want to update your password then simply leave it blank or fill your new password
                   </p>
 
                   {errors &&
@@ -198,6 +220,25 @@ const Settings = () => {
                       </p>
                     )}
                 </div>}
+                <div className="form-group">
+                  <input
+                    id="input-id"
+                    className="d-none"
+                    type="file"
+                    name="image"
+                    multiple={false}
+                    {...register("image", { required: true })}
+                  />
+
+                  <button
+                    onClick={handleUpload}
+                    style={{ width: '100%' }}
+                    className={`btn btn-outline-${values?.image?.[0]?.name ? " btn-primary" : " btn-primary"
+                      }`}
+                  >
+                    {values?.image?.[0]?.name ? values?.image?.[0]?.name : "Upload Profile"}
+                  </button>
+                </div>
                 <div className="mb-4">
                   <div className="form-check">
                     <label className="form-check-label text-muted">

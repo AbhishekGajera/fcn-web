@@ -301,7 +301,7 @@ const Calc = () => {
                           </div>
                           <input
                             type="range"
-                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            style={{ width: "100%", accentColor: "#8163cc" }}
                             value={amounts}
                             onChange={onChangeAmount}
                             size="lg"
@@ -328,7 +328,7 @@ const Calc = () => {
                           <div>
                             <input
                               type="range"
-                              style={{ width: "100%", accentColor: "#00d09c" }}
+                              style={{ width: "100%", accentColor: "#8163cc" }}
                               value={returnRateAmount}
                               onChange={onChangeRate}
                               size="lg"
@@ -355,7 +355,7 @@ const Calc = () => {
                           </div>
                           <input
                             type="range"
-                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            style={{ width: "100%", accentColor: "#8163cc" }}
                             value={totalYear}
                             onChange={onChangeYear}
                             size="lg"
@@ -383,7 +383,7 @@ const Calc = () => {
                           </div>
                           <input
                             type="range"
-                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            style={{ width: "100%", accentColor: "#8163cc" }}
                             value={amounts}
                             onChange={onChangeAmount}
                             size="lg"
@@ -410,7 +410,7 @@ const Calc = () => {
                           <div>
                             <input
                               type="range"
-                              style={{ width: "100%", accentColor: "#00d09c" }}
+                              style={{ width: "100%", accentColor: "#8163cc" }}
                               value={returnRateAmount}
                               onChange={onChangeRate}
                               size="lg"
@@ -437,7 +437,7 @@ const Calc = () => {
                           </div>
                           <input
                             type="range"
-                            style={{ width: "100%", accentColor: "#00d09c" }}
+                            style={{ width: "100%", accentColor: "#8163cc" }}
                             value={totalYear}
                             onChange={onChangeYear}
                             size="lg"
