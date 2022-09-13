@@ -55,7 +55,7 @@ const Navbar = () => {
             <Dropdown alignRight>
               <Dropdown.Toggle className="nav-link">
                 <div className="nav-profile-img">
-                  {cookies.user.avatar ? (
+                  {cookies?.user?.avatar ? (
                     <img src={cookies?.user?.avatar} alt="user" />
                   ) : (
                     <img src={require("../../assets/images/faces/face1.jpg")}
