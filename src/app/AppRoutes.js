@@ -194,7 +194,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/welcome/product_aquire" component={ ProductAcquire } accesstype={["admin"]} />
           <ProtectedRoute path="/welcome/terminate_branch" component={ TerminateLetter } accesstype={["admin"]} />
           <ProtectedRoute path="/product-assign/client" component={ Client } accesstype={["admin"]} />
-          <ProtectedRoute path="/product-assign/product" component={ AssignProduct } accesstype={["admin"]} />
+          <ProtectedRoute path="/product-assign/product" component={ AssignProduct } accesstype={["admin","IBO"]} />
           <ProtectedRoute path="/product-assign/ibo" component={ Ibo } accesstype={["admin"]} />
           <ProtectedRoute path="/product-assign/branch" component={ Branch } accesstype={["admin"]} />
           <ProtectedRoute path="/performance/employee" component={ Employee } accesstype={["admin"]} />
@@ -210,7 +210,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/calculation/ssp" component={ Ssp } accesstype={["admin"]} />
           <ProtectedRoute path="/calculation/powerone" component={ PoEquity } accesstype={["admin"]} />
           <ProtectedRoute path="/calculation/cp" component={ CpTravels } accesstype={["admin"]} />
-          <ProtectedRoute path="/leads/lead" component={ Lead } accesstype={["admin"]} />
+          <ProtectedRoute path="/leads/lead" component={ Lead } accesstype={["admin","IBO"]} />
           <ProtectedRoute path="/video/addvideo" component={ Video } accesstype={["admin"]} />
           <ProtectedRoute path="/video/fetch-video" component={ FetchVideo } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/leave" component={ Leave } accesstype={["admin"]} />
