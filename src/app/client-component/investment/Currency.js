@@ -38,25 +38,6 @@ const Currency = () => {
         <div className="col-12 grid-margin">
           <div className="card">
             <div className="card-body">
-              <div className="text-right">
-                <div className="row">
-                  <div className="col-md-12 text-right">
-                    <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
-                        Select City
-                      </label>
-                      <div className="col-sm-4">
-                        <select className="form-control">
-                          <option>Surat</option>
-                          <option>Baroda</option>
-                          <option>Vapi</option>
-                          <option>Ahmedabad</option>
-                        </select>
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-              </div>
               <h4 className="card-title">Colleteral Plan</h4>
 
               <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
@@ -66,11 +47,11 @@ const Currency = () => {
                     <Form.Group className="row">
                       <label className="col-sm-2 col-form-label">Name</label>
                       <div className="col-sm-10">
-                      <Form.Control  type="text"
-                         name="name"
-                         placeholder="Enter Your Name"
-                         {...register("name", { required: true })} />
-                            {errors && errors.name && <p>name is required field</p>}
+                        <Form.Control type="text"
+                          name="name"
+                          placeholder="Enter Your Name"
+                          {...register("name", { required: true })} />
+                        {errors && errors.name && <p>name is required field</p>}
                       </div>
                     </Form.Group>
                   </div>
@@ -143,9 +124,9 @@ const Currency = () => {
                         Address{" "}
                       </label>
                       <div className="col-sm-10">
-                      <Form.Control type="text" name="address"  placeholder="Enter Your Address"
-                         {...register("address", { required: true })}/>
-                        
+                        <Form.Control type="text" name="address" placeholder="Enter Your Address"
+                          {...register("address", { required: true })} />
+
                         {errors && errors.address && <p>address is required field</p>}
 
                       </div>
@@ -194,11 +175,26 @@ const Currency = () => {
                       </div>
                     </Form.Group>
                   </div>
-                </div>
-                <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3  col-form-label">KYC</label>
+                      <label className="col-sm-3 col-form-label">
+                        Select City
+                      </label>
+                      <div className="col-sm-9">
+                        <select className="form-control">
+                          <option>Surat</option>
+                          <option>Baroda</option>
+                          <option>Vapi</option>
+                          <option>Ahmedabad</option>
+                        </select>
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
+                <div className="row">
+                  <div className="col-md-8">
+                    <Form.Group className="row">
+                      <label className="col-sm-2  col-form-label">KYC</label>
                       <div className="col-sm-3">
                         <div className="form-check">
                           <label className="form-check-label">
@@ -227,7 +223,7 @@ const Currency = () => {
                           </label>
                         </div>
                       </div>
-                      <div className="col-sm-3">
+                      <div className="col-sm-4">
                         <div className="form-check">
                           <label className="form-check-label">
                             <input
@@ -243,25 +239,25 @@ const Currency = () => {
                       </div>
                     </Form.Group>
                   </div>
-                    <div className="col-md-6">
+                  <div className="col-md-4">
                     <div className="col-sm-3">
-                        <div className="">
-                          <label className="label">
-                            <input
-                              type="file"
-                              className="input"
-                              name="file"
-                              multiple={true}
-                              {...register("file", { required: true })}
-                              />
-                               {errors && errors.file && <p> file is required field</p>}
-                          </label>
-                        </div>
+                      <div className="">
+                        <label className="label">
+                          <input
+                            type="file"
+                            className="input"
+                            name="file"
+                            multiple={true}
+                            {...register("file", { required: true })}
+                          />
+                          {errors && errors.file && <p> file is required field</p>}
+                        </label>
                       </div>
                     </div>
+                  </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-8">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
                         Mobile Type
@@ -298,7 +294,7 @@ const Currency = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-8">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label">
                         Occupation
@@ -349,7 +345,7 @@ const Currency = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-9">
+                  <div className="col-md-12">
                     <Form.Group className="row">
                       <label className="col-sm-2 col-form-label">
                         Occupation
@@ -414,9 +410,9 @@ const Currency = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-6 col-form-label">
                         Completed Any Course?
                       </label>
                       <div className="col-sm-3">
