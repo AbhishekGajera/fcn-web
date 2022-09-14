@@ -61,6 +61,7 @@ export const deleteCost = (id) => api(`cost/delete-cost/${id}`, 'GET');
 export const CreateProduct = (data) => multipartApi(`product`, 'POST', data);
 export const getProductsList = (limit = 10,offset = 1,name = '') => api(`product?limit=${limit}&sortBy=createdAt:desc&page=${offset}&name=${name}&custom=true`, 'GET');
 export const getProductsListClient = (limit = 500,status="1") => api(`product?limit=${limit}&sortBy=createdAt:desc&status=${status}`, 'GET');
+export const getProductsByUser = (id) => api(`users/get-product-client/${id}`, 'GET');
 
 export const deleteProductById = (id) => api(`product/${id}`, 'GET');
 export const UpdateProducts = (data) => api(`product/update-product`, 'PATCH', data);

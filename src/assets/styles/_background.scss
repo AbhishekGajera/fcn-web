@@ -1,6 +1,6 @@
 // Background Mixins //
 @each $color, $value in $theme-gradient-colors {
 	.bg-gradient-#{$color} {
-		background: theme-gradient-color($color);
+		background: rgb(115, 82, 199);
 	}
 }
