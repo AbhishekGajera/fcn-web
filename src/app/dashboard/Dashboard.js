@@ -19,6 +19,7 @@ import {
   getLeads,
   getBranches,
   getTransaction,
+  updateTransaction,
   getProductsByUser,
   userLogout,
   getIBOs,
@@ -136,6 +137,36 @@ const Dashboard = () => {
         });
       }
     }
+  } 
+
+  const notificationAccept = async (id) => {
+   
+    // setIsLoading(true)
+    try {
+     
+     
+      const data = JSON.stringify({
+        trasaction_id: id,
+        status:1
+      })
+
+      
+      
+
+      await updateTransaction(data)
+     await getTransactionList();
+    toast.success('Status updated successfully', {
+      autoClose: true
+    })
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    // setIsLoading(false)
+ 
   }
 
   const getProductsList = async () => {
@@ -166,6 +197,8 @@ const Dashboard = () => {
     getProductsList();
     productByUser();
     getClientList();
+    
+   
   }, [])
 
   const options = {
@@ -219,7 +252,7 @@ const Dashboard = () => {
           "rgba(255,99,132,1)",
           "rgba(54, 162, 235, 1)",
           "rgba(255, 206, 86, 1)",
-          "rgba(75, 192, 192, 1)",
+            "rgba(75, 192, 192, 1)",
           "rgba(153, 102, 255, 1)",
           "rgba(255, 159, 64, 1)",
           "rgba(255,99,132,1)",
@@ -450,14 +483,14 @@ const Dashboard = () => {
             <div className="MuiCardHeader-root css-xjuj3x">
               <div className="MuiCardHeader-content css-11qjisw">
                 <span className="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1dwyhfw">Latest
-                  Notifications</span>
+                  Notifications - Deposit</span>
               </div>
-              <div className="MuiCardHeader-action css-tevfyd">
+              {/* <div className="MuiCardHeader-action css-tevfyd">
                 <div
                   className="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorSecondary MuiChip-filledSecondary css-1hswelu">
                   <span className="MuiChip-label MuiChip-labelSmall css-tavflp">2 New</span>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="MuiTabs-root css-1275i4j">
               <div className="MuiTabs-scroller MuiTabs-fixed css-1anid1y" style={{ Overflow: "hidden", marginBottom: "0px" }}>
@@ -465,7 +498,7 @@ const Dashboard = () => {
                   <button className="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1oma3za"
                     tabindex="0" type="button" role="tab" aria-selected="true"
                     aria-controls="mui-p-39481-P-notification" id="mui-p-39481-T-notification">
-                    App Notifications
+                    Deposit
                     <span className="MuiTouchRipple-root css-w0pj6f"></span>
                   </button>
                   <button className="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1oma3za" tabindex="-1"
@@ -485,6 +518,17 @@ const Dashboard = () => {
                 <div
                   style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "465px", maxHeight: "217px" }}>
                   <ul className="MuiList-root css-1uzmcsd">
+                  {/* {itemlistTransaction?.map((item) => {
+                                    return (
+                                      <tr>
+                                        <td>{item?.from_user?.name}</td>
+                                        <td>{item?.to_user?.name}</td>
+                                        <td>{item?.total}</td>
+                                      </tr>
+                                    );
+                                  })} */}
+                  {itemlistTransaction?.map((item) => {
+                      return (
                     <li
                       className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
                       <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
@@ -493,18 +537,19 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | September 08, 2022
-                        </h6>
+                       
                         <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
                           <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">John Smith </span>
-                            has sent you an invitation to join project
-                            <span className="css-rpx22u"> Mouldify</span>
+                            <span className="css-rpx22u">{item?.from_user?.name} </span>
+                            has sent a request to {item?.to_user?.name} to deposit <b>{item?.total}</b>
+                            
                           </p>
                           <div className="css-1yjo05o">
                             <button
                               className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">
+                              tabindex="0" type="button" 
+                              onClick={() => notificationAccept(item.id)}
+                              >
                               Accept
                               <span className="MuiTouchRipple-root css-w0pj6f"></span>
                             </button>
@@ -517,203 +562,16 @@ const Dashboard = () => {
                         </div>
                       </div>
                     </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | September 18, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Janifer decibel </span>has sent you an invitation to
-                            join project<span className="css-rpx22u"> Wieldy</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Accept
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorInherit css-tt3czs"
-                              tabindex="0" type="button">
-                              Deny<span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
+                      )
+                     })}
+                   
                   </ul>
-                  <ul className="MuiList-root css-1uzmcsd">
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:21 pm | September 13, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">You have a new friend suggestion: </span>has sent you
-                            an invitation to join project<span className="css-rpx22u"> Remy Sharp</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Reply
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | September 03, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">You have a new friend suggestion: </span>has sent you
-                            an invitation to join project
-                            <span className="css-rpx22u"> Travis Howard</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Reply
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <ul className="MuiList-root css-1uzmcsd">
-                    <li className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | August 29, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Harmayni Croft </span>has sent you an invitation to
-                            join project
-                            <span className="css-rpx22u"> Mouldify</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Accept
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                            <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorInherit css-tt3czs"
-                              tabindex="0" type="button">Deny
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:41 pm | September 13, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Jimmy Jo </span>uploaded 5 in<span className="css-rpx22u">
-                              Art Lovers</span>
-                          </p>
-                          <div className="css-k008qs">
-                            <div className="MuiAvatarGroup-root css-d9t9o5">
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                              <div
-                                className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-
-                              </div>
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">20:46 pm | September 13, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Jacky Roy </span> has shared a post saying<span
-                              className="css-rpx22u"> This is Beginning</span>
-                          </p>
-                          <button
-                            className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorInherit css-tt3czs"
-                            tabindex="0" type="button">
-                            <span className="MuiButton-startIcon MuiButton-iconSizeSmall css-16rzsu1">
-                              <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv"
-                                focusable="false" aria-hidden="true" viewBox="0 0 24 24"
-                                data-testid="BookmarkBorderOutlinedIcon">
-                                <path
-                                  d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15-5-2.18L7 18V5h10v13z">
-                                </path>
-                              </svg>
-                            </span>Bookmarks<span className="MuiTouchRipple-root css-w0pj6f"></span>
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
+                 
                 </div>
-                <div style={{ position: "absolute", height: "6px", transition: "opacity 200ms ease 0s", opacity: "0", right: "2px", bottom: "2px", left: "2px", borderRadius: "3px" }}>
-                  <div style={{ position: "relative", display: "block", height: "100%", cursor: "pointer", borderRadius: "inherit", backgroundColor: "rgba(0, 0, 0, 0.2); width: 0px" }}>
-                  </div>
-                </div>
-                <div style={{ position: "absolute", height: "6px", transition: "opacity 200ms ease 0s", opacity: "0", right: "2px", bottom: "2px", left: "2px", borderRadius: "3px" }}>
-                  <div style={{ position: "relative", display: "block", width: "100%", cursor: "pointer", borderRadius: "inherit", backgroundColor: "rgba(0, 0, 0, 0.2)", height: "178px", transform: "translateY(0px)" }}>
-                  </div>
-                </div>
+               
               </div>
             </div>
-            <div className="MuiTabPanel-root css-fb5pz1" hidden="" role="tabpanel" aria-labelledby="mui-p-39481-T-feed" id="mui-p-39481-P-feed">
-            </div>
+          
             <hr className="MuiDivider-root MuiDivider-fullWidth css-6gnggm" />
             <div className="MuiCardActions-root MuiCardActions-spacing css-a3wybe">
               <a className="MuiTypography-root MuiTypography-inherit MuiLink-root MuiLink-underlineNone css-ant7mv"
@@ -727,14 +585,14 @@ const Dashboard = () => {
             <div className="MuiCardHeader-root css-xjuj3x">
               <div className="MuiCardHeader-content css-11qjisw">
                 <span className="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1dwyhfw">Latest
-                  Notifications</span>
+                  Notifications - Withdraw</span>
               </div>
-              <div className="MuiCardHeader-action css-tevfyd">
+              {/* <div className="MuiCardHeader-action css-tevfyd">
                 <div
                   className="MuiChip-root MuiChip-filled MuiChip-sizeSmall MuiChip-colorSecondary MuiChip-filledSecondary css-1hswelu">
                   <span className="MuiChip-label MuiChip-labelSmall css-tavflp">2 New</span>
                 </div>
-              </div>
+              </div> */}
             </div>
             <div className="MuiTabs-root css-1275i4j">
               <div className="MuiTabs-scroller MuiTabs-fixed css-1anid1y" style={{ Overflow: "hidden", marginBottom: "0px" }}>
@@ -742,7 +600,7 @@ const Dashboard = () => {
                   <button className="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary Mui-selected css-1oma3za"
                     tabindex="0" type="button" role="tab" aria-selected="true"
                     aria-controls="mui-p-39481-P-notification" id="mui-p-39481-T-notification">
-                    App Notifications
+                    Withdraw
                     <span className="MuiTouchRipple-root css-w0pj6f"></span>
                   </button>
                   <button className="MuiButtonBase-root MuiTab-root MuiTab-textColorPrimary css-1oma3za" tabindex="-1"
@@ -762,6 +620,8 @@ const Dashboard = () => {
                 <div
                   style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "465px", maxHeight: "217px" }}>
                   <ul className="MuiList-root css-1uzmcsd">
+                  {withdrawTransaction?.map((item) => {
+                      return (
                     <li
                       className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
                       <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
@@ -770,18 +630,17 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | September 08, 2022
-                        </h6>
+                       
                         <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
                           <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">John Smith </span>
-                            has sent you an invitation to join project
-                            <span className="css-rpx22u"> Mouldify</span>
+                            <span className="css-rpx22u">{item?.from_user?.name} </span>
+                            has sent a request to {item?.to_user?.name} to Withdraw  <b>{item?.total}
+</b>                            
                           </p>
                           <div className="css-1yjo05o">
                             <button
                               className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">
+                              tabindex="0" type="button" onClick={() => notificationAccept(item.id)}>
                               Accept
                               <span className="MuiTouchRipple-root css-w0pj6f"></span>
                             </button>
@@ -794,199 +653,13 @@ const Dashboard = () => {
                         </div>
                       </div>
                     </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | September 18, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Janifer decibel </span>has sent you an invitation to
-                            join project<span className="css-rpx22u"> Wieldy</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Accept
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorInherit css-tt3czs"
-                              tabindex="0" type="button">
-                              Deny<span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <ul className="MuiList-root css-1uzmcsd">
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:21 pm | September 13, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">You have a new friend suggestion: </span>has sent you
-                            an invitation to join project<span className="css-rpx22u"> Remy Sharp</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Reply
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | September 03, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">You have a new friend suggestion: </span>has sent you
-                            an invitation to join project
-                            <span className="css-rpx22u"> Travis Howard</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button
-                              className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Reply
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                  </ul>
-                  <ul className="MuiList-root css-1uzmcsd">
-                    <li className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:26 pm | August 29, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Harmayni Croft </span>has sent you an invitation to
-                            join project
-                            <span className="css-rpx22u"> Mouldify</span>
-                          </p>
-                          <div className="css-1yjo05o">
-                            <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                              tabindex="0" type="button">Accept
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                            <button className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorInherit css-tt3czs"
-                              tabindex="0" type="button">Deny
-                              <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                            </button>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">21:41 pm | September 13, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Jimmy Jo </span>uploaded 5 in<span className="css-rpx22u">
-                              Art Lovers</span>
-                          </p>
-                          <div className="css-k008qs">
-                            <div className="MuiAvatarGroup-root css-d9t9o5">
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                              <div
-                                className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="../../assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
+                      )
+                     })}
 
-                              </div>
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                              <div className="MuiAvatar-root MuiAvatar-circular MuiAvatarGroup-avatar css-b4dmu">
-                                {/* <img src="assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                              </div>
-                            </div>
-                          </div>
-                        </div>
-                      </div>
-                    </li>
-                    <li
-                      className="MuiListItem-root MuiListItem-gutters MuiListItem-padding MuiListItem-alignItemsFlexStart css-1c7vlhc">
-                      <div className="MuiListItemAvatar-root MuiListItemAvatar-alignItemsFlexStart css-b612yq">
-                        <div className="MuiAvatar-root MuiAvatar-circular css-1o1fysa">
-                          {/* <img src="assets/images/avatar7.jpg" alt="Img" className="MuiAvatar-img css-1hy9t21" /> */}
-                        </div>
-                      </div>
-                      <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
-                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">20:46 pm | September 13, 2022
-                        </h6>
-                        <div className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                          <p className="MuiTypography-root MuiTypography-body1 css-lgkk95">
-                            <span className="css-rpx22u">Jacky Roy </span> has shared a post saying<span
-                              className="css-rpx22u"> This is Beginning</span>
-                          </p>
-                          <button
-                            className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedInherit MuiButton-sizeSmall MuiButton-containedSizeSmall MuiButton-colorInherit css-tt3czs"
-                            tabindex="0" type="button">
-                            <span className="MuiButton-startIcon MuiButton-iconSizeSmall css-16rzsu1">
-                              <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv"
-                                focusable="false" aria-hidden="true" viewBox="0 0 24 24"
-                                data-testid="BookmarkBorderOutlinedIcon">
-                                <path
-                                  d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15-5-2.18L7 18V5h10v13z">
-                                </path>
-                              </svg>
-                            </span>Bookmarks<span className="MuiTouchRipple-root css-w0pj6f"></span>
-                          </button>
-                        </div>
-                      </div>
-                    </li>
                   </ul>
+                
                 </div>
-                <div style={{ position: "absolute", height: "6px", transition: "opacity 200ms ease 0s", opacity: "0", right: "2px", bottom: "2px", left: "2px", borderRadius: "3px" }}>
-                  <div style={{ position: "relative", display: "block", height: "100%", cursor: "pointer", borderRadius: "inherit", backgroundColor: "rgba(0, 0, 0, 0.2); width: 0px" }}>
-                  </div>
-                </div>
-                <div style={{ position: "absolute", height: "6px", transition: "opacity 200ms ease 0s", opacity: "0", right: "2px", bottom: "2px", left: "2px", borderRadius: "3px" }}>
-                  <div style={{ position: "relative", display: "block", width: "100%", cursor: "pointer", borderRadius: "inherit", backgroundColor: "rgba(0, 0, 0, 0.2)", height: "178px", transform: "translateY(0px)" }}>
-                  </div>
-                </div>
+               
               </div>
             </div>
             <div className="MuiTabPanel-root css-fb5pz1" hidden="" role="tabpanel" aria-labelledby="mui-p-39481-T-feed" id="mui-p-39481-P-feed">
