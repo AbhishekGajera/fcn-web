@@ -159,10 +159,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
+                      <label className="col-sm-3 col-form-label">
                         Address{" "}
                       </label>
-                      <div className="col-sm-10">
+                      <div className="col-sm-9">
                         <Form.Control
                           type="text"
                           name="address"
@@ -342,10 +342,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Bank Account no
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="bankAccNo"
@@ -359,10 +359,10 @@ const CreateBranches = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         IFSC code
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
@@ -387,8 +387,8 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">Branch Head Name</label>
-                      <div className="col-sm-8">
+                      <label className="col-sm-5 col-form-label">Branch Head Name</label>
+                      <div className="col-sm-7">
                         <Form.Control
                           type="text"
                           name="b_head_name"
@@ -400,10 +400,10 @@ const CreateBranches = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-5 col-form-label">
                         Branch Head Contact
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-7">
                         <Form.Control
                           type="text"
                           name="b_head_contact_no"
@@ -419,10 +419,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         PanCard Number
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="b_pan_card_no"
@@ -438,10 +438,10 @@ const CreateBranches = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-5 col-form-label">
                         AadharCard Number
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-7">
                         <Form.Control
                           type="text"
                           name="b_aadhar_card_no"
@@ -465,10 +465,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-6 col-form-label">
                         Upload Cancel cheque copy{" "}</label>
 
-                      <div className="col-sm-8">
+                      <div className="col-sm-6">
                         <Form.Control
                           id="input-id"
                           className="d-none"
@@ -534,10 +534,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Select Product
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"

@@ -32,6 +32,9 @@
     margin-bottom: 0.625rem;
   
   }
+  .form-sample .card-description {
+    border-bottom: 1px solid rgba(0, 0, 0, 0.07);
+}
   .card-description {
     margin-bottom: 1.5rem;
     color: $card-description-color;
