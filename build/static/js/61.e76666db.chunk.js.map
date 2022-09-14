@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Fees/DepositWithdrawal.js"],"names":["DepositWithdrawal"],"mappings":"+HAAA,2BAQeA,UANW,WACxB,OACE","file":"static/js/61.e76666db.chunk.js","sourcesContent":["import React from 'react'\n\nconst DepositWithdrawal = () => {\n  return (\n    <div>DepositWithdrawal</div>\n  )\n}\n\nexport default DepositWithdrawal"],"sourceRoot":""}

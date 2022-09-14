@@ -85,7 +85,7 @@ const Settings = () => {
             <div className="auth-form-light text-left py-5 px-4 px-sm-5">
               <div className="d-flex align-items-center justify-content-center">
                 <div className="nav-profile-img">
-                  {cookie.user.avatar ? (
+                  {cookie?.user?.avatar ? (
                     <img src={cookie?.user?.avatar} alt="user" />
                   ) : (
                     <img src={require("../../assets/images/faces/face1.jpg")}
