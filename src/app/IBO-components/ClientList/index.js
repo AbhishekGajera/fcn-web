@@ -187,7 +187,7 @@ const ClientList = () => {
             cookies?.user?.id
           )
         ).data;
-        setitemlist([items]);
+        setitemlist(items);
       } else {
         items = await (
           await getUsers(
@@ -269,6 +269,7 @@ const ClientList = () => {
       }
     });
   };
+  console.log("it",itemlist[0])
 
   return (
     <div>

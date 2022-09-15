@@ -43,6 +43,7 @@ const CreateBranches = () => {
   }
 
   const onSubmit = async (data) => {
+
     const Data = new FormData();
     Data.append('file', data.image[0]);
     const fileResult = await ImageUpload(Data)
@@ -53,8 +54,13 @@ const CreateBranches = () => {
         data.image = fileResult.secure_url;
         data.role = 'branch'
         data.contactno = phone;
+      
+     
+    console.log("dd",data)
+        
+        
         const result = await CreateUser(data)
-        toast.success("user crated successfully");
+        toast.success("user created successfully");
         history.push('/branches/brancheslist')
       } catch (error) {
         console.info("error ", error)
@@ -293,7 +299,7 @@ const CreateBranches = () => {
                         >
                           <option value=''>--Select ibo--</option>
                           {branchlist.map((item, index) => (
-                            <option key={index} value={item?.name} label={item?.name}></option>
+                            <option key={index} value={item?.id} label={item?.name}></option>
                           ))}
 
                           {/* <option>United States of America</option>
@@ -367,7 +373,7 @@ const CreateBranches = () => {
                           type="text"
                           name="bankIfscCode"
                           onInput={toInputUppercase}
-                          {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
+                          {...register("bankIfscCode", { required: true})}
                         />
                         {errors && errors.bankIfscCode &&
                           errors.bankIfscCode.type === "required" && (

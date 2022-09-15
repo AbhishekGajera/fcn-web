@@ -15,6 +15,8 @@ import {
   getUsersRecent,
   getLeadsDash,
   getUserBranch,
+  getTransactionBranch,
+  getTransactionUsr,
   getProductsListClient,
   getLeads,
   getBranches,
@@ -49,9 +51,28 @@ const Dashboard = () => {
   const getTransactionList = async () => {
     setIsLoading(true)
     try {
-      const items = await (
-        await getTransaction()
-      ).data;
+      let items 
+      
+      if(cookies?.user?.role === 'admin'){
+        items = await (
+          await getTransaction()
+        ).data;
+      }
+
+      if(cookies?.user?.role === 'branch'){
+        items = await (
+          await getTransactionBranch(cookies?.user?._id)
+        ).data;
+      }
+      if(cookies?.user?.role === 'user'){
+        console.info("cookies?.user?._id++ ",cookies?.user)
+        items = await (
+          await getTransactionUsr(cookies?.user?.id)
+        ).data;
+      }
+      
+      console.log("is",items)
+      
       const depositData = items.results.filter((item) => item.type === 'deposit')
       const withdrawData = items.results.filter((item) => item.type === 'withdraw')
       setitemlistTransaction(depositData);
@@ -140,7 +161,7 @@ const Dashboard = () => {
   }
 
   const notificationAccept = async (id) => {
-
+      console.log("idd",id)
     // setIsLoading(true)
     try {
 
@@ -543,6 +564,7 @@ const Dashboard = () => {
                                   tabindex="0" type="button"
                                   onClick={() => notificationAccept(item.id)}
                                 >
+                                 
                                   Accept
                                   <span className="MuiTouchRipple-root css-w0pj6f"></span>
                                 </button>
@@ -1026,13 +1048,15 @@ const Dashboard = () => {
       </div>
 
       {/* fifth section */}
+      {["IBO"].includes(cookies?.user?.role) && (
       <div className="mb-3">
         <div className="card">
           <div className="card-body css-aocaed">
             <h4 className="welcome-text mb-0">Welcome To <Trans>{cookies?.user?.name}</Trans></h4>
           </div>
         </div>
-      </div>
+      </div>)
+}
 
       {
         ["user"].includes(cookies?.user?.role) && (

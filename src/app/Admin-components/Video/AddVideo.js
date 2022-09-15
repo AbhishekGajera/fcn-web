@@ -31,18 +31,22 @@ const AddVideo = () => {
     const values = getValues();
 
     const onSubmit = async (data) => {
+        console.log("dl",data.file[0])
+
         const formData = new FormData()
-        formData.append('file', data.file[0]);
+        formData.append('files', data.file[0]);
         const fileResult = await ImageUpload(formData)
         formData.append("user", cookies?.user?.id)
         formData.append("type", data?.category)
         formData.append("title", 'sample')
+      
 
         if (fileResult.error) {
             toast.error(fileResult.error.message);
         } else {
             try {
                 formData.url = fileResult.secure_url;
+                console.log("myfl",formData)
                 await addVideo(formData);
                 toast.success("Add Video successfully");
                 reset()
@@ -106,8 +110,8 @@ const AddVideo = () => {
                                                         <i className="input-helper"></i>
                                                         Paid
                                                     </label>
-                                                </div>
                                             </div>
+                                                </div>
                                         </Form.Group>
                                     </div>
                                 </div>

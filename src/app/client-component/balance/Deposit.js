@@ -61,6 +61,7 @@ const Deposit = () => {
       'from_user': cookies?.user?.id,
       'to_user': data.branch,
       'type': "deposit",
+      'role':'branch',
       'status': 0
     })
     try {

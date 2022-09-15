@@ -113,8 +113,8 @@ class AppRoutes extends Component {
           <Route exact path="/transaction/transactionList" component={ Transaction }  accesstype={["admin"]}/>
           {/* <Route exact path="/training" component={ Dashboard } /> */}
 
-          <ProtectedRoute path="/training/free" component={ FreeVideo  }  accesstype={["user","admin","IBO","branch"]}/>
-          <ProtectedRoute path="/training/paid" component={ PaidVideo  }  accesstype={["user","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/training/free" component={ FreeVideo  }  accesstype={["user","admin","branch"]}/>
+          <ProtectedRoute path="/training/paid" component={ PaidVideo  }  accesstype={["user","admin","branch"]}/>
           <ProtectedRoute path="/trading/demat" component={ Demat }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/trading/commodity" component={ Commodity }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/trading/forex" component={ Forex }  accesstype={["user","admin","IBO","branch"]}/>

@@ -107,6 +107,12 @@ export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 
 export const addTransaction = (data) => api(`transaction/add-transaction `, 'POST', data);
 export const getTransaction = (status="0") => api(`transaction/fetch-transaction?status=${status}&sortBy=createdAt:desc `, 'GET');
+export const getTransactionBranch = (status="0",id,role='branch') => api(`transaction/fetch-transaction?to_user=${id}&status=${status}&role=${role}&sortBy=createdAt:desc `, 'GET');
+export const getTransactionUsr = (id,status="0") => api(`transaction/get-transaction-user/${id}?status=${status}&sortBy=createdAt:desc `, 'GET');
+
+
+
+
 export const updateTransaction = (data) => api(`transaction/update-transaction`, 'PATCH', data);
 export const deleteTransaction = (id) => api(`transaction/delete-transaction/${id}`, 'GET');
 
