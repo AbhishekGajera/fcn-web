@@ -58,6 +58,7 @@ const Withdraw = () => {
       'from_user': cookies?.user?.id,
       'to_user': data.branch,
       'type': "withdraw",
+      'role':"branch",
       'status': 0
     })
     try {

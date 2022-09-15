@@ -494,12 +494,12 @@ const CreateClints = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-5 col-form-label">
                         AadharCard Number
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-7">
                         <Form.Control
                           type="text"
                           name="aadhar_card_no"
@@ -519,32 +519,12 @@ const CreateClints = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-5">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
-                        PanCard Number
-                      </label>
-                      <div className="col-sm-9">
-                        <Form.Control
-                          type="text"
-                          name="pan_card_no"
-                          onInput={toInputUppercase}
-                          {...register("pan_card_no", { required: true })}
-                        />
-                        {errors && errors.pan_card_no && (
-                          <p>PanCard number is required field</p>
-                        )}
-                      </div>
-                    </Form.Group>
-                  </div>
-                </div>
-                <div className="row">
-                  <div className="col-md-6">
-                    <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Min Amount{" "}</label>
 
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           id="minamount"
                           className="form-control"
@@ -559,12 +539,32 @@ const CreateClints = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  <div className="col-md-6">
+                </div>
+                <div className="row">
+                <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
+                        PanCard Number
+                      </label>
+                      <div className="col-sm-8">
+                        <Form.Control
+                          type="text"
+                          name="pan_card_no"
+                          onInput={toInputUppercase}
+                          {...register("pan_card_no", { required: true })}
+                        />
+                        {errors && errors.pan_card_no && (
+                          <p>PanCard number is required field</p>
+                        )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                  <div className="col-md-5">
+                    <Form.Group className="row">
+                      <label className="col-sm-4 col-form-label">
                         Max Amount{" "}</label>
 
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           id="maxamount"
                           className="form-control"

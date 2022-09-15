@@ -171,12 +171,12 @@ const PowerOne = () => {
                 <div className="card-body">
                   <h4 className="card-title">PowerOne</h4>
                   <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                    <p className="card-description"> Personal info </p>
+                    <p className="card-description mt-3"> Personal info </p>
                     <div className="row">
-                      <div className="col-md-6">
+                      <div className="col-md-8">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Name of 1st Applicant</label>
-                          <div className="col-sm-9">
+                          <label className="col-sm-4 col-form-label">Name of 1st Applicant</label>
+                          <div className="col-sm-8">
                             <Form.Control type="text"
                               name="name1"
                               placeholder="Enter Your 1st Applicant"
@@ -185,7 +185,7 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-4">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">PAN</label>
                           <div className="col-sm-9">
@@ -200,10 +200,10 @@ const PowerOne = () => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-6">
+                      <div className="col-md-8">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Name of 2nd Applicant</label>
-                          <div className="col-sm-9">
+                          <label className="col-sm-4 col-form-label">Name of 2nd Applicant</label>
+                          <div className="col-sm-8">
                             <Form.Control type="text"
                               name="name2"
                               placeholder="Enter Your 2nd Applicant"
@@ -213,7 +213,7 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
-                      <div className="col-md-6">
+                      <div className="col-md-4">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">PAN</label>
                           <div className="col-sm-9">
@@ -269,10 +269,10 @@ const PowerOne = () => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-12">
+                      <div className="col-md-6">
                         <Form.Group className="row">
-                          <label className="col-sm-2 col-form-label">Address 2</label>
-                          <div className="col-sm-10">
+                          <label className="col-sm-3 col-form-label">Address 2</label>
+                          <div className="col-sm-9">
                             <Form.Control type="text" name="address2" placeholder="Enter Your address2"
                               {...register("address2", { required: true })} />
 
@@ -280,10 +280,7 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">City</label>
                           <div className="col-sm-9">
@@ -294,7 +291,10 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
-                      <div className="col-md-4">
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-6">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">State</label>
                           <div className="col-sm-9">
@@ -305,7 +305,7 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
-                      <div className="col-md-4">
+                      <div className="col-md-6">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">Country</label>
                           <div className="col-sm-9">
@@ -348,7 +348,7 @@ const PowerOne = () => {
                     <div className="row">
                       <div className="col-md-8">
                         <Form.Group className="row">
-                          <label className="col-sm-3  col-form-label">KYC</label>
+                          <label className="col-sm-2  col-form-label">KYC</label>
                           <div className="col-sm-3">
                             <div className="form-check">
                               <label className="form-check-label">
@@ -377,7 +377,7 @@ const PowerOne = () => {
                               </label>
                             </div>
                           </div>
-                          <div className="col-sm-3">
+                          <div className="col-sm-4">
                             <div className="form-check">
                               <label className="form-check-label">
                                 <input
@@ -393,7 +393,7 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
-                      <div className="col-md-4  ">
+                      <div className="col-md-4">
                         <div className="col-sm-3">
                           <div className="">
                             <label className="label">
@@ -413,8 +413,8 @@ const PowerOne = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-2 col-form-label">PAN Number</label>
-                          <div className="col-sm-10">
+                          <label className="col-sm-3 col-form-label">PAN Number</label>
+                          <div className="col-sm-9">
                             <Form.Control type="text" name="pan_number" placeholder="Enter Your Pan"
                               {...register("pan_number", { required: true })} />
 
@@ -427,8 +427,8 @@ const PowerOne = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-2 col-form-label">Aadhar Number</label>
-                          <div className="col-sm-10">
+                          <label className="col-sm-3 col-form-label">Aadhar Number</label>
+                          <div className="col-sm-9">
                             <Form.Control type="text" name="adhar" placeholder="Enter Your Adhar"
                               {...register("adhar", { required: true })} />
 
@@ -441,8 +441,8 @@ const PowerOne = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-2 col-form-label">Passport Number</label>
-                          <div className="col-sm-10">
+                          <label className="col-sm-3 col-form-label">Passport Number</label>
+                          <div className="col-sm-9">
                             <Form.Control type="text" name="passport" placeholder="Enter Your Passport"
                               {...register("passport", { required: true })} />
 
@@ -455,8 +455,8 @@ const PowerOne = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-2 col-form-label">Voter ID Number</label>
-                          <div className="col-sm-10">
+                          <label className="col-sm-3 col-form-label">Voter ID Number</label>
+                          <div className="col-sm-9">
                             <Form.Control type="text" name="voter" placeholder="Enter Your voter"
                               {...register("voter", { required: true })} />
 
@@ -494,8 +494,7 @@ const PowerOne = () => {
                       </div>
                     </div>
                     <div className="row">
-
-                      <div className="col-md-6">
+                      <div className="col-md-12">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">By RTGS</label>
                           <div className="col-sm-9">
@@ -507,7 +506,9 @@ const PowerOne = () => {
                         </Form.Group>
 
                       </div>
-                      <div className="col-md-6">
+                    </div>
+                    <div className='row'>
+                      <div className="col-md-12">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">By Payment Gateways</label>
                           <div className="col-sm-9">

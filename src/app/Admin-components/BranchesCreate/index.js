@@ -43,6 +43,7 @@ const CreateBranches = () => {
   }
 
   const onSubmit = async (data) => {
+
     const Data = new FormData();
     Data.append('file', data.image[0]);
     const fileResult = await ImageUpload(Data)
@@ -53,8 +54,13 @@ const CreateBranches = () => {
         data.image = fileResult.secure_url;
         data.role = 'branch'
         data.contactno = phone;
+      
+     
+    console.log("dd",data)
+        
+        
         const result = await CreateUser(data)
-        toast.success("user crated successfully");
+        toast.success("user created successfully");
         history.push('/branches/brancheslist')
       } catch (error) {
         console.info("error ", error)
@@ -159,10 +165,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">
+                      <label className="col-sm-3 col-form-label">
                         Address{" "}
                       </label>
-                      <div className="col-sm-10">
+                      <div className="col-sm-9">
                         <Form.Control
                           type="text"
                           name="address"
@@ -293,7 +299,7 @@ const CreateBranches = () => {
                         >
                           <option value=''>--Select ibo--</option>
                           {branchlist.map((item, index) => (
-                            <option key={index} value={item?.name} label={item?.name}></option>
+                            <option key={index} value={item?.id} label={item?.name}></option>
                           ))}
 
                           {/* <option>United States of America</option>
@@ -342,10 +348,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Bank Account no
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="bankAccNo"
@@ -359,15 +365,15 @@ const CreateBranches = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         IFSC code
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="bankIfscCode"
                           onInput={toInputUppercase}
-                          {...register("bankIfscCode", { required: true, pattern: strongRegexcode })}
+                          {...register("bankIfscCode", { required: true})}
                         />
                         {errors && errors.bankIfscCode &&
                           errors.bankIfscCode.type === "required" && (
@@ -387,8 +393,8 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">Branch Head Name</label>
-                      <div className="col-sm-8">
+                      <label className="col-sm-5 col-form-label">Branch Head Name</label>
+                      <div className="col-sm-7">
                         <Form.Control
                           type="text"
                           name="b_head_name"
@@ -400,10 +406,10 @@ const CreateBranches = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-5 col-form-label">
                         Branch Head Contact
                       </label>
-                      <div className="col-sm-8">
+                      <div className="col-sm-7">
                         <Form.Control
                           type="text"
                           name="b_head_contact_no"
@@ -419,10 +425,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         PanCard Number
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <Form.Control
                           type="text"
                           name="b_pan_card_no"
@@ -438,10 +444,10 @@ const CreateBranches = () => {
                   </div>
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-5 col-form-label">
                         AadharCard Number
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-7">
                         <Form.Control
                           type="text"
                           name="b_aadhar_card_no"
@@ -465,10 +471,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-4 col-form-label">
+                      <label className="col-sm-6 col-form-label">
                         Upload Cancel cheque copy{" "}</label>
 
-                      <div className="col-sm-8">
+                      <div className="col-sm-6">
                         <Form.Control
                           id="input-id"
                           className="d-none"
@@ -534,10 +540,10 @@ const CreateBranches = () => {
                 <div className="row">
                   <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">
+                      <label className="col-sm-4 col-form-label">
                         Select Product
                       </label>
-                      <div className="col-sm-9">
+                      <div className="col-sm-8">
                         <select
                           className="form-control form-control-lg"
                           id="exampleFormControlSelect2"
