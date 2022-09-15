@@ -24,6 +24,8 @@ const CreateEmployee = () => {
   const onSubmit = async (data) => {
     try {
       data.name = data.first_name + ' ' + data.last_name;
+      delete data.first_name
+      delete data.last_name
       const result = await CreateUser(data)
       toast.success("user crated successfully");
       history.push('/employees/listEmployee')

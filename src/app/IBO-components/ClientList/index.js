@@ -180,7 +180,7 @@ const ClientList = () => {
             cookies?.user?.name
           )
         ).data;
-        setitemlist(items);
+        setitemlist(items.results);
       } else if (cookies?.user?.role === "IBO") {
         items = await (
           await getUserIbo(
@@ -720,9 +720,10 @@ const ClientList = () => {
                   </tr>
                 </thead>
                 <tbody>
+                  {console.log("itemlist",itemlist)}
                   {isLoading ? <Spinner />
                     :
-                    itemlist?.map((item) => {
+                    itemlist && itemlist?.map((item) => {
                       return (
                         <tr>
                           <td>{item?.name}</td>
