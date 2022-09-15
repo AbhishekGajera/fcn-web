@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
 import { getUsers, userLogout } from "../../../utils/APIs";
+import { useUrl } from "../../../utils/Functions/useUrl";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
 
@@ -10,24 +11,18 @@ const EmployeeList = () => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
 
-  // We start with an empty list of items.
-  const [currentItems, setCurrentItems] = useState(null);
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
-  const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage, setitemsPerPage] = useState(10);
+  const [itemOffset, setItemOffset] = useUrl("page");
+  const [itemsPerPage] = useState(10);
 
   useEffect(() => {
     (async () => {
-      const endOffset = itemOffset + itemsPerPage;
       try {
-        const items = await (await getUsers(itemsPerPage, itemOffset)).data;
+        const items = await (await getUsers(itemsPerPage, +itemOffset+1)).data;
         setitemlist(items?.results);
-        // Fetch items from another resources.
-        console.log(`Loading items from ${itemOffset} to ${endOffset}`);
-        setCurrentItems(items?.results?.slice(itemOffset, endOffset));
-        setPageCount(Math.ceil(items?.results?.length / itemsPerPage));
+        setPageCount(items?.totalPages);
       } catch (error) {
         console.info("error ", error);
         if (error?.response?.data?.message) {
@@ -51,11 +46,7 @@ const EmployeeList = () => {
 
   // Invoke when user click to request another page.
   const handlePageClick = (event) => {
-    const newOffset = (event.selected * itemsPerPage) % itemlist.length;
-    console.log(
-      `User requested page number ${event.selected}, which is offset ${newOffset}`
-    );
-    setItemOffset(newOffset);
+    setItemOffset(event.selected);
   };
   return (
     <div>
@@ -121,6 +112,7 @@ const EmployeeList = () => {
                 pageCount={pageCount}
                 previousLabel="< previous"
                 renderOnZeroPageCount={null}
+                forcePage={itemOffset}
               />
             </div>
           </div>

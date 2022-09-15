@@ -168,7 +168,6 @@ const ProductList = () => {
     }
   }
   const statusChanged = (id, e) => {
-    console.log("ei", e.target.value, id);
 
     const formdata = new FormData();
     formdata.append("productId", id);
