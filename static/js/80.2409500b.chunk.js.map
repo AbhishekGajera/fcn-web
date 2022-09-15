@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Product-Assign/Ibo.js"],"names":["Ibo"],"mappings":"+HAAA,2BAQeA,UANH,WACV,OACE","file":"static/js/80.2409500b.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Ibo = () => {\r\n  return (\r\n    <div>Ibo</div>\r\n  )\r\n}\r\n\r\nexport default Ibo"],"sourceRoot":""}
