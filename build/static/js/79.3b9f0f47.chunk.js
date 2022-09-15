@@ -1,0 +1,2 @@
+(this["webpackJsonppurple-react-free"]=this["webpackJsonppurple-react-free"]||[]).push([[79],{539:function(e,r,t){"use strict";t.r(r);var n=t(0),a=t.n(n);r.default=function(){return a.a.createElement("div",null,"IboPerformance")}}}]);
+//# sourceMappingURL=79.3b9f0f47.chunk.js.map
