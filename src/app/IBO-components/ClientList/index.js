@@ -367,6 +367,8 @@ const ClientList = () => {
                       </div>
                     </div>
 
+                    
+
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -720,7 +722,6 @@ const ClientList = () => {
                   </tr>
                 </thead>
                 <tbody>
-                  {console.log("itemlist",itemlist)}
                   {isLoading ? <Spinner />
                     :
                     itemlist && itemlist?.map((item) => {

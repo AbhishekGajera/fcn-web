@@ -29,8 +29,8 @@ export const approveEmployee = (data) => api(`employee/approve-leave`, 'POST', d
 //lead management
 export const CreateLead = (data) => api('leads/add-lead', 'POST', data);
 export const updateLead = (data) => api(`leads/update-lead`, 'POST',data);
-export const getLeads = (limit = 10,offset = 1,name = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&name=${name}`, 'GET');
-export const getLeadsDash = (limit = 10,offset = 1) => api(`leads/get-lead?limit=${limit}&page=${offset}&sortBy=createdAt:desc`, 'GET');
+export const getLeads = (limit = 10,offset = 1,name = '',branch = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&name=${name}&branch=${branch}&sortBy=createdAt:desc&`, 'GET');
+export const getLeadsDash = (limit = 10,offset = 1,branch = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&sortBy=createdAt:desc&branch=${branch}`, 'GET');
 
 export const deleteLead = (id) => api(`leads/delete-lead/${id}`, 'DELETE');
 
@@ -107,7 +107,7 @@ export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 
 export const addTransaction = (data) => api(`transaction/add-transaction `, 'POST', data);
 export const getTransaction = (status="0") => api(`transaction/fetch-transaction?status=${status}&sortBy=createdAt:desc `, 'GET');
-export const getTransactionBranch = (status="0",id,role='branch') => api(`transaction/fetch-transaction?to_user=${id}&status=${status}&role=${role}&sortBy=createdAt:desc `, 'GET');
+export const getTransactionBranch = (status="0",id,role='branch') => api(`transaction/get-transaction-branch?to_user=${id}&status=${status}&role=${role}&sortBy=createdAt:desc `, 'GET');
 export const getTransactionUsr = (id,status="0") => api(`transaction/get-transaction-user/${id}?status=${status}&sortBy=createdAt:desc `, 'GET');
 
 

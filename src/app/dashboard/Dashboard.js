@@ -59,19 +59,22 @@ const Dashboard = () => {
         ).data;
       }
 
+
       if (cookies?.user?.role === 'branch') {
+        console.info("cookies?.user?._id++ test2", cookies?.user)
         items = await (
-          await getTransactionBranch(cookies?.user?._id)
+          await getTransactionBranch(0,cookies?.user?.id)
         ).data;
       }
+
       if (cookies?.user?.role === 'user') {
-        console.info("cookies?.user?._id++ ", cookies?.user)
+        console.info("cookies?.user?._id++ test", cookies?.user)
         items = await (
           await getTransactionUsr(cookies?.user?.id)
         ).data;
       }
-
-      console.log("is", items)
+      
+      console.info("test api++",items)
 
       const depositData = items.results.filter((item) => item.type === 'deposit')
       const withdrawData = items.results.filter((item) => item.type === 'withdraw')
@@ -161,7 +164,6 @@ const Dashboard = () => {
   }
 
   const notificationAccept = async (id) => {
-    console.log("idd", id)
     // setIsLoading(true)
     try {
 
@@ -307,12 +309,29 @@ const Dashboard = () => {
   const leadlist = async () => {
     setIsLoading(true)
     try {
-      const items = await (
-        await getLeadsDash(
-          itemsPerPage,
-          +itemOffset + 1
-        )
-      ).data;
+      let items
+
+      if (cookies?.user?.role === 'admin') {
+        items = await (
+          await getLeadsDash(
+            itemsPerPage,
+            +itemOffset + 1
+          )
+        ).data;
+      }
+
+      console.info("cookies?.user?.role++ ",cookies?.user?.name)
+
+      if (cookies?.user?.role === 'branch') {
+        items = await (
+          await getLeadsDash(
+            itemsPerPage,
+            +itemOffset + 1,
+            cookies?.user?.name
+          )
+        ).data;
+      }
+
       setitemlistdash(items?.results);
       setPageCount(items?.totalPages);
       setIsLoading(false)
@@ -473,7 +492,7 @@ const Dashboard = () => {
               <div className="col-sm-10 col-md-12 mb-3 MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1oiueny">
                 <div className="MuiCardHeader-root css-bjoyvq">
                   <div className="MuiCardHeader-content css-11qjisw">
-                    <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">Orders</h5>
+                    <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">SIP</h5>
                     <h6 className="MuiTypography-root MuiTypography-h6 css-1csyfis">293</h6>
                   </div>
                 </div>
@@ -520,8 +539,8 @@ const Dashboard = () => {
                     </div>
                   </div>
                   <div className="MuiCardHeader-content css-11qjisw">
-                    <h4 className="MuiTypography-root MuiTypography-h4 css-tqvpca">Chris Morris</h4>
-                    <span className="MuiTypography-root MuiTypography-body2 MuiCardHeader-subheader css-15mdt76">Director</span>
+                    <h4 className="MuiTypography-root MuiTypography-h4 css-tqvpca">Powerone</h4>
+                    <span className="MuiTypography-root MuiTypography-body2 MuiCardHeader-subheader css-15mdt76">233</span>
                   </div>
                 </div>
               </div>
@@ -1253,7 +1272,7 @@ const Dashboard = () => {
                                   {itemlistpro?.products?.map((item) => {
                                     return (
                                       <tr>
-                                        <td>{item?.product}</td>
+                                        <td>{item?.product?.name || ''}</td>
                                       </tr>
                                     );
                                   })}
