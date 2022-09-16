@@ -79,7 +79,7 @@ const Settings = () => {
 
   return (
     <div>
-      <div className="row">
+      <div className="" style={{margin: "0 -2.25rem"}}>
         <div className="CmtLayout-content css-m7fmz7">
           <div className="CmtLayout-root css-7u9s91">
             <div className="CmtLayout-header css-1p8zl8c">

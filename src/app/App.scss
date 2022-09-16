@@ -471,16 +471,6 @@ ul.client-list li{
     box-shadow: rgba(115, 82, 199, 0.176) 0px 0.5rem 1.25rem;
     position: relative;
 }
-.css-vubbuv {
-    user-select: none;
-    width: 1em;
-    height: 1em;
-    display: inline-block;
-    fill: currentcolor;
-    flex-shrink: 0;
-    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    font-size: 1.5rem;
-}
 .css-1lf2qyz {
     user-select: none;
     width: 1em;
@@ -1786,4 +1776,99 @@ ul.client-list li{
         width: 100%;
         justify-content: center;
     }
+}
+.css-hxfal {
+    margin: 0px;
+    font-size: 0.875rem;
+    font-family: NoirPro, Arial;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgb(133, 149, 166);
+}
+.css-15mdt76 {
+    margin: 0px;
+    font-family: NoirPro, Arial;
+    font-weight: 400;
+    font-size: 0.875rem;
+    line-height: 1.43;
+    color: rgb(133, 149, 166);
+    display: block;
+}
+.css-zknl6a {
+    margin: 0px;
+    font-size: 0.875rem;
+    font-family: NoirPro, Arial;
+    font-weight: 400;
+    line-height: 1.5;
+    color: rgb(115, 82, 199);
+    text-decoration: none;
+}
+.css-1p273sh > .MuiGrid-item {
+    padding-left: 30px;
+}
+@media (max-width: 1080px){
+    .css-1p273sh > .MuiGrid-item {
+        padding-top: 30px
+    }
+}
+.css-c49ov {
+    box-sizing: border-box;
+    margin: 0px;
+    flex-direction: row;
+    flex-basis: 100%;
+    -webkit-box-flex: 0;
+    flex-grow: 0;
+    max-width: 100%;
+}
+.main-panel {
+    position: relative;
+    margin-left: 260px;
+}
+nav#sidebar {
+    position: fixed;
+    overflow-y: scroll;
+    top: 70px;
+    bottom: 0;
+}
+@media (min-width: 1200px){
+    .css-c49ov {
+        flex-basis: 100%;
+        -webkit-box-flex: 0;
+        flex-grow: 0;
+        max-width: 100%;
+    }
+}
+@media (max-width: 992px){
+    .css-c49ov {
+        flex-basis: 100%;
+        -webkit-box-flex: 0;
+        flex-grow: 0;
+        max-width: 100%;
+    }
+}
+@media (max-width: 992px){
+    .css-1onfrn1 {
+        margin-top: 32px;
+        margin-bottom: 32px;
+    }
+}
+@media (max-width: 850px){
+    .CmtLayout-wrapper.MuiBox-root.css-1ofxjzb.mb-3 {
+        padding: 0 25px;
+    }
+}
+@media (max-width: 991px){
+    .navbar .navbar-brand-wrapper,
+    .navbar{
+        background: #f2edf3;
+    }
+    .main-panel{
+        margin-left: 0px;
+    }
+}
+.sidebar::-webkit-scrollbar{
+    width:10px;
+}
+.main-panel .auth{
+    margin-left: -260px;
 }

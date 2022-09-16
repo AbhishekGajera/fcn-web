@@ -26,7 +26,7 @@ const AllNotification = () => {
     const Userlist = items?.data?.results;
     const dropDownValue = Userlist.map((response) => ({
       "value": response.email,
-      "label" : response.email
+      "label": response.email
     }))
     // console.log("dropDownValue",dropDownValue)
     setdropDownOpt(dropDownValue)
@@ -102,8 +102,14 @@ const AllNotification = () => {
                               options={dropDownOpt}
                               onChange={searchUpdated}
                               name='user'
-                              isMulti
+                              isMulti={true}
                             />
+                          </div>
+                          <div style={{textAlign:'end',width:'85%'}}>
+                            <span className="d-flex" style={{ float: 'right' }} >
+                              <input style={{ marginRight: "10px" }} type="checkbox" />
+                              Select All
+                            </span>
                           </div>
                         </Form.Group>
                         <Form.Group className="row">

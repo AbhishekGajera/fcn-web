@@ -855,7 +855,7 @@ const Dashboard = () => {
             <div className="MuiCardHeader-root css-1i3gbz2">
               <div className="MuiCardHeader-content css-11qjisw">
                 <h3 className="MuiTypography-root MuiTypography-h3 css-uj3m61">756+</h3>
-                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">Daily traffic</h6>
+                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">Total sip</h6>
               </div>
               <div className="MuiCardHeader-action css-tevfyd">
                 <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TimelineIcon">
@@ -894,7 +894,7 @@ const Dashboard = () => {
             <div className="MuiCardHeader-root css-1i3gbz2">
               <div className="MuiCardHeader-content css-11qjisw">
                 <h3 className="MuiTypography-root MuiTypography-h3 css-uj3m61">756+</h3>
-                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">Daily traffic</h6>
+                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">Powerone</h6>
               </div>
               <div className="MuiCardHeader-action css-tevfyd">
                 <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TimelineIcon">
@@ -933,7 +933,7 @@ const Dashboard = () => {
             <div className="MuiCardHeader-root css-1i3gbz2">
               <div className="MuiCardHeader-content css-11qjisw">
                 <h3 className="MuiTypography-root MuiTypography-h3 css-uj3m61">756+</h3>
-                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">Daily traffic</h6>
+                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">New Accounts </h6>
               </div>
               <div className="MuiCardHeader-action css-tevfyd">
                 <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TimelineIcon">
@@ -972,7 +972,7 @@ const Dashboard = () => {
             <div className="MuiCardHeader-root css-1i3gbz2">
               <div className="MuiCardHeader-content css-11qjisw">
                 <h3 className="MuiTypography-root MuiTypography-h3 css-uj3m61">756+</h3>
-                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">Daily traffic</h6>
+                <h6 className="MuiTypography-root MuiTypography-h6 css-bls563">Tours & Travels </h6>
               </div>
               <div className="MuiCardHeader-action css-tevfyd">
                 <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-vubbuv" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="TimelineIcon">
