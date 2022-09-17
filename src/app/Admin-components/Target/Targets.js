@@ -198,9 +198,7 @@ const Targets = () => {
                             ></option>
                           ))}
                         </select>
-                        {errors && errors.selectProduct && (
-                          <p>Selecting a product is required field</p>
-                        )}
+                       
                       </div>
                     </Form.Group>
                   </div>
@@ -218,7 +216,7 @@ const Targets = () => {
                           id="exampleFormControlSelect2"
                           name="selectUser"
                           {...register("selectUser", {
-                            required: true,
+                            required: false,
                           })}
                         >
                           <option value=''>--Select User--</option>
@@ -231,9 +229,7 @@ const Targets = () => {
                               ></option>
                             ))}
                         </select>
-                        {errors && errors.selectUser && (
-                          <p>Selecting a user is required field</p>
-                        )}
+                      
                       </div>
                     </Form.Group>
                   </div>
@@ -263,9 +259,7 @@ const Targets = () => {
                               ></option>
                             ))}
                         </select>
-                        {errors && errors.selectUser && (
-                          <p>Slecting a user is required field</p>
-                        )}
+                        
                       </div>
                     </Form.Group>
                   </div>
@@ -281,12 +275,10 @@ const Targets = () => {
                         <Form.Control
                           type="number"
                           name="qty"
-                          {...register("qty", { required: true })}
+                          {...register("qty", { required: false })}
                           placeholder="qty"
                         />
-                        {errors && errors.qty && (
-                          <p>Quantity is required field</p>
-                        )}
+                        
                       </div>
                     </Form.Group>
                   </div>

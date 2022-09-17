@@ -434,7 +434,7 @@ class Sidebar extends Component {
                 </Collapse>
               </li>
             }
-            {["admin","IBO"].includes(this.userData?.role) &&
+            {["admin","IBO","branch"].includes(this.userData?.role) &&
               <li className={this.isPathActive('/transaction') ? 'nav-item active' : 'nav-item'}>
                 <div className={this.state.fcnTransaction ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('fcnTransaction')} data-toggle="collapse">
                   <span className="menu-title"><Trans>Transaction</Trans></span>

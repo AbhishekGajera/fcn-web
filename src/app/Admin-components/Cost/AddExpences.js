@@ -38,7 +38,7 @@ const AddExpences = () => {
         formData.append("category",data?.expences)
         formData.append("description",data?.desc)
         formData.append("image",data?.file[0])
-        formData.append("type",data?.type)
+        formData.append("type",data?.type || '')
         try {
             await addCost(formData)
             toast.success("Invoice added Succesfully",{ autoClose : 4000 })
@@ -77,16 +77,14 @@ const AddExpences = () => {
                                                     id="exampleFormControlSelect2"
                                                     name="expences"
                                                     {...register("expences", {
-                                                        required: true,
+                                                        required: false,
                                                     })}>
                                                     <option value=''>--Select Expence--</option>
                                                    {optionForCostCategory.map((item) => {
                                                        return <option value={item.value}> {item.label} </option>
                                                    })}
                                                 </select>
-                                                {errors && errors.expences && (
-                                                    <p>Expences is required field</p>
-                                                )}
+                                                
                                             </div>
                                         </Form.Group>
                                     </div>
@@ -102,14 +100,10 @@ const AddExpences = () => {
                                                     id="exampleFormControlSelect2"
                                                     name="type"
                                                     {...register("type", {
-                                                        required: true,
+                                                        required: false,
                                                     })}>
                                                     <option value=''>--Select Type--</option>
-                                                    {
-                                                        optionForExpenceType?.map((item) => {
-                                                            return <option value={item.value}>{item.label}</option>
-                                                        })
-                                                    }
+                                                  
                                                 </select>
                                                 {errors && errors.type && (
                                                     <p>Type is required field</p>
@@ -175,7 +169,7 @@ const AddExpences = () => {
                                                     type="file"
                                                     name="file"
                                                     multiple={false}
-                                                    {...register("file", { required: true })}
+                                                    {...register("file", { required: false })}
                                                 />
                                                 
                                                 <button

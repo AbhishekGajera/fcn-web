@@ -109,6 +109,8 @@ export const addTransaction = (data) => api(`transaction/add-transaction `, 'POS
 export const getTransaction = (status="0") => api(`transaction/fetch-transaction?status=${status}&sortBy=createdAt:desc `, 'GET');
 export const getTransactionBranch = (status="0",id,role='branch') => api(`transaction/get-transaction-branch?to_user=${id}&status=${status}&role=${role}&sortBy=createdAt:desc `, 'GET');
 export const getTransactionUsr = (id,status="0") => api(`transaction/get-transaction-user/${id}?status=${status}&sortBy=createdAt:desc `, 'GET');
+export const getTransactionUsrs = (id) => api(`transaction/get-transaction-user/${id}?sortBy=createdAt:desc `, 'GET');
+
 
 
 
