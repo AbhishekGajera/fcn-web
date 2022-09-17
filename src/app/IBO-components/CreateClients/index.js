@@ -186,7 +186,7 @@ const CreateClints = () => {
           </ol>
         </nav>
       </div>
-      <div className="row auth">
+      <div className="row">
         <div className="col-12 grid-margin">
           <div className="card">
             <div className="card-body">

@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 export class LockScreen extends Component {
   render() {
     return (
-      <div>
-        <div className="content-wrapper d-flex align-items-center auth lock-full-bg h-100">
+      <div className='login-auth'>
+        <div className="content-wrapper d-flex align-items-center  auth lock-full-bg h-100">
           <div className="row w-100 align-items-center">
             <div className="col-lg-4 mx-auto">
               <div className="auth-form-transparent text-left p-5 text-center">
