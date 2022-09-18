@@ -4,6 +4,7 @@ import ReactPaginate from "react-paginate";
 import {
     getTransaction,
     userLogout,
+    getTransactionUsrs,
     updateTransaction,
     deleteTransaction,
 } from "../../../utils/APIs";
@@ -47,9 +48,19 @@ const Transaction = () => {
     const list = async () => {
         setIsLoading(true)
         try {
-            const items = await (
+            let items
+
+            if (cookies?.user?.role === 'admin') {
+              items = await (
                 await getTransaction()
-            ).data;
+              ).data;
+            }
+            if (cookies?.user?.role === 'IBO' || cookies?.user?.role === 'branch' || cookies?.user?.role === 'user' ) {
+                
+                items = await (
+                  await getTransactionUsrs(cookies?.user?.id)
+                ).data;
+              }
             setitemlist(items?.results);
             setPageCount(items?.totalPages);
         } catch (error) {

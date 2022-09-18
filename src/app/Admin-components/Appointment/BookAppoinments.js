@@ -100,12 +100,10 @@ const BookAppoinment = () => {
                         <Form.Control
                           type="datetime-local"
                           name="toDate"
-                          {...register("toDate", { required: true })}
+                          {...register("toDate", { required: false })}
                           placeholder="toDate"
                         />
-                        {errors && errors.toDate && (
-                          <p> selecting To is required field</p>
-                        )}
+                        
                       </div>
                     </Form.Group>
                   </div>
