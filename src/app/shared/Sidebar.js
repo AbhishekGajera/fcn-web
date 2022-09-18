@@ -360,7 +360,7 @@ class Sidebar extends Component {
             {["admin"].includes(this.userData?.role) &&
               <li className={this.isPathActive('/connectedusers') ? 'nav-item active' : 'nav-item'}>
                 <div className={this.state.connectedUsers ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('connectedUsers')} data-toggle="collapse">
-                  <span className="menu-title"><Trans>Connected Users</Trans></span>
+                  <span className="menu-title"><Trans>Leads</Trans></span>
                   <i className="menu-arrow"></i>
                   <i className="mdi mdi-store menu-icon"></i>
                 </div>
@@ -495,21 +495,6 @@ class Sidebar extends Component {
                   <ul className="nav flex-column sub-menu">
                     <li className="nav-item"> <Link className={this.isPathActive('/video/addVideo') ? 'nav-link active' : 'nav-link'} to="/video/addVideo"><Trans>Add Video</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/video/fetch-video') ? 'nav-link active' : 'nav-link'} to="/video/fetch-video"><Trans>Show Video</Trans></Link></li>
-                  </ul>
-                </Collapse>
-              </li>
-            }
-            {["admin","IBO"].includes(this.userData?.role) &&
-
-              <li className={this.isPathActive('/leads') ? 'nav-item active' : 'nav-item'}>
-                <div className={this.state.fcnLeads ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('fcnLeads')} data-toggle="collapse">
-                  <span className="menu-title"><Trans>Leads</Trans></span>
-                  <i className="menu-arrow"></i>
-                  <i className="mdi mdi-logout-variant menu-icon"></i>
-                </div>
-                <Collapse in={this.state.fcnLeads}>
-                  <ul className="nav flex-column sub-menu">
-                    <li className="nav-item"> <Link className={this.isPathActive('/leads/lead') ? 'nav-link active' : 'nav-link'} to="/leads/lead"><Trans>Leads</Trans></Link></li>
                   </ul>
                 </Collapse>
               </li>

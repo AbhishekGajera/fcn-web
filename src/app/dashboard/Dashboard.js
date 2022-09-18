@@ -25,6 +25,8 @@ import {
   getProductsByUser,
   userLogout,
   getIBOs,
+  getTotalPoweroneCount,
+  getTotalSIPCount,
 } from "../../utils/APIs";
 import { useUrl } from "../../utils/Functions/useUrl";
 
@@ -47,6 +49,9 @@ const Dashboard = () => {
   const [itemOffset, setItemOffset] = useUrl("page");
   const [itemsPerPage] = useState(10);
   const [pageCount, setPageCount] = useState(0);
+
+  const [countPowerone, setcountPowerone] = useState(0);
+  const [countSIP, setcountSIP] = useState(0)
 
   const getTransactionList = async () => {
     setIsLoading(true)
@@ -198,8 +203,9 @@ const Dashboard = () => {
       const items = await (
         await getProductsListClient()
       ).data;
+
       const productData = items.results.filter((item) => item?.user?.id === cookies?.user?.id)
-      if (cookies?.user?.role === "admin") {
+      if ((cookies?.user?.role === "admin") || cookies?.user?.role === "branch") {
         setTotalProduct(items?.totalResults)
       } else {
         setTotalProduct(productData?.length)
@@ -220,9 +226,18 @@ const Dashboard = () => {
     getProductsList();
     productByUser();
     getClientList();
-
+    getPowerOneAndSIPCount();
 
   }, [])
+
+  const getPowerOneAndSIPCount = async () => {
+    const powerone = await getTotalPoweroneCount()
+    setcountPowerone(powerone.data[0].totalValue)
+
+    const SIP = await getTotalSIPCount()
+    setcountSIP(SIP.data[0].totalValue)
+
+  }
 
   const options = {
     scales: {
@@ -319,8 +334,6 @@ const Dashboard = () => {
           )
         ).data;
       }
-
-      console.info("cookies?.user?.role++ ",cookies?.user?.name)
 
       if (cookies?.user?.role === 'branch') {
         items = await (
@@ -493,7 +506,7 @@ const Dashboard = () => {
                 <div className="MuiCardHeader-root css-bjoyvq">
                   <div className="MuiCardHeader-content css-11qjisw">
                     <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">SIP</h5>
-                    <h6 className="MuiTypography-root MuiTypography-h6 css-1csyfis">293</h6>
+                    <h6 className="MuiTypography-root MuiTypography-h6 css-1csyfis">{countSIP}</h6>
                   </div>
                 </div>
                 <div className="css-9qkujr">
@@ -540,7 +553,7 @@ const Dashboard = () => {
                   </div>
                   <div className="MuiCardHeader-content css-11qjisw">
                     <h4 className="MuiTypography-root MuiTypography-h4 css-tqvpca">Powerone</h4>
-                    <span className="MuiTypography-root MuiTypography-body2 MuiCardHeader-subheader css-15mdt76">233</span>
+                    <span className="MuiTypography-root MuiTypography-body2 MuiCardHeader-subheader css-15mdt76">{countPowerone}</span>
                   </div>
                 </div>
               </div>
