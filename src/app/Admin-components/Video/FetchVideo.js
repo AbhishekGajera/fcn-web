@@ -20,7 +20,7 @@ const FetchVideo = () => {
 
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useUrl("page");
-    const [itemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(20);
     const [show, setShow] = React.useState(false);
     const [valueToEdit, setvalueToEdit] = useState({});
     const [cookies, setCookie] = useCookies(["user"]);

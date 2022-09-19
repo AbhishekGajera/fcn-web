@@ -31,7 +31,7 @@ const ClientList = () => {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useUrl("page");
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {

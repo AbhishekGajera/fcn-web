@@ -170,7 +170,7 @@ class AppRoutes extends Component {
 
 
           {/* admin routes */}
-          <ProtectedRoute path="/connectedusers/getuserList" component={ ContactedClients } accesstype={["admin"]} />
+          <ProtectedRoute path="/connectedusers/getuserList" component={ ContactedClients } accesstype={["admin","branch"]} />
           <ProtectedRoute path="/clients/clientlist" component={ ClientList } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/branches/createbranches" component={ CreateBranches } accesstype={["admin","branch","IBO"]} />
           <ProtectedRoute path="/branches/brancheslist" component={ BranchList } accesstype={["admin"]} />
@@ -200,7 +200,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/performance/employee" component={ Employee } accesstype={["admin"]} />
           <ProtectedRoute path="/performance/ibo" component={ IboPerformance } accesstype={["admin"]} />
           <ProtectedRoute path="/performance/branch" component={ BranchPerformance } accesstype={["admin"]} />
-          <ProtectedRoute path="/notification/all" component={ AllNotification } accesstype={["admin"]} />
+          <ProtectedRoute path="/notification/all" component={ AllNotification } accesstype={["admin","IBO","branch","user"]} />
           <ProtectedRoute path="/notification/ibo" component={ IboNotification } accesstype={["admin"]} />
           <ProtectedRoute path="/notification/branch" component={ BranchNotification } accesstype={["admin"]} />
           <ProtectedRoute path="/notification/client" component={ ClientNotification } accesstype={["admin"]} />
@@ -210,7 +210,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/calculation/ssp" component={ Ssp } accesstype={["admin"]} />
           <ProtectedRoute path="/calculation/powerone" component={ PoEquity } accesstype={["admin"]} />
           <ProtectedRoute path="/calculation/cp" component={ CpTravels } accesstype={["admin"]} />
-          <ProtectedRoute path="/leads/lead" component={ Lead } accesstype={["admin","IBO"]} />
+          <ProtectedRoute path="/leads/lead" component={ Lead } accesstype={["admin","IBO","branch"]} />
           <ProtectedRoute path="/video/addvideo" component={ Video } accesstype={["admin"]} />
           <ProtectedRoute path="/video/fetch-video" component={ FetchVideo } accesstype={["admin"]} />
           <ProtectedRoute path="/employee_manage/leave" component={ Leave } accesstype={["admin"]} />

@@ -31,7 +31,7 @@ const BranchList = () => {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
   const [updateStatus, setupdateStatus] = useState(0);

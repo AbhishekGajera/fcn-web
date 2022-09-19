@@ -119,3 +119,8 @@ export const deleteTransaction = (id) => api(`transaction/delete-transaction/${i
 export const getTotalPoweroneCount = (data) => api(`users/users-count-powerone `, 'GET', data);
 export const getTotalSIPCount = (data) => api(`users/users-count-sip `, 'GET', data);
 
+// Notification Management
+export const addNotification = (data) => api(`notification/add-notification `, 'POST', data);
+export const getNotification = (status="1") => api(`notification/fetch-notification?status=${status}`, 'GET');
+
+

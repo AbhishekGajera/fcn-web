@@ -65,8 +65,9 @@ const CreateClints = () => {
     try {
 
       data.contactno = phone;
-
       data.name = data.first_name + ' ' + data.last_name;
+      delete data.first_name;
+      delete data.last_name;
       await CreateUser(data)
       toast.success("user created successfully");
       history.push('/clients/clientlist')
