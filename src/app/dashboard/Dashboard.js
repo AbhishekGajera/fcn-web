@@ -232,10 +232,10 @@ const Dashboard = () => {
 
   const getPowerOneAndSIPCount = async () => {
     const powerone = await getTotalPoweroneCount()
-    setcountPowerone(powerone.data[0].totalValue)
+    setcountPowerone(powerone?.data[0]?.totalValue)
 
     const SIP = await getTotalSIPCount()
-    setcountSIP(SIP.data[0].totalValue)
+    setcountSIP(SIP?.data[0]?.totalValue)
 
   }
 
@@ -1211,7 +1211,7 @@ const Dashboard = () => {
                                   {item?.branch && (
                                     <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">Branch : {item?.branch}</p>)}
                                   {item?.IBO && (
-                                    <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">IBO : {item?.IBO}</p>)}
+                                    <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">IBO : {item?.IBO?.name}</p>)}
                                 </div>
                               </li>
                             )
