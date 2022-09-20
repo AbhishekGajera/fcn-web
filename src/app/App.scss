@@ -116,7 +116,7 @@
 /* === Customs === */
 @import "../assets/styles/components/style-sip-calc";
 
-.p0{
+.p0 {
     padding: 0px !important;
 }
 
@@ -127,7 +127,8 @@ ul.client-list {
     display: inline-flex;
     padding: 0px 10px;
 }
-ul.client-list li{
+
+ul.client-list li {
     padding: 0px 5px;
 }
 
@@ -140,9 +141,11 @@ ul.client-list li{
     top: 11px;
     left: 28px;
 }
-.contact_no{
+
+.contact_no {
     position: relative;
 }
+
 .contact_no input.form-control {
     padding-left: 38px;
 }
@@ -155,6 +158,7 @@ ul.client-list li{
     align-items: stretch;
     height: 100%;
 }
+
 .css-1v3kl7i {
     display: flex;
     min-width: 56px;
@@ -165,6 +169,7 @@ ul.client-list li{
     -webkit-box-pack: center;
     justify-content: center;
 }
+
 .css-1jxw1sp {
     background-color: RGBA(255, 255, 255);
     color: RGBA(71, 82, 89);
@@ -175,6 +180,7 @@ ul.client-list li{
     height: 115px;
     background-image: linear-gradient(135deg, RGBA(56, 184, 242), RGBA(132, 60, 246));
 }
+
 .css-622j8h {
     display: flex;
     width: 126px;
@@ -187,11 +193,13 @@ ul.client-list li{
     outline: RGBA(255, 255, 255, 0.2) solid 10px;
     margin: 0px 10px 0px -70px;
 }
+
 .css-1cdh7ge {
     padding: 10px;
     flex: 1 1 0%;
     align-self: center;
 }
+
 .css-uicpbe {
     margin: 0px 0px 0.5rem;
     font-size: 1.1rem;
@@ -200,6 +208,7 @@ ul.client-list li{
     font-family: NoirPro, Arial;
     color: RGBA(255, 255, 255);
 }
+
 .css-5pv1sx {
     margin: 0px;
     font-size: 1rem;
@@ -208,6 +217,7 @@ ul.client-list li{
     font-family: NoirPro, Arial;
     color: RGBA(255, 255, 255);
 }
+
 .css-1h2yj1z {
     user-select: none;
     width: 1em;
@@ -218,7 +228,8 @@ ul.client-list li{
     transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     font-size: 36px;
 }
-.css-1jxw1sp2 { 
+
+.css-1jxw1sp2 {
     background-color: RGBA(255, 255, 255);
     color: RGBA(71, 82, 89);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -228,6 +239,7 @@ ul.client-list li{
     height: 115px;
     background-image: linear-gradient(135deg, rgb(251, 199, 154), rgb(215, 62, 104));
 }
+
 .css-1jxw1sp3 {
     background-color: RGBA(255, 255, 255);
     background-color: RGBA(0, 196, 180);
@@ -239,6 +251,7 @@ ul.client-list li{
     height: 115px;
     background-image: linear-gradient(135deg, rgb(0, 199, 154), rgb(0, 196, 180));
 }
+
 .css-1jxw1sp4 {
     background-color: RGBA(255, 255, 255);
     background-color: RGBA(0, 196, 180);
@@ -250,17 +263,19 @@ ul.client-list li{
     height: 115px;
     background-image: linear-gradient(135deg, rgb(242, 199, 154), rgb(243, 151, 17));
 }
+
 .css-1jxw1sp5 {
     background-color: RGBA(255, 255, 255);
     background-color: RGBA(0, 196, 180);
     color: RGBA(71, 82, 89);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
-    overflow: hidden;   
+    overflow: hidden;
     border-radius: 12px;
     box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
     height: 115px;
     background-image: linear-gradient(135deg, rgb(125, 199, 154), rgb(125, 9, 119));
 }
+
 .css-1jxw1sp6 {
     background-color: RGBA(255, 255, 255);
     background-color: RGBA(0, 196, 180);
@@ -272,6 +287,7 @@ ul.client-list li{
     height: 115px;
     background-image: linear-gradient(135deg, rgb(255, 199, 154), rgb(255, 243, 23));
 }
+
 .css-1oiueny {
     background-color: RGBA(255, 255, 255);
     color: RGBA(71, 82, 89);
@@ -281,6 +297,7 @@ ul.client-list li{
     box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
     position: relative;
 }
+
 .css-o2tasi {
     background-color: RGBA(255, 255, 255);
     color: RGBA(71, 82, 89);
@@ -291,6 +308,7 @@ ul.client-list li{
     position: relative;
     height: 116px;
 }
+
 .css-o2tasi .MuiCardHeader-avatar::before {
     content: "";
     position: absolute;
@@ -301,14 +319,17 @@ ul.client-list li{
     background-color: RGBA(0, 196, 180);
     border-radius: 50%;
 }
+
 .css-1p83tvv {
     display: flex;
     flex: 0 0 auto;
     margin-right: 16px;
 }
+
 .css-11qjisw {
     flex: 1 1 auto;
 }
+
 .css-1m53fs5 {
     display: flex;
     -webkit-box-align: center;
@@ -327,6 +348,7 @@ ul.client-list li{
     box-shadow: RGBA(0 0 0 / 20%) 0px 3px 1px -2px, RGBA(0 0 0 / 14%) 0px 2px 2px 0px, RGBA(0 0 0 / 12%) 0px 1px 5px 0px;
     position: relative;
 }
+
 .css-xjuj3x {
     display: flex;
     -webkit-box-align: center;
@@ -335,6 +357,7 @@ ul.client-list li{
     z-index: 2;
     position: relative;
 }
+
 .css-1oiueny {
     background-color: RGBA(255, 255, 255);
     color: RGBA(71, 82, 89);
@@ -344,6 +367,7 @@ ul.client-list li{
     box-shadow: RGBA(115 82 199 / 18%) 0px 0.5rem 1.25rem;
     position: relative;
 }
+
 .css-jwj1vn {
     display: inline-flex;
     -webkit-box-align: center;
@@ -376,6 +400,7 @@ ul.client-list li{
     letter-spacing: 1px;
     font-size: 12px;
 }
+
 .css-qjljdp {
     margin: 0px 0px 0.5rem;
     font-size: 1.1rem;
@@ -387,31 +412,31 @@ ul.client-list li{
 
 //button css
 .btn-gradient-primary {
-    background: #8163cc!important;
+    background: #8163cc !important;
 }
 
 // background css
-.bg-gradient-success.card-img-holder{
-    background-image: linear-gradient(rgb(163, 234, 211), rgb(59, 210, 162))!important;
+.bg-gradient-success.card-img-holder {
+    background-image: linear-gradient(rgb(163, 234, 211), rgb(59, 210, 162)) !important;
     border-top: 4px solid rgb(59, 210, 162);
 }
 
-.bg-gradient-danger.card-img-holder{
-    background-image: linear-gradient(rgb(244, 163, 172), rgb(231, 49, 69))!important;
+.bg-gradient-danger.card-img-holder {
+    background-image: linear-gradient(rgb(244, 163, 172), rgb(231, 49, 69)) !important;
     border-top: 4px solid rgb(231, 49, 69);
 }
 
-.bg-gradient-info.card-img-holder{
+.bg-gradient-info.card-img-holder {
     background-image: linear-gradient(rgb(193, 178, 230), rgb(115, 82, 199));
     border-top: 4px solid rgb(115, 82, 199);
 }
 
 .sipInput {
-    color: #8163cc!important;
+    color: #8163cc !important;
 }
 
-.text-success{
-    color: #8163cc!important;
+.text-success {
+    color: #8163cc !important;
 }
 
 .css-vubbuv {
@@ -424,6 +449,7 @@ ul.client-list li{
     transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     font-size: 1.5rem;
 }
+
 .css-1i3gbz2 {
     display: flex;
     -webkit-box-align: center;
@@ -433,6 +459,7 @@ ul.client-list li{
     position: relative;
     border-bottom-color: rgb(222, 226, 230);
 }
+
 .css-aocaed {
     background-color: rgb(255, 255, 255);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -444,24 +471,28 @@ ul.client-list li{
     color: rgb(255, 255, 255);
     border-top: 4px solid rgb(115, 82, 199);
 }
+
 .css-64un3z {
     background-image: linear-gradient(rgb(163, 234, 211), rgb(59, 210, 162));
     border-top: 4px solid rgb(59, 210, 162);
     border-radius: 12px;
     color: white;
 }
-.css-y7cs5t{
+
+.css-y7cs5t {
     background-image: linear-gradient(rgb(249, 204, 138), rgb(243, 151, 17));
     border-top: 4px solid rgb(243, 151, 17);
     border-radius: 12px;
     color: white;
 }
-.css-tq9b27{
+
+.css-tq9b27 {
     background-image: linear-gradient(rgb(244, 163, 172), rgb(231, 49, 69));
     border-top: 4px solid rgb(231, 49, 69);
     border-radius: 12px;
     color: white;
 }
+
 .css-iyzm1h {
     background-color: rgb(255, 255, 255);
     color: rgb(71, 82, 89);
@@ -471,6 +502,7 @@ ul.client-list li{
     box-shadow: rgba(115, 82, 199, 0.176) 0px 0.5rem 1.25rem;
     position: relative;
 }
+
 .css-1lf2qyz {
     user-select: none;
     width: 1em;
@@ -481,6 +513,7 @@ ul.client-list li{
     transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     font-size: 22px;
 }
+
 .css-1w7e976 {
     display: inline-flex;
     -webkit-box-align: center;
@@ -512,6 +545,7 @@ ul.client-list li{
     min-width: 24px;
     padding: 6px 10px;
 }
+
 .css-1dr2gsz {
     display: inline-flex;
     -webkit-box-align: center;
@@ -539,6 +573,7 @@ ul.client-list li{
     color: rgb(71, 82, 89);
     transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
 }
+
 .css-xjuj3x {
     display: flex;
     -webkit-box-align: center;
@@ -547,20 +582,24 @@ ul.client-list li{
     z-index: 2;
     position: relative;
 }
+
 .css-1xnij97:last-child {
     padding-bottom: 24px;
 }
+
 .css-1xnij97 {
     padding: 0px 24px 24px;
     z-index: 2;
     position: relative;
 }
+
 .css-1uzmcsd {
     list-style: none;
     margin: 0px;
     padding: 0px;
     position: relative;
 }
+
 .css-13qbgj9 {
     display: flex;
     -webkit-box-pack: start;
@@ -573,6 +612,7 @@ ul.client-list li{
     text-align: left;
     padding: 12px 24px;
 }
+
 .css-gw9jds {
     display: flex;
     -webkit-box-pack: start;
@@ -586,12 +626,14 @@ ul.client-list li{
     text-align: left;
     padding: 12px 24px;
 }
+
 .css-rzk08f {
     display: flex;
     flex-direction: row;
     padding: 24px;
     margin-bottom: 5px;
 }
+
 .css-1c0g2ox {
     display: inline-flex;
     -webkit-box-align: center;
@@ -626,6 +668,7 @@ ul.client-list li{
     color: rgb(255, 255, 255);
     background-color: rgb(33, 150, 243);
 }
+
 .css-1ptdtbs {
     display: inline-flex;
     -webkit-box-align: center;
@@ -660,6 +703,7 @@ ul.client-list li{
     color: rgb(255, 255, 255);
     background-color: rgb(63, 81, 181);
 }
+
 .css-wjh1gz {
     display: inline-flex;
     -webkit-box-align: center;
@@ -694,9 +738,11 @@ ul.client-list li{
     color: rgb(255, 255, 255);
     background-color: rgb(233, 30, 99);
 }
-.css-rzk08f > :not(style) + :not(style) {
+
+.css-rzk08f> :not(style)+ :not(style) {
     margin: 0px 0px 0px 8px;
 }
+
 .css-5efwz4 {
     color: rgb(71, 82, 89);
     transition: box-shadow 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
@@ -707,6 +753,7 @@ ul.client-list li{
     position: relative;
     height: 330px;
 }
+
 .css-12a6upa {
     margin: 0px 0px 0.5rem;
     font-size: 1.4rem;
@@ -715,6 +762,7 @@ ul.client-list li{
     color: rgb(55, 55, 60);
     font-family: NoirPro, Arial;
 }
+
 .css-sf71ho {
     user-select: none;
     width: 1em;
@@ -727,6 +775,7 @@ ul.client-list li{
     vertical-align: middle;
     margin-right: 4px;
 }
+
 .css-xjuj3x {
     display: flex;
     -webkit-box-align: center;
@@ -735,6 +784,7 @@ ul.client-list li{
     z-index: 2;
     position: relative;
 }
+
 .css-p4cmdx {
     inset: auto 20px 20px;
     z-index: 3;
@@ -748,13 +798,16 @@ ul.client-list li{
     border-radius: 8px;
     text-align: center;
 }
+
 .css-1oo8ecw {
     z-index: 2;
     position: relative;
 }
+
 .css-19kzrtu {
     padding: 24px;
 }
+
 .css-6gnggm {
     margin: 0px;
     flex-shrink: 0;
@@ -762,12 +815,14 @@ ul.client-list li{
     border-style: solid;
     border-color: rgb(222, 226, 230);
 }
+
 .css-p1lzxd {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     padding: 8px 24px;
 }
+
 .css-105dx4f {
     display: flex;
     flex-direction: row;
@@ -777,6 +832,7 @@ ul.client-list li{
     -webkit-box-pack: center;
     justify-content: center;
 }
+
 .css-3n2bqr {
     margin: 0px;
     font-size: 0.875rem;
@@ -784,7 +840,8 @@ ul.client-list li{
     font-weight: 400;
     line-height: 1.5;
 }
-.css-105dx4f > :not(style) + :not(style) {
+
+.css-105dx4f> :not(style)+ :not(style) {
     margin: 0px 0px 0px 8px;
 }
 
@@ -815,12 +872,14 @@ ul.client-list li{
     transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     color: rgb(255, 255, 255);
 }
+
 .css-5or1w4 {
     inset: 0px;
     position: absolute;
     background-color: rgb(255, 255, 255);
     opacity: 1;
 }
+
 .css-p4cmdx {
     inset: auto 20px 20px;
     z-index: 3;
@@ -834,6 +893,7 @@ ul.client-list li{
     border-radius: 8px;
     text-align: center;
 }
+
 .css-1oiueny {
     background-color: rgb(255, 255, 255);
     color: rgb(71, 82, 89);
@@ -843,6 +903,7 @@ ul.client-list li{
     box-shadow: rgba(115, 82, 199, 0.176) 0px 0.5rem 1.25rem;
     position: relative;
 }
+
 .css-xjuj3x {
     display: flex;
     -webkit-box-align: center;
@@ -851,6 +912,7 @@ ul.client-list li{
     z-index: 2;
     position: relative;
 }
+
 .css-1275i4j {
     overflow: hidden;
     min-height: 48px;
@@ -860,11 +922,13 @@ ul.client-list li{
     border-right-color: rgb(222, 226, 230);
     border-left-color: rgb(222, 226, 230);
 }
+
 .css-tevfyd {
     flex: 0 0 auto;
     align-self: flex-start;
     margin: 0px;
 }
+
 .css-1hswelu {
     max-width: 100%;
     font-family: NoirPro, Arial;
@@ -888,9 +952,11 @@ ul.client-list li{
     height: 22px;
     font-size: 12px;
 }
+
 .css-1oma3za.Mui-selected {
     color: rgb(115, 82, 199);
 }
+
 .css-1oma3za {
     display: inline-flex;
     -webkit-box-align: center;
@@ -926,6 +992,7 @@ ul.client-list li{
     color: rgb(133, 149, 166);
     flex: 1 1 auto;
 }
+
 .css-tt3czs {
     display: inline-flex;
     -webkit-box-align: center;
@@ -957,6 +1024,7 @@ ul.client-list li{
     letter-spacing: 1px;
     font-size: 12px;
 }
+
 .css-tavflp {
     overflow: hidden;
     text-overflow: ellipsis;
@@ -964,24 +1032,28 @@ ul.client-list li{
     padding-right: 8px;
     white-space: nowrap;
 }
+
 .css-a3wybe {
     display: flex;
     -webkit-box-align: center;
     align-items: center;
     padding: 12px 24px;
 }
+
 .css-ant7mv {
     margin: 0px;
     color: rgb(115, 82, 199);
     line-height: 1.2;
     text-decoration: none;
 }
+
 .css-1uzmcsd {
     list-style: none;
     margin: 0px;
     padding: 0px;
     position: relative;
 }
+
 .css-1c7vlhc {
     display: flex;
     -webkit-box-pack: start;
@@ -994,6 +1066,7 @@ ul.client-list li{
     text-align: left;
     padding: 8px 24px;
 }
+
 .css-1oiueny {
     background-color: rgb(255, 255, 255);
     color: rgb(71, 82, 89);
@@ -1003,12 +1076,14 @@ ul.client-list li{
     box-shadow: rgba(115, 82, 199, 0.176) 0px 0.5rem 1.25rem;
     position: relative;
 }
+
 .css-w831un {
     height: 260px;
     color: rgb(255, 255, 255);
     position: relative;
     background-image: linear-gradient(rgb(132, 60, 246), rgb(56, 184, 242));
 }
+
 .css-hyq3if {
     display: flex;
     -webkit-box-align: center;
@@ -1017,10 +1092,12 @@ ul.client-list li{
     position: relative;
     z-index: 3;
 }
+
 .css-1oo8ecw {
     z-index: 2;
     position: relative;
 }
+
 .css-9enyu9 {
     display: flex;
     flex-direction: column;
@@ -1028,6 +1105,7 @@ ul.client-list li{
     align-items: center;
     margin-top: -16px;
 }
+
 .css-1cw4bb9 {
     position: relative;
     display: flex;
@@ -1049,6 +1127,7 @@ ul.client-list li{
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 1px -2px, rgba(0, 0, 0, 0.14) 0px 2px 2px 0px, rgba(0, 0, 0, 0.12) 0px 1px 5px 0px;
     margin-bottom: 16px;
 }
+
 .css-uicpbe {
     margin: 0px 0px 0.5rem;
     font-size: 1.1rem;
@@ -1057,6 +1136,7 @@ ul.client-list li{
     font-family: NoirPro, Arial;
     color: rgb(255, 255, 255);
 }
+
 .css-1xys2wk {
     margin: 0px 0px 8px;
     font-size: 0.875rem;
@@ -1064,14 +1144,17 @@ ul.client-list li{
     font-weight: 400;
     line-height: 1.5;
 }
+
 .css-1xzjpur {
     padding: 24px;
     position: relative;
 }
+
 .css-1oo8ecw {
     z-index: 2;
     position: relative;
 }
+
 .css-qop0nf {
     margin: 0px 0px 16px;
     font-size: 1rem;
@@ -1080,6 +1163,7 @@ ul.client-list li{
     font-family: NoirPro, Arial;
     color: rgb(133, 149, 166);
 }
+
 .css-1opa6fd {
     display: flex;
     flex-direction: column;
@@ -1088,12 +1172,14 @@ ul.client-list li{
     margin: 0px;
     padding: 0px;
 }
+
 .css-14imsqj {
     list-style: none;
     display: flex;
     position: relative;
     min-height: 70px;
 }
+
 .css-11tgw8h {
     display: flex;
     flex-direction: column;
@@ -1101,6 +1187,7 @@ ul.client-list li{
     -webkit-box-align: center;
     align-items: center;
 }
+
 .css-13psa6e {
     margin: 0px 0px 0px 20px;
     font-size: 0.875rem;
@@ -1111,6 +1198,7 @@ ul.client-list li{
     text-align: left;
     padding: 4px 0px;
 }
+
 .css-1v8j3oa {
     display: flex;
     align-self: baseline;
@@ -1126,12 +1214,14 @@ ul.client-list li{
     height: 20px;
     box-shadow: rgb(255, 255, 255) 0px 0px 0px 4px, rgba(0, 0, 0, 0.08) 0px 2px 0px inset, rgba(0, 0, 0, 0.05) 0px 3px 0px 4px;
 }
+
 .css-idv8vo {
     width: 2px;
     background-color: rgb(189, 189, 189);
     -webkit-box-flex: 1;
     flex-grow: 1;
 }
+
 .css-11fs8cu {
     margin: 0px 0px 0.5rem;
     font-size: 0.875rem;
@@ -1140,6 +1230,7 @@ ul.client-list li{
     color: rgb(71, 82, 89);
     line-height: 1.5;
 }
+
 .css-wswjwv {
     margin: 0px 0px 16px;
     font-family: NoirPro, Arial;
@@ -1148,6 +1239,7 @@ ul.client-list li{
     color: rgb(133, 149, 166);
     font-size: 12px;
 }
+
 .css-fcr8e5 {
     display: inline-flex;
     -webkit-box-align: center;
@@ -1175,6 +1267,7 @@ ul.client-list li{
     transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     color: inherit;
 }
+
 .css-73zlqr {
     display: flex;
     align-self: baseline;
@@ -1190,6 +1283,7 @@ ul.client-list li{
     height: 20px;
     box-shadow: rgb(255, 255, 255) 0px 0px 0px 4px, rgba(0, 0, 0, 0.08) 0px 2px 0px inset, rgba(0, 0, 0, 0.05) 0px 3px 0px 4px;
 }
+
 .css-1sm6mlj {
     display: flex;
     align-self: baseline;
@@ -1205,12 +1299,14 @@ ul.client-list li{
     height: 20px;
     box-shadow: rgb(255, 255, 255) 0px 0px 0px 4px, rgba(0, 0, 0, 0.08) 0px 2px 0px inset, rgba(0, 0, 0, 0.05) 0px 3px 0px 4px;
 }
+
 .css-1xar93x {
     flex: 1 1 auto;
     min-width: 0px;
     margin-top: 6px;
     margin-bottom: 6px;
 }
+
 .css-1l5geqr {
     margin: 0px 0px 4px;
     font-size: 1rem;
@@ -1219,6 +1315,7 @@ ul.client-list li{
     color: rgb(55, 55, 60);
     font-family: NoirPro, Arial;
 }
+
 .css-1aqubt9 {
     -webkit-tap-highlight-color: transparent;
     background-color: transparent;
@@ -1246,15 +1343,18 @@ ul.client-list li{
     padding: 10px 24px;
     transition: all 0.2s ease 0s;
 }
+
 .css-uopt2g {
     list-style: none;
     margin: 0px 0px 8px;
     padding: 0px;
     position: relative;
 }
+
 .css-rpx22u {
     color: rgb(115, 82, 199);
 }
+
 .css-1vnkcgl {
     margin: 0px;
     font-family: NoirPro, Arial;
@@ -1263,23 +1363,28 @@ ul.client-list li{
     color: rgb(133, 149, 166);
     font-size: small;
 }
+
 .css-1aqubt9:hover {
     box-shadow: rgba(0, 0, 0, 0.2) 0px 3px 10px 0px;
     transform: translateY(-4px);
 }
+
 .css-1aqubt9:hover {
     text-decoration: none;
     background-color: rgb(245, 247, 250);
 }
+
 .css-ulk2bu:last-child {
     padding-bottom: 24px;
 }
+
 .css-m8qw0z {
     margin: 0px 0px 0px 12px;
     font-size: 0.875rem;
     font-weight: 400;
     line-height: 1.5;
 }
+
 .css-1hy9t21 {
     width: 100%;
     height: 100%;
@@ -1288,6 +1393,7 @@ ul.client-list li{
     color: transparent;
     text-indent: 10000px;
 }
+
 .css-1pclk9a {
     position: relative;
     display: flex;
@@ -1305,10 +1411,12 @@ ul.client-list li{
     width: 48px;
     height: 48px;
 }
+
 .css-149vso {
     flex-shrink: 0;
     min-width: 68px;
 }
+
 .css-bjoyvq {
     display: flex;
     -webkit-box-align: center;
@@ -1317,9 +1425,11 @@ ul.client-list li{
     z-index: 2;
     position: relative;
 }
+
 .css-9qkujr {
     margin-top: -20px;
 }
+
 .css-1csyfis {
     margin: 0px;
     font-size: 0.875rem;
@@ -1328,6 +1438,7 @@ ul.client-list li{
     font-family: NoirPro, Arial;
     color: rgb(133, 149, 166);
 }
+
 .css-1p8zl8c {
     margin-top: -32px;
     margin-bottom: -58px;
@@ -1335,13 +1446,15 @@ ul.client-list li{
     color: rgb(255, 255, 255);
     position: relative;
 }
-@media (min-width: 992px){
+
+@media (min-width: 992px) {
     .css-1p8zl8c {
         margin-left: -48px;
         margin-right: -48px;
         padding: 48px 48px 88px;
     }
 }
+
 .css-1p8zl8c::after {
     display: inline-block;
     position: absolute;
@@ -1350,12 +1463,13 @@ ul.client-list li{
     background-color: rgba(0, 0, 0, 0.65);
 }
 
-@media (min-width: 992px){
+@media (min-width: 992px) {
     .css-m7fmz7 {
         padding-left: 48px;
         padding-right: 48px;
     }
 }
+
 .css-7u9s91 {
     display: flex;
     flex: 1 1 0%;
@@ -1363,6 +1477,7 @@ ul.client-list li{
     min-height: 100%;
     flex-direction: column;
 }
+
 .css-t7d2qp {
     display: flex;
     -webkit-box-align: center;
@@ -1370,6 +1485,7 @@ ul.client-list li{
     padding: 0px;
     margin-bottom: 32px;
 }
+
 .css-69i1ev {
     display: flex;
     -webkit-box-pack: justify;
@@ -1377,6 +1493,7 @@ ul.client-list li{
     -webkit-box-align: center;
     align-items: center;
 }
+
 .css-zggyxd {
     list-style: none;
     margin: 0px;
@@ -1385,6 +1502,7 @@ ul.client-list li{
     display: flex;
     min-width: 0px;
 }
+
 .css-1psj32z {
     -webkit-tap-highlight-color: transparent;
     background-color: transparent;
@@ -1413,14 +1531,17 @@ ul.client-list li{
     min-height: auto;
     padding: 0px 8px;
 }
-    @media (min-width: 576px){
+
+@media (min-width: 576px) {
     .css-1psj32z {
         min-height: auto;
     }
 }
+
 .css-1psj32z .MuiTouchRipple-root {
     display: none;
 }
+
 .css-w0pj6f {
     overflow: hidden;
     pointer-events: none;
@@ -1429,9 +1550,11 @@ ul.client-list li{
     inset: 0px;
     border-radius: inherit;
 }
+
 .css-1tu59u4 {
     flex: 0 0 auto;
 }
+
 .css-rdgd1y {
     display: inline-flex;
     -webkit-box-align: center;
@@ -1462,15 +1585,18 @@ ul.client-list li{
     color: inherit;
     text-transform: none;
 }
+
 .css-1l6c7y9 {
     display: inherit;
     margin-right: 8px;
     margin-left: -4px;
 }
+
 .css-t7d2qp .MuiCardHeader-title {
     font-size: 1.1rem;
     margin-bottom: 0px;
 }
+
 .css-1rnw72g {
     margin: 0px;
     font-family: NoirPro, Arial;
@@ -1479,6 +1605,7 @@ ul.client-list li{
     line-height: 1.43;
     display: block;
 }
+
 .css-x3gqx0 {
     margin: 0px;
     font-size: 0.875rem;
@@ -1487,13 +1614,16 @@ ul.client-list li{
     font-family: NoirPro, Arial;
     color: inherit;
 }
+
 .css-xi606m {
     text-align: center;
 }
+
 .css-1onfrn1 {
     position: relative;
     z-index: 1;
 }
+
 .css-h1p9ca {
     position: relative;
     display: flex;
@@ -1511,6 +1641,7 @@ ul.client-list li{
     width: 72px;
     height: 72px;
 }
+
 .css-mi4p12 {
     display: flex;
     flex-direction: row;
@@ -1518,12 +1649,14 @@ ul.client-list li{
     margin-left: 8px;
     margin-right: 8px;
 }
+
 .css-f9w29w {
     list-style: none;
     margin: 0px 0px 16px;
     padding: 0px;
     position: relative;
 }
+
 .css-1f151m1 {
     display: flex;
     -webkit-box-pack: start;
@@ -1536,6 +1669,7 @@ ul.client-list li{
     text-align: left;
     padding: 4px 24px;
 }
+
 .css-2h18d4 {
     flex-shrink: 0;
     display: inline-flex;
@@ -1543,6 +1677,7 @@ ul.client-list li{
     min-width: 36px;
     color: rgb(133, 149, 166);
 }
+
 .css-1ofxjzb {
     display: flex;
     flex: 1 1 0%;
@@ -1550,12 +1685,14 @@ ul.client-list li{
     z-index: 2;
     position: relative;
 }
+
 .css-1c6ashc {
     display: flex;
     min-width: 0px;
     flex: 1 1 0%;
     flex-direction: column;
 }
+
 .css-1t8yj35 {
     background-color: rgb(255, 255, 255);
     color: rgb(71, 82, 89);
@@ -1566,6 +1703,7 @@ ul.client-list li{
     position: relative;
     margin-bottom: 30px;
 }
+
 .css-ngeif {
     display: flex;
     -webkit-box-align: center;
@@ -1578,10 +1716,12 @@ ul.client-list li{
     border-right-color: rgb(222, 226, 230);
     border-left-color: rgb(222, 226, 230);
 }
+
 .css-ngeif .MuiCardHeader-title {
     font-size: 1.1rem;
     margin-bottom: 0px;
 }
+
 .css-1dwyhfw {
     margin: 0px 0px 0.5rem;
     font-size: 1rem;
@@ -1590,15 +1730,18 @@ ul.client-list li{
     color: rgb(55, 55, 60);
     display: block;
 }
+
 .css-la1z4w {
     margin-top: -18px;
     margin-bottom: -20px;
 }
+
 .css-gz38gd {
     overflow: hidden;
     min-height: 48px;
     display: flex;
 }
+
 .css-1anid1y {
     position: relative;
     display: inline-block;
@@ -1607,16 +1750,20 @@ ul.client-list li{
     overflow-x: hidden;
     width: 100%;
 }
+
 .css-k008qs {
     display: flex;
 }
+
 .css-fmop3j.Mui-selected {
     color: rgb(115, 82, 199);
 }
+
 .css-la1z4w .MuiTab-root {
     padding-top: 20px;
     padding-bottom: 20px;
 }
+
 .css-fmop3j {
     display: inline-flex;
     -webkit-box-align: center;
@@ -1652,6 +1799,7 @@ ul.client-list li{
     flex-direction: column;
     color: rgb(133, 149, 166);
 }
+
 .css-1vgkktx {
     position: absolute;
     height: 2px;
@@ -1660,6 +1808,7 @@ ul.client-list li{
     transition: all 300ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     background-color: rgb(115, 82, 199);
 }
+
 .css-12rpcfg {
     flex-shrink: 0;
     display: inline-flex;
@@ -1677,6 +1826,7 @@ ul.client-list li{
     justify-content: center;
     border: 1px solid rgb(222, 226, 230);
 }
+
 .css-16fnjgr {
     display: flex;
     -webkit-box-pack: start;
@@ -1690,16 +1840,19 @@ ul.client-list li{
     text-align: left;
     padding: 8px 16px;
 }
-@media (min-width: 1200px){
+
+@media (min-width: 1200px) {
     .css-16fnjgr {
         width: 33.33%;
     }
 }
-@media (min-width: 1200px){
+
+@media (min-width: 1200px) {
     .css-16fnjgr {
         width: 50%;
     }
 }
+
 .css-1cw4hi4 {
     user-select: none;
     width: 1em;
@@ -1710,6 +1863,7 @@ ul.client-list li{
     transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
     font-size: inherit;
 }
+
 .css-1qe7fy0 {
     margin: 0px 0px 4px;
     line-height: 1.2;
@@ -1718,6 +1872,7 @@ ul.client-list li{
     font-size: 12px;
     color: rgb(133, 149, 166);
 }
+
 .css-s1cnk {
     margin: 0px;
     font-size: 0.875rem;
@@ -1726,6 +1881,7 @@ ul.client-list li{
     line-height: 1.5;
     color: rgb(71, 82, 89);
 }
+
 .css-1igju9t {
     list-style: none;
     padding: 0px;
@@ -1734,14 +1890,17 @@ ul.client-list li{
     flex-wrap: wrap;
     margin: 0px -16px;
 }
+
 .css-1q0msn4:last-child {
     padding-bottom: 24px;
 }
+
 .css-1q0msn4 {
     padding: 24px;
     z-index: 2;
     position: relative;
 }
+
 .css-1r7ek9c {
     display: flex;
     min-width: 0px;
@@ -1760,6 +1919,7 @@ ul.client-list li{
     height: auto;
     align-self: stretch;
 }
+
 .css-1bd9wpl {
     margin: 0px;
     font-family: NoirPro, Arial;
@@ -1767,16 +1927,19 @@ ul.client-list li{
     line-height: 1.5;
     font-size: 12px;
 }
-.css-mi4p12 > :not(style) + :not(style) {
+
+.css-mi4p12> :not(style)+ :not(style) {
     margin: 0px 0px 0px 16px;
 }
-@media (max-width: 1080px){
+
+@media (max-width: 1080px) {
     .css-1ofxjzb {
         flex-wrap: wrap;
         width: 100%;
         justify-content: center;
     }
 }
+
 .css-hxfal {
     margin: 0px;
     font-size: 0.875rem;
@@ -1785,6 +1948,7 @@ ul.client-list li{
     line-height: 1.5;
     color: rgb(133, 149, 166);
 }
+
 .css-15mdt76 {
     margin: 0px;
     font-family: NoirPro, Arial;
@@ -1794,6 +1958,7 @@ ul.client-list li{
     color: rgb(133, 149, 166);
     display: block;
 }
+
 .css-zknl6a {
     margin: 0px;
     font-size: 0.875rem;
@@ -1803,14 +1968,17 @@ ul.client-list li{
     color: rgb(115, 82, 199);
     text-decoration: none;
 }
-.css-1p273sh > .MuiGrid-item {
+
+.css-1p273sh>.MuiGrid-item {
     padding-left: 30px;
 }
-@media (max-width: 1080px){
-    .css-1p273sh > .MuiGrid-item {
+
+@media (max-width: 1080px) {
+    .css-1p273sh>.MuiGrid-item {
         padding-top: 30px
     }
 }
+
 .css-c49ov {
     box-sizing: border-box;
     margin: 0px;
@@ -1820,17 +1988,20 @@ ul.client-list li{
     flex-grow: 0;
     max-width: 100%;
 }
+
 .main-panel {
     position: relative;
     margin-left: 260px;
 }
+
 nav#sidebar {
     position: fixed;
     overflow-y: scroll;
     top: 70px;
     bottom: 0;
 }
-@media (min-width: 1200px){
+
+@media (min-width: 1200px) {
     .css-c49ov {
         flex-basis: 100%;
         -webkit-box-flex: 0;
@@ -1838,7 +2009,8 @@ nav#sidebar {
         max-width: 100%;
     }
 }
-@media (max-width: 992px){
+
+@media (max-width: 992px) {
     .css-c49ov {
         flex-basis: 100%;
         -webkit-box-flex: 0;
@@ -1846,29 +2018,50 @@ nav#sidebar {
         max-width: 100%;
     }
 }
-@media (max-width: 992px){
+
+@media (max-width: 992px) {
     .css-1onfrn1 {
         margin-top: 32px;
         margin-bottom: 32px;
     }
 }
-@media (max-width: 850px){
+
+@media (max-width: 850px) {
     .CmtLayout-wrapper.MuiBox-root.css-1ofxjzb.mb-3 {
         padding: 0 25px;
     }
 }
-@media (max-width: 991px){
+
+@media (max-width: 991px) {
+
     .navbar .navbar-brand-wrapper,
-    .navbar{
+    .navbar {
         background: #f2edf3;
     }
-    .main-panel{
+
+    .main-panel {
         margin-left: 0px;
     }
 }
-.sidebar::-webkit-scrollbar{
-    width:10px;
+
+.sidebar::-webkit-scrollbar {
+    width: 10px;
 }
-.main-panel .login-auth{
+
+.main-panel .login-auth {
     margin-left: -260px;
+}
+
+.css-nliwk5 {
+    flex-shrink: 0;
+    margin-right: 16px;
+    width: 100%;
+    overflow: hidden;
+    border-radius: 8px;
+}
+
+.css-nliwk5 img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
 }

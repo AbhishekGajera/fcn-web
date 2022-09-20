@@ -2,11 +2,11 @@ import React from "react";
 import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
-import { useCookies } from "react-cookie"
+// import { useCookies } from "react-cookie"
 
 const ClientNotification = () => {
 
-  const [cookies, setCookie] = useCookies(["user"]);
+  // const [cookies, setCookie] = useCookies(["user"]);
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => {
@@ -24,7 +24,7 @@ const ClientNotification = () => {
   const {
     register,
     handleSubmit,
-        formState: { errors, isDirty, isValid },
+        formState: { errors, isDirty },
     getValues,
   } = useForm({
     mode: "onChange",

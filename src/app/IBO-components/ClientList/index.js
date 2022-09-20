@@ -131,7 +131,7 @@ const ClientList = () => {
     setvalueToEdit(value);
     setupdateStatus(value?.status || 0);
     setbranchUpdate(value?.branch)
-    setIBOUpdate(value?.IBO)
+    setIBOUpdate(value?.IBO?.name)
     setroleUpdate(value?.role)
     setShow(true);
   };
@@ -730,7 +730,7 @@ const ClientList = () => {
                           <td>{item?.name}</td>
                           <td>{item?.contactno}</td>
                           <td>{item?.branch}</td>
-                          <td>{item?.IBO}</td>
+                          <td>{item?.IBO?.name}</td>
                           <td>{item?.email}</td>
                           <td>{item?.role}</td>
                           <td>{formateStatus(item?.status)}</td>

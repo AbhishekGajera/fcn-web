@@ -121,6 +121,8 @@ export const getTotalSIPCount = (data) => api(`users/users-count-sip `, 'GET', d
 
 // Notification Management
 export const addNotification = (data) => api(`notification/add-notification `, 'POST', data);
-export const getNotification = (status="1") => api(`notification/fetch-notification?status=${status}`, 'GET');
+export const getNotification = (status="1") => api(`notification/fetch-notification?status=${status}&sortBy=createdAt:desc`, 'GET');
+export const getNotificationByAudience = (status="1",targetAudience='all') => api(`notification/fetch-notification?status=${status}&targetAudience=${targetAudience}&sortBy=createdAt:desc`, 'GET');
+export const addViewNotification = (data) => api(`notification/add-view-notification`, 'POST',data);
 
 
