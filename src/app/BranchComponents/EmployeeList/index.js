@@ -15,12 +15,17 @@ const EmployeeList = () => {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useUrl("page");
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
 
   useEffect(() => {
     (async () => {
       try {
-        const items = await (await getUsers(itemsPerPage, +itemOffset+1)).data;
+        let items
+        if (cookies?.user?.role === "branch") {
+          items = await (await getUsers(itemsPerPage, +itemOffset+1 ,'','user',cookies?.user?.name)).data;
+        }else{
+          items = await (await getUsers(itemsPerPage, +itemOffset+1)).data;
+        }
         setitemlist(items?.results);
         setPageCount(items?.totalPages);
       } catch (error) {

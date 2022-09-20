@@ -13,7 +13,7 @@ const Payroll = () => {
 
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useUrl("page");
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
 
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);

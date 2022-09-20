@@ -33,7 +33,7 @@ const Transaction = () => {
     // We start with an empty list of items.
     const [pageCount, setPageCount] = useState(0);
     const [itemOffset, setItemOffset] = useUrl("page");
-    const [itemsPerPage] = useState(10);
+    const [itemsPerPage] = useState(20);
     const [isLoading, setIsLoading] = useState(true)
 
 

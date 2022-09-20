@@ -24,7 +24,7 @@ const ExpenceList = () => {
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
-  const [itemsPerPage] = useState(10);
+  const [itemsPerPage] = useState(20);
   const [cookies,setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const history = useHistory();

@@ -357,7 +357,7 @@ class Sidebar extends Component {
                 </Collapse>
               </li>
             }
-            {["admin"].includes(this.userData?.role) &&
+            {["admin","branch"].includes(this.userData?.role) &&
               <li className={this.isPathActive('/connectedusers') ? 'nav-item active' : 'nav-item'}>
                 <div className={this.state.connectedUsers ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('connectedUsers')} data-toggle="collapse">
                   <span className="menu-title"><Trans>Leads</Trans></span>
@@ -587,7 +587,7 @@ class Sidebar extends Component {
                 </Collapse>
               </li>
             }
-            {["admin"].includes(this.userData?.role) &&
+            {["admin","user","IBO","branch"].includes(this.userData?.role) &&
 
               <li className={this.isPathActive('/notification') ? 'nav-item active' : 'nav-item'}>
                 <div className={this.state.fcnNotification ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('fcnNotification')} data-toggle="collapse">
@@ -598,9 +598,9 @@ class Sidebar extends Component {
                 <Collapse in={this.state.fcnNotification}>
                   <ul className="nav flex-column sub-menu">
                     <li className="nav-item"> <Link className={this.isPathActive('/notification/all') ? 'nav-link active' : 'nav-link'} to="/notification/all"><Trans>All</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/notification/ibo') ? 'nav-link active' : 'nav-link'} to="/notification/ibo"><Trans>IBO</Trans></Link></li>
+                    {/* <li className="nav-item"> <Link className={this.isPathActive('/notification/ibo') ? 'nav-link active' : 'nav-link'} to="/notification/ibo"><Trans>IBO</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/notification/branch') ? 'nav-link active' : 'nav-link'} to="/notification/branch"><Trans>Branch</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/notification/client') ? 'nav-link active' : 'nav-link'} to="/notification/client"><Trans>Client</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/notification/client') ? 'nav-link active' : 'nav-link'} to="/notification/client"><Trans>Client</Trans></Link></li> */}
                   </ul>
                 </Collapse>
               </li>
