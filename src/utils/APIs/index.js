@@ -101,6 +101,12 @@ export const ImageUpload = (data) => apiImage('POST', data);
 // video management
 export const addVideo = (data) => api(`video `, 'POST', data);
 export const getVideo = (data) => api(`video `, 'GET', data);
+export const getVideoFree = (type='free') => api(`video?type=${type} `, 'GET');
+export const getVideoPaid = (type='paid') => api(`video?type=${type} `, 'GET');
+
+
+
+
 export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 
 //  Transaction Management
