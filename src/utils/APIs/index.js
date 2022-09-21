@@ -93,6 +93,7 @@ export const getRevenueList = (limit = 10,offset = 1) => api(`revenue/fetch-reve
 // connect management
 export const CreateConnect = (data) => api('contact/add-contact', 'POST', data);
 export const getConnect = (limit = 10,offset = 1,name = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&sortBy=createdAt:desc&custom=true`, 'GET');
+export const getConnectByBranch = (limit = 10,offset = 1,name = '',branch = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&branch=${branch}&sortBy=createdAt:desc&custom=true`, 'GET');
 export const getConnectedById = (id = '') => api(`contact/get-connected-id/${id}`, 'GET');
 
 //image upload in cloudinary 
@@ -101,6 +102,12 @@ export const ImageUpload = (data) => apiImage('POST', data);
 // video management
 export const addVideo = (data) => api(`video `, 'POST', data);
 export const getVideo = (data) => api(`video `, 'GET', data);
+export const getVideoFree = (type='free') => api(`video?type=${type} `, 'GET');
+export const getVideoPaid = (type='paid') => api(`video?type=${type} `, 'GET');
+
+
+
+
 export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 
 //  Transaction Management
@@ -128,3 +135,15 @@ export const getNotificationById = (id) => api(`notification/get-notificationByI
 
 
 
+// TravelQuery managemnet
+export const addTravelQuery = (data) => api(`travelQuery/add-travelQuery `, 'POST', data);
+export const getTravelQuery = (limit = 100, offset = 1) => api(`travelQuery/fetch-travelQuery?limit=${limit}&sortBy=createdAt:desc&page=${offset}&type=regular`, 'GET');
+export const updateTravelQuery = (data) => api(`travelQuery/update-travelQuery`, 'PATCH', data);
+export const deleteTravelQuery = (id) => api(`travelQuery/delete-travelQuery/${id}`, 'GET');
+
+
+// Travel managemnet
+export const addTravel = (data) => api(`travel/add-travel `, 'POST', data);
+export const deleteTravel = (id) => api(`travel/delete-travel/${id}`, 'GET');
+export const getTravel = (limit = 100, offset = 1) => api(`travel/fetch-travel?limit=${limit}&sortBy=createdAt:desc&page=${offset}&type=regular`, 'GET');
+export const getPreTravel = (limit = 100, offset = 1) => api(`travel/fetch-travel?limit=${limit}&sortBy=createdAt:desc&page=${offset}&type=pre`, 'GET');

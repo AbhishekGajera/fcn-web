@@ -129,7 +129,7 @@ const Connect = () => {
                       required: true,
                     })}
                   >
-                    <option selected>Pal - Adajan</option>
+                    <option selected>Pal-Adajan</option>
                     <option>Nanpura</option>
                     <option>Sumul-dairy Road</option>
                     <option>Katargam</option>

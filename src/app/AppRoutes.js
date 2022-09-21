@@ -21,6 +21,8 @@ const SystematicSaving   = lazy(() => import('./client-component/investment/Syst
 const Currency   = lazy(() => import('./client-component/investment/Currency'));
 const Passport   = lazy(() => import('./client-component/travel/Passport'));
 const OurPlans   = lazy(() => import('./client-component/travel/OurPlans'));
+const AddPlan   = lazy(() => import('./client-component/travel/addPlans'));
+const ViewQuery = lazy(() => import('./client-component/travel/QueryList'));
 const PreDeparture   = lazy(() => import('./client-component/travel/PreDeparture'));
 const Visa   = lazy(() => import('./client-component/travel/Visa'));
 const CustomizeTour   = lazy(() => import('./client-component/travel/CustomizeTour'));
@@ -130,7 +132,9 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/utilities/literature" component={ Literature }  accesstype={["user","admin","IBO","branch"]}/>
 
           <ProtectedRoute path="/travel/ourplan" component={ OurPlans }  accesstype={["user","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/travel/addplan" component={ AddPlan }  accesstype={["admin"]}/>
           <ProtectedRoute path="/travel/departure" component={ PreDeparture } accesstype={["user","admin","IBO","branch"]} />
+          <ProtectedRoute path="/travel/seeRequest" component={ ViewQuery } accesstype={["admin"]} />
       
           <ProtectedRoute path="/travel/passport" component={ Passport }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/travel/visa" component={ Visa } accesstype={["user","admin","IBO","branch"]} />

@@ -292,10 +292,10 @@ const Dashboard = () => {
 
   const getPowerOneAndSIPCount = async () => {
     const powerone = await getTotalPoweroneCount()
-    setcountPowerone(powerone.data[0].totalValue)
+    setcountPowerone(powerone?.data[0]?.totalValue)
 
     const SIP = await getTotalSIPCount()
-    setcountSIP(SIP.data[0].totalValue)
+    setcountSIP(SIP?.data[0]?.totalValue)
 
   }
 
