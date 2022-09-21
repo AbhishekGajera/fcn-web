@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { Form } from 'react-bootstrap';
-import { ImageUpload, userLogout, addNotification, getNotification } from "../../../utils/APIs";
+import { ImageUpload, userLogout, addNotification, getNotification, getNotificationByAudience } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Spinner from "../../shared/Spinner";
@@ -28,21 +28,33 @@ const AllNotification = () => {
   };
 
   useEffect(() => {
-    list()
-  },[])
-
-
-
-  // setTimeout(() => {
-  //   list()
-  // }, 3000);
+    const timer = setTimeout(() => {
+      list()
+    }, 5000);
+    return () => clearTimeout(timer);
+  }, [])
 
   const list = async () => {
     setIsLoading(true)
     try {
-      const items = await (
-        await getNotification()
-      ).data;
+      let items
+      if (cookies?.user?.role === 'admin') {
+        items = await (
+          await getNotification()
+        ).data;
+      }else if(cookies?.user?.role === 'IBO'){
+        items = await (
+          await getNotificationByAudience(1,'ibo')
+        ).data;
+      }else if(cookies?.user?.role === 'branch'){
+        items = await (
+          await getNotificationByAudience(1,'branch')
+        ).data;
+      }else if(cookies?.user?.role === 'user'){
+        items = await (
+          await getNotificationByAudience(1,'client')
+        ).data;
+      }
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
@@ -103,7 +115,7 @@ const AllNotification = () => {
         data.status = 1;
         const result = await addNotification(data)
         toast.success("Notification Added successfully");
-        history.push('/notification/all')
+        list();
       } catch (error) {
         if (
           error &&

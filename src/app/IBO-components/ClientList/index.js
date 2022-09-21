@@ -131,7 +131,7 @@ const ClientList = () => {
     setvalueToEdit(value);
     setupdateStatus(value?.status || 0);
     setbranchUpdate(value?.branch)
-    setIBOUpdate(value?.IBO)
+    setIBOUpdate(value?.IBO?.name)
     setroleUpdate(value?.role)
     setShow(true);
   };

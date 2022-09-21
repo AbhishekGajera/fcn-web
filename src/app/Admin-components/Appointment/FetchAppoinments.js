@@ -4,8 +4,6 @@ import ReactPaginate from "react-paginate";
 import { getAppoinmentsList, getAppoinmentsListByUser, userLogout, UpdateAppoinments } from "../../../utils/APIs";
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
-import Swal from "sweetalert2";
-import Modal from "react-bootstrap/Modal";
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
 
@@ -14,15 +12,14 @@ const FetchAppoinments = () => {
   const history = useHistory()
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
-  const [employeeList, setemployeeList] = useState([])
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
   // following the API or data you're working with.
   const [itemOffset, setItemOffset] = useState(0);
   const [itemsPerPage] = useState(20);
-  const [show, setShow] = React.useState(false);
-  const [valueToEdit, setvalueToEdit] = useState({});
+  const [ setShow] = React.useState(false);
+  const [ setvalueToEdit] = useState({});
 
   const { register, handleSubmit, reset, formState: { errors, isDirty, isValid } } = useForm({
     mode: "onChange"
