@@ -294,8 +294,10 @@ class Sidebar extends Component {
                 <Collapse in={this.state.ourTravels}>
                   <ul className="nav flex-column sub-menu">
                     <li className="nav-item"> <Link className={this.isPathActive('/travel/ourplan') ? 'nav-link active' : 'nav-link'} to="/travel/ourplan"><Trans>Our Plans</Trans></Link></li>
+                    {this.userData?.role === 'admin' && <li className="nav-item"> <Link className={this.isPathActive('/travel/addplan') ? 'nav-link active' : 'nav-link'} to="/travel/addplan"><Trans>Add Plans</Trans></Link></li>}
                     <li className="nav-item"> <Link className={this.isPathActive('/travel/departure') ? 'nav-link active' : 'nav-link'} to="/travel/departure"><Trans>Pre Departure</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/travel/tour') ? 'nav-link active' : 'nav-link'} to="/travel/tour"><Trans>Customize Tour</Trans></Link></li>
+                    {this.userData?.role === 'admin' && <li className="nav-item"> <Link className={this.isPathActive('/travel/seeRequest') ? 'nav-link active' : 'nav-link'} to="/travel/seeRequest"><Trans>See Requests</Trans></Link></li>}
                     <li className="nav-item"> <Link className={this.isPathActive('/travel/passport') ? 'nav-link active' : 'nav-link'} to="/travel/passport"><Trans>Passport</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/travel/visa') ? 'nav-link active' : 'nav-link'} to="/travel/visa"><Trans>Visa</Trans></Link></li>
                   </ul>
