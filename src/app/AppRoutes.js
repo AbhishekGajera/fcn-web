@@ -70,6 +70,7 @@ const AllNotification = lazy(() => import('./Admin-components/Notification/AllNo
 const IboNotification = lazy(() => import('./Admin-components/Notification/IboNotification'));
 const BranchNotification = lazy(() => import('./Admin-components/Notification/BranchNotification'));
 const ClientNotification = lazy(() => import('./Admin-components/Notification/ClientNotification'));
+const NotificationView = lazy(() => import('./Admin-components/Notification/ViewNotification'));
 const Manual = lazy(() => import('./Admin-components/Password/Manual'));
 const Random = lazy(() => import('./Admin-components/Password/Random'));
 const Otp = lazy(() => import('./Admin-components/Password/Otp'));
@@ -204,6 +205,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/notification/ibo" component={ IboNotification } accesstype={["admin"]} />
           <ProtectedRoute path="/notification/branch" component={ BranchNotification } accesstype={["admin"]} />
           <ProtectedRoute path="/notification/client" component={ ClientNotification } accesstype={["admin"]} />
+          <ProtectedRoute path="/viewNotification" component={ NotificationView } accesstype={["admin","user","branch","IBO"]} />
           <ProtectedRoute path="/password/random" component={ Random } accesstype={["admin"]} />
           <ProtectedRoute path="/password/manual" component={ Manual } accesstype={["admin"]} />
           <ProtectedRoute path="/password/otp" component={ Otp } accesstype={["admin"]} />

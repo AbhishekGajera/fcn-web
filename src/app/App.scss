@@ -2065,3 +2065,109 @@ nav#sidebar {
     height: 100%;
     object-fit: contain;
 }
+
+.css-q4gpdn {
+    display: inline-flex;
+    -webkit-box-align: center;
+    align-items: center;
+    -webkit-box-pack: center;
+    justify-content: center;
+    position: relative;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: transparent;
+    outline: 0px;
+    border: 0px;
+    margin: 0px;
+    cursor: pointer;
+    user-select: none;
+    vertical-align: middle;
+    appearance: none;
+    text-decoration: none;
+    text-align: center;
+    flex: 0 0 auto;
+    font-size: 1.5rem;
+    border-radius: 50%;
+    overflow: visible;
+    transition: background-color 150ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    color: rgb(133, 149, 166);
+    background: rgb(255, 255, 255);
+    width: 40px;
+    height: 40px;
+    box-shadow: rgba(0, 0, 0, 0.086) 0px 5px 10px;
+    padding: 10px;
+}
+
+.css-klzqj9 {
+    position: relative;
+    display: inline-flex;
+    vertical-align: middle;
+    flex-shrink: 0;
+}
+
+.css-6952u1 {
+    user-select: none;
+    width: 1em;
+    height: 1em;
+    display: inline-block;
+    fill: currentcolor;
+    flex-shrink: 0;
+    transition: fill 200ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    font-size: 1.25rem;
+}
+
+.css-t5kacf {
+    display: flex;
+    flex-flow: row wrap;
+    -webkit-box-pack: center;
+    place-content: center;
+    -webkit-box-align: center;
+    align-items: center;
+    position: absolute;
+    box-sizing: border-box;
+    font-family: NoirPro, Arial;
+    font-weight: 500;
+    font-size: 0.75rem;
+    min-width: 8px;
+    line-height: 1;
+    padding: 0px;
+    height: 8px;
+    border-radius: 4px;
+    z-index: 1;
+    transition: transform 225ms cubic-bezier(0.4, 0, 0.2, 1) 0ms;
+    top: 0px;
+    right: 0px;
+    transform: scale(1) translate(50%, -50%);
+    transform-origin: 100% 0%;
+}
+
+.css-klzqj9 .MuiBadge-badge {
+    top: -5px;
+    right: -5px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    border: 2px solid rgb(255, 255, 255);
+    box-shadow: rgba(115, 82, 199, 0.7) 0px 0.5rem 1.25rem;
+    background-image: linear-gradient(135deg, rgb(115, 82, 199), rgb(228, 74, 119));
+}
+
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item .nav-link{
+    margin: 0!important;
+}
+
+li.nav-item.nav-profile {
+    display: flex;
+    align-items: center;
+}
+
+.dropdown-item img{
+    width: 50px;
+    height: 50px;
+    object-fit: contain;
+    margin-right: 10px;
+    border-radius: 25px;
+}
+
+.notification-nav a.dropdown-item {
+    padding: 10px!important;
+}

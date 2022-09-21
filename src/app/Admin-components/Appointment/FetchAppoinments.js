@@ -27,7 +27,6 @@ const FetchAppoinments = () => {
 
   const [modelMode, setmodelMode] = useState('create')
   const statusChanged = (id, e) => {
-    console.log(e.target.value, id);
     UpdateAppoinments({
       "appoinments_id": id,
       "status": e.target.value

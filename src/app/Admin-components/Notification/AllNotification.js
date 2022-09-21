@@ -34,6 +34,13 @@ const AllNotification = () => {
     return () => clearTimeout(timer);
   }, [])
 
+  const viewNotification = (Id) => {
+    history.push({
+      pathname: '/viewNotification',
+      search: "?" + new URLSearchParams({ id: Id }).toString()
+    })
+  }
+
   const list = async () => {
     setIsLoading(true)
     try {
@@ -279,6 +286,7 @@ const AllNotification = () => {
                     <th> content </th>
                     <th> Type </th>
                     <th> Target Audience </th>
+                    <th> Action </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -291,6 +299,13 @@ const AllNotification = () => {
                           <td>{item?.content}</td>
                           <td>{item?.type}</td>
                           <td>{item?.targetAudience}</td>
+                          <td><button
+                                type="button"
+                                className="btn btn-gradient-primary btn-sm "
+                                onClick={() => {viewNotification(item?.id)}}
+                              >
+                                View
+                              </button></td>
                         </tr>
                       );
                     })}
