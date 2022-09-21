@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { userLogout, getConnect } from "../../../../utils/APIs";
+import { userLogout, getConnect, getConnectByBranch } from "../../../../utils/APIs";
 import { CSVLink } from "react-csv";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -36,18 +36,23 @@ const ClientList = () => {
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage]);
-
-  useEffect(() => {
-    list();
-  }, [debouncedSearchTerm]);
+  }, [itemOffset, itemsPerPage, debouncedSearchTerm]);
 
   const list = async () => {
     setIsLoading(true);
     try {
-      const items = await (
-        await getConnect(itemsPerPage, +itemOffset + 1, searchTerm)
-      ).data;
+      let items 
+      if(cookies?.user?.role === 'branch'){
+        items = await (
+          await getConnectByBranch(itemsPerPage, +itemOffset + 1, searchTerm, cookies?.user?.name)
+        ).data;
+      }
+
+      if(cookies?.user?.role === 'admin'){
+        items = await (
+          await getConnect(itemsPerPage, +itemOffset + 1, searchTerm)
+        ).data;
+      }
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
