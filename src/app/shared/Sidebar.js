@@ -573,7 +573,7 @@ class Sidebar extends Component {
                 </Collapse>
               </li>
             } */}
-            {["admin"].includes(this.userData?.role) &&
+            {/* {["admin"].includes(this.userData?.role) &&
               <li className={this.isPathActive('/performance') ? 'nav-item active' : 'nav-item'}>
                 <div className={this.state.fcnPerformance ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('fcnPerformance')} data-toggle="collapse">
                   <span className="menu-title"><Trans>Best Performance</Trans></span>
@@ -588,7 +588,7 @@ class Sidebar extends Component {
                   </ul>
                 </Collapse>
               </li>
-            }
+            } */}
             {["admin","user","IBO","branch"].includes(this.userData?.role) &&
 
               <li className={this.isPathActive('/notification') ? 'nav-item active' : 'nav-item'}>

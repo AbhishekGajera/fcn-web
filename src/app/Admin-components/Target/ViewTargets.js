@@ -89,7 +89,7 @@ const ViewTargets = () => {
 
   const onSubmit = async (data) => {
     try {
-      data.target_id =  valueToEdit?.id;
+      data.target_id = valueToEdit?.id;
       const updatedData = JSON.stringify(data)
       await UpdateTargets(updatedData)
       toast.success('Target updated Successfully', {
@@ -186,6 +186,48 @@ const ViewTargets = () => {
                             {errors && errors.Description && (
                               <p>Description is required field</p>
                             )}
+                          </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Status
+                          </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="status"
+                              {...register("status", {
+                                required: true,
+                              })}
+                            >
+                              <option value=''>--Select Status--</option>
+                              <option
+                                value="1"
+                                selected={valueToEdit.status == 1 ? "selected" : false}
+                              >
+                                Running
+                              </option>
+                              <option
+                                value="2"
+                                selected={valueToEdit.status == 2 ? "selected" : false}
+                              >
+                                Finished
+                              </option>
+                              <option
+                                value="3"
+                                selected={valueToEdit.status == 3 ? "selected" : false}
+                              >
+                                Canceled
+                              </option>
+                              <option
+                                value="4"
+                                selected={valueToEdit.status == 4 ? "selected" : false}
+                              >
+                                archived
+                              </option>
+                            </select>
+
                           </div>
                         </Form.Group>
                         <Form.Group className="row">

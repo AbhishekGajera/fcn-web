@@ -128,12 +128,12 @@ export const getTotalSIPCount = (data) => api(`users/users-count-sip `, 'GET', d
 
 // Notification Management
 export const addNotification = (data) => api(`notification/add-notification `, 'POST', data);
-export const getNotification = (status="1") => api(`notification/fetch-notification?status=${status}&sortBy=createdAt:desc`, 'GET');
+export const getNotification = (status="1",limit=10,offset = 1) => api(`notification/fetch-notification?status=${status}&limit=${limit}&&page=${offset}&sortBy=createdAt:desc`, 'GET');
 export const getDashNotification = () => api(`dashnotification/fetch-recent-notification`, 'GET');
-
-export const getNotificationByAudience = (status="1",targetAudience) => api(`notification/fetch-notification?status=${status}&targetAudience=${targetAudience}&sortBy=createdAt:desc`, 'GET');
+export const getNotificationByAudience = (status="1",targetAudience,limit=10,offset = 1) => api(`notification/fetch-notification?status=${status}&page=${offset}&targetAudience=${targetAudience}&limit=${limit}&sortBy=createdAt:desc`, 'GET');
 export const addViewNotification = (data) => api(`notification/add-view-notification`, 'POST',data);
 export const getNotificationById = (id) => api(`notification/get-notificationById/${id}`, 'GET');
+export const deleteNotification = (id) => api(`notification/delete-notification/${id}`, 'GET');
 
 
 

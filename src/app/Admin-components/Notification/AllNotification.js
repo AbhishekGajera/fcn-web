@@ -4,11 +4,12 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { Form } from 'react-bootstrap';
-import { ImageUpload, userLogout, addNotification, getNotification, getNotificationByAudience } from "../../../utils/APIs";
+import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAudience } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Spinner from "../../shared/Spinner";
 import ReactPaginate from "react-paginate";
+import Swal from "sweetalert2";
 
 
 const AllNotification = () => {
@@ -18,7 +19,7 @@ const AllNotification = () => {
   const [show, setShow] = React.useState(false);
   const [pageCount, setPageCount] = useState(0);
   const [itemOffset, setItemOffset] = useUrl("page");
-  const [itemsPerPage] = useState(20);
+  const [itemsPerPage] = useState(10);
   const [itemlist, setitemlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -28,11 +29,41 @@ const AllNotification = () => {
   };
 
   useEffect(() => {
+    list()
+  },[itemOffset,itemsPerPage])
+
+  useEffect(() => {
     const timer = setTimeout(() => {
       list()
     }, 5000);
     return () => clearTimeout(timer);
   }, [])
+
+  const deleteNotifications = (uid) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#DD6B55",
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it",
+    }).then((result) => {
+      if (result.value) {
+        return (
+          deleteNotification(uid).finally(() => list()),
+          Swal.fire(
+            "Deleted!",
+            "Your imaginary file has been deleted.",
+            "success"
+          )
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    });
+  };
 
   const viewNotification = (Id) => {
     history.push({
@@ -47,19 +78,19 @@ const AllNotification = () => {
       let items
       if (cookies?.user?.role === 'admin') {
         items = await (
-          await getNotification()
+          await getNotification('1',itemsPerPage, +itemOffset + 1,)
         ).data;
-      }else if(cookies?.user?.role === 'IBO'){
+      } else if (cookies?.user?.role === 'IBO') {
         items = await (
-          await getNotificationByAudience(1,'ibo')
+          await getNotificationByAudience(1, 'ibo',itemsPerPage, +itemOffset + 1,)
         ).data;
-      }else if(cookies?.user?.role === 'branch'){
+      } else if (cookies?.user?.role === 'branch') {
         items = await (
-          await getNotificationByAudience(1,'branch')
+          await getNotificationByAudience(1, 'branch',itemsPerPage, +itemOffset + 1,)
         ).data;
-      }else if(cookies?.user?.role === 'user'){
+      } else if (cookies?.user?.role === 'user') {
         items = await (
-          await getNotificationByAudience(1,'client')
+          await getNotificationByAudience(1, 'client',itemsPerPage, +itemOffset + 1,)
         ).data;
       }
       setitemlist(items?.results);
@@ -214,9 +245,7 @@ const AllNotification = () => {
                               type="file"
                               name="file"
                               multiple={false}
-                              {...register("file", { required: true })}
                             />
-
                             <button
                               onClick={handleUpload}
                               className={`btn btn-outline-${values?.file?.[0]?.name ? " btn-primary" : " btn-primary"
@@ -224,9 +253,6 @@ const AllNotification = () => {
                             >
                               {values?.file?.[0]?.name ? values?.file?.[0]?.name : "Upload Image"}
                             </button>
-                            {errors && errors.file && (
-                              <p>Notification image is required field</p>
-                            )}
                           </div>
                         </Form.Group>
                       </div>
@@ -286,6 +312,7 @@ const AllNotification = () => {
                     <th> content </th>
                     <th> Type </th>
                     <th> Target Audience </th>
+                    <th> View </th>
                     <th> Action </th>
                   </tr>
                 </thead>
@@ -300,12 +327,21 @@ const AllNotification = () => {
                           <td>{item?.type}</td>
                           <td>{item?.targetAudience}</td>
                           <td><button
-                                type="button"
-                                className="btn btn-gradient-primary btn-sm "
-                                onClick={() => {viewNotification(item?.id)}}
-                              >
-                                View
-                              </button></td>
+                            type="button"
+                            className="btn btn-gradient-primary btn-sm "
+                            onClick={() => { viewNotification(item?.id) }}
+                          >
+                            View
+                          </button>
+                          </td>
+                          <td>
+                            <td>
+                              <i
+                                onClick={() => deleteNotifications(item?.id)}
+                                className="mdi mdi-delete"
+                              ></i>
+                            </td>
+                          </td>
                         </tr>
                       );
                     })}

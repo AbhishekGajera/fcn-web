@@ -39,6 +39,10 @@ const ViewNotification = () => {
         getNotificationList();
     }, [])
 
+    useEffect(()=>{
+        getNotificationList();
+    },[queryParams])
+
     return (
         <div>
             <div className="page-header">
@@ -55,7 +59,7 @@ const ViewNotification = () => {
                 </nav>
             </div>
             <div className="video-section">
-                <div class="container">
+                <div class="">
                     <div class="card-group vgr-cards">
                         <div class="card">
                             <div class="card-img-body">
