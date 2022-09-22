@@ -158,17 +158,6 @@ const Login = () => {
                         Forgot password?
                       </Link>
                     </div>
-                  
-                   
-                    <div className="text-center mt-4 font-weight-light">
-                      Don't have an account?{" "}
-                      <Link
-                        to="/user-pages/register-1"
-                        className="text-primary"
-                      >
-                        Create
-                      </Link>
-                    </div>
                   </Form>
                 </div>
           </div>
