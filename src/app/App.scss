@@ -1841,18 +1841,6 @@ ul.client-list li {
     padding: 8px 16px;
 }
 
-@media (min-width: 1200px) {
-    .css-16fnjgr {
-        width: 33.33%;
-    }
-}
-
-@media (min-width: 1200px) {
-    .css-16fnjgr {
-        width: 50%;
-    }
-}
-
 .css-1cw4hi4 {
     user-select: none;
     width: 1em;
@@ -2170,4 +2158,38 @@ li.nav-item.nav-profile {
 
 .notification-nav a.dropdown-item {
     padding: 10px!important;
+}
+
+.card-deck .card {
+    flex: none!important;
+    width: 22%;
+    margin-bottom: 12px;
+}
+@media(max-width:1300px){
+    .card-deck .card {
+        width: 29%;
+    } 
+}
+@media(max-width:767px){
+    .card-deck .card {
+        width: 43%;
+    } 
+}
+@media(max-width:569px){
+    .card-deck .card {
+        width: 100%;
+    } 
+}
+.navbar .navbar-menu-wrapper .count-indicator .count-symbol {
+    top: 6px!important;
+    right: 5px!important;
+}
+
+.notification-label{
+    background: #fff!important;
+    width: 40px!important;
+    height: 40px!important;
+    padding: 10px;
+    border-radius: 20px;
+    display:block!important;
 }

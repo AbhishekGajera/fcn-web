@@ -11,9 +11,6 @@ import Withdraw from "../client-component/balance/Withdraw";
 
 import {
   getUsersList,
-  getNotificationByAudience,
-  addViewNotification,
-  getNotification,
   getUserIbo,
   getUsersRecent,
   getLeadsDash,
@@ -45,7 +42,6 @@ const Dashboard = () => {
   const [itemlistTransaction, setitemlistTransaction] = useState([]);
   const [withdrawTransaction, setWithdrawTransaction] = useState([]);
   const [productList, setProductList] = useState([]);
-  const [notificationList, setNotificationList] = useState([]);
   const [clientList, setClientList] = useState(0);
   const [totalProduct, setTotalProduct] = useState(0);
 
@@ -193,29 +189,6 @@ const Dashboard = () => {
 
   }
 
-  const viewNotification = async (id) => {
-    try {
-      const data = JSON.stringify({
-        notificationId: id,
-        userId: cookies?.user?.id
-      })
-
-      await addViewNotification(data)
-      toast.success('Mark As Read successfully', {
-        autoClose: true
-      })
-      getNotificationList();
-    } catch (error) {
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-      }
-    }
-    // setIsLoading(false)
-  }
-
-
   const getProductsList = async () => {
     setIsLoading(true)
     try {
@@ -240,54 +213,13 @@ const Dashboard = () => {
     setIsLoading(false)
   };
 
-  const getNotificationList = async () => {
-    setIsLoading(true)
-    try {
-      let items
-      if (cookies?.user?.role === 'admin') {
-        items = await (
-          await getNotification()
-        ).data;
-      } else if (cookies?.user?.role === 'IBO') {
-        items = await (
-          await getNotificationByAudience(1, 'ibo')
-        ).data;
-      } else if (cookies?.user?.role === 'branch') {
-        items = await (
-          await getNotificationByAudience(1, 'branch')
-        ).data;
-      } else if (cookies?.user?.role === 'user') {
-        items = await (
-          await getNotificationByAudience(1, 'client')
-        ).data;
-      }
-      setNotificationList(items?.results);
-    } catch (error) {
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-      }
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-        setCookie("user", null, { path: "/" });
-        userLogout(formData).finally(() => {
-          history.push("/user-pages/login-1");
-        });
-      }
-    }
-    setIsLoading(false)
-  }
-
+  
   useEffect(() => {
     getTransactionList();
     getProductsList();
     productByUser();
     getClientList();
     getPowerOneAndSIPCount();
-    getNotificationList();
   }, [])
 
   const getPowerOneAndSIPCount = async () => {
@@ -420,10 +352,10 @@ const Dashboard = () => {
   useEffect(() => {
     list();
   }, [itemOffset, itemsPerPage]);
+
   useEffect(() => {
     leadlist();
   }, [itemOffset, itemsPerPage]);
-  // console.log("it", itemlist)
 
   return (
     <>
@@ -1364,64 +1296,6 @@ const Dashboard = () => {
           </>
         )
       }
-
-      {/* Notification */}
-
-      <div className="row">
-        <div className="col-md-9 col-sm-12 mb-3">
-          <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1oiueny">
-            <div className="MuiCardHeader-root css-xjuj3x">
-              <div className="MuiCardHeader-content css-11qjisw">
-                <span className="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1dwyhfw">Recent Notification</span>
-              </div>
-            </div>
-            <div className="MuiCardContent-root css-ulk2bu">
-              <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", maxHeight: "200px" }}>
-                <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", maxHeight: "217px" }}>
-                  <ul className="MuiList-root css-uopt2g">
-                    {notificationList?.map((item) => {
-                      return (
-                        <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
-                          <>
-                            <div className="MuiListItemAvatar-root css-149vso" style={{ width: '15%' }}>
-                              <div className="MuiListItemAvatar-root css-nliwk5">
-                                <img src={item?.attachment} width='120' height='84' alt="attachment" />
-                              </div>
-                            </div>
-                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x" style={{ width: '60%', padding: '0 20px' }}>
-                              <>
-                                <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{item?.title}</h5>
-                                <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
-                                  <span className="css-rpx22u">{item?.content}</span>
-                                </p>
-                                <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
-                                  Type: {item?.type}
-                                </p>
-                              </>
-                            </div>
-                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x" style={{ width: '45%' }}>
-                              {!item?.hasShowen && (
-                                <button
-                                  className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                                  tabindex="0" type="button"
-                                  onClick={() => viewNotification(item?.id)}
-                                >
-                                  Mark As Read
-                                  <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                                </button>
-                              )}
-                            </div>
-                          </>
-                        </li>
-                      )
-                    })}
-                  </ul>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
 
     </>
   );

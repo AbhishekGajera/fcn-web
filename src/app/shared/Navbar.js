@@ -106,50 +106,48 @@ const Navbar = () => {
           </form>
         </div>
         <ul className="navbar-nav navbar-nav-right">
-          <li className="nav-item nav-profile notification-nav">
-            <Dropdown alignRight>
-              <Dropdown.Toggle className="nav-link">
-                <button className="MuiButtonBase-root MuiIconButton-root MuiIconButton-sizeMedium css-q4gpdn" tabindex="0" type="button">
-                  <span className="MuiBadge-root BaseBadge-root css-klzqj9">
-                    <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeMedium css-6952u1" focusable="false" aria-hidden="true"
-                      viewBox="0 0 24 24" data-testid="NotificationImportantOutlinedIcon">
-                      <path
-                        d="M10.01 21.01c0 1.1.89 1.99 1.99 1.99s1.99-.89 1.99-1.99h-3.98zM12 6c2.76 0 5 2.24 5 5v7H7v-7c0-2.76 2.24-5 5-5zm0-4.5c-.83 0-1.5.67-1.5 1.5v1.17C7.36 4.85 5 7.65 5 11v6l-2 2v1h18v-1l-2-2v-6c0-3.35-2.36-6.15-5.5-6.83V3c0-.83-.67-1.5-1.5-1.5zM11 8h2v4h-2zm0 6h2v2h-2z">
-                      </path>
-                    </svg>
-                    <span
-                      className="MuiBadge-badge MuiBadge-dot MuiBadge-anchorOriginTopRight MuiBadge-anchorOriginTopRightRectangular MuiBadge-overlapRectangular BaseBadge-badge css-t5kacf"></span>
-                  </span>
-                  <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                </button>
+          <li className="nav-item">
+            <Dropdown alignRight style={{marginRight:'10px'}}>
+              <Dropdown.Toggle className="nav-link count-indicator notification-label css-1oiueny">
+                <i className="mdi mdi-bell-outline"></i>
+                <span className="count-symbol bg-danger"></span>
               </Dropdown.Toggle>
-
-              <Dropdown.Menu className="navbar-dropdown">
-                <Dropdown.Item>
-                  <Trans>Notification</Trans>
-                </Dropdown.Item>
+              <Dropdown.Menu className="dropdown-menu navbar-dropdown preview-list">
+                <h6 className="p-3 mb-0"><Trans>Notifications</Trans></h6>
+                <div className="dropdown-divider"></div>
                 {notificationList?.map((item) => {
                   return (
-                    <Dropdown.Item>
-                      <img src={item?.attachment} alt="attachment" />
-                      <Trans>{item?.title}</Trans>
-                      <button
-                        className="MuiButtonBase-root MuiButton-root MuiButton-contained MuiButton-containedPrimary MuiButton-sizeSmall MuiButton-containedSizeSmall css-jwj1vn"
-                        tabindex="0" type="button" onClick={() => {viewNotification(item?.id)}}
-                      >
-                        View
-                        <span className="MuiTouchRipple-root css-w0pj6f"></span>
-                      </button>
-                    </Dropdown.Item>
+                    <>
+                      <Dropdown.Item className="dropdown-item preview-item" onClick={evt => evt.preventDefault()}>
+                        <div className="preview-thumbnail">
+                          {item?.attachment ? (
+                            <div className="preview-icon">
+                              <img src={item?.attachment} alt="attachment" />
+                            </div>
+                          ) : (
+                            <div className="preview-icon bg-success">
+                              <i className="mdi mdi-link-variant"></i>
+                            </div>
+                          )
+                          }
+                        </div>
+                        <div className="preview-item-content d-flex align-items-start flex-column justify-content-center">
+                          <h6 className="preview-subject font-weight-normal mb-1"><Trans>{item?.title}</Trans></h6>
+                          <p className="text-gray ellipsis mb-0">
+                            <Trans>{item?.content}</Trans>
+                          </p>
+                          <button type="button" class="btn btn-gradient-primary btn-rounded btn-sm" onClick={() => { viewNotification(item?.id) }}>View</button>
+                        </div>
+                      </Dropdown.Item>
+                      <div className="dropdown-divider"></div>
+                    </>
                   )
                 })}
-                <Dropdown.Item style={{ justifyContent: 'center' }}>
-                  <Link to='/notification/all' style={{ color: '#7251c7' }} className='MuiButton-containedPrimary text-center'>
-                    <Trans>View All</Trans>
-                  </Link>
-                </Dropdown.Item>
+                <h6 className="p-3 mb-0 text-center cursor-pointer" onClick={() => { history.push('/notification/all') }}><Trans>See all notifications</Trans></h6>
               </Dropdown.Menu>
             </Dropdown>
+          </li>
+          <li className="nav-item nav-profile">
             <Dropdown alignRight>
               <Dropdown.Toggle className="nav-link">
                 <div className="nav-profile-img">
