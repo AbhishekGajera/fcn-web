@@ -666,8 +666,8 @@ const ClientList = () => {
                             return (
                               <>
                                 <option
-                                  selected={i.name === selectedIBO}
-                                  value={i.name}
+                                  selected={i.id === selectedIBO}
+                                  value={i.id}
                                 >
                                   {i.name}
                                 </option>
