@@ -8,10 +8,12 @@ import { useCookies } from 'react-cookie';
 import { toast } from "react-toastify";
 import Deposit from "../client-component/balance/Deposit";
 import Withdraw from "../client-component/balance/Withdraw";
+import moment from 'moment'
 
 import {
   getUsersList,
   getNotificationByAudience,
+  getDashNotification,
   addViewNotification,
   getNotification,
   getUserIbo,
@@ -41,6 +43,9 @@ const Dashboard = () => {
   const [itemlist, setitemlist] = useState([]);
   const [itemlistdash, setitemlistdash] = useState([]);
   const [itemlistpro, setitemlistpro] = useState([]);
+  const [recentdash, setrecentdash] = useState([]);
+
+
 
   const [itemlistTransaction, setitemlistTransaction] = useState([]);
   const [withdrawTransaction, setWithdrawTransaction] = useState([]);
@@ -240,6 +245,27 @@ const Dashboard = () => {
     setIsLoading(false)
   };
 
+  const getRecent = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getDashNotification()
+      ).data;
+
+      
+      setrecentdash(items)
+      
+      
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
+
   const getNotificationList = async () => {
     setIsLoading(true)
     try {
@@ -284,6 +310,7 @@ const Dashboard = () => {
   useEffect(() => {
     getTransactionList();
     getProductsList();
+    getRecent();
     productByUser();
     getClientList();
     getPowerOneAndSIPCount();
@@ -423,7 +450,7 @@ const Dashboard = () => {
   useEffect(() => {
     leadlist();
   }, [itemOffset, itemsPerPage]);
-  // console.log("it", itemlist)
+  console.log("it", recentdash)
 
   return (
     <>
@@ -1165,11 +1192,13 @@ const Dashboard = () => {
             </div>
             <div className="css-p4cmdx">
               <div className="css-5or1w4"></div>
+              {recentdash?.map((item) => {
+                            return (
               <div className="css-1oo8ecw">
                 <div className="css-19kzrtu">
                   <div className="css-j7qwjs">
-                    <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">26 January, 03:00 PM</h6>
-                    <h2 className="MuiTypography-root MuiTypography-h2 css-12a6upa">Explore the best place of the world</h2><p className="MuiTypography-root MuiTypography-body1 css-3n2bqr">Plus more tips to keep your feet from stinking this summer</p>
+                    <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">{moment(item.createdAt).format('MMMM Do YYYY')}</h6>
+                    <h2 className="MuiTypography-root MuiTypography-h2 css-12a6upa">{item.title}</h2><p className="MuiTypography-root MuiTypography-body1 css-3n2bqr">{item.content}</p>
                   </div>
                 </div>
                 <hr className="MuiDivider-root MuiDivider-fullWidth css-6gnggm" />
@@ -1187,6 +1216,8 @@ const Dashboard = () => {
                   </div>
                 </div>
               </div>
+                            )
+              })}
             </div>
           </div>
         </div>
