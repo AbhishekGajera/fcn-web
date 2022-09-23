@@ -35,9 +35,9 @@ const ViewNotification = () => {
         }
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         getNotificationList();
-    },[])
+    }, [window.location.search])
 
     return (
         <div>
@@ -58,13 +58,15 @@ const ViewNotification = () => {
                 <div class="">
                     <div class="card-group vgr-cards">
                         <div class="card">
-                            <div class="card-img-body">
-                                <img
-                                    class="card-img"
-                                    src={itemlist?.attachment}
-                                    alt="Card image cap"
-                                />
-                            </div>
+                            {itemlist?.attachment && (
+                                <div class="card-img-body">
+                                    <img
+                                        class="card-img"
+                                        src={itemlist?.attachment}
+                                        alt="Card image cap"
+                                    />
+                                </div>
+                            )}
                             <div class="card-body">
                                 <h4 class="card-title">
                                     {itemlist?.title}

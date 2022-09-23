@@ -84,6 +84,12 @@ export const getAppoinmentsListByUser = (limit = 10,offset = 1,user = '') => api
 export const deleteAppoinmentById = (id) => api(`appoinments/delete-appoinment/${id}`, 'GET');
 export const UpdateAppoinments = (data) => api(`appoinments/update-appoinment`, 'PATCH', data);
 
+// Employee management
+export const CreateEmployees = (data) => api(`employee/create-emp`, 'POST', data);
+export const getEmployeeList = (limit = 10,offset = 1) => api(`employee/fetch-employee?limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
+export const getEmployeeByBranch = (id = '',limit = 10,offset = 1) => api(`employee/fetch-employee-by-branch?branch=${id}&limit=${limit}&sortBy=createdAt:desc&page=${offset}`, 'GET');
+export const deleteEmployee = (id) => api(`employee/delete-emp/${id}`, 'DELETE');
+export const UpdateEmployee = (id,data) => api(`employee/update-emp/${id}`, 'POST', data);
 
 // Revenue management
 export const CreateRevenue = (data) => api(`revenue/add-revenue`, 'POST', data);
@@ -104,7 +110,6 @@ export const addVideo = (data) => api(`video `, 'POST', data);
 export const getVideo = (data) => api(`video `, 'GET', data);
 export const getVideoFree = (type='free') => api(`video?type=${type} `, 'GET');
 export const getVideoPaid = (type='paid') => api(`video?type=${type} `, 'GET');
-
 
 
 
@@ -134,6 +139,11 @@ export const getNotificationByAudience = (status="1",targetAudience,limit=10,off
 export const addViewNotification = (data) => api(`notification/add-view-notification`, 'POST',data);
 export const getNotificationById = (id) => api(`notification/get-notificationById/${id}`, 'GET');
 export const deleteNotification = (id) => api(`notification/delete-notification/${id}`, 'GET');
+
+//Dashboard Notification Management
+export const addDashboardNotification = (data) => api(`dashnotification/add-dash-notification `, 'POST', data);
+export const getDashboardNotification = (limit=10,offset = 1) => api(`dashnotification/fetch-dash-notification?limit=${limit}&&page=${offset}&sortBy=createdAt:desc`, 'GET');
+export const deleteDashboardNotification = (id) => api(`dashnotification/delete-dash-notification/${id}`, 'GET');
 
 
 
