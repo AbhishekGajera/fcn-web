@@ -549,9 +549,9 @@ class Sidebar extends Component {
                 <Collapse in={this.state.fcnProductAssign}>
                   <ul className="nav flex-column sub-menu">
                     <li className="nav-item"> <Link className={this.isPathActive('/product-assign/product') ? 'nav-link active' : 'nav-link'} to="/product-assign/product"><Trans>Assign Product</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/product-assign/client') ? 'nav-link active' : 'nav-link'} to="/product-assign/client"><Trans>Client</Trans></Link></li>
+                    {/* <li className="nav-item"> <Link className={this.isPathActive('/product-assign/client') ? 'nav-link active' : 'nav-link'} to="/product-assign/client"><Trans>Client</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/product-assign/ibo') ? 'nav-link active' : 'nav-link'} to="/product-assign/ibo"><Trans>IBO</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/product-assign/branch') ? 'nav-link active' : 'nav-link'} to="/product-assign/branch"><Trans>Branch</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/product-assign/branch') ? 'nav-link active' : 'nav-link'} to="/product-assign/branch"><Trans>Branch</Trans></Link></li> */}
                   </ul>
                 </Collapse>
               </li>

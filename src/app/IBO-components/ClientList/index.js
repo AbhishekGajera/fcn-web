@@ -269,7 +269,7 @@ const ClientList = () => {
       }
     });
   };
-  console.log("it",itemlist[0])
+  // console.log("it",itemlist[0])
 
   return (
     <div>

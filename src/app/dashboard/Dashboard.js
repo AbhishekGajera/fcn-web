@@ -449,7 +449,7 @@ const Dashboard = () => {
           </div>
           <div className="col-md-3 col-sm-12" style={{ marginTop: '18px' }}>
             <div className="row">
-              {["admin", "branch", "IBO"].includes(cookies?.user?.role) && (
+              {["admin", "branch", "IBO","user"].includes(cookies?.user?.role) && (
                 <div className="col-sm-10  MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1jxw1sp" style={{ marginLeft: '20px', marginBottom: '20px' }} onClick={() => history.push("/travel/ourplan")}>
                   <div className="MuiCardActions-root css-1r9i9ek">
                     <div className="css-622j8h">

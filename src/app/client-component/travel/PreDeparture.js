@@ -50,7 +50,7 @@ const PreDeparture = () => {
               {
                 travels?.map((i) => {
                   return (
-                    <div className="card tour shadow">
+                    <div className="card tour preDeparture shadow">
                       <img
                         className="card-img-top tour-image"
                         src={i?.image}

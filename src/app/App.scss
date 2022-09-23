@@ -2193,3 +2193,19 @@ li.nav-item.nav-profile {
     border-radius: 20px;
     display:block!important;
 }
+
+.card.tour.preDeparture.shadow {
+    width: 30%!important;
+}
+@media (max-width:1210px){
+    .card.tour.preDeparture.shadow {
+        width: 43% !important;
+    }
+}
+@media (max-width:580px){
+    .card.tour.preDeparture.shadow {
+        width: 100%!important;
+        margin-left: auto;
+        margin-right: auto;
+    }
+}

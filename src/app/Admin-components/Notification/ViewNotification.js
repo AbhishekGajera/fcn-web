@@ -35,13 +35,9 @@ const ViewNotification = () => {
         }
     }
 
-    useEffect(() => {
-        getNotificationList();
-    }, [])
-
     useEffect(()=>{
         getNotificationList();
-    },[queryParams])
+    },[])
 
     return (
         <div>

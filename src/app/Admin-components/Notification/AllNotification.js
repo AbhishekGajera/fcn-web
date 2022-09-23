@@ -26,11 +26,12 @@ const AllNotification = () => {
 
   const handleClose = () => {
     setShow(false)
+    reset()
   };
 
   useEffect(() => {
     list()
-  },[itemOffset,itemsPerPage])
+  }, [itemOffset, itemsPerPage])
 
   useEffect(() => {
     const timer = setTimeout(() => {
@@ -78,19 +79,19 @@ const AllNotification = () => {
       let items
       if (cookies?.user?.role === 'admin') {
         items = await (
-          await getNotification('1',itemsPerPage, +itemOffset + 1,)
+          await getNotification('1', itemsPerPage, +itemOffset + 1,)
         ).data;
       } else if (cookies?.user?.role === 'IBO') {
         items = await (
-          await getNotificationByAudience(1, 'ibo',itemsPerPage, +itemOffset + 1,)
+          await getNotificationByAudience(1, 'ibo', itemsPerPage, +itemOffset + 1,)
         ).data;
       } else if (cookies?.user?.role === 'branch') {
         items = await (
-          await getNotificationByAudience(1, 'branch',itemsPerPage, +itemOffset + 1,)
+          await getNotificationByAudience(1, 'branch', itemsPerPage, +itemOffset + 1,)
         ).data;
       } else if (cookies?.user?.role === 'user') {
         items = await (
-          await getNotificationByAudience(1, 'client',itemsPerPage, +itemOffset + 1,)
+          await getNotificationByAudience(1, 'client', itemsPerPage, +itemOffset + 1,)
         ).data;
       }
       setitemlist(items?.results);
@@ -129,6 +130,7 @@ const AllNotification = () => {
   const {
     register,
     handleSubmit,
+    reset,
     formState: { errors, isDirty, isValid },
     getValues,
   } = useForm({
@@ -137,34 +139,40 @@ const AllNotification = () => {
 
   const values = getValues();
 
+  console.info("values++ ",values)
+
   const onSubmit = async (data) => {
-    setShow(false);
+    handleClose();
     const Data = new FormData();
-    Data.append('file', data.file[0]);
-    const fileResult = await ImageUpload(Data)
-    if (fileResult.error) {
-      toast.error(fileResult.error.message);
-    } else {
-      try {
-        delete data.file;
-        data.attachment = fileResult.secure_url;
-        data.user = cookies?.user?.id;
-        data.type = "all";
-        data.status = 1;
-        const result = await addNotification(data)
-        toast.success("Notification Added successfully");
-        list();
-      } catch (error) {
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+    console.log("data",data)
+    console.log("dataFile",values.file)
+    let fileResult;
+    if (values.file) {
+      Data.append('file', values.file[0]);
+      fileResult = await ImageUpload(Data)
+      if (fileResult.error) {
+        toast.error(fileResult.error.message);
+      }
+    }
+    try {
+      delete data.file;
+      data.attachment = fileResult ? fileResult.secure_url : '';
+      data.user = cookies?.user?.id;
+      data.type = "all";
+      data.status = 1;
+      const result = await addNotification(data)
+      toast.success("Notification Added successfully");
+      list();
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
     }
   }
@@ -245,6 +253,7 @@ const AllNotification = () => {
                               type="file"
                               name="file"
                               multiple={false}
+                              {...register("file")}
                             />
                             <button
                               onClick={handleUpload}
