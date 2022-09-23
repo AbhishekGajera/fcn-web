@@ -22,7 +22,12 @@ const AllNotification = () => {
   const [itemsPerPage] = useState(10);
   const [itemlist, setitemlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const [img, setimg] = useState()
 
+
+  const onChangeImage = (e) => {
+    setimg(e?.target?.files[0])
+  }
 
   const handleClose = () => {
     setShow(false)
@@ -139,23 +144,18 @@ const AllNotification = () => {
 
   const values = getValues();
 
-  console.info("values++ ",values)
-
   const onSubmit = async (data) => {
     handleClose();
     const Data = new FormData();
-    console.log("data",data)
-    console.log("dataFile",values.file)
     let fileResult;
-    if (values.file) {
-      Data.append('file', values.file[0]);
+    if (img) {
+      Data.append('file', img);
       fileResult = await ImageUpload(Data)
       if (fileResult.error) {
         toast.error(fileResult.error.message);
       }
     }
     try {
-      delete data.file;
       data.attachment = fileResult ? fileResult.secure_url : '';
       data.user = cookies?.user?.id;
       data.type = "all";
@@ -237,6 +237,8 @@ const AllNotification = () => {
                               name="content"
                               {...register("content", { required: true })}
                             />
+                            {console.info("errors++ ",errors)}
+                            {console.info("errors++ ",values)}
                             {errors && errors.content && (
                               <p>Content is required field</p>
                             )}
@@ -247,20 +249,13 @@ const AllNotification = () => {
                             Notification Image{" "}</label>
 
                           <div className="col-sm-8">
-                            <Form.Control
-                              id="input-id"
-                              className="d-none"
-                              type="file"
-                              name="file"
-                              multiple={false}
-                              {...register("file")}
-                            />
+                              <input type="file" id="input-id" className="d-none" onChange={onChangeImage} />
                             <button
                               onClick={handleUpload}
-                              className={`btn btn-outline-${values?.file?.[0]?.name ? " btn-primary" : " btn-primary"
+                              className={`btn btn-outline-${img?.name ? " btn-primary" : " btn-primary"
                                 }`}
                             >
-                              {values?.file?.[0]?.name ? values?.file?.[0]?.name : "Upload Image"}
+                              {img?.name ? img?.name : "Upload Image"}
                             </button>
                           </div>
                         </Form.Group>
