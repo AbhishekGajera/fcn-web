@@ -1109,9 +1109,8 @@ const Dashboard = () => {
             </div>
           </div>
         </div>
-
         <div className="MuiGrid-root MuiGrid-item col-xs-12 col-sm-12 col-md-4 col-lg-4 mb-3">
-          <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-5efwz4">
+          <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-5efwz4" style={{ backgroundImage : `url(${recentdash?.[0]?.attachment})` }}>
             <div className="MuiCardHeader-root css-xjuj3x">
               <div className="MuiCardHeader-content css-11qjisw">
               </div>
@@ -1133,20 +1132,6 @@ const Dashboard = () => {
                   <div className="css-j7qwjs">
                     <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">{moment(item.createdAt).format('MMMM Do YYYY')}</h6>
                     <h2 className="MuiTypography-root MuiTypography-h2 css-12a6upa">{item.title}</h2><p className="MuiTypography-root MuiTypography-body1 css-3n2bqr">{item.content}</p>
-                  </div>
-                </div>
-                <hr className="MuiDivider-root MuiDivider-fullWidth css-6gnggm" />
-                <div className="MuiCardActions-root MuiCardActions-spacing css-p1lzxd">
-                  <div className="css-105dx4f">
-                    <p className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                      <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-sf71ho" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="MessageIcon">
-                        <path d="M20 2H4c-1.1 0-1.99.9-1.99 2L2 22l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm-2 12H6v-2h12v2zm0-3H6V9h12v2zm0-3H6V6h12v2z"></path>
-                      </svg> 34</p>
-                    <p className="MuiTypography-root MuiTypography-body1 css-3n2bqr">
-                      <svg className="MuiSvgIcon-root MuiSvgIcon-fontSizeSmall css-sf71ho" focusable="false" aria-hidden="true" viewBox="0 0 24 24" data-testid="RemoveRedEyeIcon">
-                        <path d="M12 4.5C7 4.5 2.73 7.61 1 12c1.73 4.39 6 7.5 11 7.5s9.27-3.11 11-7.5c-1.73-4.39-6-7.5-11-7.5zM12 17c-2.76 0-5-2.24-5-5s2.24-5 5-5 5 2.24 5 5-2.24 5-5 5zm0-8c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"></path>
-                      </svg> 155
-                    </p>
                   </div>
                 </div>
               </div>

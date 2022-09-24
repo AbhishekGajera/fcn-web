@@ -749,9 +749,12 @@ ul.client-list li {
     overflow: hidden;
     border-radius: 12px;
     box-shadow: rgba(115, 82, 199, 0.176) 0px 0.5rem 1.25rem;
-    background: url("../assets/images/Explore_place.jpg") center center / cover no-repeat;
+    // background: url("../assets/images/Explore_place.jpg") center center / cover no-repeat;
     position: relative;
     height: 330px;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 .css-12a6upa {
