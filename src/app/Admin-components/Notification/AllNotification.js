@@ -4,12 +4,13 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { Form } from 'react-bootstrap';
-import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAudience } from "../../../utils/APIs";
+import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAudience, getUsers } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Spinner from "../../shared/Spinner";
 import ReactPaginate from "react-paginate";
 import Swal from "sweetalert2";
+import MySelect from "../../../common/MySelect";
 
 
 const AllNotification = () => {
@@ -23,7 +24,8 @@ const AllNotification = () => {
   const [itemlist, setitemlist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [img, setimg] = useState()
-
+  const [userOptions, setuserOptions] = useState([]);
+  const [selectedUser, setselectedUser] = useState('')
 
   const onChangeImage = (e) => {
     setimg(e?.target?.files[0])
@@ -36,6 +38,7 @@ const AllNotification = () => {
 
   useEffect(() => {
     list()
+    getUser()
   }, [itemOffset, itemsPerPage])
 
   useEffect(() => {
@@ -76,6 +79,12 @@ const AllNotification = () => {
       pathname: '/viewNotification',
       search: "?" + new URLSearchParams({ id: Id }).toString()
     })
+  }
+
+  const getUser = async (name = '') => {
+    const { data } = await getUsers(10,1,name)
+    setuserOptions(data?.results?.map((i) => ({ ...i, value : i?.id , label : i?.name })))
+    return data?.results?.map((i) => ({ ...i, value : i?.id , label : i?.name }))
   }
 
   const list = async () => {
@@ -160,6 +169,9 @@ const AllNotification = () => {
       data.user = cookies?.user?.id;
       data.type = "all";
       data.status = 1;
+      if(data?.targetAudience === 'specificUser'){
+        data.targetUser = selectedUser
+      }
       const result = await addNotification(data)
       toast.success("Notification Added successfully");
       list();
@@ -176,6 +188,15 @@ const AllNotification = () => {
       }
     }
   }
+
+  const loadOptions = async inputValue => {
+    return new Promise(resolve => resolve(getOptions(inputValue)));
+  };
+  
+  const getOptions = async inputValue => {
+    // how to trigger this to be called within loadOptions when option is selected?
+    return getUser(inputValue);
+  };
 
 
 
@@ -224,9 +245,27 @@ const AllNotification = () => {
                               <option value="branch">Branch</option>
                               <option value="ibo">IBO</option>
                               <option value="client">Client</option>
+                              <option value="specificUser">Specific User</option>
                             </select>
                           </div>
                         </Form.Group>
+                        { values?.targetAudience === 'specificUser' && <Form.Group className="row">
+                        <label className="col-sm-3 col-form-label">
+                            Select user to target{" "}
+                          </label>
+                        <div className="col-sm-8">
+
+                          <MySelect
+                            name="addressLookup"
+                            className="addressLookupContainer"
+                            label="Address Lookup"
+                            asyncSelect={true}
+                            loadOptions={loadOptions}
+                            onSelect={val => setselectedUser(val?.value)}
+                            defaultOptions={userOptions}
+                          />
+                          </div>
+                        </Form.Group>}
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">
                             Description{" "}
@@ -237,8 +276,8 @@ const AllNotification = () => {
                               name="content"
                               {...register("content", { required: true })}
                             />
-                            {console.info("errors++ ",errors)}
-                            {console.info("errors++ ",values)}
+                            {console.info("errors++ ", errors)}
+                            {console.info("errors++ ", values)}
                             {errors && errors.content && (
                               <p>Content is required field</p>
                             )}
@@ -249,7 +288,7 @@ const AllNotification = () => {
                             Notification Image{" "}</label>
 
                           <div className="col-sm-8">
-                              <input type="file" id="input-id" className="d-none" onChange={onChangeImage} />
+                            <input type="file" id="input-id" className="d-none" onChange={onChangeImage} />
                             <button
                               onClick={handleUpload}
                               className={`btn btn-outline-${img?.name ? " btn-primary" : " btn-primary"
