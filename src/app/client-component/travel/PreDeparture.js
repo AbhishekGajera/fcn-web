@@ -44,7 +44,7 @@ const PreDeparture = () => {
         </nav>
       </div>
       <div>
-        <div className="container">
+        <div className="">
           <div className="row py-5">
             <div className="card-deck tours">
               {

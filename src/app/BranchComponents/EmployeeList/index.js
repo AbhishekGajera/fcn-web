@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { getEmployeeList,getEmployeeByBranch, userLogout, deleteEmployee ,getBranches, UpdateEmployee} from "../../../utils/APIs";
+import { getEmployeeList, getEmployeeByBranch, userLogout, deleteEmployee, getBranches, UpdateEmployee } from "../../../utils/APIs";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { toast } from "react-toastify";
 import Modal from "react-bootstrap/Modal";
@@ -31,6 +31,11 @@ const EmployeeList = () => {
     setselectedBranch(e.target.value);
   };
 
+  var strongRegexMo = new RegExp(
+    "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
+  );
+  var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
+
   const {
     register,
     handleSubmit,
@@ -58,7 +63,7 @@ const EmployeeList = () => {
     data.branch = branchUpdate;
     try {
       const updatedData = JSON.stringify(data);
-      await UpdateEmployee(valueToEdit?.id,updatedData);
+      await UpdateEmployee(valueToEdit?.id, updatedData);
       toast.success("Employee updated Successfully", {
         autoClose: 3000,
       });
@@ -95,13 +100,13 @@ const EmployeeList = () => {
     setbranchList(items?.results);
   };
 
-  const list = async() =>{
+  const list = async () => {
     try {
       let items
       if (cookies?.user?.role === "branch") {
-        items = await (await getEmployeeByBranch(cookies?.user?.id,itemsPerPage, +itemOffset+1)).data;
-      }else{
-        items = await (await getEmployeeList(itemsPerPage, +itemOffset+1)).data;
+        items = await (await getEmployeeByBranch(cookies?.user?.id, itemsPerPage, +itemOffset + 1)).data;
+      } else {
+        items = await (await getEmployeeList(itemsPerPage, +itemOffset + 1)).data;
       }
       setitemlist(items?.results);
       setPageCount(items?.totalPages);
@@ -126,7 +131,7 @@ const EmployeeList = () => {
   }
 
   useEffect(() => {
-   list()
+    list()
   }, [itemOffset, itemsPerPage]);
 
   const deleteData = (uid) => {
@@ -255,7 +260,7 @@ const EmployeeList = () => {
                       <div className="col-md-12">
                         <Form.Group className="row">
                           <label className="col-sm-4 col-form-label">
-                            Search Branch
+                            Select Branch
                           </label>
                           <div className="col-sm-8">
                             <select
@@ -282,6 +287,114 @@ const EmployeeList = () => {
                       </div>
                     </div>
 
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Contact No
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="text"
+                              name="contactno"
+                              defaultValue={valueToEdit.contactno}
+                              {...register("contactno", {
+                                required: true,
+                                pattern: strongRegexMo,
+                              })}
+                            />
+                            {errors &&
+                              errors.contactno &&
+                              errors.contactno.type === "required" && (
+                                <p>contact number is required field</p>
+                              )}
+                            {errors &&
+                              errors.contactno &&
+                              errors.contactno.type === "pattern" && (
+                                <p>invalid phone number please use valid formate</p>
+                              )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Address{" "}
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="text"
+                              name="address"
+                              defaultValue={valueToEdit.address}
+                              {...register("address", { required: true })}
+                            />
+                            {errors && errors.address && (
+                              <p>address is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            Bank Account no
+                          </label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="text"
+                              name="bankAccNo"
+                              defaultValue={valueToEdit.bankAccNo}
+                              {...register("bankAccNo", { required: true })}
+                            />
+                            {errors && errors.bankAccNo && (
+                              <p>Bank Account number is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            IFSC code
+                          </label>
+                          <div className="col-sm-8">
+                            <Form.Control
+                              type="text"
+                              name="bankIfscCode"
+                              defaultValue={valueToEdit.bankIfscCode}
+                              {...register("bankIfscCode", { required: true })}
+                            />
+                            {errors && errors.bankIfscCode && (
+                              <p>Bank IFSC number is required field</p>
+                            )}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">DOB</label>
+                          <div className="col-sm-9">
+                            <Form.Control
+                              type="date"
+                              name="dob"
+                              defaultValue={valueToEdit.dob}
+                              {...register("dob", { required: true })}
+                            />
+                            {errors && errors.dob && <p>DOB is required field</p>}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
                     <div className="mt-3">
                       <button
                         className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
@@ -324,7 +437,7 @@ const EmployeeList = () => {
                     <th> Name </th>
                     <th> Branch </th>
                     <th> Email </th>
-                    <th> Role </th>
+                    <th> Contact no. </th>
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -336,7 +449,7 @@ const EmployeeList = () => {
                         <td>{item?.name}</td>
                         <td>{item?.branch?.name}</td>
                         <td>{item?.email}</td>
-                        <td>{item?.role}</td>
+                        <td>{item?.contactno}</td>
                         <td>
                           <i className="mdi mdi-lead-pencil" onClick={() => handleShow(item)}></i>
                         </td>

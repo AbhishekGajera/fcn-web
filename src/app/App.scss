@@ -2197,12 +2197,10 @@ li.nav-item.nav-profile {
     display:block!important;
 }
 
-.card.tour.preDeparture.shadow {
-    width: 30%!important;
-}
+
 @media (max-width:1210px){
     .card.tour.preDeparture.shadow {
-        width: 43% !important;
+        width: 30% !important;
     }
 }
 @media (max-width:580px){
@@ -2217,4 +2215,19 @@ li.nav-item.nav-profile {
 }
 .sidebar .nav.sub-menu .nav-item {
     padding: 0!important;
+}
+.navbar .navbar-menu-wrapper .navbar-nav .nav-item .dropdown .dropdown-menu {
+    width: 300px;
+}
+.preview-list .preview-item .preview-thumbnail img,.preview-list .preview-item .preview-thumbnail img, 
+.preview-list .preview-item .preview-thumbnail .preview-icon{
+    width: 50px!important;
+    height: 50px!important;
+    margin: 0!important;
+}
+
+@media(max-width:991px){
+    .main-panel .login-auth {
+        margin-left: 0!important;
+    }
 }
