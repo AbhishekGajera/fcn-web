@@ -106,7 +106,7 @@ const Navbar = () => {
           </form>
         </div>
         <ul className="navbar-nav navbar-nav-right">
-          <li className="nav-item">
+          <li className="nav-item notification-Info">
             <Dropdown alignRight style={{marginRight:'10px'}}>
               <Dropdown.Toggle className="nav-link count-indicator notification-label css-1oiueny">
                 <i className="mdi mdi-bell-outline"></i>

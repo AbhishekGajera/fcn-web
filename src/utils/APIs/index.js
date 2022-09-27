@@ -118,10 +118,10 @@ export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 //  Transaction Management
 
 export const addTransaction = (data) => api(`transaction/add-transaction `, 'POST', data);
-export const getTransaction = (status="0") => api(`transaction/fetch-transaction?status=${status}&sortBy=createdAt:desc `, 'GET');
+export const getTransaction = (limit = 10,offset = 1,status="0") => api(`transaction/fetch-transaction?limit=${limit}&page=${offset}&status=${status}&sortBy=createdAt:desc `, 'GET');
 export const getTransactionBranch = (status="0",id,role='branch') => api(`transaction/get-transaction-branch?to_user=${id}&status=${status}&role=${role}&sortBy=createdAt:desc `, 'GET');
 export const getTransactionUsr = (id,status="0") => api(`transaction/get-transaction-user/${id}?status=${status}&sortBy=createdAt:desc `, 'GET');
-export const getTransactionUsrs = (id) => api(`transaction/get-transaction-user/${id}?sortBy=createdAt:desc `, 'GET');
+export const getTransactionUsrs = (id,limit = 10,offset = 1) => api(`transaction/get-transaction-user/${id}?limit=${limit}&page=${offset}&sortBy=createdAt:desc `, 'GET');
 export const updateTransaction = (data) => api(`transaction/update-transaction`, 'PATCH', data);
 export const deleteTransaction = (id) => api(`transaction/delete-transaction/${id}`, 'GET');
 
@@ -136,9 +136,11 @@ export const addNotification = (data) => api(`notification/add-notification `, '
 export const getNotification = (status="1",limit=10,offset = 1) => api(`notification/fetch-notification?status=${status}&limit=${limit}&&page=${offset}&sortBy=createdAt:desc`, 'GET');
 export const getDashNotification = () => api(`dashnotification/fetch-recent-notification`, 'GET');
 export const getNotificationByAudience = (status="1",targetAudience,limit=10,offset = 1) => api(`notification/fetch-notification?status=${status}&page=${offset}&targetAudience=${targetAudience}&limit=${limit}&sortBy=createdAt:desc`, 'GET');
+export const getNotificationByAll = (status="1",targetAudience,limit=10,offset = 1) => api(`notification/fetch-notification?status=${status}&page=${offset}&targetAudience=${targetAudience}&limit=${limit}&sortBy=createdAt:desc`, 'GET');
 export const addViewNotification = (data) => api(`notification/add-view-notification`, 'POST',data);
 export const getNotificationById = (id) => api(`notification/get-notificationById/${id}`, 'GET');
 export const deleteNotification = (id) => api(`notification/delete-notification/${id}`, 'GET');
+export const getPersonalizedNotification = (id,limit=10,offset = 1) => api(`notification/get-personalized-notification/${id}?limit=${limit}&page=${offset}&sortBy=createdAt:desc`, 'GET');
 
 //Dashboard Notification Management
 export const addDashboardNotification = (data) => api(`dashnotification/add-dash-notification `, 'POST', data);

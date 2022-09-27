@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { Form } from 'react-bootstrap';
-import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAudience, getUsers } from "../../../utils/APIs";
+import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAll, getPersonalizedNotification, getNotificationByAudience, getUsers } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Spinner from "../../shared/Spinner";
@@ -19,9 +19,15 @@ const AllNotification = () => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [show, setShow] = React.useState(false);
   const [pageCount, setPageCount] = useState(0);
+  const [pagepersonalizeCount, setPersonalizeCount] = useState(0);
+  const [pageAudienceCount, setAudienceCount] = useState(0);
   const [itemOffset, setItemOffset] = useUrl("page");
-  const [itemsPerPage] = useState(10);
+  const [audienceOffset, setAudienceOffset] = useUrl("page");
+  const [personalizeOffset, setpersonalizeOffset] = useUrl("page");
+  const [itemsPerPage] = useState(20);
   const [itemlist, setitemlist] = useState([]);
+  const [audiencelist, setaudiencelist] = useState([]);
+  const [personalizelist, setpersonalizelist] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [img, setimg] = useState()
   const [userOptions, setuserOptions] = useState([]);
@@ -82,9 +88,9 @@ const AllNotification = () => {
   }
 
   const getUser = async (name = '') => {
-    const { data } = await getUsers(10,1,name)
-    setuserOptions(data?.results?.map((i) => ({ ...i, value : i?.id , label : i?.name })))
-    return data?.results?.map((i) => ({ ...i, value : i?.id , label : i?.name }))
+    const { data } = await getUsers(10, 1, name)
+    setuserOptions(data?.results?.map((i) => ({ ...i, value: i?.id, label: i?.name })))
+    return data?.results?.map((i) => ({ ...i, value: i?.id, label: i?.name }))
   }
 
   const list = async () => {
@@ -97,15 +103,16 @@ const AllNotification = () => {
         ).data;
       } else if (cookies?.user?.role === 'IBO') {
         items = await (
-          await getNotificationByAudience(1, 'ibo', itemsPerPage, +itemOffset + 1,)
+          await getNotificationByAudience(1, 'all', itemsPerPage, +itemOffset + 1,)
         ).data;
       } else if (cookies?.user?.role === 'branch') {
         items = await (
-          await getNotificationByAudience(1, 'branch', itemsPerPage, +itemOffset + 1,)
+          await getNotificationByAudience(1, 'all', itemsPerPage, +itemOffset + 1,)
         ).data;
+
       } else if (cookies?.user?.role === 'user') {
         items = await (
-          await getNotificationByAudience(1, 'client', itemsPerPage, +itemOffset + 1,)
+          await getNotificationByAudience(1, 'all', itemsPerPage, +itemOffset + 1,)
         ).data;
       }
       setitemlist(items?.results);
@@ -126,11 +133,55 @@ const AllNotification = () => {
         });
       }
     }
+    if (cookies?.user?.role !== 'admin') {
+      let name;
+      try {
+        if (cookies?.user?.role === 'IBO') {
+          name = 'ibo';
+        } else if (cookies?.user?.role === 'branch') {
+          name = 'branch';
+        } else if (cookies?.user?.role === 'user') {
+          name = 'user';
+        }
+        const audienceData = await (
+          await getNotificationByAudience(1, name, itemsPerPage, +audienceOffset + 1,)
+        ).data;
+        setaudiencelist(audienceData?.results);
+        setAudienceCount(audienceData?.totalPages);
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
+      try {
+        const personalizeData = await (
+          await getPersonalizedNotification(cookies?.user?.id, itemsPerPage, +audienceOffset + 1,)
+        ).data;
+        setpersonalizelist(personalizeData?.results?.results);
+        setPersonalizeCount(personalizeData?.totalPages);
+      } catch (error) {
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
+    }
     setIsLoading(false)
   };
 
   const handlePageClick = (event) => {
     setItemOffset(event.selected);
+  };
+
+  const handleaudiencePageClick = (event) => {
+    setAudienceOffset(event.selected);
+  };
+
+  const handlepersonlizePageClick = (event) => {
+    setpersonalizeOffset(event.selected);
   };
 
   const handleUpload = (e) => {
@@ -169,7 +220,7 @@ const AllNotification = () => {
       data.user = cookies?.user?.id;
       data.type = "all";
       data.status = 1;
-      if(data?.targetAudience === 'specificUser'){
+      if (data?.targetAudience === 'specificUser') {
         data.targetUser = selectedUser
       }
       const result = await addNotification(data)
@@ -192,7 +243,7 @@ const AllNotification = () => {
   const loadOptions = async inputValue => {
     return new Promise(resolve => resolve(getOptions(inputValue)));
   };
-  
+
   const getOptions = async inputValue => {
     // how to trigger this to be called within loadOptions when option is selected?
     return getUser(inputValue);
@@ -249,21 +300,21 @@ const AllNotification = () => {
                             </select>
                           </div>
                         </Form.Group>
-                        { values?.targetAudience === 'specificUser' && <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">
+                        {values?.targetAudience === 'specificUser' && <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
                             Select user to target{" "}
                           </label>
-                        <div className="col-sm-8">
+                          <div className="col-sm-8">
 
-                          <MySelect
-                            name="addressLookup"
-                            className="addressLookupContainer"
-                            label="Address Lookup"
-                            asyncSelect={true}
-                            loadOptions={loadOptions}
-                            onSelect={val => setselectedUser(val?.value)}
-                            defaultOptions={userOptions}
-                          />
+                            <MySelect
+                              name="addressLookup"
+                              className="addressLookupContainer"
+                              label="Address Lookup"
+                              asyncSelect={true}
+                              loadOptions={loadOptions}
+                              onSelect={val => setselectedUser(val?.value)}
+                              defaultOptions={userOptions}
+                            />
                           </div>
                         </Form.Group>}
                         <Form.Group className="row">
@@ -276,8 +327,6 @@ const AllNotification = () => {
                               name="content"
                               {...register("content", { required: true })}
                             />
-                            {console.info("errors++ ", errors)}
-                            {console.info("errors++ ", values)}
                             {errors && errors.content && (
                               <p>Content is required field</p>
                             )}
@@ -405,6 +454,138 @@ const AllNotification = () => {
           </div>
         </div>
       </div>
+
+      {cookies?.user?.role !== 'admin' && audiencelist.length !== '0' && (
+        <div className="col-lg-12 grid-margin stretch-card p0">
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">{cookies?.user.role} Notification list</h4>
+
+              <div className="table-responsive">
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th> Title </th>
+                      <th> content </th>
+                      <th> Type </th>
+                      <th> Target Audience </th>
+                      <th> View </th>
+                      <th> Action </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {isLoading ? <Spinner />
+                      :
+                      audiencelist?.map((item) => {
+                        return (
+                          <tr>
+                            <td>{item?.title}</td>
+                            <td>{item?.content}</td>
+                            <td>{item?.type}</td>
+                            <td>{item?.targetAudience}</td>
+                            <td><button
+                              type="button"
+                              className="btn btn-gradient-primary btn-sm "
+                              onClick={() => { viewNotification(item?.id) }}
+                            >
+                              View
+                            </button>
+                            </td>
+                            <td>
+                              <td>
+                                <i
+                                  onClick={() => deleteNotifications(item?.id)}
+                                  className="mdi mdi-delete"
+                                ></i>
+                              </td>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+                <ReactPaginate
+                  breakLabel="..."
+                  nextLabel="next >"
+                  className="client-list"
+                  onPageChange={handleaudiencePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pageAudienceCount}
+                  previousLabel="< previous"
+                  renderOnZeroPageCount={null}
+                  forcePage={audienceOffset}
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+      {cookies?.user?.role !== 'admin' && personalizelist.length !== '0' &&(
+        <div className="col-lg-12 grid-margin stretch-card p0">
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">Personalize Notification list</h4>
+
+              <div className="table-responsive">
+                <table className="table table-striped">
+                  <thead>
+                    <tr>
+                      <th> Title </th>
+                      <th> content </th>
+                      <th> Type </th>
+                      <th> Target Audience </th>
+                      <th> View </th>
+                      <th> Action </th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {isLoading ? <Spinner />
+                      :
+                      personalizelist?.map((item) => {
+                        return (
+                          <tr>
+                            <td>{item?.title}</td>
+                            <td>{item?.content}</td>
+                            <td>{item?.type}</td>
+                            <td>{item?.targetAudience}</td>
+                            <td><button
+                              type="button"
+                              className="btn btn-gradient-primary btn-sm "
+                              onClick={() => { viewNotification(item?.id) }}
+                            >
+                              View
+                            </button>
+                            </td>
+                            <td>
+                              <td>
+                                <i
+                                  onClick={() => deleteNotifications(item?.id)}
+                                  className="mdi mdi-delete"
+                                ></i>
+                              </td>
+                            </td>
+                          </tr>
+                        );
+                      })}
+                  </tbody>
+                </table>
+                {/* <ReactPaginate
+                  breakLabel="..."
+                  nextLabel="next >"
+                  className="client-list"
+                  onPageChange={handlepersonlizePageClick}
+                  pageRangeDisplayed={5}
+                  pageCount={pagepersonalizeCount}
+                  previousLabel="< previous"
+                  renderOnZeroPageCount={null}
+                  forcePage={personalizeOffset}
+                /> */}
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
+
     </div>
   );
 }

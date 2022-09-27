@@ -52,13 +52,13 @@ const Transaction = () => {
 
             if (cookies?.user?.role === 'admin') {
               items = await (
-                await getTransaction()
+                await getTransaction(itemsPerPage, +itemOffset + 1)
               ).data;
             }
             if (cookies?.user?.role === 'IBO' || cookies?.user?.role === 'branch' || cookies?.user?.role === 'user' ) {
                 
                 items = await (
-                  await getTransactionUsrs(cookies?.user?.id)
+                  await getTransactionUsrs(cookies?.user?.id,itemsPerPage, +itemOffset + 1)
                 ).data;
               }
             setitemlist(items?.results);
