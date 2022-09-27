@@ -386,6 +386,13 @@ const Dashboard = () => {
     leadlist();
   }, [itemOffset, itemsPerPage]);
 
+  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
+
+  const d = new Date();
+  const name = month[d.getMonth()];
+  const dayName = days[d.getDay()];
+
   return (
     <>
       <div className="mb-3">
@@ -468,7 +475,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               )}
-              <div className="col-sm-10  MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1jxw1sp2" style={{ marginLeft: '20px', marginBottom: '20px' }} onClick={() => history.push("/travel/ourplan")}>
+              {["admin", "branch","user"].includes(cookies?.user?.role) && <div className="col-sm-10  MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1jxw1sp2" style={{ marginLeft: '20px', marginBottom: '20px' }} onClick={() => history.push("/travel/ourplan")}>
                 <div className="MuiCardActions-root css-1r9i9ek">
                   <div className="css-622j8h">
                     <div className="css-1v3kl7i">
@@ -483,7 +490,7 @@ const Dashboard = () => {
                     <h5 className="MuiTypography-root MuiTypography-h5 css-5pv1sx">Products</h5>
                   </div>
                 </div>
-              </div>
+              </div>}
 
               {/* <div className="col-md-6 mb-3 MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-o2tasi" onClick={() => history.push("/travel/ourplan")}>
                     <div className="MuiCardHeader-root css-xjuj3x">
@@ -776,11 +783,8 @@ const Dashboard = () => {
                         </li>
                       )
                     })}
-
                   </ul>
-
                 </div>
-
               </div>
             </div>
             <div className="MuiTabPanel-root css-fb5pz1" hidden="" role="tabpanel" aria-labelledby="mui-p-39481-T-feed" id="mui-p-39481-P-feed">
@@ -810,9 +814,9 @@ const Dashboard = () => {
               </div>
               <div className="css-1oo8ecw">
                 <div className="css-9enyu9">
-                  <div className="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1cw4bb9">28</div>
-                  <h4 className="MuiTypography-root MuiTypography-h4 css-uicpbe">Monday</h4>
-                  <p className="MuiTypography-root MuiTypography-body1 css-1xys2wk">December 2021</p>
+                  <div className="MuiAvatar-root MuiAvatar-circular MuiAvatar-colorDefault css-1cw4bb9">{new Date().getDate()}</div>
+                  <h4 className="MuiTypography-root MuiTypography-h4 css-uicpbe">{dayName}</h4>
+                  <p className="MuiTypography-root MuiTypography-body1 css-1xys2wk">{name} {new Date().getFullYear()}</p>
                 </div>
               </div>
             </div>
@@ -1141,19 +1145,6 @@ const Dashboard = () => {
           </div>
         </div>
       </div>
-
-      {/* fifth section */}
-      {
-        ["IBO"].includes(cookies?.user?.role) && (
-          <div className="mb-3">
-            <div className="card">
-              <div className="card-body css-aocaed">
-                <h4 className="welcome-text mb-0">Welcome To <Trans>{cookies?.user?.name}</Trans></h4>
-              </div>
-            </div>
-          </div>)
-      }
-
       {
         ["user"].includes(cookies?.user?.role) && (
           <>
