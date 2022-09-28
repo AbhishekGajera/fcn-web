@@ -12,18 +12,18 @@ import moment from 'moment'
 
 import {
   getUsersList,
+  getConnectByBranch,
   getNotificationByAudience,
   getDashNotification,
   addViewNotification,
   getNotification,
   getUserIbo,
   getUsersRecent,
-  getLeadsDash,
+  getConnect,
   getUserBranch,
   getTransactionBranch,
   getTransactionUsr,
   getProductsListClient,
-  getLeads,
   getBranches,
   getTransaction,
   updateTransaction,
@@ -349,7 +349,7 @@ const Dashboard = () => {
 
       if (cookies?.user?.role === 'admin') {
         items = await (
-          await getLeadsDash(
+          await getConnect(
             itemsPerPage,
             +itemOffset + 1
           )
@@ -358,9 +358,10 @@ const Dashboard = () => {
 
       if (cookies?.user?.role === 'branch') {
         items = await (
-          await getLeadsDash(
+          await getConnectByBranch(
             itemsPerPage,
             +itemOffset + 1,
+            '',
             cookies?.user?.name
           )
         ).data;
