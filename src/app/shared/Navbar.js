@@ -31,11 +31,11 @@ const Navbar = () => {
   const getNotificationList = async () => {
     try {
       let items
-      if (cookies?.user?.role === 'admin') {
-        items = await (
-          await getNotification()
-        ).data;
-      } else if (cookies?.user?.role === 'IBO') {
+      let data
+      const allitems = await (
+        await getNotification()
+      ).data;
+      if (cookies?.user?.role === 'IBO') {
         items = await (
           await getNotificationByAudience(1, 'ibo')
         ).data;
@@ -48,7 +48,14 @@ const Navbar = () => {
           await getNotificationByAudience(1, 'client')
         ).data;
       }
-      setNotificationList(items?.results.slice(0, 4));
+      if(cookies?.user?.role !== 'admin'){
+        data = [...allitems?.results, ...items?.results];
+      }else{
+        data = [...allitems?.results];
+      }
+      const notificationData = data.filter((item) => item.hasShowen === false)
+      setNotificationList(notificationData.slice(0, 4));
+
     } catch (error) {
       if (error?.response?.data?.message) {
         toast.error(error.response.data.message);
@@ -107,7 +114,7 @@ const Navbar = () => {
         </div>
         <ul className="navbar-nav navbar-nav-right">
           <li className="nav-item notification-Info">
-            <Dropdown alignRight style={{marginRight:'10px'}}>
+            <Dropdown alignRight style={{ marginRight: '10px' }}>
               <Dropdown.Toggle className="nav-link count-indicator notification-label css-1oiueny">
                 <i className="mdi mdi-bell-outline"></i>
                 <span className="count-symbol bg-danger"></span>
@@ -143,6 +150,9 @@ const Navbar = () => {
                     </>
                   )
                 })}
+                {notificationList.length === 0 && (
+                  <h6 className="p-3 mb-0 text-center"><Trans>No Data Found</Trans></h6>
+                )}
                 <h6 className="p-3 mb-0 text-center cursor-pointer" onClick={() => { history.push('/notification/all') }}><Trans>See all notifications</Trans></h6>
               </Dropdown.Menu>
             </Dropdown>
