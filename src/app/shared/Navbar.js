@@ -29,6 +29,8 @@ const Navbar = () => {
   }
 
   const getNotificationList = async () => {
+    console.info("cookies?.user++ ",cookies?.user)
+    if(cookies?.user?.role){
     try {
       let items
       let data
@@ -48,6 +50,8 @@ const Navbar = () => {
           await getNotificationByAudience(1, 'client')
         ).data;
       }
+
+      console.info("allitems++ ",allitems, cookies?.user?.role)
       if(cookies?.user?.role !== 'admin'){
         data = [...allitems?.results, ...items?.results];
       }else{
@@ -57,6 +61,7 @@ const Navbar = () => {
       setNotificationList(notificationData.slice(0, 4));
 
     } catch (error) {
+      console.info("error+++ ",error)
       if (error?.response?.data?.message) {
         toast.error(error.response.data.message);
       } else {
@@ -72,6 +77,7 @@ const Navbar = () => {
         });
       }
     }
+  }
   }
 
 

@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { Form } from 'react-bootstrap';
-import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAll, getPersonalizedNotification, getNotificationByAudience, getUsersList } from "../../../utils/APIs";
+import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAll, getPersonalizedNotification, getNotificationByAudience, getAllUsers } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Spinner from "../../shared/Spinner";
@@ -88,7 +88,7 @@ const AllNotification = () => {
   }
 
   const getUser = async (name = '') => {
-    const { data } = await getUsersList(500, 1, name)
+    const { data } = await getAllUsers(500, 1, name)
     setuserOptions(data?.results?.map((i) => ({ ...i, value: i?.id, label: i?.name })))
     return data?.results?.map((i) => ({ ...i, value: i?.id, label: i?.name }))
   }
@@ -157,7 +157,7 @@ const AllNotification = () => {
       }
       try {
         const personalizeData = await (
-          await getPersonalizedNotification(cookies?.user?.id, itemsPerPage, +audienceOffset + 1,)
+          await getPersonalizedNotification(cookies?.user?.id, itemsPerPage, +audienceOffset)
         ).data;
         setpersonalizelist(personalizeData?.results?.results);
         setPersonalizeCount(personalizeData?.totalPages);
@@ -221,7 +221,7 @@ const AllNotification = () => {
       data.type = "all";
       data.status = 1;
       if (data?.targetAudience === 'specificUser') {
-        data.targetUser = selectedUser
+        data.user = selectedUser
       }
       const result = await addNotification(data)
       toast.success("Notification Added successfully");

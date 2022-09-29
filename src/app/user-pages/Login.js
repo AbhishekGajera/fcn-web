@@ -23,10 +23,27 @@ const Login = () => {
   const onSubmit = async (data) => {
     delete data.terms;
 
+    
     try {
       const result = await login(data);
+      console.info("data++ ",result.data.user)
       result.data.user.auth = "verified";
-      setCookie("user", result.data.user, { path: "/" });
+      setCookie("user", {
+        first_name : result?.data?.user?.first_name,
+        last_name : result?.data?.user?.last_name,
+        dob : result?.data?.user?.dob,
+        contactno : result?.data?.user?.contactno,
+        auth : result?.data?.user?.auth,
+        role : result?.data?.user?.role,
+        isEmailVerified : result?.data?.user?.isEmailVerified,
+        IBO : {
+          first_name : result?.data?.user?.IBO?.first_name,
+          last_name : result?.data?.user?.IBO?.last_name,
+          name : result?.data?.user?.IBO?.name,
+          id : result?.data?.user?.IBO?.id,
+        },
+        id : result?.data?.user?.id
+      }, { path: "/" });
       localStorage.setItem("accessToken", result.data.tokens.access.token);
       localStorage.setItem("refreshToken", result.data.tokens.refresh.token);
       history.push("/dashboard");
