@@ -480,6 +480,8 @@ const BranchList = () => {
                     <th> IBO </th>
                     <th> Role </th>
                     <th> Status </th>
+                    <th> Head Name </th>
+                    <th> Head Contact no. </th>
                     <th> Generate Password </th>
                     <th> Edit </th>
                     <th> Delete </th>
@@ -491,8 +493,6 @@ const BranchList = () => {
                     <Spinner />
                     :
                     itemlist?.map((item) => {
-                      console.log("it", item)
-
                       return (
                         <tr>
                           <td>{item?.name}</td>
@@ -501,6 +501,8 @@ const BranchList = () => {
                           <td>{item?.ibo}</td>
                           <td>{item?.role}</td>
                           <td>{formateStatus(item?.status)}</td>
+                          <td>{item?.b_head_name}</td>
+                          <td>{item?.b_head_contact_no}</td>
                           {/* <td>
                           <label className="badge badge-gradient-success">
                             Active

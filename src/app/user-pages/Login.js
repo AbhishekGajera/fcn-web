@@ -31,11 +31,13 @@ const Login = () => {
       setCookie("user", {
         first_name : result?.data?.user?.first_name,
         last_name : result?.data?.user?.last_name,
+        name : result?.data?.user.name,
         dob : result?.data?.user?.dob,
         contactno : result?.data?.user?.contactno,
         auth : result?.data?.user?.auth,
         role : result?.data?.user?.role,
         isEmailVerified : result?.data?.user?.isEmailVerified,
+        email : result?.data?.user?.email, 
         IBO : {
           first_name : result?.data?.user?.IBO?.first_name,
           last_name : result?.data?.user?.IBO?.last_name,

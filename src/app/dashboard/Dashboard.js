@@ -520,7 +520,7 @@ const Dashboard = () => {
                         </div>
                       </div>
                       <div className="MuiCardContent-root css-1cdh7ge">
-                        <h4 className="MuiTypography-root MuiTypography-h4 css-uicpbe">{cookies?.user?.total_earning.toFixed(2)}</h4>
+                        <h4 className="MuiTypography-root MuiTypography-h4 css-uicpbe">{Number(cookies?.user?.total_earning).toFixed(2)}</h4>
                         <h5 className="MuiTypography-root MuiTypography-h5 css-5pv1sx">Commission Earned</h5>
                       </div>
                     </div>
