@@ -54,11 +54,6 @@ const CreateBranches = () => {
         data.image = fileResult.secure_url;
         data.role = 'branch'
         data.contactno = phone;
-      
-     
-    console.log("dd",data)
-        
-        
         const result = await CreateUser(data)
         toast.success("user created successfully");
         history.push('/branches/brancheslist')
@@ -301,14 +296,8 @@ const CreateBranches = () => {
                           {branchlist.map((item, index) => (
                             <option key={index} value={item?.id} label={item?.name}></option>
                           ))}
-
-                          {/* <option>United States of America</option>
-                          <option >India</option>
-                          <option>United Kingdom</option>
-                          <option>Germany</option>
-                          <option>Argentina</option> */}
                         </select>
-                        {errors && errors.ibo && <p>Select Ibo is required field</p>}
+                        {errors && errors.IBO && <p>Select Ibo is required field</p>}
                       </div>
                       {/* <div className="col-sm-9">
                         <Form.Control

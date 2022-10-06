@@ -47,6 +47,10 @@ const IboList = () => {
     setbranchUpdate(e?.target?.value)
   }
 
+  const viewUser = (Id) => {
+    history.push(`/viewUser/${Id}`);
+  }
+
   const onChangeHandlerBranch = (e) => {
     setItemOffset(0);
     setselectedBranch(e.target.value);
@@ -532,6 +536,7 @@ const IboList = () => {
                     <th> Role </th>
                     <th> Status </th>
                     <th> Generate Password </th>
+                    <th> View </th>
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -564,6 +569,15 @@ const IboList = () => {
                                 onClick={() => generatePassword(item?.id)}
                               >
                                 Generate
+                              </button>
+                            </td>
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-gradient-primary btn-sm "
+                                onClick={() => { viewUser(item?.id) }}
+                              >
+                                View
                               </button>
                             </td>
                             <td>

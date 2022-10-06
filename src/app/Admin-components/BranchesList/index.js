@@ -178,7 +178,10 @@ const BranchList = () => {
     });
   }
 
-
+  const viewUser = (Id) => {
+    history.push(`/viewUser/${Id}`);
+  }
+  
   const list = async () => {
     setIsLoading(true)
     const items = await (await getBranches(itemsPerPage, (+itemOffset + 1), searchTerm)).data;
@@ -483,6 +486,7 @@ const BranchList = () => {
                     <th> Head Name </th>
                     <th> Head Contact no. </th>
                     <th> Generate Password </th>
+                    <th> view </th>
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -520,6 +524,15 @@ const BranchList = () => {
                               Generate
                             </button>
                           </td>
+                          <td>
+                              <button
+                                type="button"
+                                className="btn btn-gradient-primary btn-sm "
+                                onClick={() => { viewUser(item?.id) }}
+                              >
+                                View
+                              </button>
+                            </td>
                           <td>
                             <i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i>
                           </td>

@@ -330,7 +330,7 @@ const CreateClints = () => {
 
 
                         </select>
-                        {errors && errors.ibo && <p>Select Ibo is required field</p>}
+                        {errors && errors.IBO && <p>Select Ibo is required field</p>}
                       </div>
 
                     </Form.Group>

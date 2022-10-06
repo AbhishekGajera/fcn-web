@@ -221,6 +221,10 @@ const ClientList = () => {
     setIsLoading(false)
   };
 
+  const viewUser = (Id) => {
+    history.push(`/viewUser/${Id}`);
+  }
+
   const generatePassword = async (id) => {
     const randomPassword = password_generator();
     const newPassword = JSON.stringify({
@@ -717,6 +721,7 @@ const ClientList = () => {
                     <th> Role </th>
                     <th> Status </th>
                     <th> Generate Password </th>
+                    <th> View </th>
                     <th> Edit </th>
                     <th> Delete </th>
                   </tr>
@@ -741,6 +746,15 @@ const ClientList = () => {
                               onClick={() => generatePassword(item?.id)}
                             >
                               Generate
+                            </button>
+                          </td>
+                          <td>
+                            <button
+                              type="button"
+                              className="btn btn-gradient-primary btn-sm "
+                              onClick={() => { viewUser(item?.id) }}
+                            >
+                              View
                             </button>
                           </td>
                           <td>

@@ -5,7 +5,7 @@ import { Trans } from 'react-i18next';
 import { useCookies } from 'react-cookie';
 import { toast } from "react-toastify";
 
-import { userLogout, getNotification, getNotificationByAudience } from '../../utils/APIs';
+import { userLogout, getNotification, getNotificationByAudience, getPersonalizedNotification } from '../../utils/APIs';
 
 const Navbar = () => {
 
@@ -29,7 +29,6 @@ const Navbar = () => {
   }
 
   const getNotificationList = async () => {
-    console.info("cookies?.user++ ",cookies?.user)
     if(cookies?.user?.role){
     try {
       let items
@@ -51,9 +50,14 @@ const Navbar = () => {
         ).data;
       }
 
-      console.info("allitems++ ",allitems, cookies?.user?.role)
+      if (cookies?.user?.role !== 'admin'){
+        const allitems = await (
+          await getPersonalizedNotification(cookies?.user?.id)
+        ).data;
+      }
+
       if(cookies?.user?.role !== 'admin'){
-        data = [...allitems?.results, ...items?.results];
+        data = [...allitems?.results,...items?.results];
       }else{
         data = [...allitems?.results];
       }
