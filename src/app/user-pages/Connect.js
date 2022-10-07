@@ -1,17 +1,47 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useForm } from "react-hook-form";
-import { CreateConnect } from "../../utils/APIs";
+import { useCookies } from "react-cookie";
+import { CreateConnect ,getBranchesClient, userLogout } from "../../utils/APIs";
 import { toast } from "react-toastify";
 import { Form } from "react-bootstrap";
 import moment from 'moment';
 
 const Connect = () => {
   const history = useHistory();
-  const [courceType, setcourceType] = useState(1)
+  const [cookies, setCookie] = useCookies(["user"]);
+  const [courceType, setcourceType] = useState(1);
+  const [branchlist, setBranchlist] = useState([]);
 
   const handleChangeCourceType = (e) => {
     setcourceType(+e?.target?.value);
+  };
+
+  useEffect(() => {
+    branchList();
+  }, []);
+
+  const branchList = async () => {
+    try {
+      const items = await (await getBranchesClient()).data;
+      setBranchlist(items?.results);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
   };
 
   const {
@@ -22,13 +52,13 @@ const Connect = () => {
     mode: "onChange",
   });
 
-  const onSubmit = async ({ first_name,last_name, branch, contactno, date }) => {
+  const onSubmit = async ({ first_name, last_name, branch, contactno, date }) => {
     const formData = JSON.stringify({
-      name:first_name.concat(' ',last_name),
+      name: first_name.concat(' ', last_name),
       contactno,
       branch,
       type: courceType,
-      fromDate:date,
+      fromDate: date,
     });
 
     try {
@@ -129,12 +159,9 @@ const Connect = () => {
                       required: true,
                     })}
                   >
-                    <option selected>Pal-Adajan</option>
-                    <option>Nanpura</option>
-                    <option>Sumul-dairy Road</option>
-                    <option>Katargam</option>
-                    <option>Varachha</option>
-                    <option>Vesu</option>
+                    {branchlist.map((item, index) => (
+                      <option key={index} value={item?.name} label={item?.name}>{item?.name}</option>
+                    ))}
                   </select>
                 </div>
 

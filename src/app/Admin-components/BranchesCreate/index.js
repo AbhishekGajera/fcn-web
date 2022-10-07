@@ -51,6 +51,9 @@ const CreateBranches = () => {
       toast.error(fileResult.error.message);
     } else {
       try {
+        if(data.IBO  === ''){
+          delete data.IBO;
+        }
         data.image = fileResult.secure_url;
         data.role = 'branch'
         data.contactno = phone;
@@ -289,7 +292,7 @@ const CreateBranches = () => {
                           id="exampleFormControlSelect2"
                           name="IBO"
                           {...register("IBO", {
-                            required: true,
+                            required: false,
                           })}
                         >
                           <option value=''>--Select ibo--</option>
@@ -297,7 +300,6 @@ const CreateBranches = () => {
                             <option key={index} value={item?.id} label={item?.name}></option>
                           ))}
                         </select>
-                        {errors && errors.IBO && <p>Select Ibo is required field</p>}
                       </div>
                       {/* <div className="col-sm-9">
                         <Form.Control
