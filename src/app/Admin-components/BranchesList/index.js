@@ -23,8 +23,7 @@ import Spinner from "../../shared/Spinner";
 const BranchList = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [selectedIBO, setselectedIBO] = useState("");
-
-
+  const [showPerfomer, setShowPerfomer] = React.useState(false);
 
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
@@ -34,6 +33,7 @@ const BranchList = () => {
   const [itemsPerPage] = useState(20);
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
+  const [updatePerfomence, setupdatePerfomence] = useState(1);
   const [updateStatus, setupdateStatus] = useState(0);
   const [roleUpdate, setroleUpdate] = useState('')
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -61,6 +61,10 @@ const BranchList = () => {
     // console.log("rs",items?.results)
   };
 
+  const onChangePerfomence = (e) => {
+    setupdatePerfomence(+e?.target?.value || 0);
+  };
+
   const onChangeHandlerIBO = (e) => {
     setItemOffset(0);
     setselectedIBO(e.target.value);
@@ -71,6 +75,12 @@ const BranchList = () => {
     setupdateStatus(0)
     reset()
 
+  };
+
+  const handlePerfomanceShow = (value) => {
+    reset()
+    setvalueToEdit(value);
+    setShowPerfomer(true);
   };
 
   const onChangeStatusForm = (e) => {
@@ -98,6 +108,36 @@ const BranchList = () => {
     }
 
   };
+
+  const onPerformanceSubmit = async () => {
+    try {
+      const updatedData = JSON.stringify({ perfomance: updatePerfomence })
+      await updateProfile(updatedData, valueToEdit?.id);
+      toast.success("Add Perfomance Successfully", {
+        autoClose: 3000,
+      });
+      list();
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    } finally {
+      setShowPerfomer(false);
+    }
+  }
+
   const onSubmit = async (data) => {
     data.status = updateStatus;
     data.role = roleUpdate;
@@ -193,6 +233,61 @@ const BranchList = () => {
 
   return (
     <div>
+      <Modal
+        show={showPerfomer}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Make Top Perfomer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row auth">
+            <div className="col-12 grid-margin">
+              <div className="card">
+                <div className="card-body">
+                  <form
+                    className="form-sample"
+                  >
+                    <p className="card-description"> Make Top Perfomer </p>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Perfomance Rank
+                          </label>
+                          <div className="col-sm-8">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect3"
+                              name="perfomence"
+                              onChange={onChangePerfomence}
+                            >
+                              <option value='1' selected={valueToEdit?.perfomance === 1}>1</option>
+                              <option value='2' selected={valueToEdit?.perfomance === 2}>2</option>
+                              <option value='3' selected={valueToEdit?.perfomance === 3}>3</option>
+                            </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <button
+                        className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                        type="button"
+                        onClick={onPerformanceSubmit}
+                      >
+                        Submit Perfomance
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
       <Modal
         show={show}
         onHide={handleClose}
@@ -489,6 +584,9 @@ const BranchList = () => {
                     <th> view </th>
                     <th> Edit </th>
                     <th> Delete </th>
+                    {["admin"].includes(cookies?.user?.role) && (
+                      <th></th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -539,6 +637,17 @@ const BranchList = () => {
                           <td>
                             <i onClick={() => deleteBranch(item?.id)} className="mdi mdi-delete"></i>
                           </td>
+                          {["admin"].includes(cookies?.user?.role) && (
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-gradient-primary btn-sm "
+                                onClick={() => handlePerfomanceShow(item)}
+                              >
+                                Make Top Perfomer
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       );
                     })}

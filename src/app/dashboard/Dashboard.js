@@ -25,6 +25,7 @@ import {
   getTransactionUsr,
   getProductsListClient,
   getBranches,
+  getUserPerfomance,
   getTransaction,
   updateTransaction,
   getProductsByUser,
@@ -43,9 +44,11 @@ const Dashboard = () => {
   const [itemlist, setitemlist] = useState([]);
   const [itemlistdash, setitemlistdash] = useState([]);
   const [itemlistpro, setitemlistpro] = useState([]);
+  const [branchTopPerfomer, setbranchTopPerfomer] = useState([]);
+  const [iboTopPerfomer, setiboTopPerfomer] = useState([]);
+  const [userTopPerfomer, setUserTopPerfomer] = useState([]);
+
   const [recentdash, setrecentdash] = useState([]);
-
-
 
   const [itemlistTransaction, setitemlistTransaction] = useState([]);
   const [withdrawTransaction, setWithdrawTransaction] = useState([]);
@@ -227,11 +230,58 @@ const Dashboard = () => {
       const items = await (
         await getDashNotification()
       ).data;
-
-      
       setrecentdash(items)
-      
-      
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
+
+  const getBranchTopPerfomer = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getUserPerfomance(cookies?.user?.id, 'branch')
+      ).data;
+      setbranchTopPerfomer(items)
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
+
+  const getIboTopPerfomer = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getUserPerfomance(cookies?.user?.id, 'IBO')
+      ).data;
+      setiboTopPerfomer(items)
+    } catch (error) {
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+      }
+    }
+    setIsLoading(false)
+  };
+
+  const getUserTopPerfomer = async () => {
+    setIsLoading(true)
+    try {
+      const items = await (
+        await getUserPerfomance(cookies?.user?.id, 'user')
+      ).data;
+      setUserTopPerfomer(items)
     } catch (error) {
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
@@ -246,6 +296,9 @@ const Dashboard = () => {
     getTransactionList();
     getProductsList();
     getRecent();
+    getBranchTopPerfomer();
+    getUserTopPerfomer();
+    getIboTopPerfomer();
     productByUser();
     getClientList();
     getPowerOneAndSIPCount();
@@ -387,7 +440,7 @@ const Dashboard = () => {
     leadlist();
   }, [itemOffset, itemsPerPage]);
 
-  const month = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const month = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
 
   const d = new Date();
@@ -457,7 +510,7 @@ const Dashboard = () => {
           </div>
           <div className="col-md-3 col-sm-12" style={{ marginTop: '18px' }}>
             <div className="row">
-              {["admin", "branch", "IBO","user"].includes(cookies?.user?.role) && (
+              {["admin", "branch", "IBO", "user"].includes(cookies?.user?.role) && (
                 <div className="col-sm-10  MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1jxw1sp" style={{ marginLeft: '20px', marginBottom: '20px' }} onClick={() => history.push("/travel/ourplan")}>
                   <div className="MuiCardActions-root css-1r9i9ek">
                     <div className="css-622j8h">
@@ -476,7 +529,7 @@ const Dashboard = () => {
                   </div>
                 </div>
               )}
-              {["admin", "branch","user"].includes(cookies?.user?.role) && <div className="col-sm-10  MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1jxw1sp2" style={{ marginLeft: '20px', marginBottom: '20px' }} onClick={() => history.push("/travel/ourplan")}>
+              {["admin", "branch", "user"].includes(cookies?.user?.role) && <div className="col-sm-10  MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1jxw1sp2" style={{ marginLeft: '20px', marginBottom: '20px' }} onClick={() => history.push("/travel/ourplan")}>
                 <div className="MuiCardActions-root css-1r9i9ek">
                   <div className="css-622j8h">
                     <div className="css-1v3kl7i">
@@ -1115,7 +1168,7 @@ const Dashboard = () => {
           </div>
         </div>
         <div className="MuiGrid-root MuiGrid-item col-xs-12 col-sm-12 col-md-4 col-lg-4 mb-3">
-          <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-5efwz4" style={{ backgroundImage : `url(${recentdash?.[0]?.attachment})` }}>
+          <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-5efwz4" style={{ backgroundImage: `url(${recentdash?.[0]?.attachment})` }}>
             <div className="MuiCardHeader-root css-xjuj3x">
               <div className="MuiCardHeader-content css-11qjisw">
               </div>
@@ -1131,16 +1184,16 @@ const Dashboard = () => {
             <div className="css-p4cmdx">
               <div className="css-5or1w4"></div>
               {recentdash?.map((item) => {
-                            return (
-              <div className="css-1oo8ecw">
-                <div className="css-19kzrtu">
-                  <div className="css-j7qwjs">
-                    <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">{moment(item.createdAt).format('MMMM Do YYYY')}</h6>
-                    <h2 className="MuiTypography-root MuiTypography-h2 css-12a6upa">{item.title}</h2><p className="MuiTypography-root MuiTypography-body1 css-3n2bqr">{item.content}</p>
+                return (
+                  <div className="css-1oo8ecw">
+                    <div className="css-19kzrtu">
+                      <div className="css-j7qwjs">
+                        <h6 className="MuiTypography-root MuiTypography-h6 css-2nu12">{moment(item.createdAt).format('MMMM Do YYYY')}</h6>
+                        <h2 className="MuiTypography-root MuiTypography-h2 css-12a6upa">{item.title}</h2><p className="MuiTypography-root MuiTypography-body1 css-3n2bqr">{item.content}</p>
+                      </div>
+                    </div>
                   </div>
-                </div>
-              </div>
-                            )
+                )
               })}
             </div>
           </div>
@@ -1261,6 +1314,105 @@ const Dashboard = () => {
           </>
         )
       }
+      <>
+        <div className="row">
+          <>
+            <div className="col-md-4 mb-3">
+              <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1oiueny">
+                <div className="MuiCardHeader-root css-xjuj3x">
+                  <div className="MuiCardHeader-content css-11qjisw">
+                    <span className="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1dwyhfw">Branch Top Perfomer</span>
+                  </div>
+                </div>
+                <div className="MuiCardContent-root css-ulk2bu">
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 284px", maxHeight: "200px" }}>
+                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
+                      {branchTopPerfomer?.length !== 0 ? (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{branchTopPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                <span className="css-rpx22u">{branchTopPerfomer?.email}</span> {branchTopPerfomer?.contactno} </p>
+                            </div>
+                            <div>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">Branch : {branchTopPerfomer?.branch}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      ) : (
+                        <span style={{ fontSize: '14px', padding: '15px 30px' }}>Top Perfomer Not Found</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-3">
+              <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1oiueny">
+                <div className="MuiCardHeader-root css-xjuj3x">
+                  <div className="MuiCardHeader-content css-11qjisw">
+                    <span className="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1dwyhfw">User Top Perfomer</span>
+                  </div>
+                </div>
+                <div className="MuiCardContent-root css-ulk2bu">
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 284px", maxHeight: "200px" }}>
+                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
+                      {userTopPerfomer?.length !== 0 ? (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{userTopPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                <span className="css-rpx22u">{userTopPerfomer?.email}</span> {userTopPerfomer?.contactno} </p>
+                            </div>
+                            <div>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">User : {userTopPerfomer?.role}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      ) : (
+                        <span style={{ fontSize: '14px', padding: '15px 30px' }}>Top Perfomer Not Found</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div className="col-md-4 mb-3">
+              <div className="MuiPaper-root MuiPaper-elevation MuiPaper-rounded MuiPaper-elevation1 MuiCard-root css-1oiueny">
+                <div className="MuiCardHeader-root css-xjuj3x">
+                  <div className="MuiCardHeader-content css-11qjisw">
+                    <span className="MuiTypography-root MuiTypography-h5 MuiCardHeader-title css-1dwyhfw">IBO Top Perfomer</span>
+                  </div>
+                </div>
+                <div className="MuiCardContent-root css-ulk2bu">
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 284px", maxHeight: "200px" }}>
+                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
+                      {iboTopPerfomer?.length !== 0 ? (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{iboTopPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                <span className="css-rpx22u">{iboTopPerfomer?.email}</span> {iboTopPerfomer?.contactno} </p>
+                            </div>
+                            <div>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">IBO : {iboTopPerfomer?.role}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      ) : (
+                        <span style={{ fontSize: '14px', padding: '15px 30px' }}>Top Perfomer Not Found</span>
+                      )}
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </>
+        </div>
+      </>
 
       {
         ["user"].includes(cookies?.user?.role) && (

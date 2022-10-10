@@ -163,3 +163,7 @@ export const addTravel = (data) => api(`travel/add-travel `, 'POST', data);
 export const deleteTravel = (id) => api(`travel/delete-travel/${id}`, 'GET');
 export const getTravel = (limit = 100, offset = 1) => api(`travel/fetch-travel?limit=${limit}&sortBy=createdAt:desc&page=${offset}&type=regular`, 'GET');
 export const getPreTravel = (limit = 100, offset = 1) => api(`travel/fetch-travel?limit=${limit}&sortBy=createdAt:desc&page=${offset}&type=pre`, 'GET');
+
+
+// get user Perfomance
+export const getUserPerfomance = (id,role) => api(`users/get-top-perfomance/${id}/${role}/1`, 'GET');

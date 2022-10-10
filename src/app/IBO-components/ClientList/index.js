@@ -34,6 +34,7 @@ const ClientList = () => {
   const [itemlist, setitemlist] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
+  const [showPerfomer, setShowPerfomer] = React.useState(false);
 
   const {
     register,
@@ -46,6 +47,35 @@ const ClientList = () => {
   var strongRegexMo = new RegExp(
     "^\\s*(?:\\+?(\\d{1,3}))?[-. (]*(\\d{3})[-. )]*(\\d{3})[-. ]*(\\d{4})(?: *x(\\d+))?\\s*$"
   );
+
+  const onPerformanceSubmit = async () => {
+    try {
+      const updatedData = JSON.stringify({ perfomance: updatePerfomence })
+      await updateProfile(updatedData, valueToEdit?.id);
+      toast.success("Add Perfomance Successfully", {
+        autoClose: 3000,
+      });
+      list();
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    } finally {
+      setShowPerfomer(false);
+    }
+  }
 
   const onSubmit = async (data) => {
     data.status = updateStatus;
@@ -83,6 +113,7 @@ const ClientList = () => {
     }
   };
 
+
   // We start with an empty list of items.
   const [pageCount, setPageCount] = useState(0);
   // Here we use item offsets; we could also use page offsets
@@ -92,6 +123,7 @@ const ClientList = () => {
   const [show, setShow] = React.useState(false);
   const [valueToEdit, setvalueToEdit] = useState({});
   const [updateStatus, setupdateStatus] = useState(0);
+  const [updatePerfomence, setupdatePerfomence] = useState(1);
   const [branchList, setbranchList] = useState([]);
   const [selectedBranch, setselectedBranch] = useState("");
   const [IBOList, setIBOList] = useState([]);
@@ -103,6 +135,10 @@ const ClientList = () => {
   const onChangeBranchUpdate = (e) => {
     setbranchUpdate(e?.target?.value)
   }
+
+  const onChangePerfomence = (e) => {
+    setupdatePerfomence(+e?.target?.value || 0);
+  };
 
   const onChangeStatusForm = (e) => {
     setupdateStatus(+e?.target?.value || 0);
@@ -118,6 +154,7 @@ const ClientList = () => {
 
   const handleClose = () => {
     setShow(false);
+    setShowPerfomer(false);
     setvalueToEdit({});
     setupdateStatus(0);
     setbranchUpdate('');
@@ -135,6 +172,13 @@ const ClientList = () => {
     setroleUpdate(value?.role)
     setShow(true);
   };
+
+  const handlePerfomanceShow = (value) => {
+    reset()
+    setvalueToEdit(value);
+    setShowPerfomer(true);
+  };
+
 
   useEffect(() => {
     list();
@@ -278,6 +322,61 @@ const ClientList = () => {
   return (
     <div>
       <Modal
+        show={showPerfomer}
+        onHide={handleClose}
+        backdrop="static"
+        keyboard={false}
+      >
+        <Modal.Header closeButton>
+          <Modal.Title>Make Top Perfomer</Modal.Title>
+        </Modal.Header>
+        <Modal.Body>
+          <div className="row auth">
+            <div className="col-12 grid-margin">
+              <div className="card">
+                <div className="card-body">
+                  <form
+                    className="form-sample"
+                  >
+                    <p className="card-description"> Make Top Perfomer </p>
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-4 col-form-label">
+                            Perfomance Rank
+                          </label>
+                          <div className="col-sm-8">
+                            <select
+                              className="form-control form-control-sm"
+                              id="exampleFormControlSelect3"
+                              name="perfomence"
+                              onChange={onChangePerfomence}
+                            >
+                              <option value='1' selected={valueToEdit?.perfomance === 1}>1</option>
+                              <option value='2' selected={valueToEdit?.perfomance === 2}>2</option>
+                              <option value='3' selected={valueToEdit?.perfomance === 3}>3</option>
+                            </select>
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="mt-3">
+                      <button
+                        className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                        type="button"
+                        onClick={onPerformanceSubmit}
+                      >
+                        Submit Perfomance
+                      </button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </Modal.Body>
+      </Modal>
+      <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -370,8 +469,6 @@ const ClientList = () => {
                         </Form.Group>
                       </div>
                     </div>
-
-                    
 
                     <div className="row">
                       <div className="col-md-12">
@@ -724,6 +821,9 @@ const ClientList = () => {
                     <th> View </th>
                     <th> Edit </th>
                     <th> Delete </th>
+                    {["admin"].includes(cookies?.user?.role) && (
+                      <th></th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -771,6 +871,17 @@ const ClientList = () => {
                               {" "}
                             </i>
                           </td>
+                          {["admin"].includes(cookies?.user?.role) && (
+                            <td>
+                              <button
+                                type="button"
+                                className="btn btn-gradient-primary btn-sm "
+                                onClick={() => handlePerfomanceShow(item)}
+                              >
+                                Make Top Perfomer
+                              </button>
+                            </td>
+                          )}
                         </tr>
                       );
                     })}
