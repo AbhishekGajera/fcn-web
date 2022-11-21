@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Fees/Invoice.js"],"names":["Invoice"],"mappings":"+HAAA,2BAQeA,UANC,WACd,OACE","file":"static/js/74.37df4d69.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Invoice = () => {\r\n  return (\r\n    <div>Invoice</div>\r\n  )\r\n}\r\n\r\nexport default Invoice"],"sourceRoot":""}
