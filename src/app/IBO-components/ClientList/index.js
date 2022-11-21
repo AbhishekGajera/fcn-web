@@ -11,6 +11,9 @@ import {
   getUserBranch,
   getUserIbo
 } from "../../../utils/APIs";
+import { CSVLink } from "react-csv";
+import * as FileSaver from "file-saver";
+import * as XLSX from "xlsx";
 
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
@@ -318,6 +321,44 @@ const ClientList = () => {
     });
   };
   // console.log("it",itemlist[0])
+
+  // excel export
+  const fileType =
+    "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=UTF-8";
+  const fileExtension = ".xlsx";
+
+
+  // csv export
+  const exportToCSV = (fileName) => {
+    const ws = XLSX.utils.json_to_sheet(itemlist);
+    const wb = { Sheets: { data: ws }, SheetNames: ["data"] };
+    const excelBuffer = XLSX.write(wb, { bookType: "xlsx", type: "array" });
+    const data = new Blob([excelBuffer], { type: fileType });
+    FileSaver.saveAs(data, fileName + fileExtension);
+  };
+
+  const headers = [
+    { label: "Name", key: "name", },
+    { label: "Contact no", key: "contactno", },
+    { label: "Branch", key: "branch", },
+    { label: "IBO", key: "IBO.name", },
+    { label: "Email", key: "email", },
+    { label: "Branch", key: "branch", },
+    { label: "DOB", key: "dob", },
+    { label: "Role", key: "role", },
+    { label: "Status", key: "status", },
+    { label: "Bank Account No", key: "bankAccNo", },
+    { label: "Bank IFSC Code", key: "bankIfscCode", },
+    { label: "Bank AadharCard No", key: "b_aadhar_card_no", },
+    { label: "Address", key: "address", },
+    
+  ]
+
+  const csvreport = {
+    data: itemlist,
+    headers: headers,
+    filename: 'Clue_Mediator_Report.csv'
+  };
 
   return (
     <div>
@@ -805,7 +846,26 @@ const ClientList = () => {
               )}
             </div>
             <h4 className="card-title">Client list</h4>
+            <div className="row">
+              <div className="col-md-4">
+                <button
+                  type="button"
+                  className="btn btn-gradient-primary btn-sm "
+                >
+                  <CSVLink {...csvreport} className="text-white">Export to CSV</CSVLink>
+                </button>
+              </div>
 
+              <div className="col-md-4">
+                <button
+                  type="button"
+                  className="btn btn-gradient-primary btn-sm "
+                  onClick={() => exportToCSV('Client')}
+                >
+                  Download Excel
+                </button>
+              </div>
+            </div>
             <div className="table-responsive">
               <table className="table table-striped">
                 <thead>

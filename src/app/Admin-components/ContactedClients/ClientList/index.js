@@ -1,13 +1,14 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { userLogout, getConnect, getConnectByBranch } from "../../../../utils/APIs";
+import { userLogout, getConnect, deleteLead, getConnectByBranch } from "../../../../utils/APIs";
 import { CSVLink } from "react-csv";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
 
 import { toast } from "react-toastify";
 import { useHistory } from "react-router-dom";
+import Swal from "sweetalert2";
 import { useForm } from "react-hook-form";
 import { useUrl } from "../../../../utils/Functions/useUrl";
 import { useDebounce } from "../../../../utils/Functions/useDebounce";
@@ -118,6 +119,32 @@ const ClientList = () => {
     filename: 'Clue_Mediator_Report.csv'
   };
 
+  const deleteData = (uid) => {
+    Swal.fire({
+      title: "Are you sure?",
+      text: "You will not be able to recover this imaginary file!",
+      icon: "warning",
+      showCancelButton: true,
+      cancelButtonColor: "#DD6B55",
+      confirmButtonColor: "#DD6B55",
+      confirmButtonText: "Yes, delete it!",
+      cancelButtonText: "No, keep it",
+    }).then((result) => {
+      if (result.value) {
+        return (
+          deleteLead(uid).finally(() => list()),
+          Swal.fire(
+            "Deleted!",
+            "Your imaginary file has been deleted.",
+            "success"
+          )
+        );
+      } else if (result.dismiss === Swal.DismissReason.cancel) {
+        Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
+      }
+    });
+  };
+
   return (
     <div>
       <div className="page-header">
@@ -191,6 +218,7 @@ const ClientList = () => {
                     <th> Date </th>
                     <th> Type </th>
                     <th> Convert </th>
+                    <th> Delete </th>
                   </tr>
                 </thead>
                 <tbody>
@@ -212,6 +240,13 @@ const ClientList = () => {
                           >
                             Convert
                           </button></td>
+                          <td> <i
+                              onClick={() => deleteData(item?.id)}
+                              className="mdi mdi-delete"
+                            >
+                              {" "}
+                            </i>
+                          </td>
                         </tr>
                       );
                     })

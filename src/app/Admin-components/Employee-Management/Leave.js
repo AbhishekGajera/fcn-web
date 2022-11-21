@@ -388,7 +388,7 @@ const Leave = () => {
                   {itemlist?.map((item) => {
                     return (
                       <tr>
-                        <td>{item?.user.name}</td>
+                        <td>{item?.user?.name}</td>
                         <td>{item?.reason}</td>
                         <td>{item?.leave_status}</td>
                         <td>{item?.total_leave}</td>

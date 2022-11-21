@@ -23,6 +23,8 @@ const CreateEmployee = () => {
   );
   var strongRegex = new RegExp("^(?=.*[A-Za-z])(?=.*[0-9])(?=.{8,})");
 
+  var strongaadharcode = new RegExp("^([0-9]){12}$");
+
 
   const branchList = async () => {
     try {
@@ -326,7 +328,33 @@ const CreateEmployee = () => {
                     </Form.Group>
                   </div>
                 </div>
-
+                <div className="row">
+                  <div className="col-md-6">
+                    <Form.Group className="row">
+                      <label className="col-sm-3 col-form-label">
+                        AadharCard Number
+                      </label>
+                      <div className="col-sm-9">
+                        <Form.Control
+                          type="text"
+                          name="aadhar_card_no"
+                          {...register("aadhar_card_no", { required: true, pattern: strongaadharcode })}
+                        />
+                        {errors && errors.aadhar_card_no &&
+                          errors.aadhar_card_no.type === "required" && (
+                            <p>Aadharcard number is required field</p>
+                          )}
+                        {errors &&
+                          errors.aadhar_card_no &&
+                          errors.aadhar_card_no.type === "pattern" && (
+                            <p>
+                              Aadharcard should have number
+                            </p>
+                          )}
+                      </div>
+                    </Form.Group>
+                  </div>
+                </div>
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"

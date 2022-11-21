@@ -2236,6 +2236,12 @@ li.nav-item.nav-profile {
     margin: 0 !important;
 }
 
+.max-width-200{
+    max-width: 200px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
 @media(max-width:991px) {
     .main-panel .login-auth {
         margin-left: 0 !important;

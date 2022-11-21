@@ -415,7 +415,7 @@ const AllNotification = () => {
                       return (
                         <tr>
                           <td>{item?.title}</td>
-                          <td>{item?.content}</td>
+                          <td className="max-width-200">{item?.content}</td>
                           <td>{item?.type}</td>
                           <td>{item?.targetAudience}</td>
                           <td><button

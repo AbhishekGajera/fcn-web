@@ -33,13 +33,7 @@ export const CreateLead = (data) => api('leads/add-lead', 'POST', data);
 export const updateLead = (data) => api(`leads/update-lead`, 'POST',data);
 export const getLeads = (limit = 10,offset = 1,name = '',branch = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&name=${name}&branch=${branch}&sortBy=createdAt:desc&`, 'GET');
 export const getLeadsDash = (limit = 10,offset = 1,branch = '') => api(`leads/get-lead?limit=${limit}&page=${offset}&sortBy=createdAt:desc&branch=${branch}`, 'GET');
-
 export const deleteLead = (id) => api(`leads/delete-lead/${id}`, 'DELETE');
-
-
-
-
-
 
 // branch management
 export const getBranches = (limit = 10,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');
