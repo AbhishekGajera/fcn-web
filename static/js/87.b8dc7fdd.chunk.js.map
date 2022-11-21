@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Product-Assign/Client.js"],"names":["Client"],"mappings":"+HAAA,2BAQeA,UANA,WACb,OACE","file":"static/js/87.b8dc7fdd.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Client = () => {\r\n  return (\r\n    <div>Client</div>\r\n  )\r\n}\r\n\r\nexport default Client"],"sourceRoot":""}

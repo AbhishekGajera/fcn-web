@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Marketing/Browchures.js"],"names":["Browchures"],"mappings":"+HAAA,2BAQeA,UANI,WACjB,OACE","file":"static/js/77.81ba749e.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Browchures = () => {\r\n  return (\r\n    <div>Browchures</div>\r\n  )\r\n}\r\n\r\nexport default Browchures"],"sourceRoot":""}
