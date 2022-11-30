@@ -200,33 +200,6 @@ const PowerOne = () => {
                       </div>
                     </div>
                     <div className="row">
-                      <div className="col-md-8">
-                        <Form.Group className="row">
-                          <label className="col-sm-4 col-form-label">Name of 2nd Applicant</label>
-                          <div className="col-sm-8">
-                            <Form.Control type="text"
-                              name="name2"
-                              placeholder="Enter Your 2nd Applicant"
-                              {...register("name2", { required: true })} />
-                            {errors && errors.name2 && <p style={{ color: "red" }}>name2 is required field</p>}
-
-                          </div>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-4">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">PAN</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text"
-                              name="pan2"
-                              placeholder="Enter Your PAN2"
-                              {...register("pan2", { required: true })} />
-                            {errors && errors.pan2 && <p style={{ color: "red" }}>pan2 is required field</p>}
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div>
-                    <div className="row">
                       <div className="col-md-6">
                         <Form.Group className="row">
 
@@ -271,17 +244,6 @@ const PowerOne = () => {
                     <div className="row">
                       <div className="col-md-6">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Address 2</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="address2" placeholder="Enter Your address2"
-                              {...register("address2", { required: true })} />
-
-                            {errors && errors.address2 && <p style={{ color: "red" }}>address2 is required field</p>}
-                          </div>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">City</label>
                           <div className="col-sm-9">
                             <Form.Control type="text" name="city" placeholder="Enter Your city"
@@ -291,9 +253,6 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
-                    </div>
-
-                    <div className="row">
                       <div className="col-md-6">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">State</label>
@@ -305,6 +264,9 @@ const PowerOne = () => {
                           </div>
                         </Form.Group>
                       </div>
+                    </div>
+
+                    <div className="row">
                       <div className="col-md-6">
                         <Form.Group className="row">
                           <label className="col-sm-3 col-form-label">Country</label>
