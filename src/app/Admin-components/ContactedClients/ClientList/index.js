@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { userLogout, getConnect, deleteLead, getConnectByBranch } from "../../../../utils/APIs";
+import { userLogout, getConnect, deleteContact, getConnectByBranch } from "../../../../utils/APIs";
 import { CSVLink } from "react-csv";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -132,7 +132,7 @@ const ClientList = () => {
     }).then((result) => {
       if (result.value) {
         return (
-          deleteLead(uid).finally(() => list()),
+          deleteContact(uid).finally(() => list()),
           Swal.fire(
             "Deleted!",
             "Your imaginary file has been deleted.",

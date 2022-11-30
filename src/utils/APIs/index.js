@@ -97,6 +97,7 @@ export const CreateConnect = (data) => api('contact/add-contact', 'POST', data);
 export const getConnect = (limit = 10,offset = 1,name = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&sortBy=createdAt:desc&custom=true`, 'GET');
 export const getConnectByBranch = (limit = 10,offset = 1,name = '',branch = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&branch=${branch}&sortBy=createdAt:desc&custom=true`, 'GET');
 export const getConnectedById = (id = '') => api(`contact/get-connected-id/${id}`, 'GET');
+export const deleteContact = (id) => api(`contact/delete-contact/${id}`, 'DELETE');
 
 //image upload in cloudinary 
 export const ImageUpload = (data) => apiImage('POST', data);

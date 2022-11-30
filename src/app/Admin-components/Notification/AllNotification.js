@@ -394,7 +394,7 @@ const AllNotification = () => {
               <div className="col-md-9">
               </div>
             </div>
-            <h4 className="card-title">Notification list</h4>
+            <h4 className="card-title"></h4>
 
             <div className="table-responsive">
               <table className="table table-striped">
@@ -524,7 +524,7 @@ const AllNotification = () => {
         <div className="col-lg-12 grid-margin stretch-card p0">
           <div className="card">
             <div className="card-body">
-              <h4 className="card-title">Personalize Notification list</h4>
+              <h4 className="card-title">Personalize </h4>
 
               <div className="table-responsive">
                 <table className="table table-striped">
