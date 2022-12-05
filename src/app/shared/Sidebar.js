@@ -23,8 +23,6 @@ class Sidebar extends Component {
 
     if (itemName === 'ourUtils') {
       if (["admin"].includes(this.userData?.role)) {
-        this.props.history.push('/utilities/calculator')
-      } else {
         this.props.history.push('/utilities/offers')
       }
     }
@@ -280,8 +278,6 @@ class Sidebar extends Component {
                 <Collapse in={this.state.ourUtils}>
                   <ul className="nav flex-column sub-menu">
                     <li className="nav-item"> <Link className={this.isPathActive('/utilities/offers') ? 'nav-link active' : 'nav-link'} to="/utilities/offers"><Trans>Offers</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/utilities/calculator') ? 'nav-link active' : 'nav-link'} to="/utilities/calculator"><Trans>Calculator</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/utilities/literature') ? 'nav-link active' : 'nav-link'} to="/utilities/literature"><Trans>Literature</Trans></Link></li>
                   </ul>
                 </Collapse>
               </li>

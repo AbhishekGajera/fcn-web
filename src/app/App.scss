@@ -2242,6 +2242,21 @@ li.nav-item.nav-profile {
     text-overflow: ellipsis;
 }
 
+span.mb-10 {
+    font-weight: 800;
+    margin: 10px 0;
+    font-size: 20px;
+}
+
+.proof_img{
+    width: 200px;
+    border-radius: 25px;
+}
+
+.mb-4{
+    margin-bottom: 3px;
+}
+
 @media(max-width:991px) {
     .main-panel .login-auth {
         margin-left: 0 !important;

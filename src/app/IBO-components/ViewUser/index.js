@@ -60,47 +60,50 @@ const ViewUser = () => {
                         <div class="card">
                             <div class="card-body">
                                 <div className='row'>
+                                    <span className="mb-10">Personal Information : </span>
+                                </div>
+                                <div className='row'>
                                     <div className='col-md-6'>
                                         <div className='row'>
-                                            <span>
+                                            <span className='mb-4'>
                                                 <b>Name: </b> {itemlist?.name}
                                             </span>
                                         </div>
                                         <div className='row'>
-                                            <span>
+                                            <span className='mb-4'>
                                                 <b>Email: </b> {itemlist?.email}
                                             </span>
                                         </div>
                                         <div className='row'>
-                                            <span>
+                                            <span className='mb-4'>
                                                 <b>Contact No: </b> {itemlist?.contactno}
                                             </span>
                                         </div>
                                         <div className='row'>
-                                            <span>
+                                            <span className='mb-4'>
                                                 <b>Date Of Birth: </b> {moment(itemlist?.dob).format('DD-MM-YYYY')}
                                             </span>
                                         </div>
                                         <div className='row'>
-                                            <span>
+                                            <span className='mb-4'>
                                                 <b>Address: </b> {itemlist?.address}
                                             </span>
                                         </div>
                                         <div className='row'>
-                                            <span>
+                                            <span className='mb-4'>
                                                 <b>Country: </b> {itemlist?.country}
                                             </span>
                                         </div>
                                         {itemlist?.bankAccNo && (
                                             <div className='row'>
-                                                <span>
+                                                <span className='mb-4'>
                                                     <b>Bank Account No: </b> {itemlist?.bankAccNo}
                                                 </span>
                                             </div>
                                         )}
                                         {itemlist?.bankIfscCode && (
                                             <div className='row'>
-                                                <span>
+                                                <span className='mb-4'>
                                                     <b>Bank IFSC Code: </b> {itemlist?.bankIfscCode}
                                                 </span>
                                             </div>
@@ -108,20 +111,38 @@ const ViewUser = () => {
                                     </div>
                                     <div className='col-md-6'>
                                         <div className='row'>
-                                            <span>
+                                            <span className='mb-4'>
                                                 <b>Role: </b> {itemlist?.role}
                                             </span>
                                         </div>
+                                        {itemlist?.aadhar_card_img && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Aadhar Card Image: </b>
+                                                    <br />
+                                                    <img src={itemlist?.aadhar_card_img} alt="aadhar_card_img" className='proof_img' />
+                                                </span>
+                                            </div>
+                                        )}
                                         {itemlist?.aadhar_card_no && (
                                             <div className='row'>
-                                                <span>
+                                                <span className='mb-4'>
                                                     <b>Aadhar Card No: </b> {itemlist?.aadhar_card_no}
                                                 </span>
                                             </div>
                                         )}
-                                         {itemlist?.pan_card_no && (
+                                        {itemlist?.pan_card_img && (
                                             <div className='row'>
-                                                <span>
+                                                <span className='mb-4'>
+                                                    <b>Pan Card Image: </b>
+                                                    <br />
+                                                    <img src={itemlist?.pan_card_img} alt="pan_card_img" className='proof_img'/>
+                                                </span>
+                                            </div>
+                                        )}
+                                        {itemlist?.pan_card_no && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
                                                     <b>Pan Card No: </b> {itemlist?.pan_card_no}
                                                 </span>
                                             </div>
@@ -140,20 +161,49 @@ const ViewUser = () => {
                                                 </span>
                                             </div>
                                         )}
-                                         {itemlist?.b_aadhar_card_no && (
+                                        {itemlist?.b_aadhar_card_no && (
                                             <div className='row'>
                                                 <span>
                                                     <b>Branch AadharCard No: </b> {itemlist?.b_aadhar_card_no}
                                                 </span>
                                             </div>
                                         )}
-                                         {itemlist?.b_head_contact_no && (
+                                        {itemlist?.b_head_contact_no && (
                                             <div className='row'>
                                                 <span>
                                                     <b>Branch Head Contact No: </b> {itemlist?.b_head_contact_no}
                                                 </span>
                                             </div>
                                         )}
+                                    </div>
+                                    <div className='col-md-6'>
+                                        <div className='row'>
+                                            <span className="mb-10">Product Information : </span>
+                                        </div>
+                                        {itemlist?.products?.[0]?.product?.name && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Product Name: </b> {itemlist?.products?.[0]?.product?.name}
+                                                </span>
+                                            </div>
+                                        )}
+                                        {itemlist?.products?.[0]?.product?.description && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Product Description: </b> {itemlist?.products?.[0]?.product?.description}
+                                                </span>
+                                            </div>
+                                        )}
+                                        <div className='row'>
+                                            <span className='mb-4'>
+                                                <b>Min Amount: </b> {itemlist?.products?.[0]?.minAmount}
+                                            </span>
+                                        </div>
+                                        <div className='row'>
+                                            <span className='mb-4'>
+                                                <b>Max Amount: </b> {itemlist?.products?.[0]?.maxAmount}
+                                            </span>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

@@ -160,5 +160,11 @@ export const getTravel = (limit = 100, offset = 1) => api(`travel/fetch-travel?l
 export const getPreTravel = (limit = 100, offset = 1) => api(`travel/fetch-travel?limit=${limit}&sortBy=createdAt:desc&page=${offset}&type=pre`, 'GET');
 
 
+// Powerone managemnet
+export const addPowerone = (data) => api(`powerone/add-powerone`, 'POST', data);
+export const deletePowerone = (id) => api(`powerone/delete-powerone/${id}`, 'GET');
+export const getowerone = () => api(`powerone/fetch-powerone`, 'GET');
+
+
 // get user Perfomance
 export const getUserPerfomance = (id,role) => api(`users/get-top-perfomance/${id}/${role}/1`, 'GET');

@@ -1,20 +1,33 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { useForm } from "react-hook-form";
 import { Form } from 'react-bootstrap';
 import Tabs from 'react-bootstrap/Tabs';
 import Tab from 'react-bootstrap/Tab';
 import Calc from '../SipCalc/Calc';
 import Modal from "react-bootstrap/Modal";
+import { toast } from "react-toastify";
 import { useCookies } from 'react-cookie';
+import { useHistory } from 'react-router-dom';
+import { ImageUpload, addPowerone, getAllUsers } from '../../../utils/APIs';
+import Spinner from '../../shared/Spinner';
 
 
 const PowerOne = () => {
+  const history = useHistory();
   const [cookies] = useCookies(['user']);
-
+  const [user, setUser] = React.useState([]);
   const [show, setShow] = React.useState(false);
   const [show1, setShow1] = React.useState(false);
+  const [isLoading, setisLoading] = React.useState(false);
 
+  useEffect(() => {
+    getAllUsersList();
+  }, []);
 
+  const getAllUsersList = async () => {
+    const allUsers = await getAllUsers();
+    setUser(allUsers?.data?.results);
+  };
 
   const handleClose = () => setShow(false);
   const handleClose1 = () => setShow1(false);
@@ -24,12 +37,90 @@ const PowerOne = () => {
 
 
 
-  const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
+  const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
     mode: "onChange"
   });
-  const onSubmit = async (data) => {
-    alert(data);
+
+  const values = getValues();
+
+  const handlePanUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-panId');
+    if (element) {
+      element.click()
+    }
   };
+
+  const handlePassUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-passId');
+    if (element) {
+      element.click()
+    }
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-id');
+    if (element) {
+      element.click()
+    }
+  };
+
+  const onSubmit = async (data) => {
+    setisLoading(true)
+    console.log(data);
+    const Data = new FormData();
+    var aadharcard_img = '';
+    var pancard_img = '';
+    var passbook_img = '';
+    if (data.aadhar_card_img) {
+      Data.append('file', data.aadhar_card_img[0]);
+      aadharcard_img = await ImageUpload(Data)
+    }
+    if (data.pan_card_img) {
+      Data.append('file', data.pan_card_img[0]);
+      pancard_img = await ImageUpload(Data)
+    }
+
+    if (data.passbook_card_img) {
+      Data.append('file', data.passbook_card_img[0]);
+      passbook_img = await ImageUpload(Data)
+    }
+
+    if (aadharcard_img.error || pancard_img.error || passbook_img.error) {
+      toast.error(aadharcard_img.error.message);
+    } else {
+      delete data.deposit;
+      delete data.deposit1;
+      delete data.payment_gateway;
+      delete data.passport_number;
+      delete data.pan_number;
+      delete data.aadhar_number;
+      data.voter_card_img = "";
+      data.aadhar_card_img = aadharcard_img.secure_url;
+      data.pan_card_img = pancard_img.secure_url;
+      data.passbook_card_img = passbook_img.secure_url;
+      try {
+        setisLoading(false)
+        await addPowerone(data)
+        toast.success("Powerone created successfully");
+        history.push('/investment/powerone')
+      } catch (error) {
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
+    }
+  };
+
   return (
     <div>
       <Modal
@@ -46,7 +137,7 @@ const PowerOne = () => {
             <div className="col-12 ">
               <div className="card">
                 <div className="card-body">
-                  <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+                  <form className="form-sample" /* onSubmit={handleSubmit(onSubmit)}*/ >
                     <div className="row">
                       <>
                         <h5>Bank Detail:</h5>
@@ -82,7 +173,7 @@ const PowerOne = () => {
                           <div className="col-sm-9">
                             <Form.Control type="text" placeholder="Enter Amount"
                               name="deposit"
-                              {...register("deposit", { required: true })} />
+                              {...register("deposit", { required: false })} />
                           </div>
                         </Form.Group>
                       </div>
@@ -121,7 +212,7 @@ const PowerOne = () => {
             <div className="col-12 ">
               <div className="card">
                 <div className="card-body">
-                  <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+                  <form className="form-sample" /* onSubmit={handleSubmit(onSubmit)}*/>
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -129,7 +220,7 @@ const PowerOne = () => {
                           <div className="col-sm-9">
                             <Form.Control type="text" placeholder="Enter Amount"
                               name="deposit1"
-                              {...register("deposit1", { required: true })} />
+                              {...register("deposit1", { required: false })} />
                           </div>
                         </Form.Group>
                       </div>
@@ -167,341 +258,360 @@ const PowerOne = () => {
           </div>
           <div className="row">
             <div className="col-12 grid-margin">
-              <div className="card">
-                <div className="card-body">
-                  <h4 className="card-title">PowerOne</h4>
-                  <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                    <p className="card-description mt-3"> Personal info </p>
-                    <div className="row">
-                      <div className="col-md-8">
-                        <Form.Group className="row">
-                          <label className="col-sm-4 col-form-label">Name of 1st Applicant</label>
-                          <div className="col-sm-8">
-                            <Form.Control type="text"
-                              name="name1"
-                              placeholder="Enter Your 1st Applicant"
-                              {...register("name1", { required: true })} />
-                            {errors && errors.name1 && <p style={{ color: "red" }}>name is required field</p>}
-                          </div>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-4">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">PAN</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text"
-                              name="pan1"
-                              placeholder="Enter Your PAN1"
-                              {...register("pan1", { required: true })} />
-                            {errors && errors.name1 && <p style={{ color: "red" }}>pan1 is required field</p>}
-
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <Form.Group className="row">
-
-                          <label className="col-sm-3 col-form-label">Mobile</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text"
-                              name="mobile"
-                              defaultValue={cookies?.user?.contactno}
-                              {...register("mobile", { required: true })} />
-                          </div>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Email</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text"
-                              name="email"
-                              defaultValue={cookies?.user?.email}
-                              {...register("email", { required: true })} />
-                          </div>
-                        </Form.Group>
-                      </div>
-
-                    </div>
-
-                    <p className="card-description">Postal Address </p>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-2 col-form-label">Address 1</label>
-                          <div className="col-sm-10">
-                            <Form.Control type="text" name="address1" placeholder="Enter Your Address1"
-                              {...register("address1", { required: true })} />
-
-                            {errors && errors.address1 && <p style={{ color: "red" }}>address1 is required field</p>}
-
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">City</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="city" placeholder="Enter Your city"
-                              {...register("city", { required: true })} />
-
-                            {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
-                          </div>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-6">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">State</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="state" placeholder="Enter Your state"
-                              {...register("state", { required: true })} />
-
-                            {errors && errors.state && <p style={{ color: "red" }}>state is required field</p>}
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div>
-
-                    <div className="row">
-                      <div className="col-md-6">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Country</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="country" placeholder="Enter Your country"
-                              {...register("country", { required: true })} />
-
-                            {errors && errors.country && <p style={{ color: "red" }}>country is required field</p>}
-                          </div>
-                        </Form.Group>
-                      </div>
-                      {/* <div className="col-md-4">
-                      <Form.Group className="row">  
-                        <label className="col-sm-3 col-form-label">Country</label>
-                        <div className="col-sm-9">
-                          <select className="form-control">
-                            <option>America</option>
-                            <option>Italy</option>
-                            <option>Russia</option>
-                            <option>Britain</option>
-                          </select>
-                        </div>
-                      </Form.Group>
-                    </div> */}
-                      {/* <div className="col-md-4">
-                      <Form.Group className="row">  
-                        <label className="col-sm-3 col-form-label">Country</label>
-                        <div className="col-sm-9">
-                          <select className="form-control">
-                            <option>America</option>
-                            <option>Italy</option>
-                            <option>Russia</option>
-                            <option>Britain</option>
-                          </select>
-                        </div>
-                      </Form.Group>
-                    </div> */}
-
-                    </div>
-                    <p className="card-description">KYC </p>
-                    <div className="row">
-                      <div className="col-md-8">
-                        <Form.Group className="row">
-                          <label className="col-sm-2  col-form-label">KYC</label>
-                          <div className="col-sm-3">
-                            <div className="form-check">
-                              <label className="form-check-label">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  name="pancard"
-                                  {...register("pancard", { required: true })}
-                                />
-                                <i className="input-helper"></i>
-                                Pan card
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-sm-3">
-                            <div className="form-check">
-                              <label className="form-check-label">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  name="adhaarcard"
-                                  {...register("adhaarcard", { required: true })}
-                                />
-                                <i className="input-helper"></i>
-                                Adhaar card
-                              </label>
-                            </div>
-                          </div>
-                          <div className="col-sm-4">
-                            <div className="form-check">
-                              <label className="form-check-label">
-                                <input
-                                  type="checkbox"
-                                  className="form-check-input"
-                                  name="bankpassbook"
-                                  {...register("bankpassbook", { required: true })}
-                                />
-                                <i className="input-helper"></i>
-                                Bank Passbook
-                              </label>
-                            </div>
-                          </div>
-                        </Form.Group>
-                      </div>
-                      <div className="col-md-4">
-                        <div className="col-sm-3">
-                          <div className="">
-                            <label className="label">
-                              <input
-                                type="file"
-                                className="input"
-                                name="file"
-                                multiple={true}
-                                {...register("file", { required: true })}
-                              />
-                              {errors && errors.file && <p style={{ color: "red" }}>file is required field</p>}
+              {isLoading ? <Spinner /> : (
+                <div className="card">
+                  <div className="card-body">
+                    <h4 className="card-title">PowerOne</h4>
+                    <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
+                      <p className="card-description mt-3"> Personal info </p>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-4 col-form-label">
+                              Select Users
                             </label>
-                          </div>
+                            <div className="col-sm-6">
+                              <select
+                                className="form-control form-control-lg"
+                                id="exampleFormControlSelect2"
+                                name="selectUser"
+                                {...register("user", {
+                                  required: true,
+                                })}
+                              >
+                                <option value=''>--Select User--</option>
+                                {
+                                  user?.map((item, index) => (
+                                    <option
+                                      key={index}
+                                      value={item?.id}
+                                      label={item?.name}
+                                    ></option>
+                                  ))}
+                              </select>
+                              {errors && errors.user && <p style={{ color: "red" }}>User is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-4 col-form-label">Name</label>
+                            <div className="col-sm-8">
+                              <Form.Control type="text"
+                                name="name"
+                                placeholder="Enter Your Applicant"
+                                {...register("name", { required: true })} />
+                              {errors && errors.name && <p style={{ color: "red" }}>Name is required field</p>}
+                            </div>
+                          </Form.Group>
                         </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">PAN Number</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="pan_number" placeholder="Enter Your Pan"
-                              {...register("pan_number", { required: true })} />
-
-                            {errors && errors.pan_number && <p style={{ color: "red" }}>pan is required field</p>}
-                          </div>
-                        </Form.Group>
-
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-4 col-form-label">Mobile</label>
+                            <div className="col-sm-8">
+                              <Form.Control type="text"
+                                name="mobile"
+                                defaultValue={cookies?.user?.contactno}
+                                {...register("mobile", { required: true })} />
+                              {errors && errors.mobile && <p style={{ color: "red" }}>Mobile is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-4 col-form-label">Email</label>
+                            <div className="col-sm-8">
+                              <Form.Control type="text"
+                                name="email"
+                                defaultValue={cookies?.user?.email}
+                                {...register("email", { required: true })} />
+                              {errors && errors.email && <p style={{ color: "red" }}>Email is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Aadhar Number</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="adhar" placeholder="Enter Your Adhar"
-                              {...register("adhar", { required: true })} />
 
-                            {errors && errors.adhar && <p style={{ color: "red" }}>adhar is required field</p>}
-                          </div>
-                        </Form.Group>
+                      <p className="card-description">Postal Address </p>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">Address</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="address1" placeholder="Enter Your Address"
+                                {...register("address", { required: true })} />
 
+                              {errors && errors.address && <p style={{ color: "red" }}>address is required field</p>}
+
+                            </div>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">City</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="city" placeholder="Enter Your city"
+                                {...register("city", { required: true })} />
+
+                              {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Passport Number</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="passport" placeholder="Enter Your Passport"
-                              {...register("passport", { required: true })} />
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">State</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="state" placeholder="Enter Your state"
+                                {...register("state", { required: true })} />
 
-                            {errors && errors.passport && <p style={{ color: "red" }}>pan is required field</p>}
-                          </div>
-                        </Form.Group>
+                              {errors && errors.state && <p style={{ color: "red" }}>state is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">Country</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="country" placeholder="Enter Your country"
+                                {...register("country", { required: true })} />
 
+                              {errors && errors.country && <p style={{ color: "red" }}>country is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Voter ID Number</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="voter" placeholder="Enter Your voter"
-                              {...register("voter", { required: true })} />
-
-                            {errors && errors.voter && <p style={{ color: "red" }}>voter is required field</p>}
-                          </div>
-                        </Form.Group>
-
+                      <p className="card-description">KYC </p>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <Form.Group className="row">
+                            <label className="col-sm-2  col-form-label">KYC</label>
+                            <div className="col-sm-3">
+                              <div className="form-check">
+                                <label className="form-check-label">
+                                  <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="pancard"
+                                    {...register("pancard", { required: false })}
+                                  />
+                                  <i className="input-helper"></i>
+                                  Pan card
+                                </label>
+                              </div>
+                              <Form.Group className="row">
+                                <div className="col-sm-12">
+                                  <Form.Control
+                                    id="input-panId"
+                                    className="d-none"
+                                    type="file"
+                                    name="pan_card_img"
+                                    multiple={false}
+                                    {...register("pan_card_img")}
+                                  />
+                                  <button
+                                    onClick={handlePanUpload}
+                                    className={`btn btn-outline-${values?.pan_card_img?.[0]?.name ? " btn-primary" : " btn-primary"
+                                      }`}
+                                  >
+                                    {values?.pan_card_img?.[0]?.name ? values?.pan_card_img?.[0]?.name : "Upload Pancard Image"}
+                                  </button>
+                                </div>
+                              </Form.Group>
+                            </div>
+                            <div className="col-sm-3">
+                              <div className="form-check">
+                                <label className="form-check-label">
+                                  <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="aadharcard"
+                                    {...register("aadharcard", { required: false })}
+                                  />
+                                  <i className="input-helper"></i>
+                                  Adhaar card
+                                </label>
+                              </div>
+                              <Form.Group className="row">
+                                <div className="col-sm-12">
+                                  <Form.Control
+                                    id="input-id"
+                                    className="d-none"
+                                    type="file"
+                                    name="aadhar_card_img"
+                                    multiple={false}
+                                    {...register("aadhar_card_img")}
+                                  />
+                                  <button
+                                    onClick={handleUpload}
+                                    className={`btn btn-outline-${values?.aadhar_card_img?.[0]?.name ? " btn-primary" : " btn-primary"
+                                      }`}
+                                  >
+                                    {values?.aadhar_card_img?.[0]?.name ? values?.aadhar_card_img?.[0]?.name : "Upload Aadharcard"}
+                                  </button>
+                                </div>
+                              </Form.Group>
+                            </div>
+                            <div className="col-sm-3">
+                              <div className="form-check">
+                                <label className="form-check-label">
+                                  <input
+                                    type="checkbox"
+                                    className="form-check-input"
+                                    name="bankpassbook"
+                                    {...register("bankpassbook", { required: false })}
+                                  />
+                                  <i className="input-helper"></i>
+                                  Bank Passbook
+                                </label>
+                              </div>
+                              <Form.Group className="row">
+                                <div className="col-sm-12">
+                                  <Form.Control
+                                    id="input-passId"
+                                    className="d-none"
+                                    type="file"
+                                    name="passbook_card_img"
+                                    multiple={false}
+                                    {...register("passbook_card_img")}
+                                  />
+                                  <button
+                                    onClick={handlePassUpload}
+                                    className={`btn btn-outline-${values?.passbook_card_img?.[0]?.name ? " btn-primary" : " btn-primary"
+                                      }`}
+                                  >
+                                    {values?.passbook_card_img?.[0]?.name ? values?.passbook_card_img?.[0]?.name : "Upload Bank Passport"}
+                                  </button>
+                                </div>
+                              </Form.Group>
+                            </div>
+                          </Form.Group>
+                        </div>
                       </div>
-                    </div>
-                    <p className="card-description">PAYMENT DETAILS </p>
-                    <div className="row">
-                      <div className="col-md-6">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">By Cheque</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="cheque" placeholder="Enter Your cheque"
-                              {...register("cheque", { required: true })} />
+                      <div className="row">
+                        <div className="col-md-12">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">PAN Number</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="pan_number" placeholder="Enter Your Pan Number"
+                                {...register("pan_number", { required: true })} />
 
-                            {errors && errors.cheque && <p style={{ color: "red" }}>cheque is required field</p>}
-                          </div>
-                        </Form.Group>
+                              {errors && errors.pan_number && <p style={{ color: "red" }}>panNo is required field</p>}
+                            </div>
+                          </Form.Group>
 
+                        </div>
                       </div>
-                      <div className="col-md-6">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">By NEFT</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="neft" placeholder="Enter Your neft"
-                              {...register("neft", { required: true })} />
+                      <div className="row">
+                        <div className="col-md-12">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">Aadhar Number</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="aadhar_number" placeholder="Enter Your Aadhar Number"
+                                {...register("aadhar_number", { required: true })} />
 
-                            {errors && errors.neft && <p style={{ color: "red" }}>neft is required field</p>}
-                          </div>
-                        </Form.Group>
+                              {errors && errors.aadhar_number && <p style={{ color: "red" }}>AadharNo is required field</p>}
+                            </div>
+                          </Form.Group>
 
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">By RTGS</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="rtgs" placeholder="Enter Your rtgs"
-                              {...register("rtgs", { required: true })} />
+                      <div className="row">
+                        <div className="col-md-12">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">Passport Number</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="passport_number" placeholder="Enter Your Passport"
+                                {...register("passport_number", { required: true })} />
+                              {errors && errors.passport_number && <p style={{ color: "red" }}>passport is required field</p>}
+                            </div>
+                          </Form.Group>
 
-                            {errors && errors.rtgs && <p style={{ color: "red" }}>rtgs is required field</p>}
-                          </div>
-                        </Form.Group>
-
+                        </div>
                       </div>
-                    </div>
-                    <div className='row'>
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">By Payment Gateways</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="text" name="payment" placeholder="Enter Your payment"
-                              {...register("payment", { required: true })} />
+                      <div className="row">
+                        <div className="col-md-12">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">Voter ID Number</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="voter_id" placeholder="Enter Your voter Id Number"
+                                {...register("voter_id", { required: true })} />
 
-                            {errors && errors.payment && <p style={{ color: "red" }}>gateway is required field</p>}
-                          </div>
-                        </Form.Group>
+                              {errors && errors.voter_id && <p style={{ color: "red" }}>Voter is required field</p>}
+                            </div>
+                          </Form.Group>
 
+                        </div>
                       </div>
-                    </div>
-                    <div className="row">
+                      <p className="card-description">PAYMENT DETAILS </p>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By Cheque</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="cheque" placeholder="Enter Your cheque"
+                                {...register("cheque", { required: true })} />
 
-                    </div>
-                    <div className="row">
+                              {errors && errors.cheque && <p style={{ color: "red" }}>Cheque is required field</p>}
+                            </div>
+                          </Form.Group>
 
-                    </div>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By NEFT</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="neft" placeholder="Enter Your NEFT"
+                                {...register("neft", { required: true })} />
 
-                    <div className="mt-3">
-                      <button
-                        className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
-                        type="submit"
-                      // disabled={!isDirty || !isValid}
-                      >
-                        SIGN UP
-                      </button>
-                    </div>
-                  </form>
+                              {errors && errors.neft && <p style={{ color: "red" }}>NEFT is required field</p>}
+                            </div>
+                          </Form.Group>
+
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-12">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By RTGS</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="rtgs" placeholder="Enter Your RTGS"
+                                {...register("rtgs", { required: true })} />
+
+                              {errors && errors.rtgs && <p style={{ color: "red" }}>RTGS is required field</p>}
+                            </div>
+                          </Form.Group>
+
+                        </div>
+                      </div>
+                      <div className='row'>
+                        <div className="col-md-12">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By Payment Gateways</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="payment_gateway" placeholder="Enter Your payment"
+                                {...register("payment_gateway", { required: true })} />
+
+                              {errors && errors.payment_gateway && <p style={{ color: "red" }}>Payment Gateway is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
+                      </div>
+                      <div className="mt-3">
+                        <button
+                          className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
+                          type="submit"
+                        // disabled={!isDirty || !isValid}
+                        >
+                          Submit
+                        </button>
+                      </div>
+                    </form>
+                  </div>
                 </div>
-              </div>
+              )}
             </div>
           </div>
         </Tab>
@@ -527,29 +637,19 @@ const PowerOne = () => {
                     </thead>
                     <tbody>
                       <tr>
-
                         <td> Herman Beck </td>
-                        <td>
-                          fdsfsdfsd
-                        </td>
+                        <td> fdsfsdfsd </td>
                         <td> $ 77.99 </td>
                         <td> $ 77.99 </td>
                         <td> 2300 </td>
-
                       </tr>
                       <tr>
-
                         <td> Herman Beck </td>
-                        <td>
-                          fdsfsdfsd
-                        </td>
+                        <td>fdsfsdfsd</td>
                         <td> $ 77.99 </td>
                         <td> $ 77.99 </td>
                         <td> 2300 </td>
-
                       </tr>
-
-
                     </tbody>
                   </table>
                 </div>
