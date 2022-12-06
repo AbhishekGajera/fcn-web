@@ -221,7 +221,7 @@ const BranchList = () => {
   const viewUser = (Id) => {
     history.push(`/viewUser/${Id}`);
   }
-  
+
   const list = async () => {
     setIsLoading(true)
     const items = await (await getBranches(itemsPerPage, (+itemOffset + 1), searchTerm)).data;
@@ -428,7 +428,6 @@ const BranchList = () => {
                       </div>
                     </div>
 
-
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -463,15 +462,51 @@ const BranchList = () => {
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-4 col-form-label">
+                          <label className="col-sm-3 col-form-label">
                             Password
                           </label>
-                          <div className="col-sm-8">
+                          <div className="col-sm-9">
                             <Form.Control
                               type="password"
                               name="password"
                               {...register("password")}
                             />
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-5 col-form-label">Branch Head Name</label>
+                          <div className="col-sm-7">
+                            <Form.Control
+                              type="text"
+                              name="b_head_name"
+                              defaultValue={valueToEdit.b_head_name}
+                              {...register("b_head_name", { required: true })}
+                            />
+                            {errors && errors.b_head_name && <p>branch head name is required field</p>}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+
+                    <div className="row">
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-5 col-form-label">Branch Head Contact</label>
+                          <div className="col-sm-7">
+                            <Form.Control
+                              type="text"
+                              name="b_head_contact_no"
+                              defaultValue={valueToEdit.b_head_contact_no}
+                              {...register("b_head_contact_no", { required: true })}
+                            />
+                            {errors && errors.b_head_contact_no && (
+                              <p>branch head number is required field</p>
+                            )}
                           </div>
                         </Form.Group>
                       </div>
@@ -623,14 +658,14 @@ const BranchList = () => {
                             </button>
                           </td>
                           <td>
-                              <button
-                                type="button"
-                                className="btn btn-gradient-primary btn-sm "
-                                onClick={() => { viewUser(item?.id) }}
-                              >
-                                View
-                              </button>
-                            </td>
+                            <button
+                              type="button"
+                              className="btn btn-gradient-primary btn-sm "
+                              onClick={() => { viewUser(item?.id) }}
+                            >
+                              View
+                            </button>
+                          </td>
                           <td>
                             <i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i>
                           </td>

@@ -33,6 +33,7 @@ import {
   getIBOs,
   getTotalPoweroneCount,
   getTotalSIPCount,
+  getTransactionUsrs,
 } from "../../utils/APIs";
 import { useUrl } from "../../utils/Functions/useUrl";
 
@@ -75,13 +76,19 @@ const Dashboard = () => {
         ).data;
       }
 
-
       if (cookies?.user?.role === 'branch') {
         console.info("cookies?.user?._id++ test2", cookies?.user)
         items = await (
           await getTransactionBranch(0, cookies?.user?.id)
         ).data;
       }
+
+      if (cookies?.user?.role === 'IBO') {
+        items = await (
+          await getTransactionUsrs(cookies?.user?.id)
+        ).data;
+        console.log("items++",items)
+      }   
 
       if (cookies?.user?.role === 'user') {
         console.info("cookies?.user?._id++ test", cookies?.user)

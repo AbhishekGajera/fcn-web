@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { userLogout, getConnect, deleteContact, getConnectByBranch } from "../../../../utils/APIs";
+import { userLogout, getConnect, getBranches, deleteContact, getConnectByBranch } from "../../../../utils/APIs";
 import { CSVLink } from "react-csv";
 import * as FileSaver from "file-saver";
 import * as XLSX from "xlsx";
@@ -14,12 +14,15 @@ import { useUrl } from "../../../../utils/Functions/useUrl";
 import { useDebounce } from "../../../../utils/Functions/useDebounce";
 import Spinner from "../../../shared/Spinner";
 import moment from 'moment';
+import { Form } from "react-bootstrap";
 
 const ClientList = () => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [selectedBranch, setselectedBranch] = useState("");
+  const [branchList, setbranchList] = useState([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const {
     formState: { errors, isDirty, isValid },
@@ -37,19 +40,23 @@ const ClientList = () => {
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, debouncedSearchTerm]);
+  }, [itemOffset, itemsPerPage, selectedBranch, debouncedSearchTerm]);
+
+  useEffect(() => {
+    getBranchList()
+  },[])
 
   const list = async () => {
     setIsLoading(true);
     try {
-      let items 
-      if(cookies?.user?.role === 'branch'){
+      let items
+      if (cookies?.user?.role === 'branch') {
         items = await (
           await getConnectByBranch(itemsPerPage, +itemOffset + 1, searchTerm, cookies?.user?.name)
         ).data;
       }
 
-      if(cookies?.user?.role === 'admin'){
+      if (cookies?.user?.role === 'admin') {
         items = await (
           await getConnect(itemsPerPage, +itemOffset + 1, searchTerm)
         ).data;
@@ -82,7 +89,7 @@ const ClientList = () => {
     setItemOffset(event.selected);
   };
 
-  const convertClient = (Id) =>{   
+  const convertClient = (Id) => {
     history.push({
       pathname: '/clients/createclient',
       search: "?" + new URLSearchParams({ id: Id }).toString()
@@ -117,6 +124,17 @@ const ClientList = () => {
     data: itemlist,
     headers: headers,
     filename: 'Clue_Mediator_Report.csv'
+  };
+
+  const getBranchList = async () => {
+    const items = await (await getBranches(5000, 1, "", "branch")).data;
+
+    setbranchList(items?.results);
+  };
+
+  const onChangeHandlerBranch = (e) => {
+    setItemOffset(0);
+    setselectedBranch(e.target.value);
   };
 
   const deleteData = (uid) => {
@@ -165,8 +183,8 @@ const ClientList = () => {
       <div className="col-lg-12 grid-margin stretch-card p0">
         <div className="card">
           <div className="card-body">
-            <div className="row">
-              <div className="col-md-4">
+            <div className="row mb-4">
+              <div className="col-md-3">
                 <button
                   type="button"
                   className="btn btn-gradient-primary btn-sm "
@@ -175,7 +193,7 @@ const ClientList = () => {
                 </button>
               </div>
 
-              <div className="col-md-4">
+              <div className="col-md-3">
                 <button
                   type="button"
                   className="btn btn-gradient-primary btn-sm "
@@ -183,6 +201,39 @@ const ClientList = () => {
                 >
                   Download Excel
                 </button>
+              </div>
+            </div>
+            <div className="row">
+              <div className="col-md-4">
+                <Form.Group className="row">
+                  <label className="col-sm-6 col-form-label">
+                    Search Branch
+                  </label>
+                  <div className="col-sm-6">
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect2"
+                      name="branch"
+                      onChange={onChangeHandlerBranch}
+                    >
+                      <option selected={"" === selectedBranch} value={""}>
+                        Not Selected
+                      </option>
+                      {branchList?.map((i) => {
+                        return (
+                          <>
+                            <option
+                              selected={i.name === selectedBranch}
+                              value={i.name}
+                            >
+                              {i.name}
+                            </option>
+                          </>
+                        );
+                      })}
+                    </select>
+                  </div>
+                </Form.Group>
               </div>
 
               <div className="col-md-4">
@@ -236,16 +287,16 @@ const ClientList = () => {
                           <td><button
                             type="button"
                             className="btn btn-gradient-primary btn-sm "
-                            onClick={() => {convertClient(item?.id)}}
+                            onClick={() => { convertClient(item?.id) }}
                           >
                             Convert
                           </button></td>
                           <td> <i
-                              onClick={() => deleteData(item?.id)}
-                              className="mdi mdi-delete"
-                            >
-                              {" "}
-                            </i>
+                            onClick={() => deleteData(item?.id)}
+                            className="mdi mdi-delete"
+                          >
+                            {" "}
+                          </i>
                           </td>
                         </tr>
                       );

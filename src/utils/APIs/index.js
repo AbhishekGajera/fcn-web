@@ -107,13 +107,10 @@ export const addVideo = (data) => api(`video `, 'POST', data);
 export const getVideo = (data) => api(`video `, 'GET', data);
 export const getVideoFree = (type='free') => api(`video?type=${type} `, 'GET');
 export const getVideoPaid = (type='paid') => api(`video?type=${type} `, 'GET');
-
-
-
 export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 
-//  Transaction Management
 
+//  Transaction Management
 export const addTransaction = (data) => api(`transaction/add-transaction `, 'POST', data);
 export const getTransaction = (limit = 10,offset = 1,status="0") => api(`transaction/fetch-transaction?limit=${limit}&page=${offset}&status=${status}&sortBy=createdAt:desc `, 'GET');
 export const getTransactionBranch = (status="0",id,role='branch') => api(`transaction/get-transaction-branch?to_user=${id}&status=${status}&role=${role}&sortBy=createdAt:desc `, 'GET');
@@ -121,7 +118,6 @@ export const getTransactionUsr = (id,status="0") => api(`transaction/get-transac
 export const getTransactionUsrs = (id,limit = 10,offset = 1) => api(`transaction/get-transaction-user/${id}?limit=${limit}&page=${offset}&sortBy=createdAt:desc `, 'GET');
 export const updateTransaction = (data) => api(`transaction/update-transaction`, 'PATCH', data);
 export const deleteTransaction = (id) => api(`transaction/delete-transaction/${id}`, 'GET');
-
 
 
 // dashboard APIs
