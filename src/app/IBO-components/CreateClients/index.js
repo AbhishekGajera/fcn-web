@@ -71,11 +71,11 @@ const CreateClints = () => {
     const Data = new FormData();
     var aadharcard_img = '';
     var pancard_img = '';
-    if (data.aadhar_card_img) {
+    if (data.aadhar_card_img.length !== 0) {
       Data.append('file', data.aadhar_card_img[0]);
       aadharcard_img = await ImageUpload(Data)
     }
-    if (data.pan_card_img) {
+    if (data.pan_card_img.length !== 0) {
       Data.append('file', data.pan_card_img[0]);
       pancard_img = await ImageUpload(Data)
     }
@@ -229,9 +229,9 @@ const CreateClints = () => {
       </div>
       <div className="row">
         <div className="col-12 grid-margin">
-        {isLoading ? <Spinner /> : (
-          <div className="card">
-            <div className="card-body">
+          {isLoading ? <Spinner /> : (
+            <div className="card">
+              <div className="card-body">
                 <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
                   <p className="card-description"> Personal info </p>
                   <div className="row">
@@ -673,8 +673,8 @@ const CreateClints = () => {
                     </button>
                   </div>
                 </form>
+              </div>
             </div>
-          </div>
           )}
         </div>
       </div>

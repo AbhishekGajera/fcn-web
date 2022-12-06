@@ -74,16 +74,16 @@ const PowerOne = () => {
     var aadharcard_img = '';
     var pancard_img = '';
     var passbook_img = '';
-    if (data.aadhar_card_img) {
+    if (data.aadhar_card_img.length !== 0) {
       Data.append('file', data.aadhar_card_img[0]);
       aadharcard_img = await ImageUpload(Data)
     }
-    if (data.pan_card_img) {
+    if (data.pan_card_img.length !== 0) {
       Data.append('file', data.pan_card_img[0]);
       pancard_img = await ImageUpload(Data)
     }
 
-    if (data.passbook_card_img) {
+    if (data.passbook_card_img.length !== 0) {
       Data.append('file', data.passbook_card_img[0]);
       passbook_img = await ImageUpload(Data)
     }
@@ -97,7 +97,6 @@ const PowerOne = () => {
       delete data.passport_number;
       delete data.pan_number;
       delete data.aadhar_number;
-      data.voter_card_img = "";
       data.aadhar_card_img = aadharcard_img.secure_url;
       data.pan_card_img = pancard_img.secure_url;
       data.passbook_card_img = passbook_img.secure_url;
