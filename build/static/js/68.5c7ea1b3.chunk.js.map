@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Auto-Calculation/CpTravels.js"],"names":["CpTravels"],"mappings":"+HAAA,2BAQeA,UANG,WAChB,OACE","file":"static/js/68.5c7ea1b3.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst CpTravels = () => {\r\n  return (\r\n    <div>CpTravels</div>\r\n  )\r\n}\r\n\r\nexport default CpTravels"],"sourceRoot":""}

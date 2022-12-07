@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Product-Assign/Branch.js"],"names":["Branch"],"mappings":"+HAAA,2BAQeA,UANA,WACb,OACE","file":"static/js/86.98a7a04a.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Branch = () => {\r\n  return (\r\n    <div>Branch</div>\r\n  )\r\n}\r\n\r\nexport default Branch"],"sourceRoot":""}
