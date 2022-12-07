@@ -4,7 +4,7 @@ import { useForm } from "react-hook-form";
 import { toast } from "react-toastify";
 import { useUrl } from "../../../utils/Functions/useUrl";
 import { Form } from 'react-bootstrap';
-import { ImageUpload, userLogout, addNotification, getNotification, deleteNotification, getNotificationByAll, getPersonalizedNotification, getNotificationByAudience, getAllUsers } from "../../../utils/APIs";
+import { ImageUpload, userLogout, addNotification, updateNotification, getNotification, deleteNotification, getNotificationByAll, getPersonalizedNotification, getNotificationByAudience, getAllUsers } from "../../../utils/APIs";
 import { useHistory } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import Spinner from "../../shared/Spinner";
@@ -55,6 +55,9 @@ const AllNotification = () => {
   }, [])
 
   const deleteNotifications = (uid) => {
+    const data = JSON.stringify({
+      is_delete: 'true'
+    })
     Swal.fire({
       title: "Are you sure?",
       text: "You will not be able to recover this imaginary file!",
@@ -66,14 +69,25 @@ const AllNotification = () => {
       cancelButtonText: "No, keep it",
     }).then((result) => {
       if (result.value) {
-        return (
-          deleteNotification(uid).finally(() => list()),
-          Swal.fire(
-            "Deleted!",
-            "Your imaginary file has been deleted.",
-            "success"
-          )
-        );
+        if (cookies?.user?.role !== 'admin') {
+          return (
+            updateNotification(uid, data).finally(() => list()),
+            Swal.fire(
+              "Deleted!",
+              "Your imaginary file has been deleted.",
+              "success"
+            )
+          );
+        } else {
+          return (
+            deleteNotification(uid).finally(() => list()),
+            Swal.fire(
+              "Deleted!",
+              "Your imaginary file has been deleted.",
+              "success"
+            )
+          );
+        }
       } else if (result.dismiss === Swal.DismissReason.cancel) {
         Swal.fire("Cancelled", "Your imaginary file is safe :)", "error");
       }
@@ -101,21 +115,23 @@ const AllNotification = () => {
         items = await (
           await getNotification('1', itemsPerPage, +itemOffset + 1,)
         ).data;
+        setitemlist(items?.results);
       } else if (cookies?.user?.role === 'IBO') {
         items = await (
           await getNotificationByAudience(1, 'all', itemsPerPage, +itemOffset + 1,)
         ).data;
+        setitemlist(items?.results?.filter(data => data.is_delete === 'false'));
       } else if (cookies?.user?.role === 'branch') {
         items = await (
           await getNotificationByAudience(1, 'all', itemsPerPage, +itemOffset + 1,)
         ).data;
-
+        setitemlist(items?.results?.filter(data => data.is_delete === 'false'));
       } else if (cookies?.user?.role === 'user') {
         items = await (
           await getNotificationByAudience(1, 'all', itemsPerPage, +itemOffset + 1,)
         ).data;
+        setitemlist(items?.results?.filter(data => data.is_delete === 'false'));
       }
-      setitemlist(items?.results);
       setPageCount(items?.totalPages);
     } catch (error) {
       if (error?.response?.data?.message) {
@@ -146,7 +162,7 @@ const AllNotification = () => {
         const audienceData = await (
           await getNotificationByAudience(1, name, itemsPerPage, +audienceOffset + 1,)
         ).data;
-        setaudiencelist(audienceData?.results);
+        setaudiencelist(audienceData?.results?.filter(data => data.is_delete === 'false'));
         setAudienceCount(audienceData?.totalPages);
       } catch (error) {
         if (error?.response?.data?.message) {
@@ -159,7 +175,7 @@ const AllNotification = () => {
         const personalizeData = await (
           await getPersonalizedNotification(cookies?.user?.id, itemsPerPage, +audienceOffset)
         ).data;
-        setpersonalizelist(personalizeData?.results?.results);
+        setpersonalizelist(personalizeData?.results?.results?.filter(data => data.is_delete === 'false'));
         setPersonalizeCount(personalizeData?.totalPages);
       } catch (error) {
         if (error?.response?.data?.message) {
@@ -411,8 +427,8 @@ const AllNotification = () => {
                 <tbody>
                   {isLoading ? <Spinner />
                     :
-                    itemlist?.map((item) => {
-                      return (
+                    itemlist?.map((item) => (
+                      <>
                         <tr>
                           <td>{item?.title}</td>
                           <td className="max-width-200">{item?.content}</td>
@@ -435,8 +451,9 @@ const AllNotification = () => {
                             </td>
                           </td>
                         </tr>
-                      );
-                    })}
+                      </>
+                    )
+                    )}
                 </tbody>
               </table>
               <ReactPaginate
@@ -520,7 +537,7 @@ const AllNotification = () => {
           </div>
         </div>
       )}
-      {cookies?.user?.role !== 'admin' && personalizelist.length !== '0' &&(
+      {cookies?.user?.role !== 'admin' && personalizelist.length !== '0' && (
         <div className="col-lg-12 grid-margin stretch-card p0">
           <div className="card">
             <div className="card-body">

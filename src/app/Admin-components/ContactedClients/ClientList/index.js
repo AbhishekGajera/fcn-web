@@ -21,6 +21,7 @@ const ClientList = () => {
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
+  const [searchType, setSearchType] = useState();
   const [selectedBranch, setselectedBranch] = useState("");
   const [branchList, setbranchList] = useState([]);
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
@@ -40,7 +41,7 @@ const ClientList = () => {
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, selectedBranch, debouncedSearchTerm]);
+  }, [itemOffset, itemsPerPage,searchType, selectedBranch, debouncedSearchTerm]);
 
   useEffect(() => {
     getBranchList()
@@ -58,7 +59,7 @@ const ClientList = () => {
 
       if (cookies?.user?.role === 'admin') {
         items = await (
-          await getConnect(itemsPerPage, +itemOffset + 1, searchTerm)
+          await getConnect(itemsPerPage, +itemOffset + 1, selectedBranch ,searchType)
         ).data;
       }
       setitemlist(items?.results);
@@ -137,6 +138,10 @@ const ClientList = () => {
     setselectedBranch(e.target.value);
   };
 
+  const onChangeHandlerType = (e) => {
+    setItemOffset(0);
+    setSearchType(e.target.value);
+  };
   const deleteData = (uid) => {
     Swal.fire({
       title: "Are you sure?",
@@ -237,6 +242,28 @@ const ClientList = () => {
               </div>
 
               <div className="col-md-4">
+                <Form.Group className="row">
+                  <label className="col-sm-6 col-form-label">
+                    Search Type
+                  </label>
+                  <div className="col-sm-6">
+                    <select
+                      className="form-control form-control-sm"
+                      id="exampleFormControlSelect2"
+                      name="type"
+                      onChange={onChangeHandlerType}
+                    >
+                      <option selected={"" === searchType} value={""}>
+                        Not Selected
+                      </option>
+                      <option value={0}>Free</option>
+                      <option value={1}>Paid</option>
+                    </select>
+                  </div>
+                </Form.Group>
+              </div>
+
+              {/* <div className="col-md-4">
                 <div className="search-field d-none d-md-block">
                   <form className="d-flex align-items-center h-100" action="#">
                     <div className="input-group">
@@ -256,7 +283,7 @@ const ClientList = () => {
                     </div>
                   </form>
                 </div>
-              </div>
+              </div> */}
             </div>
 
             <div className="table-responsive">

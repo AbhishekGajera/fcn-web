@@ -18,7 +18,7 @@ class Sidebar extends Component {
     }
 
     if (itemName === 'ourInvestment') {
-      this.props.history.push('/investment/powerone')
+      this.props.history.push('/investment/addpowerone')
     }
 
     if (itemName === 'ourUtils') {
@@ -260,7 +260,8 @@ class Sidebar extends Component {
                 </div>
                 <Collapse in={this.state.ourInvestment}>
                   <ul className="nav flex-column sub-menu">
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/powerone') ? 'nav-link active' : 'nav-link'} to="/investment/powerone"><Trans>PowerOne</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/investment/addpowerone') ? 'nav-link active' : 'nav-link'} to="/investment/addpowerone"><Trans>Add PowerOne</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/investment/poweronelist') ? 'nav-link active' : 'nav-link'} to="/investment/poweronelist"><Trans>Show PowerOne</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/ssp') ? 'nav-link active' : 'nav-link'} to="/investment/ssp"><Trans>SSP</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/cp') ? 'nav-link active' : 'nav-link'} to="/investment/cp"><Trans>CP</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/insurance') ? 'nav-link active' : 'nav-link'} to="/investment/insurance"><Trans>Insurance</Trans></Link></li>

@@ -216,8 +216,6 @@ const DashboardNotification = () => {
                                                             name="content"
                                                             {...register("content", { required: true })}
                                                         />
-                                                        {console.info("errors++ ", errors)}
-                                                        {console.info("errors++ ", values)}
                                                         {errors && errors.content && (
                                                             <p>Content is required field</p>
                                                         )}

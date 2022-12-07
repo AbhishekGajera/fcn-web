@@ -94,7 +94,7 @@ export const getRevenueList = (limit = 10,offset = 1) => api(`revenue/fetch-reve
 
 // connect management
 export const CreateConnect = (data) => api('contact/add-contact', 'POST', data);
-export const getConnect = (limit = 10,offset = 1,name = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&sortBy=createdAt:desc&custom=true`, 'GET');
+export const getConnect = (limit = 10,offset = 1,branch = '',type = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&branch=${branch}&type=${type}&sortBy=createdAt:desc&custom=true`, 'GET');
 export const getConnectByBranch = (limit = 10,offset = 1,name = '',branch = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&branch=${branch}&sortBy=createdAt:desc&custom=true`, 'GET');
 export const getConnectedById = (id = '') => api(`contact/get-connected-id/${id}`, 'GET');
 export const deleteContact = (id) => api(`contact/delete-contact/${id}`, 'DELETE');
@@ -133,6 +133,7 @@ export const getNotificationByAll = (status="1",targetAudience,limit=10,offset =
 export const addViewNotification = (data) => api(`notification/add-view-notification`, 'POST',data);
 export const getNotificationById = (id) => api(`notification/get-notificationById/${id}`, 'GET');
 export const deleteNotification = (id) => api(`notification/delete-notification/${id}`, 'GET');
+export const updateNotification = (id,data) => api(`notification/update-notification/${id}`, 'PATCH',data);
 export const getPersonalizedNotification = (id,limit=10,offset = 1) => api(`notification/get-personalized-notification/${id}?limit=${limit}&page=${offset}&sortBy=createdAt:desc`, 'GET');
 
 //Dashboard Notification Management
@@ -159,7 +160,7 @@ export const getPreTravel = (limit = 100, offset = 1) => api(`travel/fetch-trave
 // Powerone managemnet
 export const addPowerone = (data) => api(`powerone/add-powerone`, 'POST', data);
 export const deletePowerone = (id) => api(`powerone/delete-powerone/${id}`, 'GET');
-export const getowerone = () => api(`powerone/fetch-powerone`, 'GET');
+export const getpowerone = () => api(`powerone/fetch-powerone`, 'GET');
 
 
 // get user Perfomance

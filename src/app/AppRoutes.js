@@ -16,6 +16,7 @@ const Balance   = lazy(() => import('./client-component/balance/Balance'));
 const Offers   = lazy(() => import('./client-component/Utils/Offers'));
 const Literature   = lazy(() => import('./client-component/Utils/Literature'));
 const PowerOne   = lazy(() => import('./client-component/investment/PowerOne'));
+const PowerOnelist   = lazy(() => import('./client-component/investment/PowerOneFetch'));
 const Insurance   = lazy(() => import('./client-component/investment/Insurance'));
 const SystematicSaving   = lazy(() => import('./client-component/investment/SystematicSaving'));
 const Currency   = lazy(() => import('./client-component/investment/Currency'));
@@ -124,7 +125,8 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/trading/commodity" component={ Commodity }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/trading/forex" component={ Forex }  accesstype={["user","admin","IBO","branch"]}/>
           
-          <ProtectedRoute path="/investment/powerone" component={ PowerOne }  accesstype={["user","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/investment/addpowerone" component={ PowerOne }  accesstype={["user","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/investment/poweronelist" component={ PowerOnelist }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/investment/ssp" component={ SystematicSaving }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/investment/cp" component={ Currency } accesstype={["user","admin","IBO","branch"]} />
           <ProtectedRoute path="/investment/insurance" component={ Insurance } accesstype={["user","admin","IBO","branch"]} />
