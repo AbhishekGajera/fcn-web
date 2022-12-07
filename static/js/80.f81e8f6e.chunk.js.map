@@ -1,0 +1,1 @@
+{"version":3,"sources":["app/Admin-components/Password/Manual.js"],"names":["Manual"],"mappings":"+HAAA,2BAQeA,UANA,WACb,OACE","file":"static/js/80.f81e8f6e.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Manual = () => {\r\n  return (\r\n    <div>Manual</div>\r\n  )\r\n}\r\n\r\nexport default Manual"],"sourceRoot":""}
