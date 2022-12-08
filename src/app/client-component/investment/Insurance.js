@@ -30,13 +30,13 @@ const Insurance = () => {
                   <div className="row">
                     <div className="col-md-12">
                       <Form.Group className="row">
-                        <label className="col-sm-2 col-form-label">insurance name</label>
+                        <label className="col-sm-2 col-form-label">Insurance name</label>
                         <div className="col-sm-10">
                         <Form.Control  type="text"
                          name="name"
                          placeholder="Enter Your Name"
                          {...register("name", { required: true })} />
-                            {errors && errors.name && <p style={{ color: "red" }}>name is required field</p>}
+                            {errors && errors.name && <p style={{ color: "red" }}>Insurance is required field</p>}
                         </div>
                       </Form.Group>
                     </div>

@@ -8,21 +8,46 @@ import Modal from "react-bootstrap/Modal";
 import { toast } from "react-toastify";
 import { useCookies } from 'react-cookie';
 import { useHistory } from 'react-router-dom';
-import { ImageUpload, addPowerone, getAllUsers } from '../../../utils/APIs';
+import { ImageUpload, addPowerone, getAllUsers, getBranchesClient, userLogout, addTransaction } from '../../../utils/APIs';
 import Spinner from '../../shared/Spinner';
 
 
 const PowerOne = () => {
   const history = useHistory();
-  const [cookies] = useCookies(['user']);
+  const [cookies, setCookie] = useCookies(['user']);
   const [user, setUser] = React.useState([]);
   const [show, setShow] = React.useState(false);
   const [show1, setShow1] = React.useState(false);
   const [isLoading, setisLoading] = React.useState(false);
+  const [itemlist, setitemlist] = React.useState([]);
 
   useEffect(() => {
     getAllUsersList();
+    list();
   }, []);
+
+  const list = async () => {
+    try {
+      const items = await (await getBranchesClient()).data;
+      setitemlist(items?.results);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
+  };
 
   const getAllUsersList = async () => {
     const allUsers = await getAllUsers();
@@ -35,9 +60,15 @@ const PowerOne = () => {
   const handleShow = () => setShow(true);
   const handleShow1 = () => setShow1(true);
 
-
-
   const { register, handleSubmit, formState: { errors, isDirty, isValid }, getValues } = useForm({
+    mode: "onChange"
+  });
+
+  const { register: register2, handleSubmit:handleSubmit2 ,formState: { errors:errors2 },reset} = useForm({
+    mode: "onChange"
+  });
+
+  const { register: register3, handleSubmit:handleSubmit3 ,formState: { errors:errors3 },reset:reset3} = useForm({
     mode: "onChange"
   });
 
@@ -66,6 +97,63 @@ const PowerOne = () => {
       element.click()
     }
   };
+
+  const onSubmitWithdraw = async (data) => {
+    handleClose();
+    const formData = JSON.stringify({
+      'total': data.amount,
+      'from_user': cookies?.user?.id,
+      'to_user': data.branch,
+      'type': "withdraw",
+      'role':"branch",
+      'status': 0
+    })
+    try {
+      await addTransaction(formData);
+      handleClose1();
+      reset3();
+      toast.success("Withdraw Request successfully");
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
+  };
+
+  const onSubmitDeposit = async(data) => {
+    const formData = JSON.stringify({
+      'total': data.amount,
+      'from_user': cookies?.user?.id,
+      'to_user': data.branch,
+      'type': "deposit",
+      'role':'branch',
+      'status': 0
+    })
+    try {
+      await addTransaction(formData);
+      reset();
+      handleClose();
+      toast.success("Deposit successfully");
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
+  }
 
   const onSubmit = async (data) => {
     setisLoading(true)
@@ -132,61 +220,60 @@ const PowerOne = () => {
           <Modal.Title>Raise Funds</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row">
+        <div className="row">
             <div className="col-12 ">
               <div className="card">
                 <div className="card-body">
-                  <form className="form-sample" /* onSubmit={handleSubmit(onSubmit)}*/ >
-                    <div className="row">
-                      <>
-                        <h5>Bank Detail:</h5>
-                        {cookies?.user?.bankAccNo && (
-                          <>
-                            <div className="col-md-12">
-                              <div className="row">
-                                <label className="col-sm-5 col-form-label">Bank Acc. No :</label>
-                                <label className="col-sm-7 col-form-label">{cookies?.user?.bankAccNo}</label>
-                              </div>
-                            </div>
-                            <div className="col-md-12">
-                              <div className="row">
-                                <label className="col-sm-5 col-form-label">Bank IFSC Code :</label>
-                                <label className="col-sm-7 col-form-label">{cookies?.user?.bankIfscCode}</label>
-                              </div>
-                            </div>
-                          </>
-                        )}
-                        {!cookies?.user?.bankAccNo && (
-                          <div className="col-md-12">
-                            <div className="row">
-                              <label className="col-form-label">No Bank Detail Found</label>
-                            </div>
-                          </div>
-                        )}
-                      </>
-                    </div>
+                  <form
+                    className="form-sample"
+                    onSubmit={handleSubmit2(onSubmitDeposit)}
+                  >
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Enter Amount</label>
+                          <label className="col-sm-3 col-form-label">
+                            Enter Amount
+                          </label>
                           <div className="col-sm-9">
-                            <Form.Control type="text" placeholder="Enter Amount"
-                              name="deposit"
-                              {...register("deposit", { required: false })} />
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter Amount"
+                              name="amount"
+                              {...register2("amount", { required: true })}
+                            />
+                            {errors2 && errors2.amount && <p style={{ color: "red" }}>Amount field is required field</p>}
+                          </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            To
+                          </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              {...register2("branch", {
+                                required: true,
+                              })}
+                            >
+                              <option value=''>--Select branch--</option>
+                              {itemlist.map((item, index) => (
+                                <option key={index} value={item?.id} label={item?.name} ></option>
+                              ))}
+                            </select>
+                            {errors2 && errors2.branch && <p style={{ color: "red" }}>Select branch is required field</p>}
                           </div>
                         </Form.Group>
                       </div>
                     </div>
-
-                    <div className='text-center'>
+                    <div className="text-center">
                       <button
                         className="btn  btn-primary btn-sm font-weight-medium auth-form-btn "
                         type="submit"
-                        disabled={!isDirty || !isValid}
                       >
                         SUBMIT
                       </button>
-
                     </div>
                   </form>
                 </div>
@@ -194,8 +281,6 @@ const PowerOne = () => {
             </div>
           </div>
         </Modal.Body>
-
-
       </Modal>
       <Modal
         show={show1}
@@ -207,33 +292,60 @@ const PowerOne = () => {
           <Modal.Title>Withdraw Funds</Modal.Title>
         </Modal.Header>
         <Modal.Body>
-          <div className="row">
+        <div className="row">
             <div className="col-12 ">
               <div className="card">
                 <div className="card-body">
-                  <form className="form-sample" /* onSubmit={handleSubmit(onSubmit)}*/>
+                  <form
+                    className="form"
+                    onSubmit={handleSubmit3(onSubmitWithdraw)}
+                  >
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label">Enter Amount</label>
+                          <label className="col-sm-3 col-form-label">
+                            Enter Amount
+                          </label>
                           <div className="col-sm-9">
-                            <Form.Control type="text" placeholder="Enter Amount"
-                              name="deposit1"
-                              {...register("deposit1", { required: false })} />
+                            <Form.Control
+                              type="text"
+                              placeholder="Enter Amount"
+                              name="amount"
+                              {...register3("amount", { required: true })}
+                            />
+                            {errors3 && errors3.amount && <p style={{ color: "red" }}>amount is required field</p>}
+                          </div>
+                        </Form.Group>
+                        <Form.Group className="row">
+                          <label className="col-sm-3 col-form-label">
+                            To
+                          </label>
+                          <div className="col-sm-9">
+                            <select
+                              className="form-control form-control-lg"
+                              id="exampleFormControlSelect2"
+                              name="branch"
+                              {...register3("branch", {
+                                required: true,
+                              })}
+                            >
+                              <option value=''>--Select branch--</option>
+                              {itemlist.map((item, index) => (
+                                <option key={index} value={item?.id} label={item?.name} ></option>
+                              ))}
+                            </select>
+                            {errors3 && errors3.branch && <p style={{ color: "red" }}>Select branch is required field</p>}
                           </div>
                         </Form.Group>
                       </div>
                     </div>
-
-                    <div className='text-center'>
+                    <div className="text-center">
                       <button
                         className="btn  btn-primary btn-sm font-weight-medium auth-form-btn "
                         type="submit"
-
                       >
                         SUBMIT
                       </button>
-
                     </div>
                   </form>
                 </div>
@@ -241,8 +353,6 @@ const PowerOne = () => {
             </div>
           </div>
         </Modal.Body>
-
-
       </Modal>
       <Tabs defaultActiveKey="first"  >
         <Tab eventKey="first" title="PowerOne">

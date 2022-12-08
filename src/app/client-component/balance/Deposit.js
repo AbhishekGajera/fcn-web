@@ -51,6 +51,7 @@ const Deposit = () => {
     register,
     handleSubmit,
     formState: { errors, isDirty, isValid },
+    reset
   } = useForm({
     mode: "onChange",
   });
@@ -67,6 +68,7 @@ const Deposit = () => {
     try {
       await addTransaction(formData);
       toast.success("Deposit successfully");
+      reset()
       history.push("/balance");
     } catch (error) {
       if (
@@ -113,9 +115,9 @@ const Deposit = () => {
                               type="text"
                               placeholder="Enter Amount"
                               name="amount"
-                              {...register("amount", { required: false })}
+                              {...register("amount", { required: true })}
                             />
-                            {errors?.amount && <p>{errors?.amount?.message}</p>}
+                            {errors?.amount && <p style={{ color: "red" }}>{errors?.amount?.message}</p>}
                           </div>
                         </Form.Group>
                         <Form.Group className="row">
@@ -136,7 +138,7 @@ const Deposit = () => {
                                 <option key={index} value={item?.id} label={item?.name} ></option>
                               ))}
                             </select>
-                            {errors && errors.branch && <p>Select branch is required field</p>}
+                            {errors && errors.branch && <p style={{ color: "red" }}>Select branch is required field</p>}
                           </div>
                         </Form.Group>
                       </div>

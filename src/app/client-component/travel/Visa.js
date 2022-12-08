@@ -110,15 +110,15 @@ const Visa = () => {
 
 
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">City</label>
-                      <div className="col-sm-9">
+                      <label className="col-sm-5 col-form-label">City</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="city"
                           placeholder="Enter Your city"
                           {...register("city", { required: true })} />
-                        {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
+                        {errors && errors.city && <p style={{ color: "red" }}>City is required field</p>}
                       </div>
                     </Form.Group>
                   </div>
@@ -153,15 +153,15 @@ const Visa = () => {
                 </div>
 
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">PAN Number</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-5 col-form-label">PAN Number</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="pan"
-                          placeholder="Enter Your pan"
+                          placeholder="Enter Your PanNumber"
                           {...register("pan", { required: true })} />
-                        {errors && errors.pan && <p style={{ color: "red" }}>PAN is required field</p>}
+                        {errors && errors.pan && <p style={{ color: "red" }}>PAN Number is required field</p>}
                       </div>
                     </Form.Group>
 
@@ -170,10 +170,10 @@ const Visa = () => {
 
 
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">Voter ID Number</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-5 col-form-label">Voter ID Number</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="voter"
                           placeholder="Enter Your Voter ID"

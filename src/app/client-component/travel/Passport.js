@@ -12,7 +12,7 @@ const Passport = () => {
   return (
     <div>
       <div className="page-header">
-        <h3 className="page-title"> Passport Form  </h3>
+        <h3 className="page-title">   </h3>
         <nav aria-label="breadcrumb">
           <ol className="breadcrumb">
             <li className="breadcrumb-item"><a href="!#" onClick={event => event.preventDefault()}>Travel</a></li>
@@ -36,16 +36,16 @@ const Passport = () => {
                           name="name"
                           placeholder="Enter Your Name"
                           {...register("name", { required: true })} />
-                        {errors && errors.name && <p style={{ color: "red" }}>name is required field</p>}
+                        {errors && errors.name && <p style={{ color: "red" }}>Name is required field</p>}
                       </div>
                     </Form.Group>
                   </div>
                 </div>
                 <div className='row'>
-                  <div className="col-md-6">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">Surname</label>
-                      <div className="col-sm-9">
+                      <label className="col-sm-5 col-form-label">Surname</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="surname"
                           placeholder="Enter Your surname"
@@ -54,7 +54,7 @@ const Passport = () => {
                       </div>
                     </Form.Group>
                   </div>
-                  <div className="col-md-6">
+                  <div className="col-md-5">
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label" htmlFor="exampleFormControlSelect1">Gender</label>
                       <div className="col-sm-9">
@@ -68,13 +68,13 @@ const Passport = () => {
                   </div>
                 </div>
                 <div className="row">
-                  <div className="col-md-8">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label" htmlFor="exampleFormControlSelect1">Date Of Birth</label>
-                      <div className="col-sm-9">
+                      <label className="col-sm-5 col-form-label" htmlFor="exampleFormControlSelect1">Date Of Birth</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="dob"
-                          placeholder="Enter Your dob"
+                          placeholder="Enter Your Date of Birth"
                           {...register("dob", { required: true })} />
                         {errors && errors.dob && <p style={{ color: "red" }}>Date of birth is required field</p>}
                       </div>
@@ -109,15 +109,15 @@ const Passport = () => {
 
 
                 <div className="row">
-                  <div className="col-md-6">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-3 col-form-label">City</label>
-                      <div className="col-sm-9">
+                      <label className="col-sm-5 col-form-label">City</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="city"
                           placeholder="Enter Your city"
                           {...register("city", { required: true })} />
-                        {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
+                        {errors && errors.city && <p style={{ color: "red" }}>City is required field</p>}
                       </div>
                     </Form.Group>
                   </div>
@@ -152,15 +152,15 @@ const Passport = () => {
                 </div>
 
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">PAN Number</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-5 col-form-label">PAN Number</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="pan"
-                          placeholder="Enter Your pan"
+                          placeholder="Enter Your PanNumber"
                           {...register("pan", { required: true })} />
-                        {errors && errors.pan && <p style={{ color: "red" }}>PAN is required field</p>}
+                        {errors && errors.pan && <p style={{ color: "red" }}>PAN Number is required field</p>}
                       </div>
                     </Form.Group>
 
@@ -169,10 +169,10 @@ const Passport = () => {
 
 
                 <div className="row">
-                  <div className="col-md-12">
+                  <div className="col-md-7">
                     <Form.Group className="row">
-                      <label className="col-sm-2 col-form-label">Voter ID Number</label>
-                      <div className="col-sm-10">
+                      <label className="col-sm-5 col-form-label">Voter ID Number</label>
+                      <div className="col-sm-7">
                         <Form.Control type="text"
                           name="voter"
                           placeholder="Enter Your Voter ID"
