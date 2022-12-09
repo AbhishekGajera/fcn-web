@@ -9,7 +9,9 @@ import {
   getBranches,
   getIBOs,
   getUserBranch,
-  getUserIbo
+  getUserIbo,
+  ImageUpload,
+  CreateUser
 } from "../../../utils/APIs";
 import { CSVLink } from "react-csv";
 import * as FileSaver from "file-saver";
@@ -351,13 +353,97 @@ const ClientList = () => {
     { label: "Bank IFSC Code", key: "bankIfscCode", },
     { label: "Bank AadharCard No", key: "b_aadhar_card_no", },
     { label: "Address", key: "address", },
-    
+
   ]
 
   const csvreport = {
     data: itemlist,
     headers: headers,
     filename: 'Clue_Mediator_Report.csv'
+  };
+
+  const handleUpload = (e) => {
+    e.preventDefault()
+    const element = document.getElementById('input-id');
+    if (element) {
+      element.click()
+    }
+  };
+
+  const fileHandler = (e) => {
+    var files = e.target.files;
+    var f = files[0];
+    var reader = new FileReader();
+    reader.onload = function (e) {
+      var data = e.target.result;
+      let readedData = XLSX.read(data, { type: 'binary' });
+      const wsname = readedData.SheetNames[0];
+      const ws = readedData.Sheets[wsname];
+
+      /* Convert array to json*/
+      const dataParse = XLSX.utils.sheet_to_json(ws, { header: 1 });
+      console.log("dataParse",dataParse);
+      // onSubmitClient(dataParse)
+    };
+    reader.readAsBinaryString(f)
+    
+    // var file = event.target.files[0];
+    // var name = file.name;
+    // const reader = new FileReader();
+    // reader.onload = (evt) => { // evt = on_file_select event
+    //   /* Parse data */
+    //   const bstr = evt.target.result;
+    //   const wb = XLSX.read(bstr, { type: 'binary' });
+    //   /* Get first worksheet */
+    //   const wsname = wb.SheetNames[0];
+    //   const ws = wb.Sheets[wsname];
+    //   /* Convert array of arrays */
+    //   const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
+    //   /* Update state */
+    //   console.log("Data>>>" + data);
+    // };
+    // reader.readAsBinaryString(file);
+  }
+
+  const onSubmitClient = async (data) => {
+    setIsLoading(true)
+    const Data = new FormData();
+    var aadharcard_img = '';
+    var pancard_img = '';
+    if (data.aadhar_card_img.length !== 0) {
+      Data.append('file', data.aadhar_card_img[0]);
+      aadharcard_img = await ImageUpload(Data)
+    }
+    if (data.pan_card_img.length !== 0) {
+      Data.append('file', data.pan_card_img[0]);
+      pancard_img = await ImageUpload(Data)
+    }
+
+    if (aadharcard_img.error || pancard_img.error) {
+      toast.error(aadharcard_img.error.message);
+    } else {
+      try {
+        data.contactno = '';
+        data.name = data.first_name + ' ' + data.last_name;
+        data.aadhar_card_img = aadharcard_img.secure_url;
+        data.pan_card_img = pancard_img.secure_url;
+        await CreateUser(data)
+        // setIsLoading(false)
+        // toast.success("user created successfully");
+        // history.push('/clients/clientlist')
+      } catch (error) {
+        if (
+          error &&
+          error.response &&
+          error.response.data &&
+          error.response.data.message
+        ) {
+          toast.error(error.response.data.message);
+        } else {
+          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+      }
+    }
   };
 
   return (
@@ -863,6 +949,22 @@ const ClientList = () => {
                   onClick={() => exportToCSV('Client')}
                 >
                   Download Excel
+                </button>
+              </div>
+              <div className="col-md-4">
+                <Form.Control
+                  id="input-id"
+                  className="d-none"
+                  type="file"
+                  name="import_client"
+                  multiple={false}
+                  onChange={(e) => { fileHandler(e) }}
+                  accept=".csv"
+                />
+                <button
+                  onClick={handleUpload}
+                  className={`btn btn-gradient-primary btn-sm`}
+                >Import Clients
                 </button>
               </div>
             </div>

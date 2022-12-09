@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useCookies } from "react-cookie";
 import ReactPaginate from "react-paginate";
-import { deletePowerone, getpowerone, userLogout, UpdateProducts } from "../../../utils/APIs";
+import { deletePowerone, getpowerone, userLogout, UpdateProducts, updatePowerone } from "../../../utils/APIs";
 import Swal from "sweetalert2";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
@@ -87,16 +87,8 @@ const PowerOneFetch = () => {
 
     const onSubmit = async (data) => {
         try {
-            const formData = new FormData()
-            formData.append("productId", valueToEdit?.id);
-            formData.append("user", cookies?.user?.id)
-            formData.append("category", data?.category)
-            formData.append("description", data?.description)
-            formData.append("name", data?.name)
-            formData.append("commision", data?.commision)
-            formData.append("status", data?.status)
-            await UpdateProducts(formData)
-            toast.success('Product updated Successfully', {
+            await updatePowerone(valueToEdit?.id, data)
+            toast.success('Powerone updated Successfully', {
                 autoClose: 3000
             })
             list()
@@ -158,7 +150,7 @@ const PowerOneFetch = () => {
                 keyboard={false}
             >
                 <Modal.Header closeButton>
-                    <Modal.Title>Update Product</Modal.Title>
+                    <Modal.Title>Update Powerone</Modal.Title>
                 </Modal.Header>
                 <Modal.Body>
                     <div className="row auth">
@@ -166,7 +158,6 @@ const PowerOneFetch = () => {
                             <div className="card">
                                 <div className="card-body">
                                     <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
-                                        <p className="card-description"> Update Product </p>
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
@@ -190,18 +181,18 @@ const PowerOneFetch = () => {
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
                                                     <label className="col-sm-3 col-form-label">
-                                                        Category{" "}
+                                                        Email{" "}
                                                     </label>
                                                     <div className="col-sm-9">
                                                         <Form.Control
                                                             type="text"
-                                                            name="category"
-                                                            defaultValue={valueToEdit.category}
-                                                            {...register("category", { required: true })}
-                                                            placeholder="category"
+                                                            name="email"
+                                                            defaultValue={valueToEdit.email}
+                                                            {...register("email", { required: true })}
+                                                            placeholder="email"
                                                         />
                                                         {errors && errors.address && (
-                                                            <p>Category is required field</p>
+                                                            <p>Email is required field</p>
                                                         )}
                                                     </div>
                                                 </Form.Group>
@@ -211,18 +202,18 @@ const PowerOneFetch = () => {
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
                                                     <label className="col-sm-3 col-form-label">
-                                                        Description{" "}
+                                                        Address{" "}
                                                     </label>
                                                     <div className="col-sm-9">
                                                         <Form.Control
                                                             as="textarea"
-                                                            name="description"
-                                                            defaultValue={valueToEdit.description}
-                                                            {...register("description", { required: true })}
-                                                            placeholder="description"
+                                                            name="address"
+                                                            defaultValue={valueToEdit.address}
+                                                            {...register("address", { required: true })}
+                                                            placeholder="address"
                                                         />
                                                         {errors && errors.desc && (
-                                                            <p>Description is required field</p>
+                                                            <p>Address is required field</p>
                                                         )}
                                                     </div>
                                                 </Form.Group>
@@ -231,22 +222,27 @@ const PowerOneFetch = () => {
                                         <div className="row" >
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
-                                                    <label className="col-sm-3 col-form-label">Status</label>
+                                                    <label className="col-sm-3 col-form-label">Mobile</label>
                                                     <div className="col-sm-9">
-                                                        <select
-                                                            className="form-control form-control-lg"
-                                                            id="exampleFormControlSelect2"
-                                                            name="status"
-                                                            {...register("status", {
-                                                                required: true,
-                                                            })}>
-                                                            <option value=''>--Select Status--</option>
-                                                            <option value='1' selected={valueToEdit.status === '1'}>Active</option>
-                                                            <option value='0' selected={valueToEdit.status === '0'}>Inactive</option>
-                                                        </select>
-                                                        {errors && errors.status && (
-                                                            <p>status is required field</p>
-                                                        )}
+                                                        <Form.Control type="text"
+                                                            name="mobile"
+                                                            defaultValue={valueToEdit?.mobile}
+                                                            {...register("mobile", { required: true })} />
+                                                        {errors && errors.mobile && <p style={{ color: "red" }}>Mobile is required field</p>}
+                                                    </div>
+                                                </Form.Group>
+                                            </div>
+                                        </div>
+                                        <div className="row" >
+                                            <div className="col-md-12">
+                                                <Form.Group className="row">
+                                                    <label className="col-sm-3 col-form-label">City</label>
+                                                    <div className="col-sm-9">
+                                                        <Form.Control type="text" name="city" placeholder="Enter Your city"
+                                                            defaultValue={valueToEdit?.city}
+                                                            {...register("city", { required: true })} />
+
+                                                        {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
                                                     </div>
                                                 </Form.Group>
                                             </div>
@@ -254,21 +250,25 @@ const PowerOneFetch = () => {
                                         <div className="row">
                                             <div className="col-md-12">
                                                 <Form.Group className="row">
-                                                    <label className="col-sm-3 col-form-label">
-                                                        Commision{" "}
-                                                    </label>
+                                                    <label className="col-sm-3 col-form-label">State</label>
                                                     <div className="col-sm-9">
-                                                        <Form.Control
-                                                            type="number"
-                                                            step="0.00001"
-                                                            name="commision"
-                                                            defaultValue={valueToEdit.commision}
-                                                            {...register("commision", { required: true })}
-                                                            placeholder="commision"
-                                                        />
-                                                        {errors && errors.commision && (
-                                                            <p>Commision is required field</p>
-                                                        )}
+                                                        <Form.Control type="text" name="state" placeholder="Enter Your state"
+                                                            defaultValue={valueToEdit?.state}
+                                                            {...register("state", { required: true })} />
+                                                        {errors && errors.state && <p style={{ color: "red" }}>state is required field</p>}
+                                                    </div>
+                                                </Form.Group>
+                                            </div>
+                                        </div>
+                                        <div className="row">
+                                            <div className="col-md-12">
+                                                <Form.Group className="row">
+                                                    <label className="col-sm-3 col-form-label">Country</label>
+                                                    <div className="col-sm-9">
+                                                        <Form.Control type="text" name="country" placeholder="Enter Your country"
+                                                           defaultValue={valueToEdit?.country}
+                                                           {...register("country", { required: true })} />
+                                                        {errors && errors.country && <p style={{ color: "red" }}>country is required field</p>}
                                                     </div>
                                                 </Form.Group>
                                             </div>
@@ -320,7 +320,7 @@ const PowerOneFetch = () => {
                                             <input
                                                 type="text"
                                                 className="form-control outline-gray bg-transparent border-0"
-                                                placeholder="Search Products"
+                                                placeholder="Search Powerone"
                                                 value={searchTerm}
                                                 onChange={(e) => {
                                                     setSearchTerm(e?.target?.value);
@@ -344,7 +344,7 @@ const PowerOneFetch = () => {
                                         <th> Mobile </th>
                                         <th> Address</th>
                                         <th> City </th>
-                                        {/* <th> Edit </th> */}
+                                        <th> Edit </th>
                                         <th> Delete </th>
                                     </tr>
                                 </thead>
@@ -360,7 +360,7 @@ const PowerOneFetch = () => {
                                                         <td>{item?.mobile}</td>
                                                         <td>{item?.address}</td>
                                                         <td>{item?.city}</td>
-                                                        {/* <td><i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i></td> */}
+                                                        <td><i onClick={() => handleShow(item)} className="mdi mdi-lead-pencil"></i></td>
                                                         <td>
                                                             <i
                                                                 onClick={() => deletePowerOne(item?.id)}

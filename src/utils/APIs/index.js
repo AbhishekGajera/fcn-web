@@ -161,6 +161,7 @@ export const getPreTravel = (limit = 100, offset = 1) => api(`travel/fetch-trave
 export const addPowerone = (data) => api(`powerone/add-powerone`, 'POST', data);
 export const deletePowerone = (id) => api(`powerone/delete-powerone/${id}`, 'GET');
 export const getpowerone = () => api(`powerone/fetch-powerone`, 'GET');
+export const updatePowerone = (id,data) => api(`powerone/update-powerone/${id}`, 'POST',data);
 
 
 // get user Perfomance

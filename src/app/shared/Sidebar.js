@@ -25,6 +25,9 @@ class Sidebar extends Component {
       if (["admin"].includes(this.userData?.role)) {
         this.props.history.push('/utilities/offers')
       }
+      if (["branch"].includes(this.userData?.role)) {
+        this.props.history.push('/utilities/calculator')
+      }
     }
     if (itemName === 'ourTravels') {
       this.props.history.push('/travel/ourplan')
@@ -269,21 +272,23 @@ class Sidebar extends Component {
                 </Collapse>
               </li>
 
+              {["admin", "branch", "user"].includes(this.userData?.role) &&
+                <li className={this.isPathActive('/utilities') ? 'nav-item active' : 'nav-item'}>
+                  <div className={this.state.ourUtils ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('ourUtils')} data-toggle="collapse">
+                    <span className="menu-title"><Trans>Utilities</Trans></span>
+                    <i className="menu-arrow"></i>
+                    <i className="mdi mdi-gift menu-icon"></i>
+                  </div>
+                  <Collapse in={this.state.ourUtils}>
+                    <ul className="nav flex-column sub-menu">
+                      <li className="nav-item"> <Link className={this.isPathActive('/utilities/offers') ? 'nav-link active' : 'nav-link'} to="/utilities/offers"><Trans>Offers</Trans></Link></li>
+                      <li className="nav-item"> <Link className={this.isPathActive('/utilities/calculator') ? 'nav-link active' : 'nav-link'} to="/utilities/calculator"><Trans>Calculator</Trans></Link></li>
+                      <li className="nav-item"> <Link className={this.isPathActive('/utilities/literature') ? 'nav-link active' : 'nav-link'} to="/utilities/literature"><Trans>Literature</Trans></Link></li>
+                    </ul>
+                  </Collapse>
+                </li>
+              }
 
-              <li className={this.isPathActive('/utilities') ? 'nav-item active' : 'nav-item'}>
-                <div className={this.state.ourUtils ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('ourUtils')} data-toggle="collapse">
-                  <span className="menu-title"><Trans>Utilities</Trans></span>
-                  <i className="menu-arrow"></i>
-                  <i className="mdi mdi-gift menu-icon"></i>
-                </div>
-                <Collapse in={this.state.ourUtils}>
-                  <ul className="nav flex-column sub-menu">
-                    <li className="nav-item"> <Link className={this.isPathActive('/utilities/offers') ? 'nav-link active' : 'nav-link'} to="/utilities/offers"><Trans>Offers</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/utilities/calculator') ? 'nav-link active' : 'nav-link'} to="/utilities/calculator"><Trans>Calculator</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/utilities/literature') ? 'nav-link active' : 'nav-link'} to="/utilities/literature"><Trans>Literature</Trans></Link></li>
-                  </ul>
-                </Collapse>
-              </li>
               <li className={this.isPathActive('/travel') ? 'nav-item active' : 'nav-item'}>
                 <div className={this.state.ourTravels ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('ourTravels')} data-toggle="collapse">
                   <span className="menu-title"><Trans>Travel</Trans></span>
@@ -303,6 +308,22 @@ class Sidebar extends Component {
                 </Collapse>
               </li>
             </>}
+
+            {["branch"].includes(this.userData?.role) &&
+              <li className={this.isPathActive('/utilities') ? 'nav-item active' : 'nav-item'}>
+                <div className={this.state.ourUtils ? 'nav-link menu-expanded' : 'nav-link'} onClick={() => this.toggleMenuState('ourUtils')} data-toggle="collapse">
+                  <span className="menu-title"><Trans>Utilities</Trans></span>
+                  <i className="menu-arrow"></i>
+                  <i className="mdi mdi-gift menu-icon"></i>
+                </div>
+                <Collapse in={this.state.ourUtils}>
+                  <ul className="nav flex-column sub-menu">
+                    <li className="nav-item"> <Link className={this.isPathActive('/utilities/calculator') ? 'nav-link active' : 'nav-link'} to="/utilities/calculator"><Trans>Calculator</Trans></Link></li>
+                  </ul>
+                </Collapse>
+              </li>
+            }
+
             {["user", "admin", "IBO"].includes(this.userData?.role) &&
               <li className={this.isPathActive('/balance') ? 'nav-item active' : 'nav-item'}>
                 <Link className="nav-link" to="/balance">

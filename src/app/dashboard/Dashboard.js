@@ -87,8 +87,8 @@ const Dashboard = () => {
         items = await (
           await getTransactionUsrs(cookies?.user?.id)
         ).data;
-        console.log("items++",items)
-      }   
+        console.log("items++", items)
+      }
 
       if (cookies?.user?.role === 'user') {
         console.info("cookies?.user?._id++ test", cookies?.user)
@@ -313,10 +313,10 @@ const Dashboard = () => {
 
   const getPowerOneAndSIPCount = async () => {
     const powerone = await getTotalPoweroneCount()
-    setcountPowerone(powerone?.data[0]?.totalValue)
+    setcountPowerone(powerone?.data[0]?.totalValue || 0)
 
     const SIP = await getTotalSIPCount()
-    setcountSIP(SIP?.data[0]?.totalValue)
+    setcountSIP(SIP?.data[0]?.totalValue || 0)
 
   }
 
@@ -1332,7 +1332,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 284px", maxHeight: "200px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "200px" }}>
                     <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
                       {branchTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
@@ -1340,9 +1340,9 @@ const Dashboard = () => {
                             <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
                               <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{branchTopPerfomer?.name}</h5>
                               <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
-                                <span className="css-rpx22u">{branchTopPerfomer?.email}</span> {branchTopPerfomer?.contactno} </p>
-                            </div>
-                            <div>
+                                {branchTopPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{branchTopPerfomer?.email}</span>
                               <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">Branch : {branchTopPerfomer?.branch}</p>
                             </div>
                           </li>
@@ -1363,7 +1363,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 284px", maxHeight: "200px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "200px" }}>
                     <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
                       {userTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
@@ -1371,9 +1371,9 @@ const Dashboard = () => {
                             <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
                               <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{userTopPerfomer?.name}</h5>
                               <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
-                                <span className="css-rpx22u">{userTopPerfomer?.email}</span> {userTopPerfomer?.contactno} </p>
-                            </div>
-                            <div>
+                                {userTopPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{userTopPerfomer?.email}</span>
                               <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">User : {userTopPerfomer?.role}</p>
                             </div>
                           </li>
@@ -1394,7 +1394,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 284px", maxHeight: "200px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "200px" }}>
                     <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
                       {iboTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
@@ -1402,9 +1402,9 @@ const Dashboard = () => {
                             <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
                               <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{iboTopPerfomer?.name}</h5>
                               <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
-                                <span className="css-rpx22u">{iboTopPerfomer?.email}</span> {iboTopPerfomer?.contactno} </p>
-                            </div>
-                            <div>
+                                {iboTopPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{iboTopPerfomer?.email}</span>
                               <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">IBO : {iboTopPerfomer?.role}</p>
                             </div>
                           </li>
