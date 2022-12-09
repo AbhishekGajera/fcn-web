@@ -94,8 +94,8 @@ export const getRevenueList = (limit = 10,offset = 1) => api(`revenue/fetch-reve
 
 // connect management
 export const CreateConnect = (data) => api('contact/add-contact', 'POST', data);
-export const getConnect = (limit = 10,offset = 1,branch = '',type = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&branch=${branch}&type=${type}&sortBy=createdAt:desc&custom=true`, 'GET');
-export const getConnectByBranch = (limit = 10,offset = 1,name = '',branch = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&branch=${branch}&sortBy=createdAt:desc&custom=true`, 'GET');
+export const getConnect = (limit = 10,offset = 1,branch = '',type = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&branch=${branch}&type=${type}&sortBy=createdAt:desc`, 'GET');
+export const getConnectByBranch = (limit = 10,offset = 1,name = '',branch = '') => api(`contact/fetch-contact?limit=${limit}&page=${offset}&name=${name}&branch=${branch}&sortBy=createdAt:desc`, 'GET');
 export const getConnectedById = (id = '') => api(`contact/get-connected-id/${id}`, 'GET');
 export const deleteContact = (id) => api(`contact/delete-contact/${id}`, 'DELETE');
 

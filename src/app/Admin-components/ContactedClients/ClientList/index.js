@@ -256,8 +256,8 @@ const ClientList = () => {
                       <option selected={"" === searchType} value={""}>
                         Not Selected
                       </option>
-                      <option value={0}>Free</option>
-                      <option value={1}>Paid</option>
+                      <option value={1}>Free</option>
+                      <option value={2}>Paid</option>
                     </select>
                   </div>
                 </Form.Group>
