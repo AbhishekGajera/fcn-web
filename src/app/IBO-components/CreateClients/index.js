@@ -105,6 +105,7 @@ const CreateClints = () => {
         } else {
           toast.error(process.env.REACT_APP_ERROR_MESSAGE);
         }
+        setisLoading(false)
       }
     }
   };
@@ -287,8 +288,8 @@ const CreateClints = () => {
                     </div>
                     <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">DOB</label>
-                        <div className="col-sm-9">
+                        <label className="col-sm-4 col-form-label">DOB</label>
+                        <div className="col-sm-8">
                           <Form.Control
                             type="date"
                             name="dob"
@@ -324,7 +325,6 @@ const CreateClints = () => {
                         </div>
                       </Form.Group>
                     </div>
-
                     <div className="col-md-4">
                       <Form.Group className="row">
                         <label className="col-sm-4 col-form-label">Branch</label>
@@ -371,8 +371,38 @@ const CreateClints = () => {
                   <div className="row">
                     <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">Email</label>
-                        <div className="col-sm-9">
+                        <label className="col-sm-4 col-form-label">Registration Date</label>
+                        <div className="col-sm-8">
+                          <Form.Control
+                            type="date"
+                            name="registration_date"
+                            // max={moment().format("YYYY-MM-DD")}
+                            {...register("registration_date", { required: true })}
+                          />
+                          {errors && errors.registration_date && <p style={{ color: "red" }}>Registration Date is required field</p>}
+                        </div>
+                      </Form.Group>
+                    </div>
+                    <div className="col-md-6">
+                      <Form.Group className="row">
+                        <label className="col-sm-4 col-form-label">Maturity Date</label>
+                        <div className="col-sm-8">
+                          <Form.Control
+                            type="date"
+                            name="maturity_date"
+                            // max={moment().format("YYYY-MM-DD")}
+                            {...register("maturity_date", { required: true })}
+                          />
+                          {errors && errors.maturity_date && <p style={{ color: "red" }}>Maturity Date is required field</p>}
+                        </div>
+                      </Form.Group>
+                    </div>
+                  </div>
+                  <div className="row">
+                    <div className="col-md-6">
+                      <Form.Group className="row">
+                        <label className="col-sm-4 col-form-label">Email</label>
+                        <div className="col-sm-8">
                           <Form.Control
                             type="text"
                             name="email"
@@ -396,10 +426,10 @@ const CreateClints = () => {
                     </div>
                     <div className="col-md-6">
                       <Form.Group className="row">
-                        <label className="col-sm-3 col-form-label">
+                        <label className="col-sm-4 col-form-label">
                           Password
                         </label>
-                        <div className="col-sm-9">
+                        <div className="col-sm-8">
                           <Form.Control
                             type={isShow ? "text" : "password"}
                             name="password"
@@ -479,7 +509,6 @@ const CreateClints = () => {
                         </div>
                       </Form.Group>
                     </div>
-
                   </div>
                   <div className="row">
                     <div className="col-md-6">

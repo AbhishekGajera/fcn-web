@@ -382,66 +382,52 @@ const ClientList = () => {
 
       /* Convert array to json*/
       const dataParse = XLSX.utils.sheet_to_json(ws, { header: 1 });
-      console.log("dataParse",dataParse);
-      // onSubmitClient(dataParse)
+      dataParse.splice(0, 1);
+      const formData = {};
+      setIsLoading(true)
+      dataParse.map((item, index) => {
+          formData.name = item[0];
+          formData.branch = item[1];
+          formData.contactno = item[2].toString();
+          formData.email = item[3];
+          formData.address = item[4];
+          formData.bankIfscCode = item[5];
+          formData.bankAccNo = item[6].toString();
+          formData.password = item[7];
+          formData.dob = item[8] ? item[8].toString() : new Date().toISOString().slice(0, 10);
+          formData.product = item[9].toString();
+          formData.IBO = item[10] ? item[10] : "633a99010d6d0aedc0e9d5b0";
+          formData.aadhar_card_no = item[11].toString();
+          formData.pan_card_no = item[12].toString();
+          formData.maxAmount = '0';
+          formData.minAmount = '0';
+          formData.registration_date = new Date().toISOString().slice(0, 10);
+          formData.maturity_date = new Date().toISOString().slice(0, 10);
+          formData.country = 'India';
+          formData.aadhar_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
+          formData.pan_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
+          onSubmitClient(formData);
+      })
+      setIsLoading(false)
+      history.push('/clients/clientlist')
     };
     reader.readAsBinaryString(f)
-    
-    // var file = event.target.files[0];
-    // var name = file.name;
-    // const reader = new FileReader();
-    // reader.onload = (evt) => { // evt = on_file_select event
-    //   /* Parse data */
-    //   const bstr = evt.target.result;
-    //   const wb = XLSX.read(bstr, { type: 'binary' });
-    //   /* Get first worksheet */
-    //   const wsname = wb.SheetNames[0];
-    //   const ws = wb.Sheets[wsname];
-    //   /* Convert array of arrays */
-    //   const data = XLSX.utils.sheet_to_csv(ws, { header: 1 });
-    //   /* Update state */
-    //   console.log("Data>>>" + data);
-    // };
-    // reader.readAsBinaryString(file);
   }
 
   const onSubmitClient = async (data) => {
-    setIsLoading(true)
-    const Data = new FormData();
-    var aadharcard_img = '';
-    var pancard_img = '';
-    if (data.aadhar_card_img.length !== 0) {
-      Data.append('file', data.aadhar_card_img[0]);
-      aadharcard_img = await ImageUpload(Data)
-    }
-    if (data.pan_card_img.length !== 0) {
-      Data.append('file', data.pan_card_img[0]);
-      pancard_img = await ImageUpload(Data)
-    }
-
-    if (aadharcard_img.error || pancard_img.error) {
-      toast.error(aadharcard_img.error.message);
-    } else {
-      try {
-        data.contactno = '';
-        data.name = data.first_name + ' ' + data.last_name;
-        data.aadhar_card_img = aadharcard_img.secure_url;
-        data.pan_card_img = pancard_img.secure_url;
-        await CreateUser(data)
-        // setIsLoading(false)
-        // toast.success("user created successfully");
-        // history.push('/clients/clientlist')
-      } catch (error) {
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+    try {
+      await CreateUser(JSON.stringify(data));
+      toast.success("user created successfully");
+    } catch (error) {
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
     }
   };

@@ -194,6 +194,20 @@ const ViewUser = () => {
                                                 </span>
                                             </div>
                                         )}
+                                         {itemlist?.registration_date && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Registration Date: </b> {moment(itemlist?.registration_date).format("DD-MM-YYYY")}
+                                                </span>
+                                            </div>
+                                        )}
+                                         {itemlist?.maturity_date && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Maturity Date: </b> {moment(itemlist?.maturity_date).format("DD-MM-YYYY")}
+                                                </span>
+                                            </div>
+                                        )}
                                         <div className='row'>
                                             <span className='mb-4'>
                                                 <b>Min Amount: </b> {itemlist?.products?.[0]?.minAmount}
