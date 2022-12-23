@@ -401,8 +401,8 @@ const ClientList = () => {
           formData.pan_card_no = item[12].toString();
           formData.maxAmount = '0';
           formData.minAmount = '0';
-          formData.registration_date = new Date().toISOString().slice(0, 10);
-          formData.maturity_date = new Date().toISOString().slice(0, 10);
+          // formData.registration_date = new Date().toISOString().slice(0, 10);
+          // formData.maturity_date = new Date().toISOString().slice(0, 10);
           formData.country = 'India';
           formData.aadhar_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
           formData.pan_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
