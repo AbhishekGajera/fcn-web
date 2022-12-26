@@ -29,61 +29,63 @@ const Navbar = () => {
   }
 
   const getNotificationList = async () => {
-    if(cookies?.user?.role){
-    try {
-      let items
-      let data
-      const allitems = await (
-        await getNotification()
-      ).data;
-      if (cookies?.user?.role === 'IBO') {
-        items = await (
-          await getNotificationByAudience(1, 'ibo')
-        ).data;
-      } else if (cookies?.user?.role === 'branch') {
-        items = await (
-          await getNotificationByAudience(1, 'branch')
-        ).data;
-      } else if (cookies?.user?.role === 'user') {
-        items = await (
-          await getNotificationByAudience(1, 'client')
-        ).data;
-      }
+    if (cookies?.user?.role) {
+      try {
+        let items
+        let data
+        let allitems
+        if (cookies?.user?.role === 'admin') {
+          allitems = await (
+            await getNotification()
+          ).data;
+        }
+        if (cookies?.user?.role === 'IBO') {
+          items = await (
+            await getNotificationByAudience(1, 'ibo')
+          ).data;
+        } else if (cookies?.user?.role === 'branch') {
+          items = await (
+            await getNotificationByAudience(1, 'branch')
+          ).data;
+        } else if (cookies?.user?.role === 'user') {
+          items = await (
+            await getNotificationByAudience(1, 'client')
+          ).data;
+        }
 
-      if (cookies?.user?.role !== 'admin'){
-        const allitems = await (
-          await getPersonalizedNotification(cookies?.user?.id)
-        ).data;
-      }
+        if (cookies?.user?.role !== 'admin') {
+          allitems = await (
+            await getPersonalizedNotification(cookies?.user?.id)
+          ).data;
+        }
 
-      if(cookies?.user?.role !== 'admin'){
-        data = [...allitems?.results,...items?.results];
-      }else{
-        data = [...allitems?.results];
-      }
-      const notificationData = data.filter((item) => item.hasShowen === false)
-      setNotificationList(notificationData.slice(0, 4));
+        if (cookies?.user?.role !== 'admin') {
+          data = [...allitems?.results, ...items?.results];
+        } else {
+          data = [...allitems?.results];
+        }
+        const notificationData = data.filter((item) => item.hasShowen === false)
+        setNotificationList(notificationData.slice(0, 4));
 
-    } catch (error) {
-      console.info("error+++ ",error)
-      if (error?.response?.data?.message) {
-        toast.error(error.response.data.message);
-      } else {
-        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-      }
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-        setCookie("user", null, { path: "/" });
-        userLogout(formData).finally(() => {
-          history.push("/user-pages/login-1");
-        });
+      } catch (error) {
+        // console.info("error+++ ",error)
+        if (error?.response?.data?.message) {
+          toast.error(error.response.data.message);
+        } else {
+          // toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+        }
+        if (error?.response?.data?.code === 401) {
+          const formData = JSON.stringify({
+            refreshToken: localStorage.getItem("refreshToken"),
+          });
+          setCookie("user", null, { path: "/" });
+          userLogout(formData).finally(() => {
+            history.push("/user-pages/login-1");
+          });
+        }
       }
     }
   }
-  }
-
 
 
   const viewNotification = (Id) => {

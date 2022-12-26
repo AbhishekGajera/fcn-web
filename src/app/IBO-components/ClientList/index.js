@@ -10,6 +10,7 @@ import {
   getIBOs,
   getUserBranch,
   getUserIbo,
+  getProductsListClient,
   ImageUpload,
   CreateUser
 } from "../../../utils/APIs";
@@ -32,11 +33,13 @@ import {
 } from "../../../utils/Functions/commonOptions";
 import { useDebounce } from "../../../utils/Functions/useDebounce";
 import Spinner from "../../shared/Spinner";
+import moment from "moment";
 
 const ClientList = () => {
   const history = useHistory();
   const [cookies, setCookie] = useCookies(["user"]);
   const [itemlist, setitemlist] = useState([]);
+  const [productlist, setproductlist] = useState([]);
   const [searchTerm, setSearchTerm] = useState("");
   const debouncedSearchTerm = useDebounce(searchTerm, 500);
   const [showPerfomer, setShowPerfomer] = React.useState(false);
@@ -133,6 +136,7 @@ const ClientList = () => {
   const [selectedBranch, setselectedBranch] = useState("");
   const [IBOList, setIBOList] = useState([]);
   const [selectedIBO, setselectedIBO] = useState("");
+  const [selectedProduct, setselectedProduct] = useState("");
   const [branchUpdate, setbranchUpdate] = useState('')
   const [IBOUpdate, setIBOUpdate] = useState('')
   const [roleUpdate, setroleUpdate] = useState('')
@@ -187,7 +191,7 @@ const ClientList = () => {
 
   useEffect(() => {
     list();
-  }, [itemOffset, itemsPerPage, selectedBranch, selectedIBO]);
+  }, [itemOffset, itemsPerPage, selectedBranch, selectedIBO, selectedProduct]);
 
   useEffect(() => {
     list();
@@ -196,7 +200,31 @@ const ClientList = () => {
   useEffect(() => {
     getBranchList();
     getIBOList();
+    productList();
   }, []);
+
+  const productList = async () => {
+    try {
+      const items = await (await getProductsListClient()).data;
+      setproductlist(items?.results);
+    } catch (error) {
+      if (error?.response?.data?.message) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+
+      if (error?.response?.data?.code === 401) {
+        const formData = JSON.stringify({
+          refreshToken: localStorage.getItem("refreshToken"),
+        });
+        setCookie("user", null, { path: "/" });
+        userLogout(formData).finally(() => {
+          history.push("/user-pages/login-1");
+        });
+      }
+    }
+  };
 
   const getBranchList = async () => {
     const items = await (await getBranches(5000, 1, "", "branch")).data;
@@ -218,6 +246,11 @@ const ClientList = () => {
     setItemOffset(0);
     setselectedIBO(e.target.value);
   };
+
+  const onChangeHandlerProduct = (e) =>{
+    setItemOffset(0);
+    setselectedProduct(e.target.value);
+  }
 
   const list = async () => {
     setIsLoading(true)
@@ -386,27 +419,27 @@ const ClientList = () => {
       const formData = {};
       setIsLoading(true)
       dataParse.map((item, index) => {
-          formData.name = item[0];
-          formData.branch = item[1];
-          formData.contactno = item[2].toString();
-          formData.email = item[3];
-          formData.address = item[4];
-          formData.bankIfscCode = item[5];
-          formData.bankAccNo = item[6].toString();
-          formData.password = item[7];
-          formData.dob = item[8] ? item[8].toString() : new Date().toISOString().slice(0, 10);
-          formData.product = item[9].toString();
-          formData.IBO = item[10] ? item[10] : "633a99010d6d0aedc0e9d5b0";
-          formData.aadhar_card_no = item[11].toString();
-          formData.pan_card_no = item[12].toString();
-          formData.maxAmount = '0';
-          formData.minAmount = '0';
-          // formData.registration_date = new Date().toISOString().slice(0, 10);
-          // formData.maturity_date = new Date().toISOString().slice(0, 10);
-          formData.country = 'India';
-          formData.aadhar_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
-          formData.pan_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
-          onSubmitClient(formData);
+        formData.name = item[0];
+        formData.branch = item[1];
+        formData.contactno = item[2].toString();
+        formData.email = item[3];
+        formData.address = item[4];
+        formData.bankIfscCode = item[5];
+        formData.bankAccNo = item[6].toString();
+        formData.password = item[7];
+        formData.dob = item[8] ? moment(moment(item[8], 'DD-MM-YYYY')).toISOString() : new Date().toISOString().slice(0, 10);
+        formData.product = item[9].toString();
+        formData.registration_date =  item[10] ? moment(moment(item[10], 'DD-MM-YYYY')).toISOString() : new Date().toISOString().slice(0, 10);
+        formData.maturity_date = item[11] ? moment(moment(item[11], 'DD-MM-YYYY')).toISOString() : new Date().toISOString().slice(0, 10);
+        formData.IBO = item[10] ? item[12] : "633a99010d6d0aedc0e9d5b0";
+        formData.aadhar_card_no = item[13].toString();
+        formData.pan_card_no = item[14].toString();
+        formData.maxAmount = '0';
+        formData.minAmount = '0';
+        formData.country = 'India';
+        formData.aadhar_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
+        formData.pan_card_img = "http://fcn.ziadoz.com/static/media/fcn_logo.782c8a9c.png";
+        onSubmitClient(formData);
       })
       setIsLoading(false)
       history.push('/clients/clientlist')
@@ -831,12 +864,12 @@ const ClientList = () => {
             <div className="row">
               {cookies?.user?.role !== "IBO" && cookies?.user?.role !== "branch" && (
                 <>
-                  <div className="col-md-4">
+                  <div className="col-md-6">
                     <Form.Group className="row">
-                      <label className="col-sm-6 col-form-label">
+                      <label className="col-sm-5 col-form-label">
                         Search Branch
                       </label>
-                      <div className="col-sm-6">
+                      <div className="col-sm-7">
                         <select
                           className="form-control form-control-sm"
                           id="exampleFormControlSelect2"
@@ -863,7 +896,7 @@ const ClientList = () => {
                     </Form.Group>
                   </div>
 
-                  <div className="col-md-4">
+                  <div className="col-md-6">
                     <Form.Group className="row">
                       <label className="col-sm-5 col-form-label">Search IBO</label>
                       <div className="col-sm-7">
@@ -893,29 +926,53 @@ const ClientList = () => {
                     </Form.Group>
                   </div>
 
-                  <div className="col-md-4">
-                    <div className="search-field d-none d-md-block">
-                      <form className="d-flex align-items-center h-100" action="#">
-                        <div className="input-group">
-                          <div className="input-group-prepend outline-gray bg-transparent">
-                            <i className="input-group-text border-0 mdi mdi-magnify"></i>
-                          </div>
-                          <input
-                            type="text"
-                            className="form-control outline-gray bg-transparent border-0"
-                            placeholder="Search Clients"
-                            value={searchTerm}
-                            onChange={(e) => {
-                              setSearchTerm(e?.target?.value);
-                              setItemOffset(0);
-                            }}
-                          />
-                        </div>
-                      </form>
-                    </div>
-                  </div>
                 </>
               )}
+            </div>
+            <div className="row">
+              <>
+                <div className="col-md-6">
+                  <Form.Group className="row">
+                    <label className="col-sm-5 col-form-label">Search Product</label>
+                    <div className="col-sm-7">
+                      <select
+                        className="form-control form-control-sm"
+                        id="exampleFormControlSelect2"
+                        name="branch"
+                        onChange={onChangeHandlerProduct}
+                      >
+                        <option value=''>--Select product--</option>
+                            {productlist.map((item, index) => (
+
+                              <option key={index} value={item?.id} label={item?.name} selected={selectedProduct === item?.id}></option>
+                            ))}                        
+                        </select>
+                    </div>
+                  </Form.Group>
+                </div>
+
+                <div className="col-md-6">
+                  <div className="search-field d-none d-md-block">
+                    <form className="d-flex align-items-center h-100" action="#">
+                      <div className="input-group">
+                        <div className="input-group-prepend outline-gray bg-transparent">
+                          <i className="input-group-text border-0 mdi mdi-magnify"></i>
+                        </div>
+                        <input
+                          type="text"
+                          className="form-control outline-gray bg-transparent border-0"
+                          placeholder="Search Clients"
+                          value={searchTerm}
+                          onChange={(e) => {
+                            setSearchTerm(e?.target?.value);
+                            setItemOffset(0);
+                          }}
+                        />
+                      </div>
+                    </form>
+                  </div>
+                </div>
+              </>
             </div>
             <h4 className="card-title">Client list</h4>
             <div className="row">

@@ -110,11 +110,11 @@ const ViewUser = () => {
                                         )}
                                     </div>
                                     <div className='col-md-6'>
-                                        <div className='row'>
+                                        {/* <div className='row'>
                                             <span className='mb-4'>
                                                 <b>Role: </b> {itemlist?.role}
                                             </span>
-                                        </div>
+                                        </div> */}
                                         {itemlist?.aadhar_card_img && (
                                             <div className='row'>
                                                 <span className='mb-4'>

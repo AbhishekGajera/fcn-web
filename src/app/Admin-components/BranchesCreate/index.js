@@ -43,35 +43,38 @@ const CreateBranches = () => {
   }
 
   const onSubmit = async (data) => {
-
     const Data = new FormData();
-    Data.append('file', data.image[0]);
-    const fileResult = await ImageUpload(Data)
-    if (fileResult.error) {
-      toast.error(fileResult.error.message);
-    } else {
-      try {
-        if(data.IBO  === ''){
-          delete data.IBO;
-        }
+    let fileResult;
+    if (data.image.length !== 0) {
+      Data.append('file', data.image[0]);
+      fileResult = await ImageUpload(Data)
+      if (fileResult.error) {
+        toast.error(fileResult.error.message);
+      }
+    }
+    try {
+      if (data.IBO === '') {
+        delete data.IBO;
+      }
+      if(data.image.length !== 0){
         data.image = fileResult.secure_url;
-        data.role = 'branch'
-        data.contactno = phone;
-        const result = await CreateUser(data)
-        toast.success("user created successfully");
-        history.push('/branches/brancheslist')
-      } catch (error) {
-        console.info("error ", error)
-        if (
-          error &&
-          error.response &&
-          error.response.data &&
-          error.response.data.message
-        ) {
-          toast.error(error.response.data.message);
-        } else {
-          toast.error(process.env.REACT_APP_ERROR_MESSAGE);
-        }
+      }
+      data.role = 'branch'
+      data.contactno = phone;
+      const result = await CreateUser(data)
+      toast.success("user created successfully");
+      history.push('/branches/brancheslist')
+    } catch (error) {
+      console.info("error ", error)
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
     }
   };
@@ -364,7 +367,7 @@ const CreateBranches = () => {
                           type="text"
                           name="bankIfscCode"
                           onInput={toInputUppercase}
-                          {...register("bankIfscCode", { required: true})}
+                          {...register("bankIfscCode", { required: true })}
                         />
                         {errors && errors.bankIfscCode &&
                           errors.bankIfscCode.type === "required" && (
@@ -472,7 +475,7 @@ const CreateBranches = () => {
                           type="file"
                           name="image"
                           multiple={false}
-                          {...register("image", { required: true })}
+                          {...register("image", { required: false })}
                         />
 
                         <button
@@ -500,7 +503,7 @@ const CreateBranches = () => {
                           type="number"
                           name="maxAmount"
                           placeholder="maxamount"
-                          {...register("maxAmount", { required: true })}
+                          {...register("maxAmount", { required: false })}
                         />
                         {errors && errors.maxamount && (
                           <p>Product maxamount is required field</p>
@@ -570,7 +573,7 @@ const CreateBranches = () => {
                           type="number"
                           name="minAmount"
                           placeholder="minAmount"
-                          {...register("minAmount", { required: true })}
+                          {...register("minAmount", { required: false })}
                         />
                         {errors && errors.minamount && (
                           <p>Product minamount is required field</p>
