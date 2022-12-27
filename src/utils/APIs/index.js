@@ -13,7 +13,7 @@ export const updateProfile = (data,id) => api(`users/${id}`, 'PATCH', data);
 export const deleteUsr = (id) => api(`users/${id}`, 'DELETE');
 export const getusersbyfilter = (email='') => api(`users?custom=true&email=${email}`, 'GET');
 export const userLogout = (data,id) => api(`auth/logout`, 'POST', data);
-export const getUsers = (limit = 10,offset = 1,name = '',role='user',branch='',IBO='') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=name:asc&name=${name}&custom=true&branch=${branch}&IBO=${IBO}`, 'GET');
+export const getUsers = (limit = 10,offset = 1,name = '',role='user',products='',branch='',IBO='') => api(`users?limit=${limit}&page=${offset}&role=${role}&products=${products}&sortBy=name:asc&name=${name}&custom=true&branch=${branch}&IBO=${IBO}`, 'GET');
 export const getUsersList = (limit = 500,offset = 1,role='user') => api(`users?limit=${limit}&page=${offset}&role=${role}&sortBy=asc`, 'GET');
 export const getAllUsers = (limit = 500,offset = 1,name='') => api(`users?name=${name}&limit=${limit}&page=${offset}&sortBy=asc&custom=true`, 'GET');
 export const getUserById = (id) => api(`users/${id}`, 'GET');
@@ -38,13 +38,13 @@ export const deleteLead = (id) => api(`contact/delete-contact/${id}`, 'DELETE');
 // branch management
 export const getBranches = (limit = 10,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');
 export const getBranchesClient = (limit = 500,offset = 1,name = '') => api(`users?limit=${limit}&page=${offset}&role=branch&name=${name}&custom=true`, 'GET');
-export const getUserBranch = (branch = '',role = 'user') => api(`users/get-user-branch?branch=${branch}&role=${role}`, 'GET');
+export const getUserBranch = (branch = '',products = '',role = 'user') => api(`users/get-user-branch?branch=${branch}&products=${products}&role=${role}`, 'GET');
 
 
 // IBO management
 export const getIBOs = (limit = 10,offset = 1,name = '',branch = '',) => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
 export const getIBOsClient = (limit = 500,offset = 1,name = '',branch = '') => api(`users?limit=${limit}&page=${offset}&role=IBO&name=${name}&custom=true&branch=${branch}`, 'GET');
-export const getUserIbo = (id) => api(`users/get-user-ibo/${id}`, 'GET');
+export const getUserIbo = (id,products) => api(`users/get-user-ibo/${id}?products=${products}`, 'GET');
 
 
 

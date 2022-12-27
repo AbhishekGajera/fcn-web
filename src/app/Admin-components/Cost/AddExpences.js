@@ -11,11 +11,18 @@ const AddExpences = () => {
     const [cookies ] = useCookies(["user"]);
     const history = useHistory()
 
+    document.addEventListener('keypress', function (e) {
+        if(e.keyCode === 13 || e.which === 13) {
+          e.preventDefault();
+          return false;
+        }
+    });
+
     const handleUpload = (e) => {
         e.preventDefault()
         const element = document.getElementById('input-id');
         if (element) {
-            element.click()
+            element.click();
         }
     };
 

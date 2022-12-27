@@ -259,14 +259,16 @@ const ClientList = () => {
       if (cookies?.user?.role === "branch") {
         items = await (
           await getUserBranch(
-            cookies?.user?.name
+            cookies?.user?.name,
+            selectedProduct
           )
         ).data;
         setitemlist(items.results);
       } else if (cookies?.user?.role === "IBO") {
         items = await (
           await getUserIbo(
-            cookies?.user?.id
+            cookies?.user?.id,
+            selectedProduct
           )
         ).data;
         setitemlist(items);
@@ -277,6 +279,7 @@ const ClientList = () => {
             +itemOffset + 1,
             searchTerm,
             "user",
+            selectedProduct,
             selectedBranch,
             selectedIBO
           )
