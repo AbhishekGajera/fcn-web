@@ -98,10 +98,41 @@ const Calc = () => {
       );
       instalments = investment;
     }
-
     settotalValue(total === "NaN" ? "0" : total);
     setfutureValues(Math.round(futureValue));
     setinvestedValue(instalments);
+  };
+
+  const YearTotal = (year,type) => {
+    let investment = amounts;
+    let instalments;
+    if (type === 0) {
+      var monthlyRate = returnRateAmount / 12 / 100;
+      var months = year * 12;
+      var futureValue = 0;
+
+      var total = investment * year * returnRateAmount;
+
+      futureValue =
+        (investment *
+          (1 + monthlyRate) *
+          (Math.pow(1 + monthlyRate, months) - 1)) /
+        monthlyRate;
+      instalments = investment * year * 12;
+    } else {
+      var total = investment;
+      futureValue = Math.round(
+        Math.pow(1 + returnRateAmount / 100, year) * amounts
+      );
+      instalments = investment;
+    }
+    if(type === 'investedValue'){
+      return numberWithCommas(investedValue);
+    }else if(type === 'futureValues'){
+      return numberWithCommas(futureValues - investedValue);
+    }else{
+      return numberWithCommas(futureValues);
+    }
   };
 
   const onChangeAmount = (changeEvent) => {
@@ -143,7 +174,7 @@ const Calc = () => {
 
   return (
     <>
-     <Modal
+      <Modal
         show={show}
         onHide={handleClose}
         backdrop="static"
@@ -265,276 +296,270 @@ const Calc = () => {
           </div>
         </Modal.Body>
       </Modal>
-        <div className="row">
-          <div className="col-md-7 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <Tab.Container id="left-tabs-example" defaultActiveKey="first">
-                  <Col sm={12}>
-                    <Nav variant="pills" className="d-flex row">
-                      <Nav.Item onClick={() => settype(0)}>
-                        <Nav.Link eventKey="first">SIP</Nav.Link>
-                      </Nav.Item>
-                      <Nav.Item onClick={() => settype(1)}>
-                        <Nav.Link eventKey="second">Lumpsum</Nav.Link>
-                      </Nav.Item>
-                    </Nav>
-                  </Col>{" "}
-                  <br />
-                  <div style={{ padding: "0px !important" }}>
-                    <Tab.Content style={{ border: "none" }}>
-                      <Tab.Pane eventKey="first">
-                        <div style={{ margin: "10px 0px" }}>
-                          <div className="investmentInput-controller">
-                            <span>Monthly investment</span>
-                            <div>
-                              <input
-                                type="text"
-                                className="sipInput"
-                                id="exampleInputEmail1"
-                                name="investment"
-                                value={amounts}
-                                onChange={onChangeAmount}
-                              />{" "}
-                              ₹
-                            </div>
-                          </div>
-                          <input
-                            type="range"
-                            style={{ width: "100%", accentColor: "#8163cc" }}
-                            value={amounts}
-                            onChange={onChangeAmount}
-                            size="lg"
-                            tooltip="off"
-                            variant="primary"
-                            max={100000}
-                          />
-                        </div>
-                        <div style={{ margin: "10px 0px" }}>
-                          <div className="investmentInput-controller">
-                            <span>Expected return rate (p.a)</span>
-                            <div>
-                              <input
-                                type="text"
-                                className="sipInput"
-                                id="exampleInputEmail1"
-                                name="investment"
-                                value={returnRateAmount}
-                                onChange={onChangeRate}
-                              />{" "}
-                              %
-                            </div>
-                          </div>
+      <div className="row">
+        <div className="col-md-7 grid-margin stretch-card">
+          <div className="card">
+            <div className="card-body">
+              <Tab.Container id="left-tabs-example" defaultActiveKey="first">
+                <Col sm={12}>
+                  <Nav variant="pills" className="d-flex row">
+                    <Nav.Item onClick={() => settype(0)}>
+                      <Nav.Link eventKey="first">SIP</Nav.Link>
+                    </Nav.Item>
+                    <Nav.Item onClick={() => settype(1)}>
+                      <Nav.Link eventKey="second">Lumpsum</Nav.Link>
+                    </Nav.Item>
+                  </Nav>
+                </Col>{" "}
+                <br />
+                <div style={{ padding: "0px !important" }}>
+                  <Tab.Content style={{ border: "none" }}>
+                    <Tab.Pane eventKey="first">
+                      <div style={{ margin: "10px 0px" }}>
+                        <div className="investmentInput-controller">
+                          <span>Monthly investment</span>
                           <div>
                             <input
-                              type="range"
-                              style={{ width: "100%", accentColor: "#8163cc" }}
-                              value={returnRateAmount}
-                              onChange={onChangeRate}
-                              size="lg"
-                              tooltip="off"
-                              variant="primary"
-                              max={30}
-                            />
+                              type="text"
+                              className="sipInput"
+                              id="exampleInputEmail1"
+                              name="investment"
+                              value={amounts}
+                              onChange={onChangeAmount}
+                            />{" "}
+                            ₹
                           </div>
                         </div>
-                        <div style={{ margin: "10px 0px" }}>
-                          <div className="investmentInput-controller">
-                            <span>Time period</span>
-                            <div>
-                              <input
-                                type="text"
-                                className="sipInput"
-                                id="exampleInputEmail1"
-                                name="investment"
-                                value={totalYear}
-                                onChange={onChangeYear}
-                              />{" "}
-                              Yr
-                            </div>
+                        <input
+                          type="range"
+                          style={{ width: "100%", accentColor: "#8163cc" }}
+                          value={amounts}
+                          onChange={onChangeAmount}
+                          size="lg"
+                          tooltip="off"
+                          variant="primary"
+                          max={100000}
+                        />
+                      </div>
+                      <div style={{ margin: "10px 0px" }}>
+                        <div className="investmentInput-controller">
+                          <span>Expected return rate (p.a)</span>
+                          <div>
+                            <input
+                              type="text"
+                              className="sipInput"
+                              id="exampleInputEmail1"
+                              name="investment"
+                              value={returnRateAmount}
+                              onChange={onChangeRate}
+                            />{" "}
+                            %
                           </div>
+                        </div>
+                        <div>
                           <input
                             type="range"
                             style={{ width: "100%", accentColor: "#8163cc" }}
-                            value={totalYear}
-                            onChange={onChangeYear}
+                            value={returnRateAmount}
+                            onChange={onChangeRate}
                             size="lg"
                             tooltip="off"
                             variant="primary"
                             max={30}
                           />
                         </div>
-                      </Tab.Pane>
-                      <Tab.Pane eventKey="second">
-                        <div style={{ margin: "10px 0px" }}>
-                          <div className="investmentInput-controller">
-                            <span>Total investment</span>
-                            <div>
-                              <input
-                                type="text"
-                                className="sipInput"
-                                id="exampleInputEmail1"
-                                name="investment"
-                                value={amounts}
-                                onChange={onChangeAmount}
-                              />{" "}
-                              ₹
-                            </div>
-                          </div>
-                          <input
-                            type="range"
-                            style={{ width: "100%", accentColor: "#8163cc" }}
-                            value={amounts}
-                            onChange={onChangeAmount}
-                            size="lg"
-                            tooltip="off"
-                            variant="primary"
-                            max={100000}
-                          />
-                        </div>
-                        <div style={{ margin: "10px 0px" }}>
-                          <div className="investmentInput-controller">
-                            <span>Expected return rate (p.a)</span>
-                            <div>
-                              <input
-                                type="text"
-                                className="sipInput"
-                                id="exampleInputEmail1"
-                                name="investment"
-                                value={returnRateAmount}
-                                onChange={onChangeRate}
-                              />{" "}
-                              %
-                            </div>
-                          </div>
+                      </div>
+                      <div style={{ margin: "10px 0px" }}>
+                        <div className="investmentInput-controller">
+                          <span>Time period</span>
                           <div>
                             <input
-                              type="range"
-                              style={{ width: "100%", accentColor: "#8163cc" }}
-                              value={returnRateAmount}
-                              onChange={onChangeRate}
-                              size="lg"
-                              tooltip="off"
-                              variant="primary"
-                              max={30}
-                            />
+                              type="text"
+                              className="sipInput"
+                              id="exampleInputEmail1"
+                              name="investment"
+                              value={totalYear}
+                              onChange={onChangeYear}
+                            />{" "}
+                            Yr
                           </div>
                         </div>
-                        <div style={{ margin: "10px 0px" }}>
-                          <div className="investmentInput-controller">
-                            <span>Time period</span>
-                            <div>
-                              <input
-                                type="text"
-                                className="sipInput"
-                                id="exampleInputEmail1"
-                                name="investment"
-                                value={totalYear}
-                                onChange={onChangeYear}
-                              />{" "}
-                              Yr
-                            </div>
+                        <input
+                          type="range"
+                          style={{ width: "100%", accentColor: "#8163cc" }}
+                          value={totalYear}
+                          onChange={onChangeYear}
+                          size="lg"
+                          tooltip="off"
+                          variant="primary"
+                          max={30}
+                        />
+                      </div>
+                    </Tab.Pane>
+                    <Tab.Pane eventKey="second">
+                      <div style={{ margin: "10px 0px" }}>
+                        <div className="investmentInput-controller">
+                          <span>Total investment</span>
+                          <div>
+                            <input
+                              type="text"
+                              className="sipInput"
+                              id="exampleInputEmail1"
+                              name="investment"
+                              value={amounts}
+                              onChange={onChangeAmount}
+                            />{" "}
+                            ₹
                           </div>
+                        </div>
+                        <input
+                          type="range"
+                          style={{ width: "100%", accentColor: "#8163cc" }}
+                          value={amounts}
+                          onChange={onChangeAmount}
+                          size="lg"
+                          tooltip="off"
+                          variant="primary"
+                          max={100000}
+                        />
+                      </div>
+                      <div style={{ margin: "10px 0px" }}>
+                        <div className="investmentInput-controller">
+                          <span>Expected return rate (p.a)</span>
+                          <div>
+                            <input
+                              type="text"
+                              className="sipInput"
+                              id="exampleInputEmail1"
+                              name="investment"
+                              value={returnRateAmount}
+                              onChange={onChangeRate}
+                            />{" "}
+                            %
+                          </div>
+                        </div>
+                        <div>
                           <input
                             type="range"
                             style={{ width: "100%", accentColor: "#8163cc" }}
-                            value={totalYear}
-                            onChange={onChangeYear}
+                            value={returnRateAmount}
+                            onChange={onChangeRate}
                             size="lg"
                             tooltip="off"
                             variant="primary"
                             max={30}
                           />
                         </div>
-                      </Tab.Pane>
-                    </Tab.Content>
-                  </div>
-                </Tab.Container>
+                      </div>
+                      <div style={{ margin: "10px 0px" }}>
+                        <div className="investmentInput-controller">
+                          <span>Time period</span>
+                          <div>
+                            <input
+                              type="text"
+                              className="sipInput"
+                              id="exampleInputEmail1"
+                              name="investment"
+                              value={totalYear}
+                              onChange={onChangeYear}
+                            />{" "}
+                            Yr
+                          </div>
+                        </div>
+                        <input
+                          type="range"
+                          style={{ width: "100%", accentColor: "#8163cc" }}
+                          value={totalYear}
+                          onChange={onChangeYear}
+                          size="lg"
+                          tooltip="off"
+                          variant="primary"
+                          max={30}
+                        />
+                      </div>
+                    </Tab.Pane>
+                  </Tab.Content>
+                </div>
+              </Tab.Container>
 
-                <div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      margin: "10px 0px",
-                    }}
-                  >
-                    <span>Invested amount</span>
-                    <span>{numberWithCommas(investedValue)} &nbsp; ₹</span>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      margin: "10px 0px",
-                    }}
-                  >
-                    <span>Est. returns</span>
-                    <span>
-                      {numberWithCommas(futureValues - investedValue)} &nbsp; ₹
-                    </span>
-                  </div>
-                  <div
-                    style={{
-                      display: "flex",
-                      justifyContent: "space-between",
-                      margin: "10px 0px",
-                    }}
-                  >
-                    <span>Total value</span>
-                    <span>{numberWithCommas(futureValues)} &nbsp; ₹</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div className="col-md-5 grid-margin stretch-card">
-            <div className="card">
-              <div className="card-body">
-                <h4 className="card-title">
-                  <button
-                    type="button"
-                    className="btn btn-gradient-primary btn-fw"
-                  >
-                    Invest now
-                  </button>
-                </h4>
-                <Doughnut
-                  data={trafficData}
-                  options={trafficOptions}
-                  id="visitSaleChart"
-                />
+              <div>
                 <div
-                  id="traffic-chart-legend"
-                  className="rounded-legend legend-vertical legend-bottom-left pt-4"
+                  style={{
+                    display: "flex",
+                    justifyContent: "space-between",
+                    margin: "10px 0px",
+                  }}
                 >
-                  <ul>
-                    <li>
-                      <span className="legend-dots bg-info"></span>Invested
-                      amount
-                    </li>
-                    <li>
-                      <span className="legend-dots bg-success"></span>Est.
-                      returns
-                    </li>
-                  </ul>
+                  <span className="text-right" style={{ width: '10%' }}>Year</span>
+                  <span className="text-right" style={{ width: '32%' }}>Invested amount</span>
+                  <span className="text-right" style={{ width: '30%' }}>Est. returns</span>
+                  <span className="text-right" style={{ width: '28%' }}>Total</span>
                 </div>
-              </div>
-              <div className='mr-3 mb-3'>
-              <h4 className="card-title text-right">
-                  <button
-                    type="button"
-                    className="btn btn-gradient-primary btn-fw"
-                    onClick={handleShow}
+                {totalYear > 0 && [...Array(totalYear)].map((e, i) =>
+                  <div
+                    style={{
+                      display: "flex",
+                      justifyContent: "space-between",
+                      margin: "10px 0px",
+                    }}
                   >
-                    Withdrawal
-                  </button>
-                </h4>
-                </div>
+                    <span className="text-right" style={{ width: '10%' }}>{i+1}</span>
+                    <span className="text-right" style={{ width: '32%' }}>{YearTotal(i+1,'investedValue')} &nbsp; ₹</span>
+                    <span className="text-right" style={{ width: '30%' }}>{YearTotal(i+1,'futureValues')} &nbsp; ₹</span>
+                    <span className="text-right" style={{ width: '28%' }}>{YearTotal(i+1,'total')} &nbsp; ₹</span>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
         </div>
-        </>
+        <div className="col-md-5 grid-margin stretch-card">
+          <div className="card">
+            <div className="card-body">
+              <h4 className="card-title">
+                <button
+                  type="button"
+                  className="btn btn-gradient-primary btn-fw"
+                >
+                  Invest now
+                </button>
+              </h4>
+              <Doughnut
+                data={trafficData}
+                options={trafficOptions}
+                id="visitSaleChart"
+              />
+              <div
+                id="traffic-chart-legend"
+                className="rounded-legend legend-vertical legend-bottom-left pt-4"
+              >
+                <ul>
+                  <li>
+                    <span className="legend-dots bg-info"></span>Invested
+                    amount
+                  </li>
+                  <li>
+                    <span className="legend-dots bg-success"></span>Est.
+                    returns
+                  </li>
+                </ul>
+              </div>
+            </div>
+            {/* <div className='mr-3 mb-3'>
+              <h4 className="card-title text-right">
+                <button
+                  type="button"
+                  className="btn btn-gradient-primary btn-fw"
+                  onClick={handleShow}
+                >
+                  Withdrawal
+                </button>
+              </h4>
+            </div> */}
+          </div>
+        </div>
+      </div>
+    </>
   );
 };
 
