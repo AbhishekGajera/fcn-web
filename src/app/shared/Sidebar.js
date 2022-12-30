@@ -302,8 +302,10 @@ class Sidebar extends Component {
                     <li className="nav-item"> <Link className={this.isPathActive('/travel/departure') ? 'nav-link active' : 'nav-link'} to="/travel/departure"><Trans>Pre Departure</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/travel/tour') ? 'nav-link active' : 'nav-link'} to="/travel/tour"><Trans>Customize Tour</Trans></Link></li>
                     {this.userData?.role === 'admin' && <li className="nav-item"> <Link className={this.isPathActive('/travel/seeRequest') ? 'nav-link active' : 'nav-link'} to="/travel/seeRequest"><Trans>See Requests</Trans></Link></li>}
-                    <li className="nav-item"> <Link className={this.isPathActive('/travel/passport') ? 'nav-link active' : 'nav-link'} to="/travel/passport"><Trans>Passport</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/travel/visa') ? 'nav-link active' : 'nav-link'} to="/travel/visa"><Trans>Visa</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/travel/createpassport') ? 'nav-link active' : 'nav-link'} to="/travel/createpassport"><Trans>Create Passport</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/travel/passportlist') ? 'nav-link active' : 'nav-link'} to="/travel/passportlist"><Trans>Show Passport</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/travel/createvisa') ? 'nav-link active' : 'nav-link'} to="/travel/createvisa"><Trans>Create Visa</Trans></Link></li>
+                    <li className="nav-item"> <Link className={this.isPathActive('/travel/visalist') ? 'nav-link active' : 'nav-link'} to="/travel/visalist"><Trans>Show Visa</Trans></Link></li>
                   </ul>
                 </Collapse>
               </li>

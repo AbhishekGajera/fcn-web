@@ -1,13 +1,36 @@
 import React from 'react'
 import { Form } from 'react-bootstrap';
+import { useCookies } from 'react-cookie';
 import { useForm } from "react-hook-form";
+import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { addPassport } from '../../../utils/APIs';
 
 const Passport = () => {
+  const [cookies, setCookie] = useCookies(["user"]);
+  const history = useHistory();
   const { register, handleSubmit, formState: { errors, isDirty, isValid } } = useForm({
     mode: "onChange"
   });
+
   const onSubmit = async (data) => {
-    alert("hi")
+    try {
+      const result = await addPassport(data)
+      toast.success("Passport Added successfully");
+      history.push('/travel/passportlist');
+    } catch (error) {
+      console.info("error ", error)
+      if (
+        error &&
+        error.response &&
+        error.response.data &&
+        error.response.data.message
+      ) {
+        toast.error(error.response.data.message);
+      } else {
+        toast.error(process.env.REACT_APP_ERROR_MESSAGE);
+      }
+    }
   };
   return (
     <div>
@@ -58,10 +81,10 @@ const Passport = () => {
                     <Form.Group className="row">
                       <label className="col-sm-3 col-form-label" htmlFor="exampleFormControlSelect1">Gender</label>
                       <div className="col-sm-9">
-                        <select className="form-control form-control-lg" id="exampleFormControlSelect1">
-                          <option>Male</option>
-                          <option>Female</option>
-                          <option>Transgender</option>
+                        <select className="form-control form-control-lg" name="gender" {...register("gender")} id="exampleFormControlSelect1">
+                          <option value="Male">Male</option>
+                          <option value="Female">Female</option>
+                          <option value="Transgender">Transgender</option>
                         </select>
                       </div>
                     </Form.Group>
@@ -72,7 +95,7 @@ const Passport = () => {
                     <Form.Group className="row">
                       <label className="col-sm-5 col-form-label" htmlFor="exampleFormControlSelect1">Date Of Birth</label>
                       <div className="col-sm-7">
-                        <Form.Control type="text"
+                        <Form.Control type="date"
                           name="dob"
                           placeholder="Enter Your Date of Birth"
                           {...register("dob", { required: true })} />
@@ -90,7 +113,7 @@ const Passport = () => {
                       <div className="col-sm-3">
                         <div className="form-check">
                           <label className="form-check-label">
-                            <input type="radio" className="form-check-input" name="ExampleRadio4" id="membershipRadios1" defaultChecked /> Yes
+                            <input type="radio" className="form-check-input" name="isOutIndiaBirth" {...register("isOutIndiaBirth", { required: false })} value="yes" id="membershipRadios1" defaultChecked /> Yes
                             <i className="input-helper"></i>
                           </label>
                         </div>
@@ -98,7 +121,7 @@ const Passport = () => {
                       <div className="col-sm-3">
                         <div className="form-check">
                           <label className="form-check-label">
-                            <input type="radio" className="form-check-input" name="ExampleRadio4" id="membershipRadios2" /> No
+                            <input type="radio" className="form-check-input" name="isOutIndiaBirth" {...register("isOutIndiaBirth", { required: false })} value="no" id="membershipRadios2" /> No
                             <i className="input-helper"></i>
                           </label>
                         </div>
@@ -148,9 +171,7 @@ const Passport = () => {
                         </div>
                       </Form.Group>
                     </div> */}
-
                 </div>
-
                 <div className="row">
                   <div className="col-md-7">
                     <Form.Group className="row">
@@ -163,11 +184,8 @@ const Passport = () => {
                         {errors && errors.pan && <p style={{ color: "red" }}>PAN Number is required field</p>}
                       </div>
                     </Form.Group>
-
                   </div>
                 </div>
-
-
                 <div className="row">
                   <div className="col-md-7">
                     <Form.Group className="row">
@@ -180,16 +198,12 @@ const Passport = () => {
                         {errors && errors.voter && <p style={{ color: "red" }}>voter id is required field</p>}
                       </div>
                     </Form.Group>
-
                   </div>
                 </div>
-
-
                 <div className="mt-3">
                   <button
                     className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
                     type="submit"
-
                   >
                     SUBMIT
                   </button>

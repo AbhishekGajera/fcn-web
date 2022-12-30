@@ -3,6 +3,7 @@ import { Switch, Route, Redirect } from 'react-router-dom';
 
 import Spinner from '../app/shared/Spinner';
 import ProtectedRoute from '../common/ProtectedRoute';
+import VisaList from './client-component/travel/VisaList';
 
 const Transaction = lazy(() => import('./Admin-components/Transaction'));
 const Dashboard = lazy(() => import('./dashboard/Dashboard'));
@@ -21,6 +22,7 @@ const Insurance   = lazy(() => import('./client-component/investment/Insurance')
 const SystematicSaving   = lazy(() => import('./client-component/investment/SystematicSaving'));
 const Currency   = lazy(() => import('./client-component/investment/Currency'));
 const Passport   = lazy(() => import('./client-component/travel/Passport'));
+const PassportList = lazy(() => import('./client-component/travel/PassportList'))
 const OurPlans   = lazy(() => import('./client-component/travel/OurPlans'));
 const AddPlan   = lazy(() => import('./client-component/travel/addPlans'));
 const ViewQuery = lazy(() => import('./client-component/travel/QueryList'));
@@ -140,8 +142,10 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/travel/departure" component={ PreDeparture } accesstype={["user","admin","IBO","branch"]} />
           <ProtectedRoute path="/travel/seeRequest" component={ ViewQuery } accesstype={["admin"]} />
       
-          <ProtectedRoute path="/travel/passport" component={ Passport }  accesstype={["user","admin","IBO","branch"]}/>
-          <ProtectedRoute path="/travel/visa" component={ Visa } accesstype={["user","admin","IBO","branch"]} />
+          <ProtectedRoute path="/travel/createpassport" component={ Passport }  accesstype={["user","admin","IBO","branch"]}/>
+          <ProtectedRoute path="/travel/passportlist" component={ PassportList }  accesstype={["admin"]}/>
+          <ProtectedRoute path="/travel/createvisa" component={ Visa } accesstype={["user","admin","IBO","branch"]} />
+          <ProtectedRoute path="/travel/visalist" component={ VisaList }  accesstype={["admin"]}/>
           <ProtectedRoute path="/travel/tour" component={ CustomizeTour } accesstype={["user","admin","IBO","branch"]} />
           <ProtectedRoute path="/balance" component={ Balance } accesstype={["user","admin","IBO","branch"]} />
 

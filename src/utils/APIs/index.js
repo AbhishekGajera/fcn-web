@@ -109,6 +109,20 @@ export const getVideoFree = (type='free') => api(`video?type=${type} `, 'GET');
 export const getVideoPaid = (type='paid') => api(`video?type=${type} `, 'GET');
 export const deleteVideo = (id) => api(`video/${id}`, 'GET');
 
+// Passport management
+export const addPassport = (data) => api(`passport `, 'POST', data);
+export const getPassport = (id) => api(`passport/${id}`, 'GET');
+export const getPassports = (limit = 10,offset = 1) => api(`passport?limit=${limit}&offset=${offset}`, 'GET');
+export const updatePassport = (id,data) => api(`passport/update-passport/${id}`,'PATCH',data);
+export const deletePassport = (id) => api(`passport/${id}`, 'DELETE');
+
+// visa management
+export const addVisa = (data) => api(`visa `, 'POST', data);
+export const getVisa = (id) => api(`visa/${id}`, 'GET');
+export const getVisas = (limit = 10,offset = 1) => api(`visa?limit=${limit}&offset=${offset}`, 'GET');
+export const updateVisa = (id,data) => api(`visa/${id}`,'PATCH',data);
+export const deleteVisa = (id) => api(`visa/${id}`, 'GET');
+
 
 //  Transaction Management
 export const addTransaction = (data) => api(`transaction/add-transaction `, 'POST', data);
