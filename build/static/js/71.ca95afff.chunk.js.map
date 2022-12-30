@@ -1,1 +1,0 @@
-{"version":3,"sources":["app/Admin-components/Auto-Calculation/Ssp.js"],"names":["Ssp"],"mappings":"+HAAA,2BAQeA,UANH,WACV,OACE","file":"static/js/71.ca95afff.chunk.js","sourcesContent":["import React from 'react'\r\n\r\nconst Ssp = () => {\r\n  return (\r\n    <div>Ssp</div>\r\n  )\r\n}\r\n\r\nexport default Ssp"],"sourceRoot":""}
