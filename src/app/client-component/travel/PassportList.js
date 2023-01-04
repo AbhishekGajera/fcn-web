@@ -53,16 +53,8 @@ const PassportList = () => {
 
   const onSubmit = async (data) => {
     try {
-      const formData = new FormData()
-      formData.append("id", valueToEdit?.id);
-      formData.append("name", data?.name)
-      formData.append("city", data?.city)
-      formData.append("isOutIndiaBirth", data?.isOutIndiaBirth)
-      formData.append("name", data?.name)
-      formData.append("pan", data?.pan)
-      formData.append("surname", data?.surname)
-      formData.append("voter", data?.voter)
-      await updatePassport(valueToEdit?.id,formData)
+      data.id = valueToEdit?.id;
+      await updatePassport(valueToEdit?.id,data)
       toast.success('Passport updated Successfully', {
         autoClose: 3000
       })
@@ -205,21 +197,6 @@ const PassportList = () => {
                         </Form.Group>
                       </div>
                     </div>
-                    {/* <div className="row" >
-                      <div className="col-md-12">
-                        <Form.Group className="row">
-                          <label className="col-sm-3 col-form-label" htmlFor="exampleFormControlSelect1">Date Of Birth</label>
-                          <div className="col-sm-9">
-                            <Form.Control type="date"
-                              name="dob"
-                              value={valueToEdit.dob}
-                              placeholder="Enter Your Date of Birth"
-                              {...register("dob", { required: true })} />
-                            {errors && errors.dob && <p style={{ color: "red" }}>Date of birth is required field</p>}
-                          </div>
-                        </Form.Group>
-                      </div>
-                    </div> */}
                     <div className="row">
                       <div className="col-md-12">
                         <Form.Group className="row">
@@ -227,7 +204,7 @@ const PassportList = () => {
                           <div className="col-sm-3">
                             <div className="form-check">
                               <label className="form-check-label">
-                                <input type="radio" className="form-check-input" checked={valueToEdit.isOutIndiaBirth === 'yes'} name="isOutIndiaBirth" {...register("isOutIndiaBirth", { required: false })} value="yes" id="membershipRadios1" /> Yes
+                                <input type="radio" className="form-check-input" defaultChecked={valueToEdit.isOutIndiaBirth === 'yes'}  name="isOutIndiaBirth" {...register("isOutIndiaBirth", { required: false })} value="yes" id="membershipRadios1" /> Yes
                                 <i className="input-helper"></i>
                               </label>
                             </div>
@@ -235,7 +212,7 @@ const PassportList = () => {
                           <div className="col-sm-3">
                             <div className="form-check">
                               <label className="form-check-label">
-                                <input type="radio" className="form-check-input" checked={valueToEdit.isOutIndiaBirth === 'no'} name="isOutIndiaBirth" {...register("isOutIndiaBirth", { required: false })} value="no" id="membershipRadios2" /> No
+                                <input type="radio" className="form-check-input" defaultChecked={valueToEdit.isOutIndiaBirth === 'no'} name="isOutIndiaBirth" {...register("isOutIndiaBirth", { required: false })} value="no" id="membershipRadios2" /> No
                                 <i className="input-helper"></i>
                               </label>
                             </div>
@@ -250,10 +227,26 @@ const PassportList = () => {
                           <div className="col-sm-9">
                             <Form.Control type="text"
                               name="city"
-                              value={valueToEdit.city}
+                              defaultValue={valueToEdit.city}
                               placeholder="Enter Your city"
                               {...register("city", { required: true })} />
                             {errors && errors.city && <p style={{ color: "red" }}>City is required field</p>}
+                          </div>
+                        </Form.Group>
+                      </div>
+                    </div>
+                    <div className="row" >
+                      <div className="col-md-12">
+                        <Form.Group className="row">
+                          <label className="col-sm-5 col-form-label" htmlFor="exampleFormControlSelect1">Date Of Birth</label>
+                          <div className="col-sm-7">
+                            <Form.Control type="date"
+                              name="dob"
+                              defaultValue={moment(valueToEdit.dob).format("YYYY-MM-DD")}
+                              placeholder="Enter Your Date of Birth"
+                              max={moment().format("YYYY-MM-DD")}
+                              {...register("dob", { required: true })} />
+                            {errors && errors.dob && <p style={{ color: "red" }}>Date of birth is required field</p>}
                           </div>
                         </Form.Group>
                       </div>
@@ -265,7 +258,7 @@ const PassportList = () => {
                           <div className="col-sm-7">
                             <Form.Control type="text"
                               name="pan"
-                              value={valueToEdit.pan}
+                              defaultValue={valueToEdit.pan}
                               placeholder="Enter Your PanNumber"
                               {...register("pan", { required: true })} />
                             {errors && errors.pan && <p style={{ color: "red" }}>PAN Number is required field</p>}
@@ -280,7 +273,7 @@ const PassportList = () => {
                           <div className="col-sm-7">
                             <Form.Control type="text"
                               name="voter"
-                              value={valueToEdit.voter}
+                              defaultValue={valueToEdit.voter}
                               placeholder="Enter Your Voter ID"
                               {...register("voter", { required: true })} />
                             {errors && errors.voter && <p style={{ color: "red" }}>voter id is required field</p>}

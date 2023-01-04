@@ -42,7 +42,7 @@ const SystematicSaving = () => {
         </nav>
       </div>
       <Calc />
-      <Tabs defaultActiveKey="first"  >
+      {/* <Tabs defaultActiveKey="first"  >
         <Tab eventKey="first" title="Systematic">
 
           <div className="row">
@@ -221,7 +221,7 @@ const SystematicSaving = () => {
                           </select>
                         </div>
                       </Form.Group>
-                    </div> */}
+                    </div> }
 
                     </div>
                     <p className="card-description">KYC </p>
@@ -612,7 +612,7 @@ const SystematicSaving = () => {
             </div>
           </div>
         </Tab>
-      </Tabs>
+      </Tabs> */}
     </div>
   )
 }

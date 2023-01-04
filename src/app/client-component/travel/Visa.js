@@ -5,6 +5,7 @@ import { useForm } from "react-hook-form";
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import { addVisa } from '../../../utils/APIs';
+import moment from "moment";
 
 const Visa = () => {
   const [cookies, setCookie] = useCookies(["user"]);
@@ -97,6 +98,7 @@ const Visa = () => {
                         <Form.Control type="date"
                           name="dob"
                           placeholder="Enter Your dob"
+                          max={moment().format("YYYY-MM-DD")}
                           {...register("dob", { required: true })} />
                         {errors && errors.dob && <p style={{ color: "red" }}>Date of birth is required field</p>}
                       </div>

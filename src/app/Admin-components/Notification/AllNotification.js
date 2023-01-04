@@ -421,7 +421,9 @@ const AllNotification = () => {
                     <th> Type </th>
                     <th> Target Audience </th>
                     <th> View </th>
+                    {cookies?.user?.role === 'admin' && (
                     <th> Action </th>
+                    )}
                   </tr>
                 </thead>
                 <tbody>
@@ -442,6 +444,7 @@ const AllNotification = () => {
                             View
                           </button>
                           </td>
+                          {cookies?.user?.role === 'admin' && (
                           <td>
                             <td>
                               <i
@@ -450,6 +453,7 @@ const AllNotification = () => {
                               ></i>
                             </td>
                           </td>
+                          )}
                         </tr>
                       </>
                     )
@@ -487,7 +491,7 @@ const AllNotification = () => {
                       <th> Type </th>
                       <th> Target Audience </th>
                       <th> View </th>
-                      <th> Action </th>
+                      {/* <th> Action </th> */}
                     </tr>
                   </thead>
                   <tbody>
@@ -508,14 +512,14 @@ const AllNotification = () => {
                               View
                             </button>
                             </td>
-                            <td>
+                            {/* <td>
                               <td>
                                 <i
                                   onClick={() => deleteNotifications(item?.id)}
                                   className="mdi mdi-delete"
                                 ></i>
                               </td>
-                            </td>
+                            </td> */}
                           </tr>
                         );
                       })}

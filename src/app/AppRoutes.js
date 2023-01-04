@@ -131,7 +131,7 @@ class AppRoutes extends Component {
           <ProtectedRoute path="/investment/poweronelist" component={ PowerOnelist }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/investment/ssp" component={ SystematicSaving }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/investment/cp" component={ Currency } accesstype={["user","admin","IBO","branch"]} />
-          <ProtectedRoute path="/investment/insurance" component={ Insurance } accesstype={["user","admin","IBO","branch"]} />
+          {/* <ProtectedRoute path="/investment/insurance" component={ Insurance } accesstype={["user","admin","IBO","branch"]} /> */}
 
           <ProtectedRoute path="/utilities/offers" component={ Offers }  accesstype={["user","admin","IBO","branch"]}/>
           <ProtectedRoute path="/utilities/calculator" component={ SipCalc }  accesstype={["user","admin","IBO","branch"]}/>

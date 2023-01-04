@@ -266,8 +266,8 @@ class Sidebar extends Component {
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/addpowerone') ? 'nav-link active' : 'nav-link'} to="/investment/addpowerone"><Trans>Add PowerOne</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/poweronelist') ? 'nav-link active' : 'nav-link'} to="/investment/poweronelist"><Trans>Show PowerOne</Trans></Link></li>
                     <li className="nav-item"> <Link className={this.isPathActive('/investment/ssp') ? 'nav-link active' : 'nav-link'} to="/investment/ssp"><Trans>SSP</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/cp') ? 'nav-link active' : 'nav-link'} to="/investment/cp"><Trans>CP</Trans></Link></li>
-                    <li className="nav-item"> <Link className={this.isPathActive('/investment/insurance') ? 'nav-link active' : 'nav-link'} to="/investment/insurance"><Trans>Insurance</Trans></Link></li>
+                    {/* <li className="nav-item"> <Link className={this.isPathActive('/investment/cp') ? 'nav-link active' : 'nav-link'} to="/investment/cp"><Trans>CP</Trans></Link></li> */}
+                    {/* <li className="nav-item"> <Link className={this.isPathActive('/investment/insurance') ? 'nav-link active' : 'nav-link'} to="/investment/insurance"><Trans>Insurance</Trans></Link></li> */}
                   </ul>
                 </Collapse>
               </li>

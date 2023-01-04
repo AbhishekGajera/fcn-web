@@ -15,11 +15,19 @@ const Calc = () => {
   const [totalValue, settotalValue] = useState(0);
   const [futureValues, setfutureValues] = useState(0);
   const [investedValue, setinvestedValue] = useState(0);
+  const [year, setYear] = useState([]);
   const [show, setShow] = React.useState(false);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
+  useEffect(() => {
+    let data = [];
+    for (let i = 1; i <= totalYear; i++) {
+      data.push(i)
+    }
+    setYear(data)
+  }, [totalYear])
 
   const {
     register,
@@ -127,11 +135,11 @@ const Calc = () => {
       instalments = investment;
     }
     if(type === 'investedValue'){
-      return numberWithCommas(investedValue);
+      return numberWithCommas(investedValue * year);
     }else if(type === 'futureValues'){
-      return numberWithCommas(futureValues - investedValue);
+      return numberWithCommas((futureValues * year) - (investedValue * year));
     }else{
-      return numberWithCommas(futureValues);
+      return numberWithCommas(futureValues * year);
     }
   };
 
@@ -495,7 +503,7 @@ const Calc = () => {
                   <span className="text-right" style={{ width: '30%' }}>Est. returns</span>
                   <span className="text-right" style={{ width: '28%' }}>Total</span>
                 </div>
-                {totalYear > 0 && [...Array(totalYear)].map((e, i) =>
+                {totalYear > 0 && year.map((e, i) =>
                   <div
                     style={{
                       display: "flex",
@@ -503,10 +511,10 @@ const Calc = () => {
                       margin: "10px 0px",
                     }}
                   >
-                    <span className="text-right" style={{ width: '10%' }}>{i+1}</span>
-                    <span className="text-right" style={{ width: '32%' }}>{YearTotal(i+1,'investedValue')} &nbsp; ₹</span>
-                    <span className="text-right" style={{ width: '30%' }}>{YearTotal(i+1,'futureValues')} &nbsp; ₹</span>
-                    <span className="text-right" style={{ width: '28%' }}>{YearTotal(i+1,'total')} &nbsp; ₹</span>
+                    <span className="text-right" style={{ width: '10%' }}>{e}</span>
+                    <span className="text-right" style={{ width: '32%' }}>{YearTotal(e,'investedValue')} &nbsp; ₹</span>
+                    <span className="text-right" style={{ width: '30%' }}>{YearTotal(e,'futureValues')} &nbsp; ₹</span>
+                    <span className="text-right" style={{ width: '28%' }}>{YearTotal(e,'total')} &nbsp; ₹</span>
                   </div>
                 )}
               </div>
