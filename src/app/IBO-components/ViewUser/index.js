@@ -110,11 +110,24 @@ const ViewUser = () => {
                                         )}
                                     </div>
                                     <div className='col-md-6'>
-                                        {/* <div className='row'>
-                                            <span className='mb-4'>
-                                                <b>Role: </b> {itemlist?.role}
-                                            </span>
-                                        </div> */}
+                                        {itemlist?.image && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Upload Cancel Cheque Image: </b>
+                                                    <br />
+                                                    <img src={itemlist?.image} alt="aadhar_card_img" className='proof_img' />
+                                                </span>
+                                            </div>
+                                        )}
+                                        {itemlist?.avatar && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Upload Cancel Cheque Image: </b>
+                                                    <br />
+                                                    <img src={itemlist?.avatar} alt="aadhar_card_img" className='proof_img' />
+                                                </span>
+                                            </div>
+                                        )}
                                         {itemlist?.aadhar_card_img && (
                                             <div className='row'>
                                                 <span className='mb-4'>
@@ -136,7 +149,7 @@ const ViewUser = () => {
                                                 <span className='mb-4'>
                                                     <b>Pan Card Image: </b>
                                                     <br />
-                                                    <img src={itemlist?.pan_card_img} alt="pan_card_img" className='proof_img'/>
+                                                    <img src={itemlist?.pan_card_img} alt="pan_card_img" className='proof_img' />
                                                 </span>
                                             </div>
                                         )}
@@ -194,30 +207,34 @@ const ViewUser = () => {
                                                 </span>
                                             </div>
                                         )}
-                                         {itemlist?.registration_date && (
+                                        {itemlist?.registration_date && (
                                             <div className='row'>
                                                 <span className='mb-4'>
                                                     <b>Registration Date: </b> {moment(itemlist?.registration_date).format("DD-MM-YYYY")}
                                                 </span>
                                             </div>
                                         )}
-                                         {itemlist?.maturity_date && (
+                                        {itemlist?.maturity_date && (
                                             <div className='row'>
                                                 <span className='mb-4'>
                                                     <b>Maturity Date: </b> {moment(itemlist?.maturity_date).format("DD-MM-YYYY")}
                                                 </span>
                                             </div>
                                         )}
+                                        {itemlist?.products?.[0]?.minAmount && (
                                         <div className='row'>
                                             <span className='mb-4'>
                                                 <b>Min Amount: </b> {itemlist?.products?.[0]?.minAmount}
                                             </span>
                                         </div>
+                                        )}
+                                        {itemlist?.products?.[0]?.maxAmount && (
                                         <div className='row'>
                                             <span className='mb-4'>
                                                 <b>Max Amount: </b> {itemlist?.products?.[0]?.maxAmount}
                                             </span>
                                         </div>
+                                        )}
                                     </div>
                                 </div>
                             </div>

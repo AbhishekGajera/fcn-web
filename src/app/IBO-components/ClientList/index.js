@@ -1023,7 +1023,8 @@ const ClientList = () => {
                     <th> Branch </th>
                     <th> IBO </th>
                     <th> Email </th>
-                    <th> Role </th>
+                    <th> Product </th>
+                    <th> Maturity Date </th>
                     <th> Status </th>
                     <th> Generate Password </th>
                     <th> View </th>
@@ -1045,7 +1046,8 @@ const ClientList = () => {
                           <td>{item?.branch}</td>
                           <td>{item?.IBO?.name}</td>
                           <td>{item?.email}</td>
-                          <td>{item?.role}</td>
+                          <td>{item?.products[0]?.product?.name}</td>
+                          <td>{item?.maturity_date ? moment(item?.maturity_date).format('DD-MM-YYYY') : '-'}</td>
                           <td>{formateStatus(item?.status)}</td>
                           <td>
                             <button

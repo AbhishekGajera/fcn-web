@@ -44,7 +44,9 @@ const ProductAdd = () => {
     formData.append("user", cookies?.user?.id)
     formData.append("category", data?.category)
     formData.append("description", data?.description)
-    formData.append("image", data?.file[0])
+    if(data?.file?.length > 0){
+      formData.append("image", data?.file[0])
+    }
     formData.append("name", data?.name)
     formData.append("commision", data?.commision)
     formData.append("status", data?.status)
@@ -252,7 +254,7 @@ const ProductAdd = () => {
                           type="file"
                           name="file"
                           multiple={false}
-                          {...register("file", { required: true })}
+                          {...register("file", { required: false })}
                         />
 
                         <button

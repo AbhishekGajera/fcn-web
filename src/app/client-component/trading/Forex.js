@@ -26,7 +26,7 @@ const Forex = () => {
                 <h4 className="font-weight-normal mb-3">Forex Account <i className="mdi mdi-diamond mdi-24px float-right"></i>
                 </h4>
                 <h2 className="mb-5">Open Your Forex Account</h2>
-                <h6 className="card-text"> <Link to={{ pathname: "https://www.angelone.in/" }} target="_blank"> Click Here</Link></h6>
+                <h6 className="card-text"> <Link to={{ pathname: "https://fcntraining.co.in/Downloads/tmsetup.exe" }} target="_blank"> Click Here</Link></h6>
 
               </div>
             </div>

@@ -68,6 +68,9 @@ const CreateBranches = () => {
       }
       data.role = 'branch'
       data.contactno = phone;
+      if(data.selectProduct === ''){
+        delete data.selectProduct;
+      }
       const result = await CreateUser(data)
       toast.success("user created successfully");
       history.push('/branches/brancheslist')
@@ -550,7 +553,7 @@ const CreateBranches = () => {
                           id="exampleFormControlSelect2"
                           name="selectProduct"
                           {...register("selectProduct", {
-                            required: true,
+                            required: false,
                           })}
                         >
                           <option value=''>--Select Product--</option>

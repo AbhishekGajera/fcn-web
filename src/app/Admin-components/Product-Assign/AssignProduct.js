@@ -37,6 +37,10 @@ const AssignProduct = () => {
         }
     };
 
+    const toInputUppercase = e => {
+        e.target.value = ("" + e.target.value).toUpperCase();
+      };
+
     const userList = async () => {
         try {
             const items = await (await getUsersList()).data;
@@ -201,10 +205,75 @@ const AssignProduct = () => {
                                         </Form.Group>
                                     </div>
                                 </div>
-
-                               
-
-
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <Form.Group className="row">
+                                            <label className="col-sm-4 col-form-label">
+                                                Bank Name
+                                            </label>
+                                            <div className="col-sm-8">
+                                                <Form.Control
+                                                    type="text"
+                                                    name="bankName"
+                                                    placeholder = "Enter Bank Name"
+                                                    {...register("bankName", { required: true })}
+                                                />
+                                                {errors && errors.bankAccNo && (
+                                                    <p>Bank name is required field</p>
+                                                )}
+                                            </div>
+                                        </Form.Group>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <Form.Group className="row">
+                                            <label className="col-sm-4 col-form-label">
+                                                Bank Acc. no
+                                            </label>
+                                            <div className="col-sm-8">
+                                                <Form.Control
+                                                    type="text"
+                                                    name="bankAccNo"
+                                                    placeholder = "Enter Bank Account No"
+                                                    {...register("bankAccNo", { required: true })}
+                                                />
+                                                {errors && errors.bankAccNo && (
+                                                    <p>Bank Account number is required field</p>
+                                                )}
+                                            </div>
+                                        </Form.Group>
+                                    </div>
+                                </div>
+                                <div className="row">
+                                    <div className="col-md-12">
+                                        <Form.Group className="row">
+                                            <label className="col-sm-4 col-form-label">
+                                                IFSC code
+                                            </label>
+                                            <div className="col-sm-8">
+                                                <Form.Control
+                                                    type="text"
+                                                    name="bankIfscCode"
+                                                    placeholder="Enter Bank IFSC Code"
+                                                    onInput={toInputUppercase}
+                                                    {...register("bankIfscCode", { required: true })}
+                                                />
+                                                {errors && errors.bankIfscCode &&
+                                                    errors.bankIfscCode.type === "required" && (
+                                                        <p>Bank IFSC number is required field</p>
+                                                    )}
+                                                {errors &&
+                                                    errors.bankIfscCode &&
+                                                    errors.bankIfscCode.type === "pattern" && (
+                                                        <p>
+                                                            IFSC code should have Capital latter and Number
+                                                        </p>
+                                                    )}
+                                            </div>
+                                        </Form.Group>
+                                    </div>
+                                </div>
                                 <div className="mt-3" style={{ display: 'flex', justifyContent: 'center' }}>
                                     <button
                                         className="btn  btn-primary btn-lg font-weight-medium auth-form-btn"
@@ -217,8 +286,8 @@ const AssignProduct = () => {
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
+            </div >
+        </div >
     )
 }
 
