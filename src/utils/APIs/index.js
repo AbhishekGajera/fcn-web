@@ -179,4 +179,4 @@ export const updatePowerone = (id,data) => api(`powerone/update-powerone/${id}`,
 
 
 // get user Perfomance
-export const getUserPerfomance = (id,role) => api(`users/get-top-perfomance/${id}/${role}/1`, 'GET');
+export const getUserPerfomance = (id,role, number = '1') => api(`users/get-top-perfomance/${id}/${role}/${number}`, 'GET');

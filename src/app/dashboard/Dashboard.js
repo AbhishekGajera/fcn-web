@@ -46,8 +46,11 @@ const Dashboard = () => {
   const [itemlistdash, setitemlistdash] = useState([]);
   const [itemlistpro, setitemlistpro] = useState([]);
   const [branchTopPerfomer, setbranchTopPerfomer] = useState([]);
+  const [branchSecondPerfomer, setbranchSecondPerfomer] = useState([]);
   const [iboTopPerfomer, setiboTopPerfomer] = useState([]);
+  const [iboSecondPerfomer, setiboSecondPerfomer] = useState([]);
   const [userTopPerfomer, setUserTopPerfomer] = useState([]);
+  const [userSecondPerfomer, setUserSecondPerfomer] = useState([]);
 
   const [recentdash, setrecentdash] = useState([]);
 
@@ -250,11 +253,16 @@ const Dashboard = () => {
 
   const getBranchTopPerfomer = async () => {
     setIsLoading(true)
+    let items;
     try {
-      const items = await (
-        await getUserPerfomance(cookies?.user?.id, 'branch')
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'branch',1)
       ).data;
-      setbranchTopPerfomer(items)
+      setbranchTopPerfomer(items);
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'branch',2)
+      ).data;
+      setbranchSecondPerfomer(items);
     } catch (error) {
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
@@ -267,11 +275,16 @@ const Dashboard = () => {
 
   const getIboTopPerfomer = async () => {
     setIsLoading(true)
+    let items;
     try {
-      const items = await (
-        await getUserPerfomance(cookies?.user?.id, 'IBO')
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'IBO',1)
       ).data;
       setiboTopPerfomer(items)
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'IBO',2)
+      ).data;
+      setiboSecondPerfomer(items)
     } catch (error) {
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
@@ -284,11 +297,16 @@ const Dashboard = () => {
 
   const getUserTopPerfomer = async () => {
     setIsLoading(true)
+    let items;
     try {
-      const items = await (
-        await getUserPerfomance(cookies?.user?.id, 'user')
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'user',1)
       ).data;
       setUserTopPerfomer(items)
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'user',2)
+      ).data;
+      setUserSecondPerfomer(items)
     } catch (error) {
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
@@ -1332,8 +1350,8 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "200px" }}>
-                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: "200px", maxHeight: "235px" }}>
+                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "305px" }}>
                       {branchTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
                           <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
@@ -1350,6 +1368,20 @@ const Dashboard = () => {
                       ) : (
                         <span style={{ fontSize: '14px', padding: '15px 30px' }}>Top Perfomer Not Found</span>
                       )}
+                       {branchSecondPerfomer?.length !== 0 && (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{branchSecondPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                {branchSecondPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{branchSecondPerfomer?.email}</span>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">Branch : {branchSecondPerfomer?.branch}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1363,8 +1395,8 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "200px" }}>
-                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "235px" }}>
+                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "305px" }}>
                       {userTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
                           <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
@@ -1381,6 +1413,20 @@ const Dashboard = () => {
                       ) : (
                         <span style={{ fontSize: '14px', padding: '15px 30px' }}>Top Perfomer Not Found</span>
                       )}
+                      {userSecondPerfomer?.length !== 0 && (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{userSecondPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                {userSecondPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{userSecondPerfomer?.email}</span>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">User : {userSecondPerfomer?.role}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1394,8 +1440,8 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "200px" }}>
-                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "217px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "235px" }}>
+                    <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "305px" }}>
                       {iboTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
                           <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
@@ -1411,6 +1457,20 @@ const Dashboard = () => {
                         </ul>
                       ) : (
                         <span style={{ fontSize: '14px', padding: '15px 30px' }}>Top Perfomer Not Found</span>
+                      )}
+                      {iboSecondPerfomer?.length !== 0 && (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{iboSecondPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                {iboSecondPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{iboSecondPerfomer?.email}</span>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">IBO : {iboSecondPerfomer?.role}</p>
+                            </div>
+                          </li>
+                        </ul>
                       )}
                     </div>
                   </div>

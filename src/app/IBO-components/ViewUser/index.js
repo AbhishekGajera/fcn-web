@@ -128,6 +128,15 @@ const ViewUser = () => {
                                                 </span>
                                             </div>
                                         )}
+                                        {itemlist?.cancel_cheque && (
+                                            <div className='row'>
+                                                <span className='mb-4'>
+                                                    <b>Cancel Cheque Image: </b>
+                                                    <br />
+                                                    <img src={itemlist?.cancel_cheque} alt="cancel_cheque" className='proof_img' />
+                                                </span>
+                                            </div>
+                                        )}
                                         {itemlist?.aadhar_card_img && (
                                             <div className='row'>
                                                 <span className='mb-4'>

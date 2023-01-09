@@ -185,11 +185,10 @@ const PowerOne = () => {
       passbook_img = await ImageUpload(Data)
     }
 
-    if (data.payment_img.length !== 0) {
-      Data.append('file', data.payment_img[0]);
+    if (data.payment_screenshot.length !== 0) {
+      Data.append('file', data.payment_screenshot[0]);
       payment_img = await ImageUpload(Data)
     }
-
 
     if (aadharcard_img.error || pancard_img.error || passbook_img.error || payment_img.error) {
       toast.error(aadharcard_img.error.message);
@@ -200,7 +199,7 @@ const PowerOne = () => {
       delete data.passport_number;
       delete data.pan_number;
       delete data.aadhar_number;
-      data.payment_img = payment_img.secure_url;
+      data.payment_screenshot  = payment_img.secure_url;
       data.aadhar_card_img = aadharcard_img.secure_url;
       data.pan_card_img = pancard_img.secure_url;
       data.passbook_card_img = passbook_img.secure_url;
@@ -208,7 +207,7 @@ const PowerOne = () => {
         setisLoading(false)
         await addPowerone(data)
         toast.success("Powerone created successfully");
-        history.push('/investment/powerone')
+        history.push('/investment/poweronelist');
       } catch (error) {
         if (
           error &&
@@ -669,17 +668,17 @@ const PowerOne = () => {
                               <select
                                 className="form-control form-control-lg"
                                 id="exampleFormControlSelect2"
-                                name="payment_by"
-                                {...register("payment_by", {
+                                name="method_by"
+                                {...register("method_by", {
                                   required: true,
                                 })}
                               >
                                 <option value=''>--Select Payment Method--</option>
-                                <option value="">By Cash</option>
-                                <option value="">By GooglePay</option>
-                                <option value="">By Card</option>
+                                <option value="by_cash">By Cash</option>
+                                <option value="by_gpay">By GooglePay</option>
+                                <option value="by_card">By Card</option>
                               </select>
-                              {errors && errors.payment_by && <p style={{ color: "red" }}>Payment By is required field</p>}
+                              {errors && errors.method_by  && <p style={{ color: "red" }}>Payment By is required field</p>}
                             </div>
                           </Form.Group>
                         </div>
@@ -687,10 +686,9 @@ const PowerOne = () => {
                           <Form.Group className="row">
                             <label className="col-sm-5 col-form-label">Payment Number</label>
                             <div className="col-sm-7">
-                              <Form.Control type="text" name="payment_number" placeholder="Enter Your Payment Number"
-                                {...register("payment_number", { required: true })} />
-
-                              {errors && errors.payment_number && <p style={{ color: "red" }}>Payment Number is required field</p>}
+                              <Form.Control type="text" name="payment_no" placeholder="Enter Your Payment Number"
+                                {...register("payment_no", { required: true })} />
+                              {errors && errors.payment_no  && <p style={{ color: "red" }}>Payment Number is required field</p>}
                             </div>
                           </Form.Group>
                         </div>
@@ -704,16 +702,16 @@ const PowerOne = () => {
                                 id="input-paymentId"
                                 className="d-none"
                                 type="file"
-                                name="payment_img"
+                                name="payment_screenshot"
                                 multiple={false}
-                                {...register("payment_img")}
+                                {...register("payment_screenshot")}
                               />
                               <button
                                 onClick={handlepaymentUpload}
-                                className={`btn btn-outline-${values?.payment_img?.[0]?.name ? " btn-primary" : " btn-primary"
+                                className={`btn btn-outline-${values?.payment_screenshot ?.[0]?.name ? " btn-primary" : " btn-primary"
                                   }`}
                               >
-                                {values?.payment_img?.[0]?.name ? values?.payment_img?.[0]?.name : "Upload Payment Screenshot"}
+                                {values?.payment_screenshot ?.[0]?.name ? values?.payment_screenshot ?.[0]?.name : "Upload Payment Screenshot"}
                               </button>
                             </div>
                           </Form.Group>

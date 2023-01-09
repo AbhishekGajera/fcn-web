@@ -88,8 +88,8 @@ const CreateClints = () => {
       pancard_img = await ImageUpload(Data)
     }
 
-    if (data.cancel_cheque_img.length !== 0) {
-      Data.append('file', data.cancel_cheque_img[0]);
+    if (data.cancel_cheque.length !== 0) {
+      Data.append('file', data.cancel_cheque[0]);
       cheque_img = await ImageUpload(Data)
     }
 
@@ -103,7 +103,7 @@ const CreateClints = () => {
         delete data.last_name;
         data.aadhar_card_img = aadharcard_img.secure_url;
         data.pan_card_img = pancard_img.secure_url;
-        data.cancel_cheque_img = cheque_img.secure_url;
+        data.cancel_cheque = cheque_img.secure_url;
         await CreateUser(data)
         setisLoading(false)
         toast.success("user created successfully");
@@ -733,19 +733,19 @@ const CreateClints = () => {
                             id="input-chequeId"
                             className="d-none"
                             type="file"
-                            name="cancel_cheque_img"
+                            name="cancel_cheque"
                             multiple={false}
-                            {...register("cancel_cheque_img", { required: false })}
+                            {...register("cancel_cheque", { required: false })}
                           />
 
                           <button
                             onClick={handleCancelChequeUpload}
-                            className={`btn btn-outline-${values?.cancel_cheque_img?.[0]?.name ? " btn-primary" : " btn-primary"
+                            className={`btn btn-outline-${values?.cancel_cheque?.[0]?.name ? " btn-primary" : " btn-primary"
                               }`}
                           >
-                            {values?.cancel_cheque_img?.[0]?.name ? values?.cancel_cheque_img?.[0]?.name : "Upload Image"}
+                            {values?.cancel_cheque?.[0]?.name ? values?.cancel_cheque?.[0]?.name : "Upload Image"}
                           </button>
-                          {errors && errors.cancel_cheque_img && (
+                          {errors && errors.cancel_cheque && (
                             <p>Upload image is required field</p>
                           )}
                         </div>

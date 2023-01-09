@@ -209,7 +209,7 @@ const PowerOneFetch = () => {
                                                             as="textarea"
                                                             name="address"
                                                             defaultValue={valueToEdit.address}
-                                                            {...register("address", { required: true })}
+                                                            {...register("address", { required: false })}
                                                             placeholder="address"
                                                         />
                                                         {errors && errors.desc && (
@@ -240,7 +240,7 @@ const PowerOneFetch = () => {
                                                     <div className="col-sm-9">
                                                         <Form.Control type="text" name="city" placeholder="Enter Your city"
                                                             defaultValue={valueToEdit?.city}
-                                                            {...register("city", { required: true })} />
+                                                            {...register("city", { required: false })} />
 
                                                         {errors && errors.city && <p style={{ color: "red" }}>city is required field</p>}
                                                     </div>
@@ -254,7 +254,7 @@ const PowerOneFetch = () => {
                                                     <div className="col-sm-9">
                                                         <Form.Control type="text" name="state" placeholder="Enter Your state"
                                                             defaultValue={valueToEdit?.state}
-                                                            {...register("state", { required: true })} />
+                                                            {...register("state", { required: false })} />
                                                         {errors && errors.state && <p style={{ color: "red" }}>state is required field</p>}
                                                     </div>
                                                 </Form.Group>
@@ -267,7 +267,7 @@ const PowerOneFetch = () => {
                                                     <div className="col-sm-9">
                                                         <Form.Control type="text" name="country" placeholder="Enter Your country"
                                                            defaultValue={valueToEdit?.country}
-                                                           {...register("country", { required: true })} />
+                                                           {...register("country", { required: false })} />
                                                         {errors && errors.country && <p style={{ color: "red" }}>country is required field</p>}
                                                     </div>
                                                 </Form.Group>
