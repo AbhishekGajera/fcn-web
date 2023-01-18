@@ -98,7 +98,7 @@ const CreateClints = () => {
     } else {
       try {
         data.contactno = phone;
-        data.name = data.first_name + ' ' + data.last_name;
+        data.name = data.first_name;
         delete data.first_name;
         delete data.last_name;
         data.aadhar_card_img = aadharcard_img.secure_url;
@@ -264,7 +264,7 @@ const CreateClints = () => {
                 <form className="form-sample" onSubmit={handleSubmit(onSubmit)}>
                   <p className="card-description"> Personal info </p>
                   <div className="row">
-                    <div className="col-md-6">
+                    <div className="col-md-12">
                       <Form.Group className="row">
                         <label className="col-sm-4 col-form-label">First Name</label>
                         <div className="col-sm-8">
@@ -276,21 +276,6 @@ const CreateClints = () => {
                             {...register("first_name", { required: true })}
                           />
                           {errors && errors.first_name && <p style={{ color: "red" }}>first name is required field</p>}
-                        </div>
-                      </Form.Group>
-                    </div>
-                    <div className="col-md-6">
-                      <Form.Group className="row">
-                        <label className="col-sm-4 col-form-label">Last Name</label>
-                        <div className="col-sm-8">
-                          <Form.Control
-                            type="text"
-                            name="last_name"
-                            defaultValue={clientlist?.name.split(" ")[1]}
-                            onChange={(e) => setClientlist({ ...clientlist, name: e?.target?.value })}
-                            {...register("last_name", { required: true })}
-                          />
-                          {errors && errors.last_name && <p style={{ color: "red" }}>last name is required field</p>}
                         </div>
                       </Form.Group>
                     </div>

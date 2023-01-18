@@ -34,12 +34,12 @@ const Navbar = () => {
         let items
         let data
         let allitems
+        let item
         if (cookies?.user?.role === 'admin') {
           allitems = await (
             await getNotification()
           ).data;
-        }
-        if (cookies?.user?.role === 'IBO') {
+        } else if (cookies?.user?.role === 'IBO') {
           items = await (
             await getNotificationByAudience(1, 'ibo')
           ).data;
@@ -60,10 +60,17 @@ const Navbar = () => {
         }
 
         if (cookies?.user?.role !== 'admin') {
-          data = [...allitems?.results, ...items?.results];
+          item = await (
+            await getNotificationByAudience(1, 'all')
+          ).data;
+        }
+
+        if (cookies?.user?.role !== 'admin') {
+          data = item?.results.concat(allitems?.results, items?.results);
         } else {
           data = [...allitems?.results];
         }
+
         const notificationData = data.filter((item) => item.hasShowen === false)
         setNotificationList(notificationData.slice(0, 4));
 

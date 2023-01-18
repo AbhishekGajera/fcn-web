@@ -32,15 +32,15 @@ const Connect = () => {
         toast.error(process.env.REACT_APP_ERROR_MESSAGE);
       }
 
-      if (error?.response?.data?.code === 401) {
-        const formData = JSON.stringify({
-          refreshToken: localStorage.getItem("refreshToken"),
-        });
-        setCookie("user", null, { path: "/" });
-        userLogout(formData).finally(() => {
-          history.push("/user-pages/login-1");
-        });
-      }
+      // if (error?.response?.data?.code === 401) {
+      //   const formData = JSON.stringify({
+      //     refreshToken: localStorage.getItem("refreshToken"),
+      //   });
+      //   setCookie("user", null, { path: "/" });
+      //   userLogout(formData).finally(() => {
+      //     history.push("/user-pages/login-1");
+      //   });
+      // }
     }
   };
 

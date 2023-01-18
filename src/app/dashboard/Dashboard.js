@@ -47,10 +47,13 @@ const Dashboard = () => {
   const [itemlistpro, setitemlistpro] = useState([]);
   const [branchTopPerfomer, setbranchTopPerfomer] = useState([]);
   const [branchSecondPerfomer, setbranchSecondPerfomer] = useState([]);
+  const [branchThirdPerfomer, setbranchThirdPerfomer] = useState([]);
   const [iboTopPerfomer, setiboTopPerfomer] = useState([]);
   const [iboSecondPerfomer, setiboSecondPerfomer] = useState([]);
+  const [iboThirdPerfomer, setiboThirdPerfomer] = useState([]);
   const [userTopPerfomer, setUserTopPerfomer] = useState([]);
   const [userSecondPerfomer, setUserSecondPerfomer] = useState([]);
+  const [userThirdPerfomer, setUserThirdPerfomer] = useState([]);
 
   const [recentdash, setrecentdash] = useState([]);
 
@@ -263,6 +266,10 @@ const Dashboard = () => {
         await getUserPerfomance(cookies?.user?.id, 'branch',2)
       ).data;
       setbranchSecondPerfomer(items);
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'branch',3)
+      ).data;
+      setbranchThirdPerfomer(items);
     } catch (error) {
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
@@ -285,6 +292,10 @@ const Dashboard = () => {
         await getUserPerfomance(cookies?.user?.id, 'IBO',2)
       ).data;
       setiboSecondPerfomer(items)
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'IBO',3)
+      ).data;
+      setiboThirdPerfomer(items)
     } catch (error) {
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
@@ -307,6 +318,10 @@ const Dashboard = () => {
         await getUserPerfomance(cookies?.user?.id, 'user',2)
       ).data;
       setUserSecondPerfomer(items)
+      items = await (
+        await getUserPerfomance(cookies?.user?.id, 'user',3)
+      ).data;
+      setUserThirdPerfomer(items)
     } catch (error) {
       if (error?.response?.data?.code === 401) {
         const formData = JSON.stringify({
@@ -1350,7 +1365,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: "200px", maxHeight: "235px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: "200px", maxHeight: "355px" }}>
                     <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "305px" }}>
                       {branchTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
@@ -1382,6 +1397,20 @@ const Dashboard = () => {
                           </li>
                         </ul>
                       )}
+                      {branchThirdPerfomer?.length !== 0 && (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{branchThirdPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                {branchThirdPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{branchThirdPerfomer?.email}</span>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">Branch : {branchThirdPerfomer?.branch}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1395,7 +1424,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "235px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "355px" }}>
                     <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "305px" }}>
                       {userTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
@@ -1427,6 +1456,20 @@ const Dashboard = () => {
                           </li>
                         </ul>
                       )}
+                      {userThirdPerfomer?.length !== 0 && (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{userThirdPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                {userThirdPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{userThirdPerfomer?.email}</span>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">User : {userThirdPerfomer?.role}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      )}
                     </div>
                   </div>
                 </div>
@@ -1440,7 +1483,7 @@ const Dashboard = () => {
                   </div>
                 </div>
                 <div className="MuiCardContent-root css-ulk2bu">
-                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "235px" }}>
+                  <div direction="vertical" style={{ position: "relative", overflow: "hidden", width: "100%", height: "auto", minHeight: " 200px", maxHeight: "355px" }}>
                     <div style={{ position: "relative", overflow: "scroll", marginRight: "-17px", marginBottom: "-17px", minHeight: "301px", maxHeight: "305px" }}>
                       {iboTopPerfomer?.length !== 0 ? (
                         <ul className="MuiList-root css-uopt2g">
@@ -1468,6 +1511,20 @@ const Dashboard = () => {
                               </p>
                               <span className="css-rpx22u">{iboSecondPerfomer?.email}</span>
                               <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">IBO : {iboSecondPerfomer?.role}</p>
+                            </div>
+                          </li>
+                        </ul>
+                      )}
+                      {iboThirdPerfomer?.length !== 0 && (
+                        <ul className="MuiList-root css-uopt2g">
+                          <li className="MuiButtonBase-root MuiListItemButton-root MuiListItemButton-gutters css-1aqubt9" tabindex="0" role="button">
+                            <div className="MuiListItemText-root MuiListItemText-multiline css-1xar93x">
+                              <h5 className="MuiTypography-root MuiTypography-h5 css-1l5geqr">{iboThirdPerfomer?.name}</h5>
+                              <p className="MuiTypography-root MuiTypography-body1 css-1vnkcgl">
+                                {iboThirdPerfomer?.contactno}
+                              </p>
+                              <span className="css-rpx22u">{iboThirdPerfomer?.email}</span>
+                              <p class="MuiTypography-root MuiTypography-body1 css-1vnkcgl">IBO : {iboThirdPerfomer?.role}</p>
                             </div>
                           </li>
                         </ul>
