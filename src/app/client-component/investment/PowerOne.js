@@ -199,7 +199,7 @@ const PowerOne = () => {
       delete data.passport_number;
       delete data.pan_number;
       delete data.aadhar_number;
-      data.payment_screenshot  = payment_img.secure_url;
+      data.payment_screenshot = payment_img.secure_url;
       data.aadhar_card_img = aadharcard_img.secure_url;
       data.pan_card_img = pancard_img.secure_url;
       data.passbook_card_img = passbook_img.secure_url;
@@ -678,7 +678,7 @@ const PowerOne = () => {
                                 <option value="by_gpay">By GooglePay</option>
                                 <option value="by_card">By Card</option>
                               </select>
-                              {errors && errors.method_by  && <p style={{ color: "red" }}>Payment By is required field</p>}
+                              {errors && errors.method_by && <p style={{ color: "red" }}>Payment By is required field</p>}
                             </div>
                           </Form.Group>
                         </div>
@@ -688,7 +688,57 @@ const PowerOne = () => {
                             <div className="col-sm-7">
                               <Form.Control type="text" name="payment_no" placeholder="Enter Your Payment Number"
                                 {...register("payment_no", { required: true })} />
-                              {errors && errors.payment_no  && <p style={{ color: "red" }}>Payment Number is required field</p>}
+                              {errors && errors.payment_no && <p style={{ color: "red" }}>Payment Number is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By Cheque</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="cheque" placeholder="Enter Your cheque"
+                                {...register("cheque", { required: false })} />
+
+                              {errors && errors.cheque && <p style={{ color: "red" }}>Cheque is required field</p>}
+                            </div>
+                          </Form.Group>
+
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By NEFT</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="neft" placeholder="Enter Your NEFT"
+                                {...register("neft", { required: false })} />
+
+                              {errors && errors.neft && <p style={{ color: "red" }}>NEFT is required field</p>}
+                            </div>
+                          </Form.Group>
+
+                        </div>
+                      </div>
+                      <div className="row">
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By RTGS</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="rtgs" placeholder="Enter Your RTGS"
+                                {...register("rtgs", { required: false })} />
+
+                              {errors && errors.rtgs && <p style={{ color: "red" }}>RTGS is required field</p>}
+                            </div>
+                          </Form.Group>
+                        </div>
+                        <div className="col-md-6">
+                          <Form.Group className="row">
+                            <label className="col-sm-3 col-form-label">By Payment Gateways</label>
+                            <div className="col-sm-9">
+                              <Form.Control type="text" name="payment_gateway" placeholder="Enter Your payment"
+                                {...register("payment_gateway", { required: false })} />
+
+                              {errors && errors.payment_gateway && <p style={{ color: "red" }}>Payment Gateway is required field</p>}
                             </div>
                           </Form.Group>
                         </div>
@@ -708,10 +758,10 @@ const PowerOne = () => {
                               />
                               <button
                                 onClick={handlepaymentUpload}
-                                className={`btn btn-outline-${values?.payment_screenshot ?.[0]?.name ? " btn-primary" : " btn-primary"
+                                className={`btn btn-outline-${values?.payment_screenshot?.[0]?.name ? " btn-primary" : " btn-primary"
                                   }`}
                               >
-                                {values?.payment_screenshot ?.[0]?.name ? values?.payment_screenshot ?.[0]?.name : "Upload Payment Screenshot"}
+                                {values?.payment_screenshot?.[0]?.name ? values?.payment_screenshot?.[0]?.name : "Upload Payment Screenshot"}
                               </button>
                             </div>
                           </Form.Group>
